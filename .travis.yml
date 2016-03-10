@@ -1,7 +1,9 @@
 language: android
 android:
   components:
-    - build-tools-23.0.0
+    - platform-tools
+    - tools
+    - build-tools-23.0.2
     - android-23
     - android-L
     - sys-img-x86-android-tv-l
@@ -10,8 +12,6 @@ android:
 
     # Uncomment the lines below if you want to
     # use the latest revision of Android SDK Tools
-    #- platform-tools
-    #- tools
 
     # The BuildTools version used by your project
     #- build-tools-19.1.0
