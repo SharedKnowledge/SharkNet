@@ -1,1 +1,5 @@
 language: android
+android:
+  components:
+    - android-16
+    - build-tools-25.0.8
