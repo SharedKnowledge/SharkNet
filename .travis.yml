@@ -1,5 +1,9 @@
 language: android
 jdk: oraclejdk7
+cache:
+  directories:
+    - ${TRAVIS_BUILD_DIR}/gradle/caches/
+    - ${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/
 env:
   gloabl:
     - ANDROID_API_LEVEL=23
