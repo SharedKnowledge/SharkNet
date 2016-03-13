@@ -10,15 +10,14 @@ android:
     - android-22
 
 deploy:
-  provider: releases
-  api_key: ef55c0591e705576b2487b1af7742f9549763d37
-  file: app/build/outputs/apk/app-release.apk
-  skip_cleanup: true
-  on:
-    repo: SharedKnowledge/SharkNet
-    # repo: Zzivi/Sodexo
-    tags: true
-    all_branches: true
+  - provider: releases
+    api_key: e9f07dfb2a30d0f39c9d3a4a2fe6289881c6b914
+    file: app/build/outputs/apk/app-release.apk
+    skip_cleanup: true
+    on:
+      repo: SharedKnowledge/SharkNet
+      tags: true
+      all_branches: true
 
 # notifications:
 #   email:
