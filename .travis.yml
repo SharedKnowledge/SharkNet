@@ -7,10 +7,6 @@ android:
     - platform-tools
     - build-tools-21.1.1
     - android-21
-    - build-tools-20.0.0
-    - android-19
-    - build-tools-22.0.1
-    - android-22
 
 deploy:
   provider: releases
