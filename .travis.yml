@@ -18,6 +18,7 @@ deploy:
     repo: SharedKnowledge/SharkNet
     # repo: Zzivi/Sodexo
     tags: true
+    all_branches: true
 
 # notifications:
 #   email:
@@ -43,7 +44,7 @@ deploy:
     # use the latest revision of Android SDK Tools
 
     # The BuildTools version used by your project
-    #- build-tools-19.1.0
+    #- build-tools-19.1.0h
 
     # The SDK version used to compile your project
     #- android-19
