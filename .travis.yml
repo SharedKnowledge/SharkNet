@@ -1,14 +1,45 @@
+
 language: android
+script: ./gradlew build assembleRelease
 android:
   components:
-    - platform-tools
     - tools
+    - platform-tools
+    - build-tools-21.1.1
+    - android-21
+    - build-tools-20.0.0
+    - android-19
     - build-tools-23.0.2
     - android-23
-    - android-L
-    - sys-img-x86-android-tv-l
-    - add-on
-    - extra
+
+deploy:
+  provider: releases
+  api_key: ef55c0591e705576b2487b1af7742f9549763d37
+  file: app/build/outputs/apk/app-release.apk
+  skip_cleanup: true
+  on:
+    # repo: Zzivi/Sodexo
+    tags: true
+
+# notifications:
+#   email:
+#     recipients:
+#     - daniel.viorreta@zzivi.com
+#     - romina.liuzzi@zzivi.com
+#     on_success: always
+#     on_failure: always
+
+# language: android
+# android:
+#   components:
+#     - platform-tools
+#     - tools
+#     - build-tools-23.0.2
+#     - android-23
+#     - android-L
+#     - sys-img-x86-android-tv-l
+#     - add-on
+#     - extra
 
     # Uncomment the lines below if you want to
     # use the latest revision of Android SDK Tools
@@ -27,5 +58,5 @@ android:
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-19
-    - sys-img-x86-android-17
+    # - sys-img-armeabi-v7a-android-19
+    # - sys-img-x86-android-17
