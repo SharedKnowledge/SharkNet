@@ -1,60 +1,20 @@
-
 language: android
 script: ./gradlew build assembleRelease
 android:
   components:
-    - tools
-    - platform-tools
-    - extra-android-m2repository
-    - build-tools-22.0.1
-    - android-22
-
+  - tools
+  - platform-tools
+  - extra-android-m2repository
+  - build-tools-22.0.1
+  - android-22
 deploy:
+  matrix:
   - provider: releases
-    api_key: e9f07dfb2a30d0f39c9d3a4a2fe6289881c6b914
+    api-key:
+      secure: QjHx01wjwrWzcvOD+6akCCvBxIgrPfh/uirn7YK1Cj/LXnosDPZDaEKmBbZgOMESSgvBPVu+VvT8D45vFiNrcdXqHgdDWaQj3WtuUrSH32sExl7uEvDiWk5slp6vrj/8tBrAzoHF6GIFkZ0pX4406QdF92SSKCk5GGm7nM3tE+BQLvG0nJ0jEF2QHpdQLYYAhBOOf2x04hsKPIvOy6JdpNvOd8SXraY8uwduNJmgg6FLiiCDSBO4f2jFe1Fs+08UT9KYO8CeOfe6E8wneunDWLgLnfB1CuM3+9JUm+m5WMFktND0XhCmvyEQtLjtgOHvg4wSBZxkbZ7Exzzj2VVgWCkx2qGdS5o/bk/6h3eiLL/UYkfhi5ldXaclPlvagAPdS2bcyMK6LS0jl3mD6AY7sv5ICV4yP1t0g7e8MxRmqkyek05AM1N+AK4oTaCCgnK2xKHun1HkB0vGe6YUzdI0hldB4sIcV9IvcdAoQsOgw1bQBQS+tthpZBO2ziI0V90N7RM2i/lA9iaBxfKnzRL3SMifdjfhA50W5NWJe7LToSDsYjg0WBZ7vlw97eRIU3BeDLumUoZIz2HUa6ITRL8cQ8QqKikoPGmKL292ogSimbxXl+MZdv1+ifvsNHydYY+0arxdv70hhz4K1q+UUPbrqkBJSyU5SlwWFAlxLISU/Ik=
     file: app/build/outputs/apk/app-release.apk
     skip_cleanup: true
     on:
       repo: SharedKnowledge/SharkNet
       tags: true
       all_branches: true
-
-# notifications:
-#   email:
-#     recipients:
-#     - daniel.viorreta@zzivi.com
-#     - romina.liuzzi@zzivi.com
-#     on_success: always
-#     on_failure: always
-
-# language: android
-# android:
-#   components:
-#     - platform-tools
-#     - tools
-#     - build-tools-23.0.2
-#     - android-23
-#     - android-L
-#     - sys-img-x86-android-tv-l
-#     - add-on
-#     - extra
-
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-
-    # The BuildTools version used by your project
-    #- build-tools-19.1.0h
-
-    # The SDK version used to compile your project
-    #- android-19
-
-    # Additional components
-    #- extra-google-google_play_services
-    #- extra-google-m2repository
-    #- extra-android-m2repository
-    #- addon-google_apis-google-19
-
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    # - sys-img-armeabi-v7a-android-19
-    # - sys-img-x86-android-17
