@@ -7,16 +7,14 @@ android:
   - extra-android-m2repository
   - build-tools-22.0.1
   - android-22
-before_deploy:
-  - cp ./app/build/outputs/apk/*.apk .
-deploy:
-  provider: releases
-  api_key:
-    secure: JUq9Yr+1FEeiR5i0cEGmL2QtqtgGSWOZrs10oHRS62QdOH5s0sp3MpAAJxFIFOsblkXwy8O4nYIoopWsv0Oo/KrqJZ8i2IKmdjEtkrK9sSwfbKdbhnn7nuTKVFhkivh0A3oYTN3r8bccVeL3TozQsaUPgGMtK9m1Dgl1nOvWDZWAokqFDx2zjd3OYOo3mAIKykDte5bwc2W1I40jJJXF2sNWwVwi0ZOq6wA6/rCQLCUjzXVl/YRL4g4ElJ19y5oReOdLYtiqIi3m+/G7BD+mVQZjD4KtHAjq2PVdEz3PfgBjaPzJXaXN7lN3RvX18fdBZWmCjm5kGY6yOqtlE1QUgUq8T9EF2jj8ZHyBsVwg40SuzQ5zesbEz1YlRCdcDSKlKfeKsLtRYgxEMNB+peCmwZ4AaxjfNwJfdGulZF8BhYz7XqwRFvD7Nox1znGlkL+h2qukxcXegAasKuUCO0gLqubkGlDn/1vqj3P0T7wh/eK1Rzt1/ThXs4X3VXnUdzSXFHr8GYRt5WrkAzGQuyI1HwzPymDCKNmcMe5ZXENzMd+gbTSZgSyKVQbgqV1htIDu9D+HdnQoaxsRUQ9XcUO1VM6e6T3dw2012t7KoE9V13+l4kOZcKoxcX8QuJ92xsYcpU5qNdtQ3iY44kuYqrDkPsmuiMMG1gp+49Gc31hFaro=
-  file:
-    - "app-release.apk"
-    # - "app/build/outputs/apk/app-release.apk"
-  skip_cleanup: true
-  on:
-    repo: SharedKnowledge/SharkNet
-    tags: true
+# before_deploy:
+#   - cp ./app/build/outputs/apk/*.apk .
+# deploy:
+#   provider: releases
+#   file:
+#     - "app-release.apk"
+#     # - "app/build/outputs/apk/app-release.apk"
+#   skip_cleanup: true
+#   on:
+#     repo: SharedKnowledge/SharkNet
+#     tags: true
