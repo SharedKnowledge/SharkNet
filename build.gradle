@@ -6,16 +6,35 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0-alpha1'
+        classpath 'co.riiid:gradle-github-plugin:0.4.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
+apply plugin: 'co.riiid.gradle'
+
 allprojects {
     repositories {
         jcenter()
     }
+}
+
+github {
+    owner = 'SharedKnowledge'
+    repo = 'SharkNet'
+    token = 'dc2fbcd71dae5c000da4bda1a2468c8cf4e8aaaf'
+    tagName = '0.1.0'
+    targetCommitish = 'master'
+    name = 'v0.1.0'
+    body = """# SharkNet
+            The first ever Release.
+            """
+    assets = [
+            'app/build/outputs/apk/app-release-unaligned.apk',
+            'app/build/outputs/apk/app-debug.apk'
+    ]
 }
 
 task clean(type: Delete) {
