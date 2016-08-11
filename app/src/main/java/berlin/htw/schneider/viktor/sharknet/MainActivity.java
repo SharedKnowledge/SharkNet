@@ -53,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
                 {"Turmspringen", "https://de.wikipedia.org/wiki/Turmspringen"},
         };
 
-        for (int i = 0; i < dummyInterests.length; i++) {
-            TXSemanticTag parentTag = implSharkNet.getMyProfile().getInterests().addInterest(dummyInterests[i][0], dummyInterests[i][0]);
-            if (i == 0) {
-                for(String[] child : sportsTopics) {
-                    implSharkNet.getMyProfile().getInterests().addInterest(child[0], child[1]).move(parentTag);
-                }
-            }
-        }
+//        for (int i = 0; i < dummyInterests.length; i++) {
+//            TXSemanticTag parentTag = implSharkNet.getMyProfile().getInterests().addInterest(dummyInterests[i][0], dummyInterests[i][0]);
+//            if (i == 0) {
+//                for(String[] child : sportsTopics) {
+//                    implSharkNet.getMyProfile().getInterests().addInterest(child[0], child[1]).move(parentTag);
+//                }
+//            }
+//        }
 
 
     }

@@ -9,6 +9,8 @@ android {
         exclude 'META-INF/maven/plugin.xml'
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/plexus/components.xml'
+        exclude 'META-INF/maven/commons-io/commons-io/pom.xml'
+        exclude 'META-INF/maven/commons-io/commons-io/pom.properties'
 
     }
     defaultConfig {
@@ -19,15 +21,23 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 configurations.all {
     resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
         force 'junit:junit:4.12'
     }
 }
@@ -44,4 +54,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.0.2'
 
     compile 'com.github.SharedKnowledge:SharkNet-Api-Android:master-SNAPSHOT'
+//    compile 'com.github.SharedKnowledge:SharkNet-Api-Android:429ec34877'
 }
