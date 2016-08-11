@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+
+        tools:context="berlin.htw.schneider.viktor.sharknet.ChatDetailActivity"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.v7.widget.RecyclerView android:layout_width="fill_parent"
+                                            android:layout_height="0dp"
+                                            android:layout_weight="1"
+                                            android:id="@+id/msg_list_view"
+                                            android:layout_marginBottom="5dp"
+                                            android:paddingTop="?attr/actionBarSize"
+                                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            </android.support.v7.widget.RecyclerView>
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="5"
+            android:gravity="bottom"
+            android:background="@color/sharknet">
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:inputType="textMultiLine|textShortMessage"
+                android:id="@+id/write_msg_edit_text"
+                android:layout_gravity="bottom"
+                android:hint="@string/write_a_message"
+                android:maxLines="3"
+                android:layout_weight="4"
+                android:maxHeight="20dp" android:textColor="@color/abc_primary_text_disable_only_material_dark"
+                android:textColorHint="@color/abc_primary_text_disable_only_material_dark"
+                android:theme="@style/WhiteLine"/>
+        <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/send_button"
+                android:src="@drawable/ic_send_white_48dp"
+                android:layout_gravity="bottom|right"
+                android:layout_weight="1"
+                android:onClick="sendMessage"
+                android:textSize="15sp"
+                android:visibility="gone"
+                android:background="@null"/>
+        <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/record"
+                android:src="@drawable/ic_mic_white_48dp"
+                android:layout_gravity="bottom|right"
+                android:layout_weight="1"
+                android:onClick="recordAudio"
+                android:textSize="15sp"
+                android:background="@null"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="horizontal"
+                  android:background="@color/sharknet"
+                  android:layout_height="wrap_content">
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/camera"
+                android:onClick="takePicture"
+                android:src="@drawable/ic_photo_camera_white_48dp"
+                android:background="@null" android:layout_gravity="left"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/file"
+                android:src="@drawable/ic_insert_drive_file_white_48dp"
+                android:layout_gravity="left"
+                android:onClick="sendFile"
+                android:background="@null"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/contact"
+                android:src="@drawable/ic_person_add_white_48dp"
+                android:layout_gravity="left"
+                android:onClick="addContact"
+                android:background="@null"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/image"
+                android:onClick="sendPicture"
+                android:src="@drawable/ic_image_white_48dp"
+                android:layout_gravity="left"
+                android:background="@null"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_con_detail_view"
+        tools:context="berlin.htw.schneider.viktor.sharknet.ConDetailView">
+<ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    >
+        <ImageView
+                android:layout_width="151dp"
+                android:layout_height="151dp"
+                android:id="@+id/con_profile_image" android:layout_gravity="center"
+                android:src="@drawable/ic_person_pink_700_48dp"
+                android:contentDescription="@string/prifiel_image" android:maxHeight="40dp" android:maxWidth="40dp"
+                android:minHeight="40dp" android:minWidth="40dp" android:nestedScrollingEnabled="false"
+                android:scaleType="fitCenter"/>
+
+
+        <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/nickname"
+                    android:id="@+id/con_nickname_label"/>
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:theme="@style/MyEditTextTheme"
+
+                    android:hint="@string/nickname"
+                    android:ems="10"
+                    android:id="@+id/con_nickname_edit"/>
+
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/name"
+                    android:id="@+id/con_name_label"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:theme="@style/MyEditTextTheme"
+
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="@string/name"
+                android:ems="10"
+                android:id="@+id/con_name_edit"/>
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/e_mail"
+                android:id="@+id/con_email_label"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:theme="@style/MyEditTextTheme"
+
+                android:ems="10"
+                android:hint="@string/email_fake"
+                android:id="@+id/con_email_edit"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/phone"
+                android:id="@+id/con_phone_label"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/MyEditTextTheme"
+
+                android:inputType="phone"
+                android:ems="10"
+                android:hint="@string/phone_fake"
+                android:id="@+id/con_phone_edit"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/note"
+                android:id="@+id/con_note_label" android:layout_gravity="center_horizontal"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:theme="@style/MyEditTextTheme"
+
+                android:hint="@string/some_notes"
+                android:ems="10"
+                android:id="@+id/con_not_edit"/>
+
+    </LinearLayout>
+</ScrollView>
+</RelativeLayout>

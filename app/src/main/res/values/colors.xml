@@ -2,5 +2,10 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="sharknet">#ff4081</color>
+    <color name="sharknet_less">#C2185B</color>
+    <color name="sharknet_green">#66ff99</color>
+    <color name="sharknet_red">#ff0000</color>
+    <color name="sharknet_orange">#ff6600</color>
 </resources>
