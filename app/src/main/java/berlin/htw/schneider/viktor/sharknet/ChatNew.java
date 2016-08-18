@@ -52,12 +52,21 @@ public class ChatNew extends AppCompatActivity {
                 if(!selcted_contacts.isEmpty())
                 {
                     EditText title = (EditText) findViewById(R.id.chat_new_title);
-                    net.sharksystem.sharknet_api_android.interfaces.Chat c = MainActivity.implSharkNet.newChat(selcted_contacts);
+                    net.sharksystem.sharknet_api_android.interfaces.Chat c = null;
+                    try {
+                        c = MainActivity.implSharkNet.newChat(selcted_contacts);
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
 
                     assert title != null;
                     if(!title.getText().toString().trim().isEmpty())
                     {
-                        c.setTitle(title.getText().toString());
+                        try {
+                            c.setTitle(title.getText().toString());
+                        } catch (SharkKBException e) {
+                            e.printStackTrace();
+                        }
                     }
                     Log.d("ChatNewID", String.valueOf(c.getID()));
                     // TODO: geht leider wegen der api noch nicht so richtig

@@ -12,7 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import net.sharksystem.sharknet_api_android.dummy_impl.ImplInterest;
+//import net.sharksystem.sharknet_api_android.dummy_impl.ImplInterest;
 import net.sharksystem.sharknet_api_android.dummy_impl.ImplContent;
 
 public class TimelineNewFeed extends AppCompatActivity {

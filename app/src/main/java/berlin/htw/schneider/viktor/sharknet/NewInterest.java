@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import net.sharksystem.sharknet_api_android.dummy_impl.Dummy;
 
 public class NewInterest extends AppCompatActivity {
 
@@ -49,7 +50,8 @@ public class NewInterest extends AppCompatActivity {
 
                 EditText name = (EditText) findViewById(R.id.new_interest_name_editText);
                 String s = name.getText().toString();
-                MainActivity.implSharkNet.getMyProfile().getInterests().addInterest(s,"wiki/"+s);
+                //TODO: fragen wie ich hier vorgehen soll
+                MainActivity.implSharkNet.getMyProfile().setInterest(null);
                 finish();
                 return true;
 

@@ -43,7 +43,12 @@ public class TimelineListAdapter extends ArrayAdapter<Feed>
         //title.setTypeface(type);
 
 
-        String s = new java.text.SimpleDateFormat("HH:mm").format(feed.getTimestamp());
+        String s = null;
+        try {
+            s = new java.text.SimpleDateFormat("HH:mm").format(feed.getTimestamp());
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
         try {
             title.setText(String.format("%s     %s", feed.getContent().getMessage(), s));
         } catch (SharkKBException e) {

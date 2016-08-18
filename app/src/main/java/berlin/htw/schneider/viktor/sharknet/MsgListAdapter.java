@@ -81,14 +81,19 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
     public int getItemViewType(int position)
     {
         Message message = msgs.get(position);
-        if(message.isMine())
-        {
-            return 1;
+        try {
+            if(message.isMine())
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        } catch (SharkKBException e) {
+            e.printStackTrace();
         }
-        else
-        {
-            return 0;
-        }
+        return -1;
     }
 
     @Override
@@ -127,17 +132,21 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
             e.printStackTrace();
         }
 
-        if(message.isMine())
-        {
-            s = "Gesendet am "+s;
-            //holder.msg.setTextAlignment();
-           // holder.msg.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.sharknet));
-            holder.timestamp.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.sharknet));
-        }
-        else
-        {
-            s = "Empfangen am "+s;
-            holder.timestamp.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.cardview_dark_background));
+        try {
+            if(message.isMine())
+            {
+                s = "Gesendet am "+s;
+                //holder.msg.setTextAlignment();
+               // holder.msg.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.sharknet));
+                holder.timestamp.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.sharknet));
+            }
+            else
+            {
+                s = "Empfangen am "+s;
+                holder.timestamp.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.cardview_dark_background));
+            }
+        } catch (SharkKBException e) {
+            e.printStackTrace();
         }
         builder_msg_inf.append(s);
        // builder_msg_inf.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.circle_green)),builder_msg_inf.length() - 1,builder_msg_inf.length(),0);

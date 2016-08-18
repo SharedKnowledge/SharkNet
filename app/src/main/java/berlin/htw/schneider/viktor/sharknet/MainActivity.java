@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent inbox = new Intent(this, Inbox.class);
 
-        implSharkNet.setProfile(this.profiles.get(index),"");
+        implSharkNet.setActiveProfile(this.profiles.get(index),"");
 
         /*
 

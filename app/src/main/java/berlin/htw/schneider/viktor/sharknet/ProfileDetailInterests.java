@@ -15,7 +15,7 @@ import android.widget.TextView;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.TXSemanticTag;
-import net.sharksystem.sharknet_api_android.interfaces.Interest;
+//import net.sharksystem.sharknet_api_android.interfaces.Interest;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ public class ProfileDetailInterests extends AppCompatActivity
     {
         super.onResume();
         InterestsListAdapter interestsListAdapter = null;
-        interestsListAdapter = new InterestsListAdapter(this,R.layout.line_item_interest,
-                MainActivity.implSharkNet.getMyProfile().getInterests().getAllTopics());
+        //interestsListAdapter = new InterestsListAdapter(this,R.layout.line_item_interest,
+        //        MainActivity.implSharkNet.getMyProfile().getInterests().getAllTopics());
         ListView lv = (ListView) findViewById(R.id.listView_interests);
         if (lv != null)
         {
@@ -46,8 +46,8 @@ public class ProfileDetailInterests extends AppCompatActivity
 
 
         InterestsListAdapter interestsListAdapter = null;
-        interestsListAdapter = new InterestsListAdapter(this,R.layout.line_item_interest,
-                MainActivity.implSharkNet.getMyProfile().getInterests().getAllTopics());
+        //interestsListAdapter = new InterestsListAdapter(this,R.layout.line_item_interest,
+                //MainActivity.implSharkNet.getMyProfile().getInterests().getAllTopics());
         ListView lv = (ListView) findViewById(R.id.listView_interests);
         if (lv != null)
         {

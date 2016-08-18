@@ -51,9 +51,17 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         {
             if(chat.getID() == chatID)
             {
-                msgs = chat.getMessages(false);
+                try {
+                    msgs = chat.getMessages(false);
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
                 this.chat = chat;
-                getSupportActionBar().setTitle(this.chat.getTitle());
+                try {
+                    getSupportActionBar().setTitle(this.chat.getTitle());
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -116,8 +124,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         return true;
     }
 
-    public void sendMessage(View view)
-    {
+    public void sendMessage(View view) throws SharkKBException {
         EditText msg_text = (EditText) findViewById(R.id.write_msg_edit_text);
 
         String msg_string;
