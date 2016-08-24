@@ -22,6 +22,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ChatDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,7 +40,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
         send = (ImageButton) findViewById(R.id.send_button);
         record = (ImageButton) findViewById(R.id.record);
-        int chatID = getIntent().getIntExtra(Chat.CHAT_ID, 0);
+        String chatID = getIntent().getStringExtra(Chat.CHAT_ID);
 
         List<Message> msgs = new ArrayList<>();
         List<net.sharksystem.api.interfaces.Chat> chats = null;
@@ -52,21 +53,26 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         Toolbar t = (Toolbar) findViewById(R.id.toolbar_chatdetail);
         setSupportActionBar(t);
 
+        assert chats != null;
         for(net.sharksystem.api.interfaces.Chat chat : chats)
         {
-            if(chat.getID() == chatID)
-            {
-                try {
-                    msgs = chat.getMessages(false);
-                } catch (SharkKBException e) {
-                    e.printStackTrace();
+            try {
+                if(Objects.equals(chat.getID(), chatID))
+                {
+                    try {
+                        msgs = chat.getMessages(false);
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
+                    this.chat = chat;
+                    try {
+                        getSupportActionBar().setTitle(this.chat.getTitle());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
                 }
-                this.chat = chat;
-                try {
-                    getSupportActionBar().setTitle(this.chat.getTitle());
-                } catch (SharkKBException e) {
-                    e.printStackTrace();
-                }
+            } catch (SharkKBException e) {
+                e.printStackTrace();
             }
         }
 
@@ -138,7 +144,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         {
             msg_string = msg_text.getText().toString().trim();
 
-            if (msg_string.isEmpty())
+            if(msg_string.isEmpty())
             {
                 Snackbar.make(view, "No message entered!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();

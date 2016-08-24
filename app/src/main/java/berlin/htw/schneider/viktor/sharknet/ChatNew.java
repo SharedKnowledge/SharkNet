@@ -66,7 +66,12 @@ public class ChatNew extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    Log.d("ChatNewID", String.valueOf(c.getID()));
+                    try {
+                        assert c != null;
+                        Log.d("ChatNewID", c.getID());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
                     // TODO: geht leider wegen der api noch nicht so richtig
                     try {
                         c.sendMessage(null,"Chat was created by "

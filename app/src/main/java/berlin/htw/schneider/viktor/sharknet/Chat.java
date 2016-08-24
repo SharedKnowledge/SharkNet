@@ -48,7 +48,11 @@ public class Chat extends AppCompatActivity
                 {
                     Intent intent = new Intent(Chat.this,ChatDetailActivity.class);
                     //identifies the chat for the detailView
-                    intent.putExtra(CHAT_ID,chats.get(position).getID());
+                    try {
+                        intent.putExtra(CHAT_ID,chats.get(position).getID());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
                     startActivity(intent);
                 }
             });
@@ -102,7 +106,11 @@ public class Chat extends AppCompatActivity
                 {
                     Intent intent = new Intent(Chat.this,ChatDetailActivity.class);
                     //identifies the chat for the detailView
-                    intent.putExtra(CHAT_ID,chats.get(position).getID());
+                    try {
+                        intent.putExtra(CHAT_ID,chats.get(position).getID());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
                     startActivity(intent);
                 }
             });
