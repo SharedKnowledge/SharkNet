@@ -39,7 +39,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
         send = (ImageButton) findViewById(R.id.send_button);
         record = (ImageButton) findViewById(R.id.record);
-        int chatID = getIntent().getIntExtra(Chat.CHAT_ID, 0);
+        String chatID = getIntent().getStringExtra(Chat.CHAT_ID);
 
         List<Message> msgs = new ArrayList<>();
         List<net.sharksystem.api.interfaces.Chat> chats = null;
@@ -54,19 +54,23 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
         for(net.sharksystem.api.interfaces.Chat chat : chats)
         {
-            if(chat.getID() == chatID)
-            {
-                try {
-                    msgs = chat.getMessages(false);
-                } catch (SharkKBException e) {
-                    e.printStackTrace();
+            try {
+                if(chat.getID().equals(chatID))
+                {
+                    try {
+                        msgs = chat.getMessages(false);
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
+                    this.chat = chat;
+                    try {
+                        getSupportActionBar().setTitle(this.chat.getTitle());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
                 }
-                this.chat = chat;
-                try {
-                    getSupportActionBar().setTitle(this.chat.getTitle());
-                } catch (SharkKBException e) {
-                    e.printStackTrace();
-                }
+            } catch (SharkKBException e) {
+                e.printStackTrace();
             }
         }
 

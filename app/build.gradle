@@ -37,6 +37,9 @@ android {
 
 configurations.all {
     resolutionStrategy {
+        // cache dynamic versions for 10 minutes
+        cacheDynamicVersionsFor 60, 'seconds'
+        // don't cache changing modules at all
         cacheChangingModulesFor 0, 'seconds'
         force 'junit:junit:4.12'
     }
@@ -53,6 +56,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.0.+'
     compile 'com.android.support:recyclerview-v7:23.0.2'
 
-    compile 'com.github.SharedKnowledge:SharkNet-Api-Android:master-SNAPSHOT'
+    compile 'com.github.SharedKnowledge:SharkNet-Api-Android:-SNAPSHOT'
 //    compile 'com.github.SharedKnowledge:SharkNet-Api-Android:429ec34877'
 }
