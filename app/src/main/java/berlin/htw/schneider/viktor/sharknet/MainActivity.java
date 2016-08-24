@@ -1,27 +1,24 @@
 package berlin.htw.schneider.viktor.sharknet;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.TXSemanticTag;
-import net.sharksystem.sharknet_api_android.*;
-import net.sharksystem.sharknet_api_android.dummy_impl.ImplSharkNet;
-import net.sharksystem.sharknet_api_android.interfaces.Profile;
+import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.api.interfaces.*;
+import net.sharksystem.api.utils.DummyCreator;
+import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static ImplSharkNet implSharkNet;
-    private List<Profile> profiles = null;
+    public static SharkNetEngine implSharkNet;
+    private List<net.sharksystem.api.interfaces.Profile> profiles = null;
     int index ;
 
     @Override
@@ -29,47 +26,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        implSharkNet = new ImplSharkNet();
-        implSharkNet.fillWithDummyData();
+        try {
+            implSharkNet = SharkNetEngine.getSharkNet();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        try {
+            Dummy.createDummyData();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         index = 0;
-        this.profiles = implSharkNet.getProfiles();
+        try {
+            this.profiles = implSharkNet.getProfiles();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
 
         EditText userid = (EditText) findViewById(R.id.userid);
         assert userid != null;
+
         try {
             userid.setText(this.profiles.get(index).getNickname());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        String[][] dummyInterests = {
-                {"Sport", "https://de.wikipedia.org/wiki/Sport"},
-                {"Musik", "https://de.wikipedia.org/wiki/Musik"},
-                {"Literatur", "https://de.wikipedia.org/wiki/Literatur"},
-        };
-
-        String[][] sportsTopics = {
-                {"Fußball", "https://de.wikipedia.org/wiki/Fußball"},
-                {"Handball", "https://de.wikipedia.org/wiki/Handball"},
-                {"Turmspringen", "https://de.wikipedia.org/wiki/Turmspringen"},
-        };
-
-//        for (int i = 0; i < dummyInterests.length; i++) {
-//            TXSemanticTag parentTag = implSharkNet.getMyProfile().getInterests().addInterest(dummyInterests[i][0], dummyInterests[i][0]);
-//            if (i == 0) {
-//                for(String[] child : sportsTopics) {
-//                    implSharkNet.getMyProfile().getInterests().addInterest(child[0], child[1]).move(parentTag);
-//                }
-//            }
-//        }
-
-
     }
 
     public void openChat(View view)
     {
         Intent inbox = new Intent(this, Inbox.class);
 
-        implSharkNet.setActiveProfile(this.profiles.get(index),"");
+        try {
+            implSharkNet.setActiveProfile(this.profiles.get(index),"");
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         /*
 
@@ -81,18 +77,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(inbox);
     }
 
-    public void backProfile(View view)
-    {
+    public void backProfile(View view) throws SharkKBException {
         if(index > 0)
         {
             index--;
             EditText userid = (EditText) findViewById(R.id.userid);
             assert userid != null;
-            try {
-                userid.setText(this.profiles.get(index).getNickname());
-            } catch (SharkKBException e) {
-                e.printStackTrace();
-            }
+            userid.setText(this.profiles.get(index).getNickname());
             Toast.makeText(this,"back",Toast.LENGTH_SHORT).show();
         }
         else
@@ -100,38 +91,25 @@ public class MainActivity extends AppCompatActivity {
            index = this.profiles.size()-1;
             EditText userid = (EditText) findViewById(R.id.userid);
             assert userid != null;
-            try {
-                userid.setText(this.profiles.get(index).getNickname());
-            } catch (SharkKBException e) {
-                e.printStackTrace();
-            }
+            userid.setText(this.profiles.get(index).getNickname());
         }
     }
 
 
-    public void nextProfile(View view)
-    {
+    public void nextProfile(View view) throws SharkKBException {
         if(index < this.profiles.size()-1)
         {
             index++;
             EditText userid = (EditText) findViewById(R.id.userid);
             assert userid != null;
-            try {
-                userid.setText(this.profiles.get(index).getNickname());
-            } catch (SharkKBException e) {
-                e.printStackTrace();
-            }
+            userid.setText(this.profiles.get(index).getNickname());
         }
         else
         {
             index = 0;
             EditText userid = (EditText) findViewById(R.id.userid);
             assert userid != null;
-            try {
-                userid.setText(this.profiles.get(index).getNickname());
-            } catch (SharkKBException e) {
-                e.printStackTrace();
-            }
+            userid.setText(this.profiles.get(index).getNickname());
         }
     }
 }

@@ -1,20 +1,16 @@
 package berlin.htw.schneider.viktor.sharknet;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.interfaces.Contact;
+import net.sharksystem.api.interfaces.Contact;
+
 
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +39,11 @@ public class ConDetailView extends AppCompatActivity {
         this.con_nickname = getIntent().getStringExtra("CONTACT_NICKNAME");
         getSupportActionBar().setTitle(con_nickname);
         //Typeface type = Typeface.createFromAsset(getAssets(),"fonts/RockSalt.TTF");
-        this.contacts = MainActivity.implSharkNet.getContacts();
+        try {
+            this.contacts = MainActivity.implSharkNet.getContacts();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
 
         TextView t = (TextView) findViewById(R.id.con_nickname_label);
         //t.setTypeface(type);
@@ -130,7 +130,7 @@ public class ConDetailView extends AppCompatActivity {
             try {
                 ConDetailView.this.contact.setNickname(con_nickname);
             } catch (SharkKBException e) {
-
+                e.printStackTrace();
             }
             //TODO: muss noch in der API erweitert werden um email usw.
             //ConDetailView.this.contact.setUID();

@@ -4,8 +4,6 @@ package berlin.htw.schneider.viktor.sharknet;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,15 +11,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.dummy_impl.ImplContent;
-import net.sharksystem.sharknet_api_android.interfaces.*;
+import net.sharksystem.api.interfaces.Contact;
 
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +48,12 @@ public class ChatNew extends AppCompatActivity {
                 if(!selcted_contacts.isEmpty())
                 {
                     EditText title = (EditText) findViewById(R.id.chat_new_title);
-                    net.sharksystem.sharknet_api_android.interfaces.Chat c = null;
+                    net.sharksystem.api.interfaces.Chat c = null;
                     try {
                         c = MainActivity.implSharkNet.newChat(selcted_contacts);
                     } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
@@ -71,8 +69,10 @@ public class ChatNew extends AppCompatActivity {
                     Log.d("ChatNewID", String.valueOf(c.getID()));
                     // TODO: geht leider wegen der api noch nicht so richtig
                     try {
-                        c.sendMessage(new ImplContent("Chat was created by "
-                                +MainActivity.implSharkNet.getMyProfile().getNickname(),MainActivity.implSharkNet.getMyProfile()));
+                        c.sendMessage(null,"Chat was created by "
+                                + MainActivity.implSharkNet.getMyProfile().getNickname(),null);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     } catch (SharkKBException e) {
                         e.printStackTrace();
                     }
@@ -105,10 +105,18 @@ public class ChatNew extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         selcted_contacts = new ArrayList<>();
-        this.contacts = MainActivity.implSharkNet.getContacts();
+        try {
+            this.contacts = MainActivity.implSharkNet.getContacts();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
         // TODO: nimmt Timo noch raus den einen Contact
-        contacts.remove(MainActivity.implSharkNet.getMyProfile());
-        ConListAdapterNewChat chatListAdapter = new ConListAdapterNewChat(this,R.layout.line_item_con_new_chat,contacts);
+        try {
+            contacts.remove(MainActivity.implSharkNet.getMyProfile());
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        ConListAdapterNewChat chatListAdapter = new ConListAdapterNewChat(this, R.layout.line_item_con_new_chat,contacts);
         final ListView lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
         {

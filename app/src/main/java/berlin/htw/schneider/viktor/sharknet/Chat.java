@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import net.sharkfw.knowledgeBase.SharkKBException;
 
 import java.util.List;
 
@@ -23,15 +24,19 @@ public class Chat extends AppCompatActivity
 {
 
     public static final String CHAT_ID ="CHAT_ID" ;
-    private List<net.sharksystem.sharknet_api_android.interfaces.Chat> chats;
+    private List<net.sharksystem.api.interfaces.Chat> chats;
     private ChatListAdapter chatListAdapter;
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        chats = MainActivity.implSharkNet.getChats();
-        this.chatListAdapter = new ChatListAdapter(this,R.layout.line_item_chat,chats);
+        try {
+            chats = MainActivity.implSharkNet.getChats();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.line_item_chat,chats);
         ListView lv = (ListView)findViewById(R.id.chatsListView);
 
         if (lv != null)
@@ -80,8 +85,12 @@ public class Chat extends AppCompatActivity
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-        chats = MainActivity.implSharkNet.getChats();
-        this.chatListAdapter = new ChatListAdapter(this,R.layout.line_item_chat,chats);
+        try {
+            chats = MainActivity.implSharkNet.getChats();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.line_item_chat,chats);
         ListView lv = (ListView)findViewById(R.id.chatsListView);
 
         if (lv != null)

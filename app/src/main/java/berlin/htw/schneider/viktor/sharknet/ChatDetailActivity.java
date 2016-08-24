@@ -17,8 +17,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.dummy_impl.ImplContent;
-import net.sharksystem.sharknet_api_android.interfaces.Message;
+import net.sharksystem.api.interfaces.Message;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ChatDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private net.sharksystem.sharknet_api_android.interfaces.Chat chat ;
+    private net.sharksystem.api.interfaces.Chat chat ;
     private MsgListAdapter msgListAdapter;
 
     private ImageButton send, record;
@@ -42,12 +42,17 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         int chatID = getIntent().getIntExtra(Chat.CHAT_ID, 0);
 
         List<Message> msgs = new ArrayList<>();
-        List<net.sharksystem.sharknet_api_android.interfaces.Chat> chats =  MainActivity.implSharkNet.getChats();
+        List<net.sharksystem.api.interfaces.Chat> chats = null;
+        try {
+            chats = MainActivity.implSharkNet.getChats();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
 
         Toolbar t = (Toolbar) findViewById(R.id.toolbar_chatdetail);
         setSupportActionBar(t);
 
-        for(net.sharksystem.sharknet_api_android.interfaces.Chat chat : chats)
+        for(net.sharksystem.api.interfaces.Chat chat : chats)
         {
             if(chat.getID() == chatID)
             {
@@ -124,7 +129,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         return true;
     }
 
-    public void sendMessage(View view) throws SharkKBException {
+    public void sendMessage(View view) throws JSONException, SharkKBException {
         EditText msg_text = (EditText) findViewById(R.id.write_msg_edit_text);
 
         String msg_string;
@@ -140,15 +145,11 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
             }
             else
             {
-                try {
-                    chat.sendMessage(new ImplContent(msg_string,MainActivity.implSharkNet.getMyProfile()));
-                } catch (SharkKBException e) {
-                    e.printStackTrace();
-                }
+                chat.sendMessage(null,msg_string,null);
                 this.chat.update();
                 this.msgListAdapter.notifyDataSetChanged();
                 msg_text.getText().clear();
-                for(net.sharksystem.sharknet_api_android.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+                for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
                 {
                     if(c.getID()==this.chat.getID())
                     {

@@ -16,6 +16,14 @@
         <item name="colorAccent">@color/cardview_light_background</item>
 
     </style>
+    <style name="Sharknet" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here.-->
+        <item name="colorControlNormal">@color/sharknet</item>
+        <item name="colorPrimary">@color/sharknet</item>
+        <item name="colorPrimaryDark">@color/sharknet</item>
+        <item name="colorAccent">@color/sharknet</item>
+
+    </style>
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
     <style name="drawer_style">

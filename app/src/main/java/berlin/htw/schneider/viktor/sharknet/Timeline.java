@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,7 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import net.sharksystem.sharknet_api_android.interfaces.Feed;
+import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.interfaces.Feed;
 
 import java.util.List;
 
@@ -29,9 +29,13 @@ public class Timeline extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        this.feeds = MainActivity.implSharkNet.getFeeds(true);
+        try {
+            this.feeds = MainActivity.implSharkNet.getFeeds(true);
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
 
-        this.timelineListAdapter = new TimelineListAdapter(this,R.layout.line_item_timeline,feeds);
+        this.timelineListAdapter = new TimelineListAdapter(this, R.layout.line_item_timeline,feeds);
         ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
         if (feeds_liste != null)
         {
@@ -71,8 +75,12 @@ public class Timeline extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        this.feeds = MainActivity.implSharkNet.getFeeds(true);
-        this.timelineListAdapter = new TimelineListAdapter(this,R.layout.line_item_timeline,feeds);
+        try {
+            this.feeds = MainActivity.implSharkNet.getFeeds(true);
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        this.timelineListAdapter = new TimelineListAdapter(this, R.layout.line_item_timeline,feeds);
         ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
         if (feeds_liste != null)
         {

@@ -1,16 +1,13 @@
 package berlin.htw.schneider.viktor.sharknet;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import net.sharksystem.sharknet_api_android.dummy_impl.Dummy;
+import net.sharkfw.knowledgeBase.SharkKBException;
 
 public class NewInterest extends AppCompatActivity {
 
@@ -28,7 +25,7 @@ public class NewInterest extends AppCompatActivity {
             public void onClick(View view) {
                 EditText name = (EditText) findViewById(R.id.new_interest_name_editText);
                 String s = name.getText().toString();
-                MainActivity.implSharkNet.getMyProfile().getInterests().addInterest(s,"wiki/"+s);
+                MainActivity.implSharkNet.getMyProfile().getContact().getInterests().addInterest(s,"wiki/"+s);
                 finish();
             }
         });*/
@@ -50,8 +47,8 @@ public class NewInterest extends AppCompatActivity {
 
                 EditText name = (EditText) findViewById(R.id.new_interest_name_editText);
                 String s = name.getText().toString();
-                //TODO: fragen wie ich hier vorgehen soll
-                MainActivity.implSharkNet.getMyProfile().setInterest(null);
+                // TODO: Interessen müssen noch gemacht werden
+                //MainActivity.implSharkNet.getMyProfile().getInterests().addInterest(s,"wiki/"+s);
                 finish();
                 return true;
 

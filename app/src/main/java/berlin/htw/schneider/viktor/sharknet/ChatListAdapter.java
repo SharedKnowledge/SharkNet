@@ -10,21 +10,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.interfaces.*;
-
-
+import net.sharksystem.api.interfaces.Message;
 import java.util.List;
 
 /**
  * Reads the Information from the Chat-List and
  * fills the List-Items-Layout.
  */
-public class ChatListAdapter extends ArrayAdapter<net.sharksystem.sharknet_api_android.interfaces.Chat>
+public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces.Chat>
 {
 
-    private List<net.sharksystem.sharknet_api_android.interfaces.Chat> chats;
+    private List<net.sharksystem.api.interfaces.Chat> chats;
 
-    public ChatListAdapter(Context context, int resource, List<net.sharksystem.sharknet_api_android.interfaces.Chat> objects)
+    public ChatListAdapter(Context context, int resource, List<net.sharksystem.api.interfaces.Chat> objects)
     {
         super(context, resource, objects);
         this.chats = objects;
@@ -38,7 +36,7 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.sharknet_api_a
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.line_item_chat,parent,false);
         }
 
-        net.sharksystem.sharknet_api_android.interfaces.Chat chat = chats.get(position);
+        net.sharksystem.api.interfaces.Chat chat = chats.get(position);
         //Title
         TextView title = (TextView) convertView.findViewById(R.id.name);
         try {
@@ -73,6 +71,7 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.sharknet_api_a
 
         String last_msg_content = sender+":"+content;
         text.setText(last_msg_content);
+
 
         //Image
         ImageView image = (ImageView) convertView.findViewById(R.id.chat_image);

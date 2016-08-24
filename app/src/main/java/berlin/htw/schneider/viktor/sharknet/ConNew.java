@@ -1,18 +1,14 @@
 package berlin.htw.schneider.viktor.sharknet;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import net.sharksystem.sharknet_api_android.interfaces.Contact;
-import net.sharksystem.sharknet_api_android.dummy_impl.ImplContact;
+import net.sharkfw.knowledgeBase.SharkKBException;
 
 public class ConNew extends AppCompatActivity {
 
@@ -57,7 +53,11 @@ public class ConNew extends AppCompatActivity {
 
             assert nickname != null;
             // TODO: bei Timmo nachfragen ob ich so richtig mache
-            MainActivity.implSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
+            try {
+                MainActivity.implSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
+            } catch (SharkKBException e) {
+                e.printStackTrace();
+            }
 
             finish();
             return true;

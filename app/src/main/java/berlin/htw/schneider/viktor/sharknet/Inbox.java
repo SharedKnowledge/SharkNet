@@ -13,23 +13,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import net.sharksystem.sharknet_api_android.interfaces.Feed;
-import net.sharksystem.sharknet_api_android.dummy_impl.ImplSharkNet;
-
+import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.interfaces.Feed;
 import java.util.List;
 
 public class Inbox extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener
+{
 
 
     private List<Feed> feeds;
     public TimelineListAdapter timelineListAdapter;
-    private List<net.sharksystem.sharknet_api_android.interfaces.Chat> chats;
-    private ChatListAdapter chatListAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -42,29 +40,13 @@ public class Inbox extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-/*
-        chats = MainActivity.implSharkNet.getChats();
-        this.chatListAdapter = new ChatListAdapter(this,R.layout.line_item_chat,chats);
-        ListView lv = (ListView)findViewById(R.id.chatsListView);
-
-        if (lv != null)
-        {
-            lv.setAdapter(chatListAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-                    Intent intent = new Intent(Inbox.this,ChatDetailActivity.class);
-
-                    intent.putExtra(Chat.CHAT_ID,chats.get(position).getID());
-                    startActivity(intent);
-                }
-            });
+        try {
+            this.feeds = MainActivity.implSharkNet.getFeeds(true);
+        } catch (SharkKBException e) {
+            e.printStackTrace();
         }
-*/
-        this.feeds = MainActivity.implSharkNet.getFeeds(true);
 
-        this.timelineListAdapter = new TimelineListAdapter(this,R.layout.line_item_timeline,feeds);
+        this.timelineListAdapter = new TimelineListAdapter(this, R.layout.line_item_timeline,feeds);
         ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
         if (feeds_liste != null)
         {

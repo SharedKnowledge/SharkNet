@@ -3,8 +3,6 @@ package berlin.htw.schneider.viktor.sharknet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,10 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.interfaces.Contact;
+import net.sharksystem.api.interfaces.Contact;
+
 
 import java.util.List;
 
@@ -30,9 +30,13 @@ public class Contacts extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        contacts = MainActivity.implSharkNet.getContacts();
+        try {
+            contacts = MainActivity.implSharkNet.getContacts();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
 
-        ConListAdapter conListAdapter = new ConListAdapter(this,R.layout.line_item_con,contacts);
+        ConListAdapter conListAdapter = new ConListAdapter(this, R.layout.line_item_con,contacts);
         ListView lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
         {
@@ -77,9 +81,13 @@ public class Contacts extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        contacts = MainActivity.implSharkNet.getContacts();
+        try {
+            contacts = MainActivity.implSharkNet.getContacts();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
 
-        ConListAdapter conListAdapter = new ConListAdapter(this,R.layout.line_item_con,contacts);
+        ConListAdapter conListAdapter = new ConListAdapter(this, R.layout.line_item_con,contacts);
         ListView lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
         {

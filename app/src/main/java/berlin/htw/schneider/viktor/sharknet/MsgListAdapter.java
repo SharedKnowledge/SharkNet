@@ -1,19 +1,16 @@
 package berlin.htw.schneider.viktor.sharknet;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.interfaces.Message;
-
+import net.sharksystem.api.interfaces.Message;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -93,7 +90,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        return -1;
+        return 0;
     }
 
     @Override
@@ -127,14 +124,25 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
             e.printStackTrace();
         }
         try {
-            builder.append(message.getContent().getMessage());
+            builder.append(message.getContent().getMessage()+" ");
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
 
+
+        // TODO: Ausrufezeigen soll später weg
+        //if(!message.isdisliked())
+        //{
+            // TODO: sollte vielleicht besser über die Bubble farbe angezeigt werden
+            //holder.msg.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_warning_lime_800_18dp, 0);
+        //}
+
+
         try {
             if(message.isMine())
             {
+
+
                 s = "Gesendet am "+s;
                 //holder.msg.setTextAlignment();
                // holder.msg.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.sharknet));
@@ -142,6 +150,40 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
             }
             else
             {
+                try {
+                    if(message.isDisliked())
+                    {
+                        holder.msg.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_send_pink_700_18dp, 0);
+
+                    }
+                    else
+                    {
+                        holder.msg.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_send_black_18dp, 0);
+
+                    }
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+                // TODO: Ausrufezeigen soll später hin
+                try {
+                    if(message.getSender().getPublicKey() != null &&message.getSender().getPublicKey().isEmpty())
+                    {
+                        ImageView key;
+                        if(message.getSender().getPublicKeyExpiration() != null && message.getSender().getPublicKeyExpiration().before(new Timestamp(System.currentTimeMillis())))
+                        {
+                            key = (ImageView) holder.itemView.findViewById(R.id.msg_key);
+
+                        }
+                        else
+                        {
+                            //TODO: soll ein grauer Schlüssel angezeigt werden
+                            key = (ImageView) holder.itemView.findViewById(R.id.msg_key_grey);
+                        }
+                        key.setVisibility(View.VISIBLE);
+                    }
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
                 s = "Empfangen am "+s;
                 holder.timestamp.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.cardview_dark_background));
             }
@@ -149,7 +191,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
             e.printStackTrace();
         }
         builder_msg_inf.append(s);
-       // builder_msg_inf.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.circle_green)),builder_msg_inf.length() - 1,builder_msg_inf.length(),0);
+           // builder.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.ic_warning_lime_800_18dp)),builder.length() - 1,builder.length(),0);
         //builder_msg_inf.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.circle_orange)),builder_msg_inf.length() - 2,builder_msg_inf.length(),0);
         //builder_msg_inf.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.circle_red)),builder_msg_inf.length() - 3,builder_msg_inf.length(),0);
 /*

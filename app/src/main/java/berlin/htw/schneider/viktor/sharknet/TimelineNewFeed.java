@@ -1,19 +1,12 @@
 package berlin.htw.schneider.viktor.sharknet;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-//import net.sharksystem.sharknet_api_android.dummy_impl.ImplInterest;
-import net.sharksystem.sharknet_api_android.dummy_impl.ImplContent;
 
 public class TimelineNewFeed extends AppCompatActivity {
 
@@ -35,7 +28,7 @@ public class TimelineNewFeed extends AppCompatActivity {
                 //TODO:
                 /*MainActivity.implSharkNet.newFeed(new ImplContent(text),
                         new ImplInterest("Sport",null,null,null),
-                        MainActivity.implSharkNet.getMyProfile());
+                        MainActivity.implSharkNet.getMyProfile().getContact());
                 finish();
             }
         });
@@ -63,7 +56,7 @@ public class TimelineNewFeed extends AppCompatActivity {
                 //TODO:
                 /*MainActivity.implSharkNet.newFeed(new ImplContent(text),
                         new ImplInterest("Sport",null,null,null),
-                        MainActivity.implSharkNet.getMyProfile());
+                        MainActivity.implSharkNet.getMyProfile().getContact());
                         */
                 finish();
                 return true;

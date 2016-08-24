@@ -8,8 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.interfaces.Contact;
-
+import net.sharksystem.api.interfaces.Contact;
 import java.util.List;
 
 /**

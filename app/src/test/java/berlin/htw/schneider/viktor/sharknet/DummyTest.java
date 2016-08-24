@@ -1,10 +1,10 @@
 package berlin.htw.schneider.viktor.sharknet;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.dummy_impl.ImplSharkNet;
-import net.sharksystem.sharknet_api_android.interfaces.*;
-import net.sharksystem.sharknet_api_android.interfaces.Chat;
-import net.sharksystem.sharknet_api_android.interfaces.Profile;
+
+import net.sharksystem.api.interfaces.*;
+import net.sharksystem.api.interfaces.Chat;
+import net.sharksystem.api.interfaces.Profile;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,7 +14,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.sharknet_api_android.interfaces.*;
+import net.sharksystem.api.interfaces.*;
+import net.sharksystem.api.interfaces.Profile;
+
 
 import java.io.IOException;
 
@@ -42,10 +42,15 @@ public class ProfileDetail extends AppCompatActivity
                 EditText phone = (EditText) findViewById(R.id.con_phone_edit);
                 EditText note = (EditText) findViewById(R.id.con_not_edit);
 
-                net.sharksystem.sharknet_api_android.interfaces.Profile myprofile =  MainActivity.implSharkNet.getMyProfile();
+                net.sharksystem.api.interfaces.Profile myprofile = null;
+                try {
+                    myprofile = MainActivity.implSharkNet.getMyProfile();
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
                 assert nickname != null;
                 //MainActivity.implSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
-                //Contact mycontact = MainActivity.implSharkNet.getMyProfile();
+
                 try {
                     myprofile.setNickname(nickname.getText().toString());
                 } catch (SharkKBException e) {
@@ -54,7 +59,7 @@ public class ProfileDetail extends AppCompatActivity
                 //TODO: mycontact.setPicture();
                 //TODO: mycontact.setUID();
                 //TODO: mycontact.setPublicKey();
-                //myprofile.setContact(mycontact);
+
                 finish();
 
                 return true;
@@ -69,7 +74,7 @@ public class ProfileDetail extends AppCompatActivity
         }
     }
 
-    private net.sharksystem.sharknet_api_android.interfaces.Profile profile;
+    private Profile profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +82,11 @@ public class ProfileDetail extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        profile = MainActivity.implSharkNet.getMyProfile();
+        try {
+            profile = MainActivity.implSharkNet.getMyProfile();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
 
         EditText nickname = (EditText) findViewById(R.id.con_nickname_edit);
         try {
@@ -112,10 +121,10 @@ public class ProfileDetail extends AppCompatActivity
                 EditText phone = (EditText) findViewById(R.id.con_phone_edit);
                 EditText note = (EditText) findViewById(R.id.con_not_edit);
 
-                net.sharksystem.sharknet_api_android.interfaces.Profile myprofile =  MainActivity.implSharkNet.getMyProfile();
+                net.sharksystem.sharknet.api.Profile myprofile =  MainActivity.implSharkNet.getMyProfile();
                 assert nickname != null;
                 //MainActivity.implSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
-                Contact mycontact = MainActivity.implSharkNet.getMyProfile();
+                Contact mycontact = MainActivity.implSharkNet.getMyProfile().getContact();
                 mycontact.setNickname(nickname.getText().toString());
                 //TODO: mycontact.setPicture();
                 //TODO: mycontact.setUID();
