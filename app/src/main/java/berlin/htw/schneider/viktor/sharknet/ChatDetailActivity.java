@@ -1,9 +1,19 @@
 package berlin.htw.schneider.viktor.sharknet;
 
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,15 +21,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
 import org.json.JSONException;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,14 +45,25 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
     private net.sharksystem.api.interfaces.Chat chat ;
     private MsgListAdapter msgListAdapter;
+    ImageView image_capture;
 
     private ImageButton send, record;
+    private String dir_photo;
+    private int TAKE_PHOTO_CODE = 0;
+    private String file_path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_detail);
+        image_capture  = (ImageView) findViewById(R.id.image_capture);
+        // Here, we are making a folder named picFolder to store
+        // pics taken by the camera using this application.
+        this.dir_photo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/SharkNet/";
+        File newdir = new File(dir_photo);
+        newdir.mkdirs();
+
 
         send = (ImageButton) findViewById(R.id.send_button);
         record = (ImageButton) findViewById(R.id.record);
@@ -153,7 +180,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
             }
             else
             {
-                chat.sendMessage(null,msg_string,null);
+                this.chat.sendMessage(null,msg_string,null);
                 this.chat.update();
                 this.msgListAdapter.notifyDataSetChanged();
                 msg_text.getText().clear();
@@ -192,7 +219,60 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
     public void takePicture(View view)
     {
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String format = s.format(new java.util.Date());
+        this.file_path = this.dir_photo+format+".png";
+        File newfile = new File(file_path);
+        try {
+            newfile.createNewFile();
+        }
+        catch (IOException e)
+        {
+        }
+        int hasWriteContactsPermission = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        123);
+            }
+            return;
+        }
+        Uri outputFileUri = Uri.fromFile(newfile);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 
+        startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK)
+        {
+            int hasWriteContactsPermission = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                hasWriteContactsPermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                            123);
+                }
+                return;
+            }
+
+
+            File image = new File(file_path);
+            Log.d("IMAGE_ERROR",file_path);
+            Bitmap bmp = BitmapFactory.decodeFile(image.getPath());
+            assert image_capture != null;
+            assert bmp != null;
+            image_capture.setImageBitmap(bmp);
+            Log.d("CameraDemo", "Pic saved");
+        }
     }
 
     public void sendFile(View view)

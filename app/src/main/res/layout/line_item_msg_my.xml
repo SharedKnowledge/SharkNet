@@ -16,7 +16,9 @@
               android:id="@+id/msg_content"
               android:gravity="right">
 
-
+<ImageView android:layout_width="wrap_content"
+           android:id="@+id/image_capture"
+           android:layout_height="wrap_content"/>
 
         <TextView
                 android:layout_width="wrap_content"
