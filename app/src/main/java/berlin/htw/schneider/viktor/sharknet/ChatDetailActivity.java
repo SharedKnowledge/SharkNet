@@ -78,10 +78,12 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
         this.msgListAdapter = new MsgListAdapter(msgs);
         RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
+
         if (lv != null)
         {
             LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
             lv.setLayoutManager(llm);
+            llm.setStackFromEnd(true);
             lv.setItemAnimator(new DefaultItemAnimator());
             lv.setAdapter(msgListAdapter);
         }
@@ -157,7 +159,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                 msg_text.getText().clear();
                 for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
                 {
-                    if(c.getID()==this.chat.getID())
+                    if(Objects.equals(c.getID(), this.chat.getID()))
                     {
                         this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
                         RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
@@ -165,6 +167,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                         {
                             LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
                             lv.setLayoutManager(llm);
+                            llm.setStackFromEnd(true);
                             lv.setItemAnimator(new DefaultItemAnimator());
                             lv.setAdapter(msgListAdapter);
                             lv.scrollToPosition(this.chat.getMessages(false).size()-1);

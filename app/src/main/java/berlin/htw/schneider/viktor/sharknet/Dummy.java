@@ -17,13 +17,15 @@ package berlin.htw.schneider.viktor.sharknet;
         import java.io.ByteArrayInputStream;
         import java.io.InputStream;
         import java.util.ArrayList;
+        import java.util.Timer;
+        import java.util.TimerTask;
 
 /**
  * Created by j4rvis on 24.08.16.
  */
 public class Dummy {
 
-    public static void createDummyData() throws SharkKBException, JSONException {
+    public static void createDummyData() throws SharkKBException, JSONException, InterruptedException {
 
         String aliceName = "Alice";
         String aliceNickName = "Ali";
@@ -131,10 +133,14 @@ public class Dummy {
 
         Chat aliceAndBobChat = engine.newChat(aliceAndBob);
         aliceAndBobChat.setTitle("ABD");
+
+        Thread.sleep(10);
         Chat aliceAndBobAndCharlieChat = engine.newChat(aliceAndBobAndCharlie);
         aliceAndBobAndCharlieChat.setTitle("ABCD");
+        Thread.sleep(10);
         Chat aliceAndCharlieChat = engine.newChat(aliceAndCharlie);
         aliceAndCharlieChat.setTitle("ACD");
+        Thread.sleep(10);
         Chat bobAndCharlieChat = engine.newChat(bobAndCharlie);
         bobAndCharlieChat.setTitle("BCD");
 
