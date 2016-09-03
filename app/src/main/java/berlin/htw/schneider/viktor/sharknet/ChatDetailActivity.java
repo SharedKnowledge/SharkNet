@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,11 +30,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.ContentImpl;
+import net.sharksystem.api.interfaces.Content;
 import net.sharksystem.api.interfaces.Message;
 import org.json.JSONException;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,6 +52,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
     private ImageButton send, record;
     private String dir_photo;
     private int TAKE_PHOTO_CODE = 0;
+    private static final int SELECT_PHOTO = 100;
+    private static final int SELECT_FILE = 101;
     private String file_path;
 
     @Override
@@ -57,7 +61,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_detail);
-        image_capture  = (ImageView) findViewById(R.id.image_capture);
+        this.image_capture  = (ImageView) findViewById(R.id.image_capture);
         // Here, we are making a folder named picFolder to store
         // pics taken by the camera using this application.
         this.dir_photo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/SharkNet/";
@@ -247,8 +251,79 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
+
+
+        if( requestCode == SELECT_FILE)
+        {
+            //TODO:
+            if (resultCode == RESULT_OK)
+            {
+                Uri file = data.getData();
+                InputStream fileStream = null;
+                // TODO: file-name soll noch angezeigt werden
+                // alles nach den letzten "/" anzeigen
+                // vielleicht verschiedene icons für pdf usw anzeigen lassen
+
+                Log.d("FILE_SELECTED",file.toString());
+                try {
+                    fileStream = getContentResolver().openInputStream(file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    this.chat.sendMessage(fileStream,"File","file/doc");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if( requestCode == SELECT_PHOTO)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                Uri selectedImage = data.getData();
+                InputStream imageStream = null;
+                try {
+                    imageStream = getContentResolver().openInputStream(selectedImage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    this.chat.sendMessage(imageStream,"Bild","image/png");
+                } catch (JSONException | SharkKBException e) {
+                    e.printStackTrace();
+                }
+                this.chat.update();
+                this.msgListAdapter.notifyDataSetChanged();
+
+                try {
+                    for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+                    {
+                        if(Objects.equals(c.getID(), this.chat.getID()))
+                        {
+                            this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
+                            RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
+                            if (lv != null)
+                            {
+                                LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+                                lv.setLayoutManager(llm);
+                                llm.setStackFromEnd(true);
+                                lv.setItemAnimator(new DefaultItemAnimator());
+                                lv.setAdapter(msgListAdapter);
+                                lv.scrollToPosition(this.chat.getMessages(false).size()-1);
+                            }
+                        }
+                    }
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK)
         {
@@ -263,21 +338,54 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                 }
                 return;
             }
+            Drawable pic = Drawable.createFromPath(file_path);
+            this.image_capture  = (ImageView) findViewById(R.id.image_capture);
+            if (image_capture != null)
+            {
+                image_capture.setImageDrawable(pic);
+            }
+            try {
+                this.chat.sendMessage(new FileInputStream(file_path),"Bild","image/png");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (SharkKBException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            this.chat.update();
+            this.msgListAdapter.notifyDataSetChanged();
 
+            try {
+                for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+                {
+                    if(Objects.equals(c.getID(), this.chat.getID()))
+                    {
+                        this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
+                        RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
+                        if (lv != null)
+                        {
+                            LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+                            lv.setLayoutManager(llm);
+                            llm.setStackFromEnd(true);
+                            lv.setItemAnimator(new DefaultItemAnimator());
+                            lv.setAdapter(msgListAdapter);
+                            lv.scrollToPosition(this.chat.getMessages(false).size()-1);
+                        }
+                    }
+                }
+            } catch (SharkKBException e) {
+                e.printStackTrace();
+            }
 
-            File image = new File(file_path);
-            Log.d("IMAGE_ERROR",file_path);
-            Bitmap bmp = BitmapFactory.decodeFile(image.getPath());
-            assert image_capture != null;
-            assert bmp != null;
-            image_capture.setImageBitmap(bmp);
-            Log.d("CameraDemo", "Pic saved");
         }
     }
 
     public void sendFile(View view)
     {
-
+        Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        fileIntent.setType("file/*"); // intent type to filter application based on your requirement
+        startActivityForResult(fileIntent, SELECT_FILE);
     }
 
     public void addContact(View view)
@@ -287,6 +395,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
     public void sendPicture(View view)
     {
-
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, SELECT_PHOTO);
     }
 }

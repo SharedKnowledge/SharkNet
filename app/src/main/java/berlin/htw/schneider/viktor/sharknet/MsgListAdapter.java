@@ -1,8 +1,10 @@
 package berlin.htw.schneider.viktor.sharknet;
 
+import android.graphics.BitmapFactory;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
+
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -29,40 +33,30 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
     public class ViewHolderBase extends RecyclerView.ViewHolder
     {
         public TextView msg,timestamp;
+        public ImageView image_capture;
 
         public ViewHolderBase(View itemView)
         {
             super(itemView);
             msg = (TextView) itemView.findViewById(R.id.msg);
             timestamp = (TextView) itemView.findViewById(R.id.timestamp);
-            //check = itemView.getResources().getDrawable(R.drawable.ic_check_green_600_18dp);
-           // cross = itemView.getResources().getDrawable(R.drawable.ic_close_red_300_18dp);
+            image_capture = (ImageView) itemView.findViewById(R.id.image_capture);
         }
     }
 
     public class ViewHolderMsg extends ViewHolderBase
     {
-        public TextView msg;
-
         public ViewHolderMsg(View itemView)
         {
             super(itemView);
-            msg = (TextView) itemView.findViewById(R.id.msg);
-            //check = itemView.getResources().getDrawable(R.drawable.ic_check_green_600_18dp);
-            //cross = itemView.getResources().getDrawable(R.drawable.ic_close_red_300_18dp);
         }
     }
 
     public class ViewHolderMsgMy extends ViewHolderBase
     {
-        public TextView msg;
-
         public ViewHolderMsgMy(View itemView)
         {
             super(itemView);
-            msg = (TextView) itemView.findViewById(R.id.msg);
-            //check = itemView.getResources().getDrawable(R.drawable.ic_check_green_600_18dp);
-            //cross = itemView.getResources().getDrawable(R.drawable.ic_close_red_300_18dp);
         }
     }
 
@@ -131,22 +125,38 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
 
 
         // TODO: Ausrufezeigen soll später weg
-        //if(!message.isdisliked())
+        // if(!message.isdisliked())
         //{
-            // TODO: sollte vielleicht besser über die Bubble farbe angezeigt werden
-            //holder.msg.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_warning_lime_800_18dp, 0);
+        // TODO: sollte vielleicht besser über die Bubble farbe angezeigt werden
+        // holder.msg.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_warning_lime_800_18dp, 0);
         //}
 
 
         try {
+            if(message.getContent().getInputStream()!= null)
+            {
+                switch (message.getContent().getMimeType())
+                {
+                    case "image/png":
+                        holder.image_capture.setImageBitmap(BitmapFactory.decodeStream(message.getContent().getInputStream()));
+                        break;
+                    case "image/jpg":
+                        break;
+                    case "sound/mp3":
+                        break;
+                    case "video/avi":
+                        break;
+                    default:
+                        //Todo: mimeType geht noch nicht
+
+                        holder.image_capture.setImageBitmap(BitmapFactory.decodeStream(message.getContent().getInputStream()));
+
+                        Log.d("MIME_TYPE",message.getContent().getMimeType());
+                }
+            }
             if(message.isMine())
             {
-
-
                 s = "Gesendet am "+s;
-                //holder.msg.setTextAlignment();
-               // holder.msg.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.sharknet));
-                holder.timestamp.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.sharknet));
             }
             else
             {
@@ -191,7 +201,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
             e.printStackTrace();
         }
         builder_msg_inf.append(s);
-           // builder.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.ic_warning_lime_800_18dp)),builder.length() - 1,builder.length(),0);
+        // builder.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.ic_warning_lime_800_18dp)),builder.length() - 1,builder.length(),0);
         //builder_msg_inf.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.circle_orange)),builder_msg_inf.length() - 2,builder_msg_inf.length(),0);
         //builder_msg_inf.setSpan(new ImageSpan(holder.itemView.getResources().getDrawable(R.drawable.circle_red)),builder_msg_inf.length() - 3,builder_msg_inf.length(),0);
 /*

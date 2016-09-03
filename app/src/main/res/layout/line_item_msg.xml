@@ -9,9 +9,6 @@
                                     app:cardElevation="0dp"
                                     app:cardMaxElevation="0dp"
 >
-    <ImageView android:layout_width="wrap_content"
-               android:id="@+id/image_capture"
-               android:layout_height="wrap_content"/>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"
                   android:layout_width="wrap_content"
@@ -53,6 +50,10 @@
                         android:layout_marginStart="7dp"
                         android:background="@drawable/corners_round_msg"
                         />
+                <ImageView android:layout_width="wrap_content"
+                           android:id="@+id/image_capture"
+                           android:adjustViewBounds="true"
+                           android:layout_height="wrap_content"/>
             <LinearLayout android:layout_width="wrap_content"
                           android:orientation="horizontal"
                           android:layout_height="wrap_content">
