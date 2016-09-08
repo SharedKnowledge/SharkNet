@@ -390,7 +390,9 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
     public void addContact(View view)
     {
-
+        //TODO: beim back-click kein chatverlauf mehr
+        Intent addOtherContact = new Intent(this, ChatDetailAddContact.class);
+        startActivity(addOtherContact);
     }
 
     public void sendPicture(View view)

@@ -7,10 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.knowledgeBase.TXSemanticTag;
 import net.sharksystem.api.impl.SharkNetEngine;
-import net.sharksystem.api.interfaces.*;
-import net.sharksystem.api.utils.DummyCreator;
 import org.json.JSONException;
 
 import java.util.List;

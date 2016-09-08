@@ -2,7 +2,6 @@ package berlin.htw.schneider.viktor.sharknet;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,60 +15,26 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Feed;
-
 import java.util.List;
 
-public class Timeline extends AppCompatActivity
+public class Inbox_old extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
+
+
     private List<Feed> feeds;
-    public TimelineListAdapter timelineListAdapter;
+    public InboxListAdapter inboxListAdapter;
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        try {
-            this.feeds = MainActivity.implSharkNet.getFeeds(true);
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
-        this.timelineListAdapter = new TimelineListAdapter(this, R.layout.line_item_timeline,feeds);
-        ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
-        if (feeds_liste != null)
-        {
-            feeds_liste.setAdapter(timelineListAdapter);
-            feeds_liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-                    //Intent intent = new Intent(Timeline.this,TimelineNewFeed.class);
-                    //startActivity(intent);
-                }
-            });
-        }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline);
+        setContentView(R.layout.activity_inbox);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        assert fab != null;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(Timeline.this,TimelineNewFeed.class);
-                startActivity(intent);
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -80,17 +45,18 @@ public class Timeline extends AppCompatActivity
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        this.timelineListAdapter = new TimelineListAdapter(this, R.layout.line_item_timeline,feeds);
+
+        this.inboxListAdapter = new InboxListAdapter(this, R.layout.line_item_timeline,feeds);
         ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
         if (feeds_liste != null)
         {
-            feeds_liste.setAdapter(timelineListAdapter);
+            feeds_liste.setAdapter(inboxListAdapter);
             feeds_liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
-                    //Intent intent = new Intent(Timeline.this,TimelineNewFeed.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(Inbox_old.this,Inbox.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -98,6 +64,14 @@ public class Timeline extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+/*
+        //TODO: noch nicht klar wie ich jedes menuitem ansprechen kann
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/RockSalt.TTF");
+        MenuItem mi = (MenuItem) findViewById(R.id.inbox);
+        assert mi != null;
+        TextView t = (TextView) mi.getActionView();
+        t.setTypeface(type);
+*/
     }
 
     @Override
@@ -113,7 +87,8 @@ public class Timeline extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.timeline, menu);
+        getMenuInflater().inflate(R.menu.inbox, menu);
+
         return true;
     }
 
@@ -144,7 +119,7 @@ public class Timeline extends AppCompatActivity
                 startActivity(new Intent(this, Chat.class));
                 return true;
             case R.id.timeline:
-                startActivity(new Intent(this, Timeline.class));
+                startActivity(new Intent(this, Inbox.class));
                 return true;
             case R.id.contact:
                 startActivity(new Intent(this, Contacts.class));
@@ -153,7 +128,7 @@ public class Timeline extends AppCompatActivity
                 startActivity(new Intent(this, Profile.class));
                 return true;
             case R.id.inbox:
-                startActivity(new Intent(this, Inbox.class));
+                startActivity(new Intent(this, Inbox_old.class));
                 return true;
         }
 

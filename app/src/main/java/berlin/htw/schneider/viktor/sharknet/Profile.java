@@ -96,7 +96,7 @@ public class Profile extends AppCompatActivity
                 startActivity(new Intent(this, Chat.class));
                 return true;
             case R.id.timeline:
-                startActivity(new Intent(this, Timeline.class));
+                startActivity(new Intent(this, Inbox.class));
                 return true;
             case R.id.contact:
                 startActivity(new Intent(this, Contacts.class));
@@ -105,7 +105,7 @@ public class Profile extends AppCompatActivity
                 startActivity(new Intent(this, Profile.class));
                 return true;
             case R.id.inbox:
-                startActivity(new Intent(this, Inbox.class));
+                startActivity(new Intent(this, Inbox_old.class));
                 return true;
         }
 

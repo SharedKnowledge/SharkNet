@@ -8,7 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-public class TimelineNewFeed extends AppCompatActivity {
+public class InboxNewFeed extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

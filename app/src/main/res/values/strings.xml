@@ -67,4 +67,5 @@
     <string name="delete">delete</string>
     <string name="blacklist">blacklist</string>
     <string name="me">Me</string>
+    <string name="title_activity_chat_detail_add_contact">New Contact</string>
 </resources>

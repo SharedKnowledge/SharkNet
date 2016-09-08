@@ -16,12 +16,12 @@ import java.util.List;
 /**
  * Created by viktorowich on 29/06/16.
  */
-public class TimelineListAdapter extends ArrayAdapter<Feed>
+public class InboxListAdapter extends ArrayAdapter<Feed>
 {
     private List<Feed> feeds;
 
 
-    public TimelineListAdapter(Context context, int resource, List<Feed> objects)
+    public InboxListAdapter(Context context, int resource, List<Feed> objects)
     {
         super(context, resource, objects);
         this.feeds = objects;
