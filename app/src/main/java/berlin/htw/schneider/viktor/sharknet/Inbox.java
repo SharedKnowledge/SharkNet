@@ -113,7 +113,8 @@ public class Inbox extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.timeline, menu);
+        getMenuInflater().inflate(R.menu.inbox, menu);
+
         return true;
     }
 
@@ -143,7 +144,7 @@ public class Inbox extends AppCompatActivity
             case R.id.chat:
                 startActivity(new Intent(this, Chat.class));
                 return true;
-            case R.id.timeline:
+            case R.id.inbox:
                 startActivity(new Intent(this, Inbox.class));
                 return true;
             case R.id.contact:
@@ -152,9 +153,7 @@ public class Inbox extends AppCompatActivity
             case R.id.profile:
                 startActivity(new Intent(this, Profile.class));
                 return true;
-            case R.id.inbox:
-                startActivity(new Intent(this, Inbox_old.class));
-                return true;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

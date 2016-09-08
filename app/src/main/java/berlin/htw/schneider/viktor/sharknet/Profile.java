@@ -95,7 +95,7 @@ public class Profile extends AppCompatActivity
             case R.id.chat:
                 startActivity(new Intent(this, Chat.class));
                 return true;
-            case R.id.timeline:
+            case R.id.inbox:
                 startActivity(new Intent(this, Inbox.class));
                 return true;
             case R.id.contact:
@@ -104,9 +104,7 @@ public class Profile extends AppCompatActivity
             case R.id.profile:
                 startActivity(new Intent(this, Profile.class));
                 return true;
-            case R.id.inbox:
-                startActivity(new Intent(this, Inbox_old.class));
-                return true;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

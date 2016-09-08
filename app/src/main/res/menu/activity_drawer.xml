@@ -14,10 +14,6 @@
                 android:actionLayout="@layout/menu_item"
                 />
         <item
-                android:id="@+id/timeline"
-                android:title="@string/timeline"
-                android:actionLayout="@layout/menu_item"/>
-        <item
                 android:id="@+id/profile"
                 android:title="@string/profile"
                 android:actionLayout="@layout/menu_item"/>

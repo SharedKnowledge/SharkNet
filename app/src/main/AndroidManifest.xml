@@ -48,11 +48,6 @@
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-                android:name=".Inbox_old"
-                android:label="@string/title_activity_inbox"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-        <activity
                 android:name=".ChatDetailActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/title_activity_chat_detail"
