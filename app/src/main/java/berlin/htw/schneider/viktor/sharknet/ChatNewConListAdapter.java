@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.sharkfw.knowledgeBase.SharkKBException;
@@ -14,12 +15,12 @@ import java.util.List;
 /**
  * Created by viktorowich on 08/06/16.
  */
-public class ConListAdapterNewChat extends ArrayAdapter<Contact>
+public class ChatNewConListAdapter extends ArrayAdapter<Contact>
 {
 
     private List<Contact> contacts;
 
-    public ConListAdapterNewChat(Context context, int resource, List<Contact> objects)
+    public ChatNewConListAdapter(Context context, int resource, List<Contact> objects)
     {
         super(context, resource, objects);
         this.contacts = objects;
@@ -66,6 +67,11 @@ public class ConListAdapterNewChat extends ArrayAdapter<Contact>
             //TODO: image.setImageResource(contact.getPicture().);
         }*/
 
+        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
+        checkBox.setChecked(false);
+
         return convertView;
     }
+
+
 }

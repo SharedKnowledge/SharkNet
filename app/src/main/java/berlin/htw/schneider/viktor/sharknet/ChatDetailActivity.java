@@ -4,8 +4,6 @@ package berlin.htw.schneider.viktor.sharknet;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -14,7 +12,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,13 +27,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.impl.ContentImpl;
-import net.sharksystem.api.interfaces.Content;
 import net.sharksystem.api.interfaces.Message;
 import org.json.JSONException;
 
 import java.io.*;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +39,12 @@ import java.util.Objects;
 
 public class ChatDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int ADD_CONTACT = 1050;
     private net.sharksystem.api.interfaces.Chat chat ;
     private MsgListAdapter msgListAdapter;
     ImageView image_capture;
+    private String chatID;
+    public static final String CHAT_ID = "CHAT_ID";
 
     private ImageButton send, record;
     private String dir_photo;
@@ -55,14 +52,29 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
     private static final int SELECT_PHOTO = 100;
     private static final int SELECT_FILE = 101;
     private String file_path;
+    private List<Message> msgs ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null)
+        {
+            // Restore value of members from saved state
+            chatID = savedInstanceState.getString(CHAT_ID);
+            Log.d("!!!CREATE","########## Aus SaveInstanceSTATE ##########");
+            Log.d("!!!CREATE","########## "+chatID+" ##########");
+        }
+        else
+        {
+            chatID = getIntent().getStringExtra(Chat.CHAT_ID);
+            Log.d("!!!CREATE","########## Aus EXTRA ###########");
+        }
         setContentView(R.layout.activity_chat_detail);
         this.image_capture  = (ImageView) findViewById(R.id.image_capture);
         // Here, we are making a folder named picFolder to store
+            Log.d("!!!CREATE","########## "+chatID+" ##########");
         // pics taken by the camera using this application.
         this.dir_photo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/SharkNet/";
         File newdir = new File(dir_photo);
@@ -71,9 +83,9 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
         send = (ImageButton) findViewById(R.id.send_button);
         record = (ImageButton) findViewById(R.id.record);
-        String chatID = getIntent().getStringExtra(Chat.CHAT_ID);
 
-        List<Message> msgs = new ArrayList<>();
+
+        msgs = new ArrayList<>();
         List<net.sharksystem.api.interfaces.Chat> chats = null;
         try {
             chats = MainActivity.implSharkNet.getChats();
@@ -168,7 +180,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         return true;
     }
 
-    public void sendMessage(View view) throws JSONException, SharkKBException {
+    public void sendMessage(View view) throws JSONException, SharkKBException
+    {
         EditText msg_text = (EditText) findViewById(R.id.write_msg_edit_text);
 
         String msg_string;
@@ -218,7 +231,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
     public void recordAudio(View view)
     {
-
+        //TODO: waiting for the bug-fix
     }
 
     public void takePicture(View view)
@@ -263,6 +276,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
             {
                 Uri file = data.getData();
                 InputStream fileStream = null;
+
                 // TODO: file-name soll noch angezeigt werden
                 // alles nach den letzten "/" anzeigen
                 // vielleicht verschiedene icons für pdf usw anzeigen lassen
@@ -379,6 +393,29 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
             }
 
         }
+
+        this.msgListAdapter.notifyDataSetChanged();
+        try {
+            for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+            {
+                if(Objects.equals(c.getID(), this.chat.getID()))
+                {
+                    this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
+                    RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
+                    if (lv != null)
+                    {
+                        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+                        lv.setLayoutManager(llm);
+                        llm.setStackFromEnd(true);
+                        lv.setItemAnimator(new DefaultItemAnimator());
+                        lv.setAdapter(msgListAdapter);
+                        lv.scrollToPosition(this.chat.getMessages(false).size()-1);
+                    }
+                }
+            }
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendFile(View view)
@@ -392,7 +429,9 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
     {
         //TODO: beim back-click kein chatverlauf mehr
         Intent addOtherContact = new Intent(this, ChatDetailAddContact.class);
-        startActivity(addOtherContact);
+        addOtherContact.putExtra(Chat.CHAT_ID,chatID);
+        startActivityForResult(addOtherContact,ADD_CONTACT);
+//        startActivity(addOtherContact);
     }
 
     public void sendPicture(View view)
@@ -400,5 +439,22 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(CHAT_ID, getIntent().getStringExtra(Chat.CHAT_ID));
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        chatID = savedInstanceState.getString(CHAT_ID);
     }
 }

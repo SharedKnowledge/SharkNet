@@ -71,7 +71,7 @@
             android:id="@+id/checkBox"
             android:theme="@style/MyEditTextTheme"
             android:layout_gravity="right"
-           />
+            android:clickable="true"/>
     </LinearLayout>
 </LinearLayout>
 

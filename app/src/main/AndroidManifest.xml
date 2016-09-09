@@ -39,7 +39,7 @@
         </activity>
         <activity
                 android:name=".Inbox"
-                android:label="@string/title_activity_timeline"
+                android:label="@string/title_activity_inbox"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
