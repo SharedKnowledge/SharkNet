@@ -63,23 +63,22 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         {
             // Restore value of members from saved state
             chatID = savedInstanceState.getString(CHAT_ID);
-            Log.d("!!!CREATE","########## Aus SaveInstanceSTATE ##########");
-            Log.d("!!!CREATE","########## "+chatID+" ##########");
+//            Log.d("!!!CREATE","########## Aus SaveInstanceSTATE ##########");
+//            Log.d("!!!CREATE","########## "+chatID+" ##########");
         }
         else
         {
             chatID = getIntent().getStringExtra(Chat.CHAT_ID);
-            Log.d("!!!CREATE","########## Aus EXTRA ###########");
+//            Log.d("!!!CREATE","########## Aus EXTRA ###########");
         }
         setContentView(R.layout.activity_chat_detail);
         this.image_capture  = (ImageView) findViewById(R.id.image_capture);
         // Here, we are making a folder named picFolder to store
-            Log.d("!!!CREATE","########## "+chatID+" ##########");
+//            Log.d("!!!CREATE","########## "+chatID+" ##########");
         // pics taken by the camera using this application.
         this.dir_photo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/SharkNet/";
         File newdir = new File(dir_photo);
         newdir.mkdirs();
-
 
         send = (ImageButton) findViewById(R.id.send_button);
         record = (ImageButton) findViewById(R.id.record);
@@ -160,7 +159,6 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
             String t = s.toString().trim();
             if(t.length()==0)
             {
-                //TODO: Button soll von Send zu Micro sich ändern
                 send.setVisibility(View.GONE);
                 record.setVisibility(View.VISIBLE);
             }
@@ -231,7 +229,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
     public void recordAudio(View view)
     {
-        //TODO: waiting for the bug-fix
+        //TODO: muss noch gemacht werden
+        //
     }
 
     public void takePicture(View view)
@@ -271,27 +270,27 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
         if( requestCode == SELECT_FILE)
         {
-            //TODO:
             if (resultCode == RESULT_OK)
             {
                 Uri file = data.getData();
+                String fileName = file.getLastPathSegment();
+                String fileExtension = "file/unknown";
+                if(fileName.contains("."))
+                {
+                    String [] splitName = fileName.split("\\.");
+                    fileExtension = splitName[splitName.length-1];
+
+                }
+
                 InputStream fileStream = null;
-
-                // TODO: file-name soll noch angezeigt werden
-                // alles nach den letzten "/" anzeigen
-                // vielleicht verschiedene icons für pdf usw anzeigen lassen
-
-                Log.d("FILE_SELECTED",file.toString());
                 try {
                     fileStream = getContentResolver().openInputStream(file);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 try {
-                    this.chat.sendMessage(fileStream,"File","file/doc");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (SharkKBException e) {
+                    this.chat.sendMessage(fileStream,fileName,"file/"+fileExtension);
+                } catch (JSONException | SharkKBException e) {
                     e.printStackTrace();
                 }
             }
@@ -427,7 +426,6 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
     public void addContact(View view)
     {
-        //TODO: beim back-click kein chatverlauf mehr
         Intent addOtherContact = new Intent(this, ChatDetailAddContact.class);
         addOtherContact.putExtra(Chat.CHAT_ID,chatID);
         startActivityForResult(addOtherContact,ADD_CONTACT);

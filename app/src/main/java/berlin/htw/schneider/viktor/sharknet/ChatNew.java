@@ -133,7 +133,6 @@ public class ChatNew extends AppCompatActivity {
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        // TODO: nimmt Timo noch raus den einen Contact
         try {
             contacts.remove(MainActivity.implSharkNet.getMyProfile());
         } catch (SharkKBException e) {

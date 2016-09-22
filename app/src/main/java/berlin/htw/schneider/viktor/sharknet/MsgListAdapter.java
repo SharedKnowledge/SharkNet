@@ -13,72 +13,34 @@ import android.widget.TextView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
 
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
  * Created by viktorowich on 01/06/16.
  */
-public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHolderBase>
-{
+public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHolderBase> {
     private List<Message> msgs;
     //Drawable check,cross;
 
-    public MsgListAdapter( List<Message> objects)
-    {
+    public MsgListAdapter(List<Message> objects) {
         msgs = objects;
-    }
-
-    public class ViewHolderBase extends RecyclerView.ViewHolder
-    {
-        public TextView msg,timestamp;
-        public ImageView image_capture;
-
-        public ViewHolderBase(View itemView)
-        {
-            super(itemView);
-            msg = (TextView) itemView.findViewById(R.id.msg);
-            timestamp = (TextView) itemView.findViewById(R.id.timestamp);
-            image_capture = (ImageView) itemView.findViewById(R.id.image_capture);
-        }
-    }
-
-    public class ViewHolderMsg extends ViewHolderBase
-    {
-        public ViewHolderMsg(View itemView)
-        {
-            super(itemView);
-        }
-    }
-
-    public class ViewHolderMsgMy extends ViewHolderBase
-    {
-        public ViewHolderMsgMy(View itemView)
-        {
-            super(itemView);
-        }
     }
 
     /**
      * Check if i am the creator of the message.
      *
-     * @param position  Position of the Message from the List of all Messages
-     *
+     * @param position Position of the Message from the List of all Messages
      * @return int viewType: 0 not my Message
-     *                       1 my Message
+     * 1 my Message
      */
     @Override
-    public int getItemViewType(int position)
-    {
+    public int getItemViewType(int position) {
         Message message = msgs.get(position);
         try {
-            if(message.isMine())
-            {
+            if (message.isMine()) {
                 return 1;
-            }
-            else
-            {
+            } else {
                 return 0;
             }
         } catch (SharkKBException e) {
@@ -88,26 +50,23 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
     }
 
     @Override
-    public ViewHolderBase onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public ViewHolderBase onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        switch (viewType)
-        {
+        switch (viewType) {
             case 0:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_item_msg,parent,false);
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_item_msg, parent, false);
                 return new ViewHolderMsg(itemView);
             case 1:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_item_msg_my,parent,false);
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_item_msg_my, parent, false);
                 return new ViewHolderMsgMy(itemView);
 
         }
-        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_item_msg,parent,false);
+        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_item_msg, parent, false);
         return new ViewHolderMsg(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderBase holder, int position)
-    {
+    public void onBindViewHolder(ViewHolderBase holder, int position) {
         Message message = msgs.get(position);
         SpannableStringBuilder builder = new SpannableStringBuilder();
         SpannableStringBuilder builder_msg_inf = new SpannableStringBuilder();
@@ -118,56 +77,46 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
             e.printStackTrace();
         }
         try {
-            builder.append(message.getContent().getMessage()+" ");
+            builder.append(message.getContent().getMessage()).append(" ");
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
 
-
-        // TODO: Ausrufezeigen soll später weg
+        // TODO: Ausrufezeichen soll später weg
         // if(!message.isdisliked())
         //{
         // TODO: sollte vielleicht besser über die Bubble farbe angezeigt werden
         // holder.msg.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_warning_lime_800_18dp, 0);
         //}
 
-
         try {
-            if(message.getContent().getInputStream()!= null)
-            {
-                switch (message.getContent().getMimeType())
-                {
+            if (message.getContent().getInputStream() != null) {
+                switch (message.getContent().getMimeType()) {
                     case "image/png":
                         holder.image_capture.setImageBitmap(BitmapFactory.decodeStream(message.getContent().getInputStream()));
                         break;
                     case "image/jpg":
+                        holder.image_capture.setImageBitmap(BitmapFactory.decodeStream(message.getContent().getInputStream()));
                         break;
                     case "sound/mp3":
+                        Log.d("MimeType", message.getContent().getMimeType());
                         break;
                     case "video/avi":
+                        Log.d("MimeType", message.getContent().getMimeType());
                         break;
                     default:
-                        //Todo: mimeType geht noch nicht
+                        //TODO:
 
-                        holder.image_capture.setImageBitmap(BitmapFactory.decodeStream(message.getContent().getInputStream()));
-
-                        Log.d("MIME_TYPE",message.getContent().getMimeType());
                 }
             }
-            if(message.isMine())
-            {
-                s = "Gesendet am "+s;
-            }
-            else
-            {
+            if (message.isMine()) {
+                s = "Gesendet am " + s;
+            } else {
                 try {
-                    if(message.isDisliked())
-                    {
+                    if (message.isDisliked()) {
                         holder.msg.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_send_pink_700_18dp, 0);
 
-                    }
-                    else
-                    {
+                    } else {
                         holder.msg.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_send_black_18dp, 0);
 
                     }
@@ -176,16 +125,12 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
                 }
                 // TODO: Ausrufezeigen soll später hin
                 try {
-                    if(message.getSender().getPublicKey() != null &&message.getSender().getPublicKey().isEmpty())
-                    {
+                    if (message.getSender().getPublicKey() != null && message.getSender().getPublicKey().isEmpty()) {
                         ImageView key;
-                        if(message.getSender().getPublicKeyExpiration() != null && message.getSender().getPublicKeyExpiration().before(new Timestamp(System.currentTimeMillis())))
-                        {
+                        if (message.getSender().getPublicKeyExpiration() != null && message.getSender().getPublicKeyExpiration().before(new Timestamp(System.currentTimeMillis()))) {
                             key = (ImageView) holder.itemView.findViewById(R.id.msg_key);
 
-                        }
-                        else
-                        {
+                        } else {
                             //TODO: soll ein grauer Schlüssel angezeigt werden
                             key = (ImageView) holder.itemView.findViewById(R.id.msg_key_grey);
                         }
@@ -194,7 +139,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
                 } catch (SharkKBException e) {
                     e.printStackTrace();
                 }
-                s = "Empfangen am "+s;
+                s = "Empfangen am " + s;
                 holder.timestamp.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.cardview_dark_background));
             }
         } catch (SharkKBException e) {
@@ -260,8 +205,31 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return msgs.size();
+    }
+
+    public class ViewHolderBase extends RecyclerView.ViewHolder {
+        public TextView msg, timestamp;
+        public ImageView image_capture;
+
+        public ViewHolderBase(View itemView) {
+            super(itemView);
+            msg = (TextView) itemView.findViewById(R.id.msg);
+            timestamp = (TextView) itemView.findViewById(R.id.timestamp);
+            image_capture = (ImageView) itemView.findViewById(R.id.image_capture);
+        }
+    }
+
+    public class ViewHolderMsg extends ViewHolderBase {
+        public ViewHolderMsg(View itemView) {
+            super(itemView);
+        }
+    }
+
+    public class ViewHolderMsgMy extends ViewHolderBase {
+        public ViewHolderMsgMy(View itemView) {
+            super(itemView);
+        }
     }
 }
