@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,14 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import berlin.htw.schneider.viktor.sharknet.R;
+import berlin.htw.schneider.viktor.sharknet.activities.MainActivity;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.interfaces.*;
 import net.sharksystem.api.interfaces.Profile;
 
 
 import java.io.IOException;
 
-public class ProfileDetail extends AppCompatActivity
+public class ProfileDetailActivity extends AppCompatActivity
 {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -121,7 +122,7 @@ public class ProfileDetail extends AppCompatActivity
                 EditText phone = (EditText) findViewById(R.id.con_phone_edit);
                 EditText note = (EditText) findViewById(R.id.con_not_edit);
 
-                net.sharksystem.sharknet.api.Profile myprofile =  MainActivity.implSharkNet.getMyProfile();
+                net.sharksystem.sharknet.api.ProfileActivity myprofile =  MainActivity.implSharkNet.getMyProfile();
                 assert nickname != null;
                 //MainActivity.implSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
                 Contact mycontact = MainActivity.implSharkNet.getMyProfile().getContact();

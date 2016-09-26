@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.dummy;
 
 /**
  * Created by viktorowich on 24/08/16.
@@ -129,7 +129,7 @@ public class Dummy {
         bobAndCharlie.add(bob);
         bobAndCharlie.add(charlie);
 
-        // Chat initiation
+        // ChatActivity initiation
 
         Chat aliceAndBobChat = engine.newChat(aliceAndBob);
         aliceAndBobChat.setTitle("ABD");

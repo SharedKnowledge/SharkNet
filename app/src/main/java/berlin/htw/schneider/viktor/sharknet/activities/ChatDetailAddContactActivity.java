@@ -1,8 +1,7 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,9 +9,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import berlin.htw.schneider.viktor.sharknet.adapters.ChatNewConListAdapter;
+import berlin.htw.schneider.viktor.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
 import org.json.JSONException;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ChatDetailAddContact extends AppCompatActivity
+public class ChatDetailAddContactActivity extends AppCompatActivity
 {
     private List<Contact> contacts;
     private List<Contact> selected_contacts;
@@ -35,7 +35,7 @@ public class ChatDetailAddContact extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_contact);
         setSupportActionBar(toolbar);
 
-        this.chatID = getIntent().getStringExtra(Chat.CHAT_ID);
+        this.chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
 
         selected_contacts = new ArrayList<>();
         try {
@@ -43,7 +43,7 @@ public class ChatDetailAddContact extends AppCompatActivity
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        // TODO: Kontakte die bereits im Chat sind sollen rausgenommen werden durch ChatID!!
+        // TODO: Kontakte die bereits im ChatActivity sind sollen rausgenommen werden durch ChatID!!
         ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.line_item_con_new_chat,contacts);
         lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
@@ -58,7 +58,7 @@ public class ChatDetailAddContact extends AppCompatActivity
     public void onBackPressed()
     {
         Intent returnChatIDIntent = getIntent();
-        returnChatIDIntent.putExtra(Chat.CHAT_ID,chatID);
+        returnChatIDIntent.putExtra(ChatActivity.CHAT_ID,chatID);
         setResult(Activity.RESULT_OK,returnChatIDIntent);
         finish();
     }
@@ -111,16 +111,16 @@ public class ChatDetailAddContact extends AppCompatActivity
                     }
 
                     Intent returnChatIDIntent = getIntent();
-                    returnChatIDIntent.putExtra(Chat.CHAT_ID,chatID);
+                    returnChatIDIntent.putExtra(ChatActivity.CHAT_ID,chatID);
                     setResult(Activity.RESULT_OK,returnChatIDIntent);
                     finish();
-//                    startActivity(new Intent( ChatDetailAddContact.this, ChatDetailActivity.class ));
+//                    startActivity(new Intent( ChatDetailAddContactActivity.this, ChatDetailActivity.class ));
                 }
 
                 return true;
             case android.R.id.home:
                 Intent returnChatIDIntent = getIntent();
-                returnChatIDIntent.putExtra(Chat.CHAT_ID,chatID);
+                returnChatIDIntent.putExtra(ChatActivity.CHAT_ID,chatID);
                 setResult(Activity.RESULT_OK,returnChatIDIntent);
                 finish();
                 return true;

@@ -5,7 +5,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
 
-        tools:context="berlin.htw.schneider.viktor.sharknet.ChatDetailActivity"
+        tools:context="berlin.htw.schneider.viktor.sharknet.activities.ChatDetailActivity"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 

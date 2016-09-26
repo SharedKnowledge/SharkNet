@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 
 import android.Manifest;
@@ -19,13 +19,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import berlin.htw.schneider.viktor.sharknet.adapters.MsgListAdapter;
+import berlin.htw.schneider.viktor.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
 import org.json.JSONException;
@@ -68,7 +69,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         }
         else
         {
-            chatID = getIntent().getStringExtra(Chat.CHAT_ID);
+            chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
 //            Log.d("!!!CREATE","########## Aus EXTRA ###########");
         }
         setContentView(R.layout.activity_chat_detail);
@@ -307,7 +308,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                     e.printStackTrace();
                 }
                 try {
-                    this.chat.sendMessage(imageStream,"Bild","image/png");
+                    this.chat.sendMessage(imageStream,"","image/png");
                 } catch (JSONException | SharkKBException e) {
                     e.printStackTrace();
                 }
@@ -358,7 +359,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                 image_capture.setImageDrawable(pic);
             }
             try {
-                this.chat.sendMessage(new FileInputStream(file_path),"Bild","image/png");
+                this.chat.sendMessage(new FileInputStream(file_path),"","image/png");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (SharkKBException e) {
@@ -426,8 +427,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
     public void addContact(View view)
     {
-        Intent addOtherContact = new Intent(this, ChatDetailAddContact.class);
-        addOtherContact.putExtra(Chat.CHAT_ID,chatID);
+        Intent addOtherContact = new Intent(this, ChatDetailAddContactActivity.class);
+        addOtherContact.putExtra(ChatActivity.CHAT_ID,chatID);
         startActivityForResult(addOtherContact,ADD_CONTACT);
 //        startActivity(addOtherContact);
     }
@@ -443,7 +444,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
     public void onSaveInstanceState(Bundle savedInstanceState)
     {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString(CHAT_ID, getIntent().getStringExtra(Chat.CHAT_ID));
+        savedInstanceState.putString(CHAT_ID, getIntent().getStringExtra(ChatActivity.CHAT_ID));
     }
 
     @Override

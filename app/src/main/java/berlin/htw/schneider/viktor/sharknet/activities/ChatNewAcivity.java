@@ -1,18 +1,18 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import berlin.htw.schneider.viktor.sharknet.adapters.ChatNewConListAdapter;
+import berlin.htw.schneider.viktor.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
 
@@ -21,7 +21,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatNew extends AppCompatActivity {
+public class ChatNewAcivity extends AppCompatActivity {
 
     private List<Contact> contacts;
     private List<Contact> selected_contacts;
@@ -93,13 +93,13 @@ public class ChatNew extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     try {
-                        c.sendMessage(null,"Chat was created by "
+                        c.sendMessage(null,"ChatActivity was created by "
                                 + MainActivity.implSharkNet.getMyProfile().getNickname(),null);
                     } catch (JSONException | SharkKBException e) {
                         e.printStackTrace();
                     }
 
-                    startActivity(new Intent( ChatNew.this, Chat.class ));
+                    startActivity(new Intent( ChatNewAcivity.this, ChatActivity.class ));
                 }
                 else
                 {

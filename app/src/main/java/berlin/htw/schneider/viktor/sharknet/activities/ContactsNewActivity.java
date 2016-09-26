@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +8,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
+import berlin.htw.schneider.viktor.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 
-public class ConNew extends AppCompatActivity {
+public class ContactsNewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

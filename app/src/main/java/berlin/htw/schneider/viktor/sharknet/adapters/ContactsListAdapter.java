@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import berlin.htw.schneider.viktor.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
 
@@ -16,12 +17,12 @@ import java.util.List;
 /**
  * Created by viktorowich on 08/06/16.
  */
-public class ConListAdapter extends ArrayAdapter<Contact>
+public class ContactsListAdapter extends ArrayAdapter<Contact>
 {
 
     private List<Contact> contacts;
 
-    public ConListAdapter(Context context, int resource, List<Contact> objects)
+    public ContactsListAdapter(Context context, int resource, List<Contact> objects)
     {
         super(context, resource, objects);
         this.contacts = objects;

@@ -48,7 +48,7 @@ public class DummyTest
     @Test
     public void checkContacts() throws SharkKBException {
         List<Contact> contacts = mSharkNet.getContacts();
-        System.out.println("%%%%%%%%%%%% Contacts:"+contacts.size());
+        System.out.println("%%%%%%%%%%%% ContactsActivity:"+contacts.size());
         assertNotNull(contacts);
     }
     @Test

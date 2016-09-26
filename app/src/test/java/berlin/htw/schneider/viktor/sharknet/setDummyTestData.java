@@ -48,9 +48,9 @@ public class setDummyTestData
         Timestamp timenow = new Timestamp(now.getTime());
 
         //Anlegen von Profilen
-        net.sharksystem.api.interfaces.Profile bob_p = s.newProfile("bob", "bobsDevice");
+        net.sharksystem.api.interfaces.ProfileActivity bob_p = s.newProfile("bob", "bobsDevice");
         assertEquals(1,s.getProfiles().size());
-        net.sharksystem.api.interfaces.Profile alice_p  = s.newProfile("alice", "alicesDevice");
+        net.sharksystem.api.interfaces.ProfileActivity alice_p  = s.newProfile("alice", "alicesDevice");
         assertEquals(2,s.getProfiles().size());
 
         //Aktives Profil ist Alice
@@ -89,9 +89,9 @@ public class setDummyTestData
         bobandcharlesrecipients.add(alice_charles);
 
         //2.Chats mit Kontaktlisten anelgen
-        net.sharksystem.api.interfaces.Chat chatgroup = s.newChat(grouprecipients);
-        net.sharksystem.api.interfaces.Chat chatcharles  = s.newChat(charlesrecipient);
-        net.sharksystem.api.interfaces.Chat chatbobandcharles  = s.newChat(bobandcharlesrecipients);
+        net.sharksystem.api.interfaces.ChatActivity chatgroup = s.newChat(grouprecipients);
+        net.sharksystem.api.interfaces.ChatActivity chatcharles  = s.newChat(charlesrecipient);
+        net.sharksystem.api.interfaces.ChatActivity chatbobandcharles  = s.newChat(bobandcharlesrecipients);
 
         //3. Senden von Nachrichten
         chatgroup.sendMessage(new ImplContent("Hallo zusammen", alice_p));
@@ -143,7 +143,7 @@ public class setDummyTestData
 
         chatgroup.sendMessage(content);
 
-        //Senden von Nachrichten aus dem Chat 2 und 3
+        //Senden von Nachrichten aus dem ChatActivity 2 und 3
         chatcharles.sendMessage(new ImplContent("Hallo Charles", alice_p));
         chatcharles.sendMessage(new ImplContent("Wie geht es dir?", alice_p));
         chatcharles.sendMessage(new ImplContent("Es freut mich das du auch bei SharkNet bist", alice_p));
@@ -197,7 +197,7 @@ public class setDummyTestData
         Contact peter = s.newContact("peter", "dagobert@entenhausen.de", "foo");
         List<Contact> recipients = new LinkedList<>();
         recipients.add(peter);
-        Chat bob_peter = s.newChat(recipients);
+        ChatActivity bob_peter = s.newChat(recipients);
         Message m_peter_bob = new ImplMessage(new ImplContent("hallo bob", bob_p), time5ago, peter, s.getMyProfile(), grouprecipients, false, false);
         DummyDB.getInstance().addMessage(m_peter_bob, bob_peter);
         bob_peter.sendMessage(new ImplContent("hallo peter", bob_p));
@@ -253,7 +253,7 @@ public class setDummyTestData
         s.exchangeContactNFC();
 
 
-        //Set Default Profile to alice
+        //Set Default ProfileActivity to alice
 
         s.setProfile(alice_p, "");
     }

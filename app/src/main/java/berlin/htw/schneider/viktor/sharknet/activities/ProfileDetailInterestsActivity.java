@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import net.sharkfw.knowledgeBase.SharkKBException;
+import berlin.htw.schneider.viktor.sharknet.R;
+import berlin.htw.schneider.viktor.sharknet.adapters.InterestsListAdapter;
 
-public class ProfileDetailInterests extends AppCompatActivity
+public class ProfileDetailInterestsActivity extends AppCompatActivity
 {
     private TextView textView;
 
@@ -58,7 +59,7 @@ public class ProfileDetailInterests extends AppCompatActivity
             public void onClick(View view) {
 
                 //MainActivity.implSharkNet.getMyProfile().getContact();
-                Intent intent = new Intent(ProfileDetailInterests.this,NewInterest.class);
+                Intent intent = new Intent(ProfileDetailInterestsActivity.this,NewInterestActivity.class);
                 startActivity(intent);
             }
         });

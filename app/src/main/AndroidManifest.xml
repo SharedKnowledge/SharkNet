@@ -20,7 +20,7 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             tools:replace="android:icon, android:theme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,106 +28,106 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".Contacts"
+                android:name=".activities.ContactsActivity"
                 android:label="@string/title_activity_contacts"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-                android:name=".Chat"
+                android:name=".activities.ChatActivity"
                 android:label="@string/title_activity_chat"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-                android:name=".Inbox"
+                android:name=".activities.InboxActivity"
                 android:label="@string/title_activity_inbox"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-                android:name=".Profile"
+                android:name=".activities.ProfileActivity"
                 android:label="@string/title_activity_profile"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-                android:name=".ChatDetailActivity"
+                android:name=".activities.ChatDetailActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/title_activity_chat_detail"
-                android:parentActivityName=".Chat"
+                android:parentActivityName=".activities.ChatActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.Chat"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ChatActivity"/>
         </activity>
         <activity
-                android:name=".ChatNew"
+                android:name=".activities.ChatNewAcivity"
                 android:label="@string/title_activity_chat_new"
-                android:parentActivityName=".Chat"
+                android:parentActivityName=".activities.ChatActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.Chat"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ChatActivity"/>
         </activity>
         <activity
-                android:name=".ConDetailView"
+                android:name=".activities.ContactsDetailViewActivity"
                 android:label="@string/title_activity_con_detail_view"
-                android:parentActivityName=".Contacts"
+                android:parentActivityName=".activities.ContactsActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.Contacts"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ContactsActivity"/>
         </activity>
         <activity
-                android:name=".ProfileDetail"
+                android:name=".activities.ProfileDetailActivity"
                 android:label="@string/title_activity_profile_detail"
-                android:parentActivityName=".Profile"
+                android:parentActivityName=".activities.ProfileActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.Profile"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ProfileActivity"/>
         </activity>
         <activity
-                android:name=".ConNew"
+                android:name=".activities.ContactsNewActivity"
                 android:label="@string/title_activity_con_new"
-                android:parentActivityName=".Contacts"
+                android:parentActivityName=".activities.ContactsActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.Contacts"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ContactsActivity"/>
         </activity>
         <activity
-                android:name=".ProfileDetailInterests"
+                android:name=".activities.ProfileDetailInterestsActivity"
                 android:label="@string/title_activity_profile_detail_interests"
-                android:parentActivityName=".ProfileDetail"
+                android:parentActivityName=".activities.ProfileDetailActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.ProfileDetail"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ProfileDetailActivity"/>
         </activity>
         <activity
-                android:name=".InboxNewFeed"
+                android:name=".activities.InboxNewFeedActivity"
                 android:label="@string/title_activity_timeline_detail_view"
-                android:parentActivityName=".Inbox"
+                android:parentActivityName=".activities.InboxActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".Inbox"/>
+                    android:value=".activities.InboxActivity"/>
         </activity>
         <activity
-                android:name=".ProfileSettings"
+                android:name=".activities.ProfileSettingsActivity"
                 android:label="@string/title_activity_profile_settings"
-                android:parentActivityName=".Profile"
+                android:parentActivityName=".activities.ProfileActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.Profile"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ProfileActivity"/>
         </activity>
         <activity
-                android:name=".NewInterest"
+                android:name=".activities.NewInterestActivity"
                 android:label="@string/title_activity_new_interest"
-                android:parentActivityName=".ProfileDetailInterests"
+                android:parentActivityName=".activities.ProfileDetailInterestsActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.ProfileDetailInterests"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ProfileDetailInterestsActivity"/>
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -136,13 +136,13 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".ChatDetailAddContact"
+                android:name=".activities.ChatDetailAddContactActivity"
                 android:label="@string/title_activity_chat_detail_add_contact"
-                android:parentActivityName=".ChatDetailActivity"
+                android:parentActivityName=".activities.ChatDetailActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="berlin.htw.schneider.viktor.sharknet.ChatDetailActivity"/>
+                    android:value="berlin.htw.schneider.viktor.sharknet.activities.ChatDetailActivity"/>
         </activity>
     </application>
 

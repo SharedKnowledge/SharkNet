@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.adapters;
 
 
 import android.content.Context;
@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import berlin.htw.schneider.viktor.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
 import java.util.List;
 
 /**
- * Reads the Information from the Chat-List and
+ * Reads the Information from the ChatActivity-List and
  * fills the List-Items-Layout.
  */
 public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces.Chat>

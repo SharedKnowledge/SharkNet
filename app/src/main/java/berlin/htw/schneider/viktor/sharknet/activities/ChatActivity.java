@@ -1,9 +1,10 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,38 +15,47 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import berlin.htw.schneider.viktor.sharknet.*;
+import berlin.htw.schneider.viktor.sharknet.adapters.ChatListAdapter;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.interfaces.Feed;
 
 import java.util.List;
 
-public class Inbox extends AppCompatActivity
+public class ChatActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
-    private List<Feed> feeds;
-    public InboxListAdapter inboxListAdapter;
+
+    public static final String CHAT_ID ="CHAT_ID" ;
+    private List<net.sharksystem.api.interfaces.Chat> chats;
+    private ChatListAdapter chatListAdapter;
 
     @Override
     protected void onResume() {
         super.onResume();
 
         try {
-            this.feeds = MainActivity.implSharkNet.getFeeds(true);
+            chats = MainActivity.implSharkNet.getChats();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.line_item_chat,chats);
+        ListView lv = (ListView)findViewById(R.id.chatsListView);
 
-        this.inboxListAdapter = new InboxListAdapter(this, R.layout.line_item_timeline,feeds);
-        ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
-        if (feeds_liste != null)
+        if (lv != null)
         {
-            feeds_liste.setAdapter(inboxListAdapter);
-            feeds_liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lv.setAdapter(chatListAdapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
-                    //Intent intent = new Intent(Inbox.this,InboxNewFeed.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(ChatActivity.this,ChatDetailActivity.class);
+                    //identifies the chat for the detailView
+                    try {
+                        intent.putExtra(CHAT_ID,chats.get(position).getID());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
+                    startActivity(intent);
                 }
             });
         }
@@ -54,7 +64,7 @@ public class Inbox extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline);
+        setContentView(R.layout.activity_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -64,45 +74,55 @@ public class Inbox extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(Inbox.this,InboxNewFeed.class);
-                startActivity(intent);
+                startActivity(new Intent(ChatActivity.this,ChatNewAcivity.class));
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        assert drawer != null;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(this);
+
         try {
-            this.feeds = MainActivity.implSharkNet.getFeeds(true);
+            chats = MainActivity.implSharkNet.getChats();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        this.inboxListAdapter = new InboxListAdapter(this, R.layout.line_item_timeline,feeds);
-        ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
-        if (feeds_liste != null)
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.line_item_chat,chats);
+        ListView lv = (ListView)findViewById(R.id.chatsListView);
+
+        if (lv != null)
         {
-            feeds_liste.setAdapter(inboxListAdapter);
-            feeds_liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lv.setAdapter(chatListAdapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
-                    //Intent intent = new Intent(Inbox.this,InboxNewFeed.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(ChatActivity.this,ChatDetailActivity.class);
+                    //identifies the chat for the detailView
+                    try {
+                        intent.putExtra(CHAT_ID,chats.get(position).getID());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
+                    startActivity(intent);
                 }
             });
         }
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -113,8 +133,7 @@ public class Inbox extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.inbox, menu);
-
+        getMenuInflater().inflate(R.menu.chat, menu);
         return true;
     }
 
@@ -126,9 +145,11 @@ public class Inbox extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -142,16 +163,16 @@ public class Inbox extends AppCompatActivity
         switch (id)
         {
             case R.id.chat:
-                startActivity(new Intent(this, Chat.class));
+                startActivity(new Intent(this, ChatActivity.class));
                 return true;
             case R.id.inbox:
-                startActivity(new Intent(this, Inbox.class));
+                startActivity(new Intent(this, InboxActivity.class));
                 return true;
             case R.id.contact:
-                startActivity(new Intent(this, Contacts.class));
+                startActivity(new Intent(this, ContactsActivity.class));
                 return true;
             case R.id.profile:
-                startActivity(new Intent(this, Profile.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 return true;
 
         }

@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import berlin.htw.schneider.viktor.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
 
@@ -15,7 +16,7 @@ import net.sharksystem.api.interfaces.Contact;
 import java.util.List;
 import java.util.Objects;
 
-public class ConDetailView extends AppCompatActivity {
+public class ContactsDetailViewActivity extends AppCompatActivity {
 
     private String con_nickname;
     private Contact contact;
@@ -126,16 +127,16 @@ public class ConDetailView extends AppCompatActivity {
         {
             EditText nickname = (EditText)findViewById(R.id.con_nickname_edit);
             assert nickname != null;
-            ConDetailView.this.con_nickname = nickname.getText().toString();
+            ContactsDetailViewActivity.this.con_nickname = nickname.getText().toString();
             try {
-                ConDetailView.this.contact.setNickname(con_nickname);
+                ContactsDetailViewActivity.this.contact.setNickname(con_nickname);
             } catch (SharkKBException e) {
                 e.printStackTrace();
             }
             //TODO: muss noch in der API erweitert werden um email usw.
-            //ConDetailView.this.contact.setUID();
-            //ConDetailView.this.contact.setPicture();
-            //ConDetailView.this.contact.setPublicKey();
+            //ContactsDetailViewActivity.this.contact.setUID();
+            //ContactsDetailViewActivity.this.contact.setPicture();
+            //ContactsDetailViewActivity.this.contact.setPublicKey();
             finish();
             return true;
         }

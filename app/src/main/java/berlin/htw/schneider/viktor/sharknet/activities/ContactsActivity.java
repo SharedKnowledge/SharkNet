@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package berlin.htw.schneider.viktor.sharknet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import berlin.htw.schneider.viktor.sharknet.R;
+import berlin.htw.schneider.viktor.sharknet.adapters.ContactsListAdapter;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
 
 
 import java.util.List;
 
-public class Contacts extends AppCompatActivity
+public class ContactsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
     private static final String CONTACT_NICKNAME = "CONTACT_NICKNAME";
@@ -36,16 +38,16 @@ public class Contacts extends AppCompatActivity
             e.printStackTrace();
         }
 
-        ConListAdapter conListAdapter = new ConListAdapter(this, R.layout.line_item_con,contacts);
+        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.line_item_con,contacts);
         ListView lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
         {
-            lv.setAdapter(conListAdapter);
+            lv.setAdapter(contactsListAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
-                    Intent intent = new Intent(Contacts.this,ConDetailView.class);
+                    Intent intent = new Intent(ContactsActivity.this,ContactsDetailViewActivity.class);
                     try {
                         intent.putExtra(CONTACT_NICKNAME,contacts.get(position).getNickname());
                     } catch (SharkKBException e) {
@@ -70,7 +72,7 @@ public class Contacts extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(Contacts.this,ConNew.class);
+                Intent intent = new Intent(ContactsActivity.this,ContactsNewActivity.class);
                 startActivity(intent);
             }
         });
@@ -87,16 +89,16 @@ public class Contacts extends AppCompatActivity
             e.printStackTrace();
         }
 
-        ConListAdapter conListAdapter = new ConListAdapter(this, R.layout.line_item_con,contacts);
+        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.line_item_con,contacts);
         ListView lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
         {
-            lv.setAdapter(conListAdapter);
+            lv.setAdapter(contactsListAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
-                    Intent intent = new Intent(Contacts.this,ConDetailView.class);
+                    Intent intent = new Intent(ContactsActivity.this,ContactsDetailViewActivity.class);
                     try {
                         intent.putExtra(CONTACT_NICKNAME,contacts.get(position).getNickname());
                     } catch (SharkKBException e) {
@@ -153,16 +155,16 @@ public class Contacts extends AppCompatActivity
         switch (id)
         {
             case R.id.chat:
-                startActivity(new Intent(this, Chat.class));
+                startActivity(new Intent(this, ChatActivity.class));
                 return true;
             case R.id.inbox:
-                startActivity(new Intent(this, Inbox.class));
+                startActivity(new Intent(this, InboxActivity.class));
                 return true;
             case R.id.contact:
-                startActivity(new Intent(this, Contacts.class));
+                startActivity(new Intent(this, ContactsActivity.class));
                 return true;
             case R.id.profile:
-                startActivity(new Intent(this, Profile.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 return true;
 
         }
