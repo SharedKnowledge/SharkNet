@@ -25,7 +25,7 @@ public class DummyTest
     @Before
     public void setUp() throws SharkKBException, JSONException {
         mSharkNet = SharkNetEngine.getSharkNet();
-        Dummy.createDummyData();
+//        Dummy.createDummyData();
         mSharkNet.setActiveProfile(mSharkNet.getProfiles().get(1),"");
         System.out.println("%%%%%%%%%%%% "+mSharkNet.getMyProfile().getNickname());
     }

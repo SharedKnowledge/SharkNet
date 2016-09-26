@@ -11,6 +11,7 @@ android {
         exclude 'META-INF/plexus/components.xml'
         exclude 'META-INF/maven/commons-io/commons-io/pom.xml'
         exclude 'META-INF/maven/commons-io/commons-io/pom.properties'
+        exclude 'META-INF/LICENSE'
 
     }
     defaultConfig {

@@ -2,7 +2,7 @@ package berlin.htw.schneider.viktor.sharknet;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.TXSemanticTag;
-import net.sharksystem.api.dummy_impl.*;
+//import net.sharksystem.api.dummy_impl.*;
 import net.sharksystem.api.interfaces.*;
 import net.sharksystem.api.interfaces.Chat;
 import org.junit.Before;
