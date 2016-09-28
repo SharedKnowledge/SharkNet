@@ -5,13 +5,18 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,8 +24,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,6 +39,7 @@ import net.sharksystem.api.interfaces.Message;
 import org.json.JSONException;
 
 import java.io.*;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +49,7 @@ import java.util.Objects;
 public class ChatDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int ADD_CONTACT = 1050;
+    private static final int REQUEST_MICROPHONE = 101;
     private net.sharksystem.api.interfaces.Chat chat ;
     private MsgListAdapter msgListAdapter;
     ImageView image_capture;
@@ -54,9 +63,14 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
     private static final int SELECT_FILE = 101;
     private String file_path;
     private List<Message> msgs ;
+    private MediaRecorder mediaRecorder;
+
+
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onCreate(final Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
@@ -64,18 +78,13 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         {
             // Restore value of members from saved state
             chatID = savedInstanceState.getString(CHAT_ID);
-//            Log.d("!!!CREATE","########## Aus SaveInstanceSTATE ##########");
-//            Log.d("!!!CREATE","########## "+chatID+" ##########");
         }
         else
         {
             chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
-//            Log.d("!!!CREATE","########## Aus EXTRA ###########");
         }
         setContentView(R.layout.activity_chat_detail);
         this.image_capture  = (ImageView) findViewById(R.id.image_capture);
-        // Here, we are making a folder named picFolder to store
-//            Log.d("!!!CREATE","########## "+chatID+" ##########");
         // pics taken by the camera using this application.
         this.dir_photo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/SharkNet/";
         File newdir = new File(dir_photo);
@@ -83,6 +92,52 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
         send = (ImageButton) findViewById(R.id.send_button);
         record = (ImageButton) findViewById(R.id.record);
+
+        record.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                int hasWriteContactsPermission = 0;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                {
+                    hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                }
+                if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED)
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    {
+                        requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                123);
+                    }
+                }
+                if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(ChatDetailActivity.this,
+                            new String[]{Manifest.permission.RECORD_AUDIO},
+                            REQUEST_MICROPHONE);
+                }
+                mediaRecorder = new MediaRecorder();
+                mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                String time = String.valueOf(System.nanoTime());
+                file_path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+ time+".mp4";
+                mediaRecorder.setOutputFile(file_path);
+
+                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                try {
+                    mediaRecorder.prepare();
+                } catch (IOException e) {
+                    Log.e("MediaRecorterError", "prepare() failed");
+                }
+                mediaRecorder.start();
+
+                return false;
+            }
+        });
+
 
 
         msgs = new ArrayList<>();
@@ -119,6 +174,65 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
             }
         }
 
+        record.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if(event.getAction()== MotionEvent.ACTION_UP && mediaRecorder != null)
+                {
+                    mediaRecorder.stop();
+                    mediaRecorder.reset();
+                    mediaRecorder.release();
+                    mediaRecorder=null;
+
+                    String fileExtension = "audio/mp4";
+                    File file = new File(file_path);
+
+                    FileInputStream fileStream = null;
+                    try {
+                        fileStream = new FileInputStream(file
+                        );
+                    } catch (FileNotFoundException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        chat.sendMessage(fileStream,file_path,fileExtension);
+                    } catch (JSONException | SharkKBException e) {
+                        e.printStackTrace();
+                    }
+                    chat.update();
+                    msgListAdapter.notifyDataSetChanged();
+
+                    try {
+                        for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+                        {
+                            if(Objects.equals(c.getID(), chat.getID()))
+                            {
+                                msgListAdapter = new MsgListAdapter(chat.getMessages(false));
+                                RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
+                                if (lv != null)
+                                {
+                                    LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+                                    lv.setLayoutManager(llm);
+                                    llm.setStackFromEnd(true);
+                                    lv.setItemAnimator(new DefaultItemAnimator());
+                                    lv.setAdapter(msgListAdapter);
+                                    lv.scrollToPosition(chat.getMessages(false).size()-1);
+                                }
+                            }
+                        }
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                return false;
+            }
+        });
+
         this.msgListAdapter = new MsgListAdapter(msgs);
         RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
 
@@ -142,7 +256,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private final TextWatcher  TextEditorWatcher = new TextWatcher() {
+    private final TextWatcher  TextEditorWatcher = new TextWatcher()
+    {
 
         public void beforeTextChanged(CharSequence s, int start, int count, int after)
         {
@@ -228,12 +343,6 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         return false;
     }
 
-    public void recordAudio(View view)
-    {
-        //TODO: muss noch gemacht werden
-        //
-    }
-
     public void takePicture(View view)
     {
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
@@ -301,6 +410,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
             if (resultCode == RESULT_OK)
             {
                 Uri selectedImage = data.getData();
+//                String fileName = selectedImage.getLastPathSegment();
+//                Log.d("Picture", selectedImage.getPath());
                 InputStream imageStream = null;
                 try {
                     imageStream = getContentResolver().openInputStream(selectedImage);
@@ -308,7 +419,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                     e.printStackTrace();
                 }
                 try {
-                    this.chat.sendMessage(imageStream,"","image/png");
+                    this.chat.sendMessage(imageStream,selectedImage.getPath(),"image/png");
                 } catch (JSONException | SharkKBException e) {
                     e.printStackTrace();
                 }
@@ -359,7 +470,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                 image_capture.setImageDrawable(pic);
             }
             try {
-                this.chat.sendMessage(new FileInputStream(file_path),"","image/png");
+                this.chat.sendMessage(new FileInputStream(file_path),file_path,"image/png");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (SharkKBException e) {

@@ -44,9 +44,13 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
             } else {
                 return 0;
             }
+
+            // TODO: soll schauen ob content leer ist oder nicht
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
+
+
         return 0;
     }
 
@@ -95,6 +99,8 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
                 switch (message.getContent().getMimeType()) {
                     case "image/png":
                         holder.image_capture.setImageBitmap(BitmapFactory.decodeStream(message.getContent().getInputStream()));
+//                        Drawable d = Drawable.createFromStream(message.getContent().getInputStream(),"Image");
+//                        holder.msg.setCompoundDrawablesWithIntrinsicBounds(null,null,null,d);
                         break;
                     case "image/jpg":
                         holder.image_capture.setImageBitmap(BitmapFactory.decodeStream(message.getContent().getInputStream()));
@@ -214,7 +220,8 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
         public TextView msg, timestamp;
         public ImageView image_capture;
 
-        public ViewHolderBase(View itemView) {
+        public ViewHolderBase(View itemView)
+        {
             super(itemView);
             msg = (TextView) itemView.findViewById(R.id.msg);
             timestamp = (TextView) itemView.findViewById(R.id.timestamp);

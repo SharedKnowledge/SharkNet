@@ -53,6 +53,8 @@
                 <ImageView android:layout_width="wrap_content"
                            android:id="@+id/image_capture"
                            android:adjustViewBounds="true"
+                           android:background="#000000"
+                           android:padding="1dp"
                            android:layout_height="wrap_content"/>
             <LinearLayout android:layout_width="wrap_content"
                           android:orientation="horizontal"

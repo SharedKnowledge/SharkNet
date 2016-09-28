@@ -57,7 +57,6 @@
                 android:src="@drawable/ic_mic_white_48dp"
                 android:layout_gravity="bottom|right"
                 android:layout_weight="1"
-                android:onClick="recordAudio"
                 android:textSize="15sp"
                 android:background="@null"/>
     </LinearLayout>

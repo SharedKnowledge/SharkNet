@@ -29,6 +29,8 @@
 
     <ImageView android:layout_width="wrap_content"
                android:id="@+id/image_capture"
+               android:background="@color/sharknet"
+               android:padding="1dp"
                android:layout_marginLeft="40dp"
                android:layout_marginBottom="5dp"
                android:layout_marginTop="5dp"
