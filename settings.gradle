@@ -1,1 +1,3 @@
-include ':app'
+include ':app', ':api', ':library'
+project(':api').projectDir = new File('SharkNet-Api-Android/api')
+project(':library').projectDir = new File('SharkNet-Api-Android/SharkFW-Android/library')
