@@ -14,16 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import berlin.htw.schneider.viktor.sharknet.R;
-import berlin.htw.schneider.viktor.sharknet.adapters.InboxListAdapter;
+
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Feed;
 
 import java.util.List;
 
+import berlin.htw.schneider.viktor.sharknet.R;
+import berlin.htw.schneider.viktor.sharknet.adapters.InboxListAdapter;
+
 public class InboxActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
-{
+        implements NavigationView.OnNavigationItemSelectedListener {
     private List<Feed> feeds;
     public InboxListAdapter inboxListAdapter;
 
@@ -37,15 +38,13 @@ public class InboxActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        this.inboxListAdapter = new InboxListAdapter(this, R.layout.line_item_timeline,feeds);
+        this.inboxListAdapter = new InboxListAdapter(this, R.layout.line_item_timeline, feeds);
         ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
-        if (feeds_liste != null)
-        {
+        if (feeds_liste != null) {
             feeds_liste.setAdapter(inboxListAdapter);
             feeds_liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //Intent intent = new Intent(InboxActivity.this,InboxNewFeedActivity.class);
                     //startActivity(intent);
                 }
@@ -64,9 +63,8 @@ public class InboxActivity extends AppCompatActivity
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(InboxActivity.this,InboxNewFeedActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(InboxActivity.this, InboxNewFeedActivity.class);
                 startActivity(intent);
             }
         });
@@ -82,15 +80,13 @@ public class InboxActivity extends AppCompatActivity
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        this.inboxListAdapter = new InboxListAdapter(this, R.layout.line_item_timeline,feeds);
+        this.inboxListAdapter = new InboxListAdapter(this, R.layout.line_item_timeline, feeds);
         ListView feeds_liste = (ListView) findViewById(R.id.feeds_listView);
-        if (feeds_liste != null)
-        {
+        if (feeds_liste != null) {
             feeds_liste.setAdapter(inboxListAdapter);
             feeds_liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //Intent intent = new Intent(InboxActivity.this,InboxNewFeedActivity.class);
                     //startActivity(intent);
                 }
@@ -141,8 +137,7 @@ public class InboxActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        switch (id)
-        {
+        switch (id) {
             case R.id.chat:
                 startActivity(new Intent(this, ChatActivity.class));
                 return true;
