@@ -15,7 +15,7 @@ android {
 
     }
     defaultConfig {
-        applicationId "berlin.htw.schneider.viktor.sharknet"
+        applicationId "net.sharksystem.sharknet"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
