@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.activities;
+package net.sharksystem.sharknet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import berlin.htw.schneider.viktor.sharknet.R;
-import berlin.htw.schneider.viktor.sharknet.activities.InboxActivity;
-import berlin.htw.schneider.viktor.sharknet.dummy.Dummy;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.activities.InboxActivity;
+import net.sharksystem.sharknet.dummy.Dummy;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import org.json.JSONException;

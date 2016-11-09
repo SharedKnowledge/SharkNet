@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.activities;
+package net.sharksystem.sharknet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import berlin.htw.schneider.viktor.sharknet.R;
+import net.sharksystem.sharknet.R;
 
 public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener

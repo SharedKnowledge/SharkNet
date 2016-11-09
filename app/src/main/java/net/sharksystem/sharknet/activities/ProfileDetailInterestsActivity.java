@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.activities;
+package net.sharksystem.sharknet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import berlin.htw.schneider.viktor.sharknet.R;
-import berlin.htw.schneider.viktor.sharknet.adapters.InterestsListAdapter;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.adapters.InterestsListAdapter;
 
 public class ProfileDetailInterestsActivity extends AppCompatActivity
 {

@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.activities;
+package net.sharksystem.sharknet.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import berlin.htw.schneider.viktor.sharknet.R;
-import berlin.htw.schneider.viktor.sharknet.activities.MainActivity;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.activities.MainActivity;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Profile;
 

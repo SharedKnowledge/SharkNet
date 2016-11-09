@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.activities;
+package net.sharksystem.sharknet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +17,10 @@ import android.widget.ListView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Feed;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.adapters.InboxListAdapter;
 
 import java.util.List;
-
-import berlin.htw.schneider.viktor.sharknet.R;
-import berlin.htw.schneider.viktor.sharknet.adapters.InboxListAdapter;
 
 public class InboxActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

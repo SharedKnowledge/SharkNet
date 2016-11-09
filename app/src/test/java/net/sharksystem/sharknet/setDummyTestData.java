@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package net.sharksystem.sharknet;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.TXSemanticTag;

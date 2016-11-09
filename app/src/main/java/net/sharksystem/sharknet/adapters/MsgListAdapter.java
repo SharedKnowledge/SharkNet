@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.adapters;
+package net.sharksystem.sharknet.adapters;
 
 import android.graphics.BitmapFactory;
 import android.support.v4.content.ContextCompat;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import berlin.htw.schneider.viktor.sharknet.R;
+import net.sharksystem.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
 

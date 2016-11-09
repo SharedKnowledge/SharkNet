@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.dummy;
+package net.sharksystem.sharknet.dummy;
 
 /**
  * Created by viktorowich on 24/08/16.

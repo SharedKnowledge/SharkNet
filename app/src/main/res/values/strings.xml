@@ -70,4 +70,5 @@
     <string name="title_activity_chat_detail_add_contact">New Contact</string>
     <string name="delete_chat">delete chat</string>
     <string name="block_user">block user</string>
+    <string name="title_activity_radar">RadarActivity</string>
 </resources>

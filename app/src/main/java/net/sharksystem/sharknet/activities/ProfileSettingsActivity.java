@@ -1,10 +1,10 @@
-package berlin.htw.schneider.viktor.sharknet.activities;
+package net.sharksystem.sharknet.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Spinner;
-import berlin.htw.schneider.viktor.sharknet.R;
+import net.sharksystem.sharknet.R;
 
 public class ProfileSettingsActivity extends AppCompatActivity {
 

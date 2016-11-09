@@ -11,7 +11,7 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_chat_detail_add_contact"
-        tools:context="berlin.htw.schneider.viktor.sharknet.activities.ChatDetailAddContactActivity">
+        tools:context="net.sharksystem.sharknet.activities.ChatDetailAddContactActivity">
 
 
 

@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet;
+package net.sharksystem.sharknet;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

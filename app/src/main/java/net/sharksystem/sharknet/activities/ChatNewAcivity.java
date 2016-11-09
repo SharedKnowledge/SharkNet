@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.activities;
+package net.sharksystem.sharknet.activities;
 
 
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import berlin.htw.schneider.viktor.sharknet.adapters.ChatNewConListAdapter;
-import berlin.htw.schneider.viktor.sharknet.R;
+import net.sharksystem.sharknet.adapters.ChatNewConListAdapter;
+import net.sharksystem.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
 

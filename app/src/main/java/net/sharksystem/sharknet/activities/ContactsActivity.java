@@ -1,4 +1,4 @@
-package berlin.htw.schneider.viktor.sharknet.activities;
+package net.sharksystem.sharknet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import berlin.htw.schneider.viktor.sharknet.R;
-import berlin.htw.schneider.viktor.sharknet.adapters.ContactsListAdapter;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.adapters.ContactsListAdapter;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
 
