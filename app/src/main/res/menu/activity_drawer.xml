@@ -21,6 +21,10 @@
                 android:id="@+id/contact"
                 android:title="@string/Contacts"
                 android:actionLayout="@layout/menu_item"/>
+        <item
+            android:id="@+id/radar"
+            android:title="@string/Radar"
+            android:actionLayout="@layout/menu_item"/>
     </group>
 <!--
     <item android:title="@string/action_settings">

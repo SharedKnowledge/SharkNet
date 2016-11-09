@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -24,7 +23,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -49,7 +47,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class ChatDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ChatDetailActivity extends AppCompatActivity {
 
     public static final int ADD_CONTACT = 1050;
     private static final int REQUEST_MICROPHONE = 101;
@@ -339,11 +337,6 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         }
 
 
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
     }
 
     public void takePicture(View view)
