@@ -6,11 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.activities.InboxActivity;
-import net.sharksystem.sharknet.dummy.Dummy;
+
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.dummy.Dummy;
+
 import org.json.JSONException;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static SharkNetEngine implSharkNet;
     private List<net.sharksystem.api.interfaces.Profile> profiles = null;
-    int index ;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +58,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void openChat(View view)
-    {
+    public void openChat(View view) {
         Intent inbox = new Intent(this, InboxActivity.class);
 
         try {
-            implSharkNet.setActiveProfile(this.profiles.get(index),"");
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+            implSharkNet.setActiveProfile(this.profiles.get(index), "");
+            implSharkNet.startShark();
+        } catch (SharkKBException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -80,17 +79,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void backProfile(View view) throws SharkKBException {
-        if(index > 0)
-        {
+        if (index > 0) {
             index--;
             EditText userid = (EditText) findViewById(R.id.userid);
             assert userid != null;
             userid.setText(this.profiles.get(index).getNickname());
-            Toast.makeText(this,"back",Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-           index = this.profiles.size()-1;
+            Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
+        } else {
+            index = this.profiles.size() - 1;
             EditText userid = (EditText) findViewById(R.id.userid);
             assert userid != null;
             userid.setText(this.profiles.get(index).getNickname());
@@ -99,15 +95,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void nextProfile(View view) throws SharkKBException {
-        if(index < this.profiles.size()-1)
-        {
+        if (index < this.profiles.size() - 1) {
             index++;
             EditText userid = (EditText) findViewById(R.id.userid);
             assert userid != null;
             userid.setText(this.profiles.get(index).getNickname());
-        }
-        else
-        {
+        } else {
             index = 0;
             EditText userid = (EditText) findViewById(R.id.userid);
             assert userid != null;

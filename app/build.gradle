@@ -61,5 +61,4 @@ dependencies {
 //    compile 'com.github.SharedKnowledge:SharkNet-Api-Android:429ec34877'
 
     compile project(':api')
-    compile project(':library')
 }
