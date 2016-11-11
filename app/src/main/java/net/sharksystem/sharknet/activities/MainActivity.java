@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             implSharkNet.setActiveProfile(this.profiles.get(index), "");
-            
+
             implSharkNet.startShark();
         } catch (SharkKBException | JSONException e) {
             e.printStackTrace();
