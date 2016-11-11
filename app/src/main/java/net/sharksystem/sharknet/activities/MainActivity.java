@@ -7,13 +7,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import net.sharkfw.kep.SharkProtocolNotSupportedException;
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.dummy.Dummy;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            implSharkNet = SharkNetEngine.getSharkNet();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+        implSharkNet = SharkNetEngine.getSharkNet();
+
+        L.setLogLevel(L.LOGLEVEL_ALL);
+
+        SharkNetEngine.getSharkNet().setContext(this);
         try {
             Dummy.createDummyData();
         } catch (SharkKBException e) {
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             implSharkNet.setActiveProfile(this.profiles.get(index), "");
 
             implSharkNet.startShark();
-        } catch (SharkKBException | JSONException e) {
+        } catch (SharkKBException | JSONException | SharkProtocolNotSupportedException | IOException e) {
             e.printStackTrace();
         }
 
