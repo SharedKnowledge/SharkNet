@@ -9,12 +9,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="21919b1d-19fe-46a3-bc64-55d4a3517ddc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SharkNet-Api-Android" afterPath="$PROJECT_DIR$/SharkNet-Api-Android" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/RadarActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/RadarActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_item_radar_contact.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_item_radar_contact.xml" />
-    </list>
+    <list default="true" id="21919b1d-19fe-46a3-bc64-55d4a3517ddc" name="Default" comment="" />
     <ignored path="SharkNet.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
