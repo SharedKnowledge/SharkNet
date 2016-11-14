@@ -2,6 +2,8 @@ package net.sharksystem.sharknet.activities;
 
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -22,13 +24,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.*;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import android.widget.LinearLayout;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Message;
@@ -48,7 +50,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class ChatDetailActivity extends AppCompatActivity {
+public class ChatDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int ADD_CONTACT = 1050;
     private static final int REQUEST_MICROPHONE = 101;
@@ -67,7 +69,11 @@ public class ChatDetailActivity extends AppCompatActivity {
     private List<Message> msgs ;
     private MediaRecorder mediaRecorder;
 
-
+    Toolbar toolbar;
+    boolean hidden = true;
+    LinearLayout mRevealView;
+    ImageButton ib_gallery,ib_contacts,ib_location;
+    ImageButton ib_file,ib_camera;
 
 
 
@@ -140,7 +146,7 @@ public class ChatDetailActivity extends AppCompatActivity {
             }
         });
 
-
+// chats = SharkNetEngine.getSharkNet().getChats();
 
         msgs = new ArrayList<>();
         List<net.sharksystem.api.interfaces.Chat> chats = null;
@@ -150,8 +156,28 @@ public class ChatDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
+//        ib_audio=(ImageButton)findViewById(R.id.audio);
+        ib_file=(ImageButton)findViewById(R.id.file);
+        ib_camera=(ImageButton)findViewById(R.id.camera);
+        ib_contacts=(ImageButton)findViewById(R.id.contacts);
+        ib_gallery=(ImageButton)findViewById(R.id.gallery);
+//        ib_location=(ImageButton)findViewById(R.id.location);
+//        ib_video=(ImageButton)findViewById(R.id.video);
+//        ib_audio.setOnClickListener(this);
+        ib_file.setOnClickListener(this);
+        ib_camera.setOnClickListener(this);
+        ib_contacts.setOnClickListener(this);
+        ib_gallery.setOnClickListener(this);
+//        ib_location.setOnClickListener(this);
+//        ib_video.setOnClickListener(this);
+
         Toolbar t = (Toolbar) findViewById(R.id.toolbar_chatdetail);
         setSupportActionBar(t);
+        mRevealView.setVisibility(View.INVISIBLE);
+
+
 
         assert chats != null;
         for(net.sharksystem.api.interfaces.Chat chat : chats)
@@ -563,5 +589,111 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         // Restore state members from saved instance
         chatID = savedInstanceState.getString(CHAT_ID);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == R.id.action_settings)
+        {
+            return true;
+        }
+
+        else if(id== R.id.attachment)
+        {// attachment icon click event
+
+            // finding X and Y co-ordinates
+            int cx = (mRevealView.getLeft() + mRevealView.getRight());
+            int cy = (mRevealView.getTop());
+
+            // to find  radius when icon is tapped for showing layout
+            int startradius=0;
+            int endradius = Math.max(mRevealView.getWidth(), mRevealView.getHeight());
+
+            // performing circular reveal when icon will be tapped
+            Animator animator = ViewAnimationUtils.createCircularReveal(mRevealView,                     cx, cy, startradius, endradius);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setDuration(400);
+
+            //reverse animation
+            // to find radius when icon is tapped again for hiding layout
+            //  starting radius will be the radius or the extent to which circular reveal animation is to be shown
+
+            int reverse_startradius = Math.max(mRevealView.getWidth(),mRevealView.getHeight());
+
+            //endradius will be zero
+            int reverse_endradius=0;
+
+            // performing circular reveal for reverse animation
+            Animator animate = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                animate = ViewAnimationUtils.createCircularReveal(mRevealView,cx,cy,reverse_startradius,reverse_endradius);
+            }
+            if(hidden){
+
+                // to show the layout when icon is tapped
+                mRevealView.setVisibility(View.VISIBLE);
+                animator.start();
+                hidden = false;
+            }
+            else {
+                mRevealView.setVisibility(View.VISIBLE);
+
+                // to hide layout on animation end
+                animate.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        mRevealView.setVisibility(View.INVISIBLE);
+                        hidden = true;
+                    }
+                });
+                animate.start();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+//            case R.id.audio:
+//                Snackbar.make(v, "Audio Clicked", Snackbar.LENGTH_SHORT).show();
+//                mRevealView.setVisibility(View.INVISIBLE);
+//                hidden=true;
+//                break;
+            case R.id.file:
+                sendFile(v);
+                mRevealView.setVisibility(View.INVISIBLE);
+                hidden=true;
+                break;
+            case R.id.camera:
+                takePicture(v);
+                mRevealView.setVisibility(View.INVISIBLE);
+                hidden=true;
+                break;
+//            case R.id.location:
+//                Snackbar.make(v, "Location Clicked", Snackbar.LENGTH_SHORT).show();
+//                mRevealView.setVisibility(View.INVISIBLE);
+//                hidden=true;
+//                break;
+            case R.id.contacts:
+                addContact(v);
+                mRevealView.setVisibility(View.INVISIBLE);
+                hidden=true;
+                break;
+//            case R.id.video:
+//                Snackbar.make(v, "Video Clicked", Snackbar.LENGTH_SHORT).show();
+//                mRevealView.setVisibility(View.INVISIBLE);
+//                hidden=true;
+//                break;
+            case R.id.gallery:
+                sendPicture(v);
+                mRevealView.setVisibility(View.INVISIBLE);
+                hidden=true;
+                break;
+        }
     }
 }

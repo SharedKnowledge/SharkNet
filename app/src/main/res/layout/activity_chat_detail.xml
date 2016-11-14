@@ -23,7 +23,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
     <include layout="@layout/content_chat_detail"/>
+    <include layout="@layout/content_chat_detail_menu_popup"/>
 
 
 

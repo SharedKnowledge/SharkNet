@@ -18,6 +18,10 @@
           android:orderInCategory="100"
           android:icon="@drawable/ic_search_white_48dp"
           app:showAsAction="ifRoom"/>
-
+    <item android:id="@+id/attachment"
+          android:title="@string/attachment"
+          android:orderInCategory="100"
+          android:icon="@drawable/ic_attach_file_white_48dp"
+          app:showAsAction="always"/>
 
 </menu>

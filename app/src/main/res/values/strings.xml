@@ -72,4 +72,6 @@
     <string name="delete_chat">delete chat</string>
     <string name="block_user">block user</string>
     <string name="title_activity_radar">RadarActivity</string>
+    <string name="attachment">attachment</string>
+    <string name="file">file</string>
 </resources>

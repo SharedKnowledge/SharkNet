@@ -60,42 +60,6 @@
                 android:textSize="15sp"
                 android:background="@null"/>
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent"
-                  android:orientation="horizontal"
-                  android:background="@color/sharknet"
-                  android:layout_height="wrap_content">
-        <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/camera"
-                android:onClick="takePicture"
-                android:src="@drawable/ic_photo_camera_white_48dp"
-                android:background="@null" android:layout_gravity="left"/>
-        <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/file"
-                android:src="@drawable/ic_insert_drive_file_white_48dp"
-                android:layout_gravity="left"
-                android:onClick="sendFile"
-                android:background="@null"/>
-        <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/contact"
-                android:src="@drawable/ic_person_add_white_48dp"
-                android:layout_gravity="left"
-                android:onClick="addContact"
-                android:background="@null"/>
-        <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/image"
-                android:onClick="sendPicture"
-                android:src="@drawable/ic_image_white_48dp"
-                android:layout_gravity="left"
-                android:background="@null"/>
 
-    </LinearLayout>
 
 </LinearLayout>
