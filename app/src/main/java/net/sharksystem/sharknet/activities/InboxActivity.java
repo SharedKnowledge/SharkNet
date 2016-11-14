@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Feed;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.adapters.InboxListAdapter;
@@ -25,7 +26,7 @@ public class InboxActivity extends BaseActivity {
         super.onResume();
 
         try {
-            this.feeds = MainActivity.implSharkNet.getFeeds(true);
+            this.feeds = SharkNetEngine.getSharkNet().getFeeds(true);
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -60,7 +61,7 @@ public class InboxActivity extends BaseActivity {
         });
 
         try {
-            this.feeds = MainActivity.implSharkNet.getFeeds(true);
+            this.feeds = SharkNetEngine.getSharkNet().getFeeds(true);
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

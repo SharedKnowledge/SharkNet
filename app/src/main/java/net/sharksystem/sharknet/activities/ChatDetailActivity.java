@@ -30,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.adapters.MsgListAdapter;
@@ -144,7 +145,7 @@ public class ChatDetailActivity extends AppCompatActivity {
         msgs = new ArrayList<>();
         List<net.sharksystem.api.interfaces.Chat> chats = null;
         try {
-            chats = MainActivity.implSharkNet.getChats();
+            chats = SharkNetEngine.getSharkNet().getChats();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -208,7 +209,7 @@ public class ChatDetailActivity extends AppCompatActivity {
                     msgListAdapter.notifyDataSetChanged();
 
                     try {
-                        for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+                        for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
                         {
                             if(Objects.equals(c.getID(), chat.getID()))
                             {
@@ -316,7 +317,7 @@ public class ChatDetailActivity extends AppCompatActivity {
                 this.chat.update();
                 this.msgListAdapter.notifyDataSetChanged();
                 msg_text.getText().clear();
-                for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+                for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
                 {
                     if(Objects.equals(c.getID(), this.chat.getID()))
                     {
@@ -423,7 +424,7 @@ public class ChatDetailActivity extends AppCompatActivity {
                 this.msgListAdapter.notifyDataSetChanged();
 
                 try {
-                    for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+                    for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
                     {
                         if(Objects.equals(c.getID(), this.chat.getID()))
                         {
@@ -478,7 +479,7 @@ public class ChatDetailActivity extends AppCompatActivity {
             this.msgListAdapter.notifyDataSetChanged();
 
             try {
-                for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+                for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
                 {
                     if(Objects.equals(c.getID(), this.chat.getID()))
                     {
@@ -503,7 +504,7 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         this.msgListAdapter.notifyDataSetChanged();
         try {
-            for(net.sharksystem.api.interfaces.Chat c: MainActivity.implSharkNet.getChats())
+            for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
             {
                 if(Objects.equals(c.getID(), this.chat.getID()))
                 {

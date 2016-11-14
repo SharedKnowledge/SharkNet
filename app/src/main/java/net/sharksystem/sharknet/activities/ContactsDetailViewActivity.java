@@ -8,10 +8,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
-import net.sharksystem.sharknet.R;
-import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.interfaces.Contact;
 
+import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.sharknet.R;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,7 +42,7 @@ public class ContactsDetailViewActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(con_nickname);
         //Typeface type = Typeface.createFromAsset(getAssets(),"fonts/RockSalt.TTF");
         try {
-            this.contacts = MainActivity.implSharkNet.getContacts();
+            this.contacts = SharkNetEngine.getSharkNet().getContacts();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

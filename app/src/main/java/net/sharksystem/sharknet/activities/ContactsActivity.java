@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.adapters.ContactsListAdapter;
@@ -26,7 +27,7 @@ public class ContactsActivity extends BaseActivity {
     {
         super.onResume();
         try {
-            contacts = MainActivity.implSharkNet.getContacts();
+            contacts = SharkNetEngine.getSharkNet().getContacts();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -69,7 +70,7 @@ public class ContactsActivity extends BaseActivity {
         });
 
         try {
-            contacts = MainActivity.implSharkNet.getContacts();
+            contacts = SharkNetEngine.getSharkNet().getContacts();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

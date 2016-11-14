@@ -8,8 +8,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
-import net.sharksystem.sharknet.R;
+
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.sharknet.R;
 
 public class ContactsNewActivity extends AppCompatActivity {
 
@@ -55,7 +57,7 @@ public class ContactsNewActivity extends AppCompatActivity {
             assert nickname != null;
             // TODO: bei Timmo nachfragen ob ich so richtig mache
             try {
-                MainActivity.implSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
+                SharkNetEngine.getSharkNet().newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
             } catch (SharkKBException e) {
                 e.printStackTrace();
             }

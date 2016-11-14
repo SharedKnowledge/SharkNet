@@ -13,11 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.activities.MainActivity;
-import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.interfaces.Profile;
 
+import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.api.interfaces.Profile;
+import net.sharksystem.sharknet.R;
 
 import java.io.IOException;
 
@@ -45,12 +45,12 @@ public class ProfileDetailActivity extends AppCompatActivity
 
                 net.sharksystem.api.interfaces.Profile myprofile = null;
                 try {
-                    myprofile = MainActivity.implSharkNet.getMyProfile();
+                    myprofile = SharkNetEngine.getSharkNet().getMyProfile();
                 } catch (SharkKBException e) {
                     e.printStackTrace();
                 }
                 assert nickname != null;
-                //MainActivity.implSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
+                //SharkNetEngine.getSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
 
                 try {
                     myprofile.setNickname(nickname.getText().toString());
@@ -84,7 +84,7 @@ public class ProfileDetailActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         try {
-            profile = MainActivity.implSharkNet.getMyProfile();
+            profile = SharkNetEngine.getSharkNet().getMyProfile();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -122,10 +122,10 @@ public class ProfileDetailActivity extends AppCompatActivity
                 EditText phone = (EditText) findViewById(R.id.con_phone_edit);
                 EditText note = (EditText) findViewById(R.id.con_not_edit);
 
-                net.sharksystem.sharknet.api.ProfileActivity myprofile =  MainActivity.implSharkNet.getMyProfile();
+                net.sharksystem.sharknet.api.ProfileActivity myprofile =  SharkNetEngine.getSharkNet.getMyProfile();
                 assert nickname != null;
-                //MainActivity.implSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
-                Contact mycontact = MainActivity.implSharkNet.getMyProfile().getContact();
+                //SharkNetEngine.getSharkNet.newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
+                Contact mycontact = SharkNetEngine.getSharkNet.getMyProfile().getContact();
                 mycontact.setNickname(nickname.getText().toString());
                 //TODO: mycontact.setPicture();
                 //TODO: mycontact.setUID();

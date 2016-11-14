@@ -10,11 +10,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
-import net.sharksystem.sharknet.adapters.ChatNewConListAdapter;
-import net.sharksystem.sharknet.R;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ListView;
+
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.adapters.ChatNewConListAdapter;
 
 import org.json.JSONException;
 
@@ -71,7 +76,7 @@ public class ChatNewAcivity extends AppCompatActivity {
                     EditText title = (EditText) findViewById(R.id.chat_new_title);
                     net.sharksystem.api.interfaces.Chat c = null;
                     try {
-                        c = MainActivity.implSharkNet.newChat(selected_contacts);
+                        c = SharkNetEngine.getSharkNet().newChat(selected_contacts);
                     } catch (SharkKBException | JSONException e) {
                         e.printStackTrace();
                     }
@@ -94,7 +99,7 @@ public class ChatNewAcivity extends AppCompatActivity {
                     }
                     try {
                         c.sendMessage(null,"ChatActivity was created by "
-                                + MainActivity.implSharkNet.getMyProfile().getNickname(),null);
+                                + SharkNetEngine.getSharkNet().getMyProfile().getNickname(),null);
                     } catch (JSONException | SharkKBException e) {
                         e.printStackTrace();
                     }
@@ -129,12 +134,12 @@ public class ChatNewAcivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         selected_contacts = new ArrayList<>();
         try {
-            this.contacts = MainActivity.implSharkNet.getContacts();
+            this.contacts = SharkNetEngine.getSharkNet().getContacts();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
         try {
-            contacts.remove(MainActivity.implSharkNet.getMyProfile());
+            contacts.remove(SharkNetEngine.getSharkNet().getMyProfile());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

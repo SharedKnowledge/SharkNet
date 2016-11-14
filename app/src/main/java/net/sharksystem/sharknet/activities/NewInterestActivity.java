@@ -7,8 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+
 import net.sharksystem.sharknet.R;
-import net.sharkfw.knowledgeBase.SharkKBException;
 
 public class NewInterestActivity extends AppCompatActivity {
 
@@ -26,7 +26,7 @@ public class NewInterestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText name = (EditText) findViewById(R.id.new_interest_name_editText);
                 String s = name.getText().toString();
-                MainActivity.implSharkNet.getMyProfile().getContact().getInterests().addInterest(s,"wiki/"+s);
+                SharkNetEngine.getSharkNet.getMyProfile().getContact().getInterests().addInterest(s,"wiki/"+s);
                 finish();
             }
         });*/
@@ -49,7 +49,7 @@ public class NewInterestActivity extends AppCompatActivity {
                 EditText name = (EditText) findViewById(R.id.new_interest_name_editText);
                 String s = name.getText().toString();
                 // TODO: Interessen müssen noch gemacht werden
-                //MainActivity.implSharkNet.getMyProfile().getInterests().addInterest(s,"wiki/"+s);
+                //SharkNetEngine.getSharkNet.getMyProfile().getInterests().addInterest(s,"wiki/"+s);
                 finish();
                 return true;
 

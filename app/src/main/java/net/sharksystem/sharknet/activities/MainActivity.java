@@ -21,7 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static SharkNetEngine implSharkNet;
     private List<net.sharksystem.api.interfaces.Profile> profiles = null;
     int index;
 
@@ -30,23 +29,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        implSharkNet = SharkNetEngine.getSharkNet();
-
         L.setLogLevel(L.LOGLEVEL_ALL);
 
         SharkNetEngine.getSharkNet().setContext(this);
+
         try {
             Dummy.createDummyData();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (SharkKBException | JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         index = 0;
         try {
-            this.profiles = implSharkNet.getProfiles();
+            this.profiles = SharkNetEngine.getSharkNet().getProfiles();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -65,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
         Intent inbox = new Intent(this, InboxActivity.class);
 
         try {
-            implSharkNet.setActiveProfile(this.profiles.get(index), "");
+            SharkNetEngine.getSharkNet().setActiveProfile(this.profiles.get(index), "");
 
-            implSharkNet.startShark();
+            SharkNetEngine.getSharkNet().startShark();
         } catch (SharkKBException | JSONException | SharkProtocolNotSupportedException | IOException e) {
             e.printStackTrace();
         }

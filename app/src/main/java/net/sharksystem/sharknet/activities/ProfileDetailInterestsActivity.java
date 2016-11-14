@@ -22,7 +22,7 @@ public class ProfileDetailInterestsActivity extends AppCompatActivity
         InterestsListAdapter interestsListAdapter = null;
         interestsListAdapter = new InterestsListAdapter(this, R.layout.line_item_interest,
                 //TODO: Interessen noch nicht implementiert
-                //MainActivity.implSharkNet.getMyProfile().getInterests().getAllTopics()
+                //SharkNetEngine.getSharkNet.getMyProfile().getInterests().getAllTopics()
                 null
         );
         ListView lv = (ListView) findViewById(R.id.listView_interests);
@@ -43,7 +43,7 @@ public class ProfileDetailInterestsActivity extends AppCompatActivity
         InterestsListAdapter interestsListAdapter = null;
         interestsListAdapter = new InterestsListAdapter(this, R.layout.line_item_interest,
                 //TODO: Interessen noch nicht implementiert
-                //MainActivity.implSharkNet.getMyProfile().getContact().getInterests().getAllTopics()
+                //SharkNetEngine.getSharkNet.getMyProfile().getContact().getInterests().getAllTopics()
                 null
         );
         ListView lv = (ListView) findViewById(R.id.listView_interests);
@@ -58,7 +58,7 @@ public class ProfileDetailInterestsActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                //MainActivity.implSharkNet.getMyProfile().getContact();
+                //SharkNetEngine.getSharkNet.getMyProfile().getContact();
                 Intent intent = new Intent(ProfileDetailInterestsActivity.this,NewInterestActivity.class);
                 startActivity(intent);
             }

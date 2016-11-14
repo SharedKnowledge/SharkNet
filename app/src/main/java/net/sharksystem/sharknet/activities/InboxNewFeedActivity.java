@@ -27,9 +27,9 @@ public class InboxNewFeedActivity extends AppCompatActivity {
                 EditText message = (EditText) findViewById(R.id.feed_new_message);
                 String text = message.getText().toString();
                 //TODO:
-                /*MainActivity.implSharkNet.newFeed(new ImplContent(text),
+                /*SharkNetEngine.getSharkNet.newFeed(new ImplContent(text),
                         new ImplInterest("Sport",null,null,null),
-                        MainActivity.implSharkNet.getMyProfile().getContact());
+                        SharkNetEngine.getSharkNet.getMyProfile().getContact());
                 finish();
             }
         });
@@ -55,9 +55,9 @@ public class InboxNewFeedActivity extends AppCompatActivity {
                 EditText message = (EditText) findViewById(R.id.feed_new_message);
                 String text = message.getText().toString();
                 //TODO:
-                /*MainActivity.implSharkNet.newFeed(new ImplContent(text),
+                /*SharkNetEngine.getSharkNet.newFeed(new ImplContent(text),
                         new ImplInterest("Sport",null,null,null),
-                        MainActivity.implSharkNet.getMyProfile().getContact());
+                        SharkNetEngine.getSharkNet.getMyProfile().getContact());
                         */
                 finish();
                 return true;

@@ -11,10 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import net.sharksystem.sharknet.adapters.ChatNewConListAdapter;
-import net.sharksystem.sharknet.R;
+
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.adapters.ChatNewConListAdapter;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -39,7 +42,7 @@ public class ChatDetailAddContactActivity extends AppCompatActivity
 
         selected_contacts = new ArrayList<>();
         try {
-            this.contacts = MainActivity.implSharkNet.getContacts();
+            this.contacts = SharkNetEngine.getSharkNet().getContacts();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -95,7 +98,7 @@ public class ChatDetailAddContactActivity extends AppCompatActivity
                 if (!selected_contacts.isEmpty())
                 {
                     try {
-                        for(net.sharksystem.api.interfaces.Chat chat : MainActivity.implSharkNet.getChats())
+                        for(net.sharksystem.api.interfaces.Chat chat : SharkNetEngine.getSharkNet().getChats())
                         {
                             if(Objects.equals(chatID, chat.getID()))
                             {
