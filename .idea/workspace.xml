@@ -9,7 +9,12 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="21919b1d-19fe-46a3-bc64-55d4a3517ddc" name="Default" comment="" />
+    <list default="true" id="21919b1d-19fe-46a3-bc64-55d4a3517ddc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SharkNet-Api-Android" afterPath="$PROJECT_DIR$/SharkNet-Api-Android" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/RadarActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/RadarActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_item_radar_contact.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_item_radar_contact.xml" />
+    </list>
     <ignored path="SharkNet.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,12 +46,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SharkNet.iml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SharkNet.iml">
+      <file leaf-file-name="AndroidSharkEngine.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/peer/AndroidSharkEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="177">
+              <caret line="129" column="36" selection-start-line="129" selection-start-column="36" selection-end-line="129" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <marker date="1479129492018" expanded="true" signature="1618:1952" ph=" { " />
+                <marker date="1479129492018" expanded="true" signature="1991:2001" ph=" { " />
+                <marker date="1479129492018" expanded="false" signature="5953:5963" ph=" { " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2722,7 +2732,6 @@
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/impl/FeedImpl.java" />
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/interfaces/SharkNet.java" />
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/impl/ContactImpl.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_radar_contact.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/adapters/RadarListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_radar.xml" />
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/Globals.java" />
@@ -2732,7 +2741,6 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/protocols/wifidirect_obsolete/WifiDirectStreamStub.java" />
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/protocols/wifidirect/WifiDirectManager.java" />
-        <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/peer/AndroidSharkEngine.java" />
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/ports/RadarKP.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/InboxActivity.java" />
@@ -2749,7 +2757,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/ProfileDetailActivity.java" />
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/protocols/wifidirect/WifiDirectUtil.java" />
         <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/impl/SharkNetEngine.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_radar_contact.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/RadarActivity.java" />
+        <option value="$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/peer/AndroidSharkEngine.java" />
       </list>
     </option>
   </component>
@@ -2769,7 +2779,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
+    <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -2784,7 +2794,70 @@
     </navigator>
     <panes>
       <pane id="AndroidView">
-        <subPane />
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SharkNet" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SharkNet" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SharkNet" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SharkNet" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SharkNet" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
       </pane>
       <pane id="PackagesPane" />
       <pane id="ProjectPane" />
@@ -3154,7 +3227,7 @@
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24785867" sideWeight="0.52202284" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46061268" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.46061268" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -3166,6 +3239,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32922912" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -3182,7 +3256,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32922912" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -3456,21 +3529,6 @@
             <marker date="1478694041727" expanded="true" signature="2908:3014" ph="//..." />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_radar_contact.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-          <folding>
-            <marker date="1478874609494" expanded="true" signature="111:762" ph="..." />
-            <marker date="1478874609494" expanded="true" signature="312:535" ph="..." />
-            <marker date="1478874609494" expanded="true" signature="551:744" ph="..." />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_radar.xml">
@@ -4071,27 +4129,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/adapters/RadarListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
-          <folding>
-            <marker date="1478874826742" expanded="true" signature="51:398" ph="..." />
-            <marker date="1478874826742" expanded="true" signature="400:441" ph="/**...*/" />
-            <marker date="1478874826742" expanded="false" signature="640:651" ph=" { " />
-            <marker date="1478874826742" expanded="false" signature="670:676" ph=" }" />
-            <marker date="1478874826742" expanded="true" signature="733:802" ph="{...}" />
-            <marker date="1478874826742" expanded="false" signature="843:854" ph=" { " />
-            <marker date="1478874826742" expanded="false" signature="878:884" ph=" }" />
-            <marker date="1478874826742" expanded="false" signature="940:951" ph=" { " />
-            <marker date="1478874826742" expanded="false" signature="982:988" ph=" }" />
-            <marker date="1478874826742" expanded="false" signature="1043:1054" ph=" { " />
-            <marker date="1478874826742" expanded="false" signature="1063:1069" ph=" }" />
-            <marker date="1478874826742" expanded="true" signature="1159:1750" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/impl/SharkNetEngine.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -4152,44 +4189,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/peer/AndroidSharkEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="133" column="13" selection-start-line="133" selection-start-column="13" selection-end-line="133" selection-end-column="13" />
-          <folding>
-            <marker date="1479123063720" expanded="true" signature="48:897" ph="..." />
-            <marker date="1479123063720" expanded="true" signature="1368:1420" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="1471:1601" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="1645:1979" ph=" { " />
-            <marker date="1479123063720" expanded="true" signature="1645:1984" ph="{...}" />
-            <marker date="1479123063720" expanded="false" signature="2017:2028" ph=" { " />
-            <marker date="1479123063720" expanded="true" signature="2018:2028" ph=" { " />
-            <marker date="1479123063720" expanded="false" signature="2042:2048" ph=" }" />
-            <marker date="1479123063720" expanded="true" signature="2289:2496" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="2601:2677" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="2754:2789" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="2902:3110" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="3208:3277" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="3361:3429" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="3551:3614" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="3718:3781" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="3871:3934" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="4034:4192" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="4260:4942" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="5004:5087" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="5158:5281" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="5355:5410" ph="{...}" />
-            <marker date="1479123063720" expanded="true" signature="5473:5820" ph="{...}" />
-            <marker date="1479123063720" expanded="false" signature="5871:5882" ph=" { " />
-            <marker date="1479123063720" expanded="false" signature="5872:5882" ph=" { " />
-            <marker date="1479123063720" expanded="false" signature="5921:5927" ph=" }" />
-            <marker date="1479123063720" expanded="true" signature="5994:6361" ph="{...}" />
-            <marker date="1479123063720" expanded="false" signature="6415:6426" ph=" { " />
-            <marker date="1479123063720" expanded="false" signature="6459:6465" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/protocols/wifidirect/WifiDirectManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
@@ -4227,23 +4226,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/RadarActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="724">
-          <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
-          <folding>
-            <marker date="1479125576916" expanded="false" signature="53:454" ph="..." />
-            <marker date="1479125576916" expanded="true" signature="620:884" ph="{...}" />
-            <marker date="1479125576916" expanded="true" signature="955:1055" ph="{...}" />
-            <marker date="1479125576916" expanded="true" signature="1121:1284" ph="{...}" />
-            <marker date="1479125576916" expanded="true" signature="1356:1827" ph="{...}" />
-            <marker date="1479125576916" expanded="true" signature="1366:1562" ph="//..." />
-            <marker date="1479125576916" expanded="true" signature="1607:1692" ph="//..." />
-            <marker date="1479125576916" expanded="true" signature="1901:1972" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitmodules">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -4265,6 +4247,72 @@
         <state relative-caret-position="378">
           <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_radar_contact.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="38" selection-start-line="16" selection-start-column="38" selection-end-line="16" selection-end-column="38" />
+          <folding>
+            <marker date="1479128627480" expanded="true" signature="111:802" ph="..." />
+            <marker date="1479128627480" expanded="true" signature="312:535" ph="..." />
+            <marker date="1479128627480" expanded="true" signature="551:784" ph="..." />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/activities/RadarActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="429">
+          <caret line="61" column="30" selection-start-line="61" selection-start-column="30" selection-end-line="61" selection-end-column="30" />
+          <folding>
+            <marker date="1479129185426" expanded="false" signature="53:454" ph="..." />
+            <marker date="1479129185426" expanded="true" signature="620:884" ph="{...}" />
+            <marker date="1479129185426" expanded="true" signature="955:1055" ph="{...}" />
+            <marker date="1479129185426" expanded="true" signature="1121:1284" ph="{...}" />
+            <marker date="1479129185426" expanded="true" signature="1356:1826" ph="{...}" />
+            <marker date="1479129185426" expanded="true" signature="1366:1562" ph="//..." />
+            <marker date="1479129185426" expanded="true" signature="1607:1692" ph="//..." />
+            <marker date="1479129185426" expanded="true" signature="1900:1971" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/sharksystem/sharknet/adapters/RadarListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="65" column="27" selection-start-line="65" selection-start-column="27" selection-end-line="65" selection-end-column="27" />
+          <folding>
+            <marker date="1478874826742" expanded="true" signature="51:398" ph="..." />
+            <marker date="1478874826742" expanded="true" signature="400:441" ph="/**...*/" />
+            <marker date="1478874826742" expanded="false" signature="640:651" ph=" { " />
+            <marker date="1478874826742" expanded="false" signature="670:676" ph=" }" />
+            <marker date="1478874826742" expanded="true" signature="733:802" ph="{...}" />
+            <marker date="1478874826742" expanded="false" signature="843:854" ph=" { " />
+            <marker date="1478874826742" expanded="false" signature="878:884" ph=" }" />
+            <marker date="1478874826742" expanded="false" signature="940:951" ph=" { " />
+            <marker date="1478874826742" expanded="false" signature="982:988" ph=" }" />
+            <marker date="1478874826742" expanded="false" signature="1043:1054" ph=" { " />
+            <marker date="1478874826742" expanded="false" signature="1063:1069" ph=" }" />
+            <marker date="1478874826742" expanded="true" signature="1159:1750" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SharkNet-Api-Android/api/src/main/java/net/sharksystem/api/shark/peer/AndroidSharkEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="129" column="36" selection-start-line="129" selection-start-column="36" selection-end-line="129" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1479129492018" expanded="true" signature="1618:1952" ph=" { " />
+            <marker date="1479129492018" expanded="true" signature="1991:2001" ph=" { " />
+            <marker date="1479129492018" expanded="false" signature="5953:5963" ph=" { " />
+          </folding>
         </state>
       </provider>
     </entry>

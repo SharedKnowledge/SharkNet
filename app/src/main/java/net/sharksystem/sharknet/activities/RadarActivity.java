@@ -54,7 +54,6 @@ public class RadarActivity extends BaseActivity implements RadarListener {
             return true;
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
