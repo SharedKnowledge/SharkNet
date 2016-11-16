@@ -9,32 +9,30 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import net.sharksystem.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
+
 import java.util.List;
 
 /**
  * Reads the Information from the ChatActivity-List and
  * fills the List-Items-Layout.
  */
-public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces.Chat>
-{
+public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces.Chat> {
 
     private List<net.sharksystem.api.interfaces.Chat> chats;
 
-    public ChatListAdapter(Context context, int resource, List<net.sharksystem.api.interfaces.Chat> objects)
-    {
+    public ChatListAdapter(Context context, int resource, List<net.sharksystem.api.interfaces.Chat> objects) {
         super(context, resource, objects);
         this.chats = objects;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        if(convertView == null)
-        {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.line_item_chat,parent,false);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.line_item_chat, parent, false);
         }
 
         net.sharksystem.api.interfaces.Chat chat = chats.get(position);
@@ -49,15 +47,15 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
         //Sender + Lastmessage-Text
         TextView text = (TextView) convertView.findViewById(R.id.msg_text);
 
-        List<Message> msgs      = null;
+        List<Message> msgs = null;
         try {
             msgs = chat.getMessages(false);
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
         Log.d("adapter", String.valueOf(msgs.size()));
-        Message last_msg        = msgs.get(msgs.size()-1);
-        String content         = null;
+        Message last_msg = msgs.get(msgs.size() - 1);
+        String content = null;
         try {
             content = last_msg.getContent().getMessage();
         } catch (SharkKBException e) {
@@ -70,7 +68,7 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
             e.printStackTrace();
         }
 
-        String last_msg_content = sender+":"+content;
+        String last_msg_content = sender + ":" + content;
         text.setText(last_msg_content);
 
 
@@ -80,21 +78,18 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
         //if(chat.getPicture() != null)
         //{
         try {
-            if(chat.getContacts().size()>1)
-            {
+            if (chat.getContacts().size() > 1) {
                 image.setImageResource(R.drawable.ic_group_pink_600_24dp);
-            }
-            else
-            {
+            } else {
                 image.setImageResource(R.drawable.ic_person_pink_600_24dp);
             }
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
         //}
-       // else
+        // else
         //{
-           //TODO: image.setImageResource(chat.getPicture().);
+        //TODO: image.setImageResource(chat.getPicture().);
         //‚}
 
         return convertView;

@@ -32,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.LinearLayout;
+
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Message;
@@ -55,7 +56,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 {
     public static final int ADD_CONTACT = 1050;
     private static final int REQUEST_MICROPHONE = 101;
-    private net.sharksystem.api.interfaces.Chat chat ;
+    private net.sharksystem.api.interfaces.Chat chat;
     private MsgListAdapter msgListAdapter;
     ImageView image_capture;
     private String chatID;
@@ -67,15 +68,14 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
     private static final int SELECT_PHOTO = 100;
     private static final int SELECT_FILE = 101;
     private String file_path;
-    private List<Message> msgs ;
+    private List<Message> msgs;
     private MediaRecorder mediaRecorder;
 
     Toolbar toolbar;
     boolean hidden = true;
     LinearLayout mRevealView;
-    ImageButton ib_gallery,ib_contacts,ib_location;
-    ImageButton ib_file,ib_camera;
-
+    ImageButton ib_gallery, ib_contacts, ib_location;
+    ImageButton ib_file, ib_camera;
 
     @Override
     protected void onResume() {
@@ -83,21 +83,17 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState)
-    {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             // Restore value of members from saved state
             chatID = savedInstanceState.getString(CHAT_ID);
-        }
-        else
-        {
+        } else {
             chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
         }
         setContentView(R.layout.activity_chat_detail);
-        this.image_capture  = (ImageView) findViewById(R.id.image_capture);
+        this.image_capture = (ImageView) findViewById(R.id.image_capture);
         // pics taken by the camera using this application.
         this.dir_photo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/SharkNet/";
         File newdir = new File(dir_photo);
@@ -106,28 +102,22 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         send = (ImageButton) findViewById(R.id.send_button);
         record = (ImageButton) findViewById(R.id.record);
 
-        record.setOnLongClickListener(new View.OnLongClickListener()
-        {
+        record.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v)
-            {
+            public boolean onLongClick(View v) {
                 int hasWriteContactsPermission = 0;
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 }
-                if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED)
-                {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                    {
-                        requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                 123);
                     }
                 }
                 if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
-                {
+                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(ChatDetailActivity.this,
                             new String[]{Manifest.permission.RECORD_AUDIO},
                             REQUEST_MICROPHONE);
@@ -136,7 +126,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
                 String time = String.valueOf(System.nanoTime());
-                file_path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+ time+".mp4";
+                file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + time + ".mp4";
                 mediaRecorder.setOutputFile(file_path);
 
                 mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
@@ -161,13 +151,13 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             e.printStackTrace();
         }
 
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
 //        ib_audio=(ImageButton)findViewById(R.id.audio);
-        ib_file=(ImageButton)findViewById(R.id.file);
-        ib_camera=(ImageButton)findViewById(R.id.camera);
-        ib_contacts=(ImageButton)findViewById(R.id.contacts);
-        ib_gallery=(ImageButton)findViewById(R.id.gallery);
+        ib_file = (ImageButton) findViewById(R.id.file);
+        ib_camera = (ImageButton) findViewById(R.id.camera);
+        ib_contacts = (ImageButton) findViewById(R.id.contacts);
+        ib_gallery = (ImageButton) findViewById(R.id.gallery);
 //        ib_location=(ImageButton)findViewById(R.id.location);
 //        ib_video=(ImageButton)findViewById(R.id.video);
 //        ib_audio.setOnClickListener(this);
@@ -183,13 +173,10 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         mRevealView.setVisibility(View.INVISIBLE);
 
 
-
         assert chats != null;
-        for(net.sharksystem.api.interfaces.Chat chat : chats)
-        {
+        for (net.sharksystem.api.interfaces.Chat chat : chats) {
             try {
-                if(Objects.equals(chat.getID(), chatID))
-                {
+                if (Objects.equals(chat.getID(), chatID)) {
                     try {
                         msgs = chat.getMessages(false);
                     } catch (SharkKBException e) {
@@ -207,17 +194,14 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             }
         }
 
-        record.setOnTouchListener(new View.OnTouchListener()
-        {
+        record.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if(event.getAction()== MotionEvent.ACTION_UP && mediaRecorder != null)
-                {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP && mediaRecorder != null) {
                     mediaRecorder.stop();
                     mediaRecorder.reset();
                     mediaRecorder.release();
-                    mediaRecorder=null;
+                    mediaRecorder = null;
 
                     String fileExtension = "audio/mp4";
                     File file = new File(file_path);
@@ -226,13 +210,12 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                     try {
                         fileStream = new FileInputStream(file
                         );
-                    } catch (FileNotFoundException e)
-                    {
+                    } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
 
                     try {
-                        chat.sendMessage(fileStream,file_path,fileExtension);
+                        chat.sendMessage(fileStream, file_path, fileExtension);
                     } catch (JSONException | SharkKBException e) {
                         e.printStackTrace();
                     }
@@ -240,20 +223,17 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                     msgListAdapter.notifyDataSetChanged();
 
                     try {
-                        for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
-                        {
-                            if(Objects.equals(c.getID(), chat.getID()))
-                            {
+                        for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
+                            if (Objects.equals(c.getID(), chat.getID())) {
                                 msgListAdapter = new MsgListAdapter(chat.getMessages(false));
-                                RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
-                                if (lv != null)
-                                {
+                                RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
+                                if (lv != null) {
                                     LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
                                     lv.setLayoutManager(llm);
                                     llm.setStackFromEnd(true);
                                     lv.setItemAnimator(new DefaultItemAnimator());
                                     lv.setAdapter(msgListAdapter);
-                                    lv.scrollToPosition(chat.getMessages(false).size()-1);
+                                    lv.scrollToPosition(chat.getMessages(false).size() - 1);
                                 }
                             }
                         }
@@ -267,10 +247,9 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         });
 
         this.msgListAdapter = new MsgListAdapter(msgs);
-        RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
+        RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
 
-        if (lv != null)
-        {
+        if (lv != null) {
             LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
             lv.setLayoutManager(llm);
             llm.setStackFromEnd(true);
@@ -289,30 +268,23 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private final TextWatcher  TextEditorWatcher = new TextWatcher()
-    {
+    private final TextWatcher TextEditorWatcher = new TextWatcher() {
 
-        public void beforeTextChanged(CharSequence s, int start, int count, int after)
-        {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             // When No Password Entered
 
         }
 
-        public void onTextChanged(CharSequence s, int start, int before, int count)
-        {
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
         }
 
-        public void afterTextChanged(Editable s)
-        {
+        public void afterTextChanged(Editable s) {
             String t = s.toString().trim();
-            if(t.length()==0)
-            {
+            if (t.length() == 0) {
                 send.setVisibility(View.GONE);
                 record.setVisibility(View.VISIBLE);
-            }
-            else
-            {
+            } else {
                 send.setVisibility(View.VISIBLE);
                 record.setVisibility(View.GONE);
             }
@@ -321,47 +293,38 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
     };
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.chat_detail, menu);
         return true;
     }
 
-    public void sendMessage(View view) throws JSONException, SharkKBException
-    {
+    public void sendMessage(View view) throws JSONException, SharkKBException {
         EditText msg_text = (EditText) findViewById(R.id.write_msg_edit_text);
 
         String msg_string;
 
-        if (msg_text != null)
-        {
+        if (msg_text != null) {
             msg_string = msg_text.getText().toString().trim();
 
-            if(msg_string.isEmpty())
-            {
+            if (msg_string.isEmpty()) {
                 Snackbar.make(view, "No message entered!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            }
-            else
-            {
-                this.chat.sendMessage(null,msg_string,null);
+            } else {
+                this.chat.sendMessage(msg_string);
                 this.chat.update();
                 this.msgListAdapter.notifyDataSetChanged();
                 msg_text.getText().clear();
-                for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
-                {
-                    if(Objects.equals(c.getID(), this.chat.getID()))
-                    {
+                for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
+                    if (Objects.equals(c.getID(), this.chat.getID())) {
                         this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
-                        RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
-                        if (lv != null)
-                        {
+                        RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
+                        if (lv != null) {
                             LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
                             lv.setLayoutManager(llm);
                             llm.setStackFromEnd(true);
                             lv.setItemAnimator(new DefaultItemAnimator());
                             lv.setAdapter(msgListAdapter);
-                            lv.scrollToPosition(this.chat.getMessages(false).size()-1);
+                            lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
                         }
                     }
                 }
@@ -371,17 +334,14 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void takePicture(View view)
-    {
+    public void takePicture(View view) {
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String format = s.format(new java.util.Date());
-        this.file_path = this.dir_photo+format+".png";
+        this.file_path = this.dir_photo + format + ".png";
         File newfile = new File(file_path);
         try {
             newfile.createNewFile();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
         }
         int hasWriteContactsPermission = 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -389,7 +349,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         }
         if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         123);
             }
             return;
@@ -400,23 +360,20 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 
         startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
     }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if( requestCode == SELECT_FILE)
-        {
-            if (resultCode == RESULT_OK)
-            {
+        if (requestCode == SELECT_FILE) {
+            if (resultCode == RESULT_OK) {
                 Uri file = data.getData();
                 String fileName = file.getLastPathSegment();
                 String fileExtension = "file/unknown";
-                if(fileName.contains("."))
-                {
-                    String [] splitName = fileName.split("\\.");
-                    fileExtension = splitName[splitName.length-1];
+                if (fileName.contains(".")) {
+                    String[] splitName = fileName.split("\\.");
+                    fileExtension = splitName[splitName.length - 1];
 
                 }
 
@@ -427,16 +384,14 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                     e.printStackTrace();
                 }
                 try {
-                    this.chat.sendMessage(fileStream,fileName,"file/"+fileExtension);
+                    this.chat.sendMessage(fileStream, fileName, "file/" + fileExtension);
                 } catch (JSONException | SharkKBException e) {
                     e.printStackTrace();
                 }
             }
         }
-        if( requestCode == SELECT_PHOTO)
-        {
-            if (resultCode == RESULT_OK)
-            {
+        if (requestCode == SELECT_PHOTO) {
+            if (resultCode == RESULT_OK) {
                 Uri selectedImage = data.getData();
 //                String fileName = selectedImage.getLastPathSegment();
 //                Log.d("Picture", selectedImage.getPath());
@@ -447,7 +402,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                     e.printStackTrace();
                 }
                 try {
-                    this.chat.sendMessage(imageStream,selectedImage.getPath(),"image/png");
+                    this.chat.sendMessage(imageStream, selectedImage.getPath(), "image/png");
                 } catch (JSONException | SharkKBException e) {
                     e.printStackTrace();
                 }
@@ -455,20 +410,17 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                 this.msgListAdapter.notifyDataSetChanged();
 
                 try {
-                    for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
-                    {
-                        if(Objects.equals(c.getID(), this.chat.getID()))
-                        {
+                    for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
+                        if (Objects.equals(c.getID(), this.chat.getID())) {
                             this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
-                            RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
-                            if (lv != null)
-                            {
+                            RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
+                            if (lv != null) {
                                 LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
                                 lv.setLayoutManager(llm);
                                 llm.setStackFromEnd(true);
                                 lv.setItemAnimator(new DefaultItemAnimator());
                                 lv.setAdapter(msgListAdapter);
-                                lv.scrollToPosition(this.chat.getMessages(false).size()-1);
+                                lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
                             }
                         }
                     }
@@ -478,27 +430,25 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             }
         }
 
-        if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK)
-        {
+        if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK) {
             int hasWriteContactsPermission = 0;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 hasWriteContactsPermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
             if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             123);
                 }
                 return;
             }
             Drawable pic = Drawable.createFromPath(file_path);
-            this.image_capture  = (ImageView) findViewById(R.id.image_capture);
-            if (image_capture != null)
-            {
+            this.image_capture = (ImageView) findViewById(R.id.image_capture);
+            if (image_capture != null) {
                 image_capture.setImageDrawable(pic);
             }
             try {
-                this.chat.sendMessage(new FileInputStream(file_path),file_path,"image/png");
+                this.chat.sendMessage(new FileInputStream(file_path), file_path, "image/png");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (SharkKBException e) {
@@ -510,20 +460,17 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             this.msgListAdapter.notifyDataSetChanged();
 
             try {
-                for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
-                {
-                    if(Objects.equals(c.getID(), this.chat.getID()))
-                    {
+                for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
+                    if (Objects.equals(c.getID(), this.chat.getID())) {
                         this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
-                        RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
-                        if (lv != null)
-                        {
+                        RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
+                        if (lv != null) {
                             LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
                             lv.setLayoutManager(llm);
                             llm.setStackFromEnd(true);
                             lv.setItemAnimator(new DefaultItemAnimator());
                             lv.setAdapter(msgListAdapter);
-                            lv.scrollToPosition(this.chat.getMessages(false).size()-1);
+                            lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
                         }
                     }
                 }
@@ -535,20 +482,17 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 
         this.msgListAdapter.notifyDataSetChanged();
         try {
-            for(net.sharksystem.api.interfaces.Chat c: SharkNetEngine.getSharkNet().getChats())
-            {
-                if(Objects.equals(c.getID(), this.chat.getID()))
-                {
+            for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
+                if (Objects.equals(c.getID(), this.chat.getID())) {
                     this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
-                    RecyclerView lv = (RecyclerView)findViewById(R.id.msg_list_view);
-                    if (lv != null)
-                    {
+                    RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
+                    if (lv != null) {
                         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
                         lv.setLayoutManager(llm);
                         llm.setStackFromEnd(true);
                         lv.setItemAnimator(new DefaultItemAnimator());
                         lv.setAdapter(msgListAdapter);
-                        lv.scrollToPosition(this.chat.getMessages(false).size()-1);
+                        lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
                     }
                 }
             }
@@ -557,38 +501,33 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    public void sendFile(View view)
-    {
+    public void sendFile(View view) {
         Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
         fileIntent.setType("file/*"); // intent type to filter application based on your requirement
         startActivityForResult(fileIntent, SELECT_FILE);
     }
 
-    public void addContact(View view)
-    {
+    public void addContact(View view) {
         Intent addOtherContact = new Intent(this, ChatDetailAddContactActivity.class);
-        addOtherContact.putExtra(ChatActivity.CHAT_ID,chatID);
-        startActivityForResult(addOtherContact,ADD_CONTACT);
+        addOtherContact.putExtra(ChatActivity.CHAT_ID, chatID);
+        startActivityForResult(addOtherContact, ADD_CONTACT);
 //        startActivity(addOtherContact);
     }
 
-    public void sendPicture(View view)
-    {
+    public void sendPicture(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_PHOTO);
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState)
-    {
+    public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(CHAT_ID, getIntent().getStringExtra(ChatActivity.CHAT_ID));
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState)
-    {
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         // Always call the superclass so it can restore the view hierarchy
         super.onRestoreInstanceState(savedInstanceState);
 
@@ -598,10 +537,8 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         switch (id)
         {
             case R.id.action_settings:
@@ -702,12 +639,12 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             case R.id.file:
                 sendFile(v);
                 mRevealView.setVisibility(View.INVISIBLE);
-                hidden=true;
+                hidden = true;
                 break;
             case R.id.camera:
                 takePicture(v);
                 mRevealView.setVisibility(View.INVISIBLE);
-                hidden=true;
+                hidden = true;
                 break;
 //            case R.id.location:
 //                Snackbar.make(v, "Location Clicked", Snackbar.LENGTH_SHORT).show();
@@ -717,7 +654,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             case R.id.contacts:
                 addContact(v);
                 mRevealView.setVisibility(View.INVISIBLE);
-                hidden=true;
+                hidden = true;
                 break;
 //            case R.id.video:
 //                Snackbar.make(v, "Video Clicked", Snackbar.LENGTH_SHORT).show();
@@ -727,7 +664,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             case R.id.gallery:
                 sendPicture(v);
                 mRevealView.setVisibility(View.INVISIBLE);
-                hidden=true;
+                hidden = true;
                 break;
         }
     }

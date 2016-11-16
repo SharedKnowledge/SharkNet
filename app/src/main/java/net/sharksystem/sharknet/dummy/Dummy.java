@@ -4,21 +4,17 @@ package net.sharksystem.sharknet.dummy;
  * Created by viktorowich on 24/08/16.
  */
 
-        import net.sharkfw.knowledgeBase.PeerSemanticTag;
         import net.sharkfw.knowledgeBase.SharkKBException;
-        import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
-        import net.sharksystem.api.impl.SharkNetEngine;
-        import net.sharksystem.api.interfaces.Chat;
-        import net.sharksystem.api.interfaces.Contact;
-        import net.sharksystem.api.interfaces.Profile;
+import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.api.interfaces.Chat;
+import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.api.interfaces.Profile;
 
-        import org.json.JSONException;
+import org.json.JSONException;
 
-        import java.io.ByteArrayInputStream;
-        import java.io.InputStream;
-        import java.util.ArrayList;
-        import java.util.Timer;
-        import java.util.TimerTask;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created by j4rvis on 24.08.16.
@@ -67,6 +63,13 @@ public class Dummy {
         String eliseTelephoneMobile = "01177 1234567891";
         String eliseNote = "This is just a simple note from Elise";
 
+        String frankName = "Frank";
+        String frankNickName = "Frank";
+        String frankSI = "www.facebook.com/frank";
+        String frankMail = "mail://frank.com";
+        String frankTelephoneHome = "030 1234567891";
+        String frankTelephoneMobile = "01177 1234567891";
+        String frankNote = "This is just a simple note from Frank";
 
         byte[] randomByte = new byte[20];
         InputStream stream = new ByteArrayInputStream(randomByte);
@@ -109,6 +112,13 @@ public class Dummy {
         elise.addTelephoneNumber(eliseTelephoneHome);
         elise.addTelephoneNumber(eliseTelephoneMobile);
         elise.addNote(eliseNote);
+
+        Profile frank = engine.newProfile(frankName, frankSI);
+        frank.setEmail(frankMail);
+        frank.setNickname(frankNickName);
+        frank.addTelephoneNumber(frankTelephoneHome);
+        frank.addTelephoneNumber(frankTelephoneMobile);
+        frank.addNote(frankNote);
 
         engine.setActiveProfile(david, "password");
 

@@ -1,6 +1,8 @@
 package net.sharksystem.sharknet.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
         L.setLogLevel(L.LOGLEVEL_ALL);
 
+        WifiManager wifiManager = (WifiManager)this.getSystemService(Context.WIFI_SERVICE);
+        wifiManager.setWifiEnabled(false);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        wifiManager.setWifiEnabled(true);
+
         SharkNetEngine.getSharkNet().setContext(this);
 
         try {
@@ -58,12 +69,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openChat(View view) {
-        Intent inbox = new Intent(this, InboxActivity.class);
+//        Intent inbox = new Intent(this, InboxActivity.class);
+        Intent radar = new Intent(this, RadarActivity.class);
 
         try {
             SharkNetEngine.getSharkNet().setActiveProfile(this.profiles.get(index), "");
-
             SharkNetEngine.getSharkNet().startShark();
+
         } catch (SharkKBException | JSONException | SharkProtocolNotSupportedException | IOException e) {
             e.printStackTrace();
         }
@@ -75,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         Menu m = nv.getMenu();
         txtV.setTypeface(face);
 */
-        startActivity(inbox);
+        startActivity(radar);
     }
 
     public void backProfile(View view) throws SharkKBException {
