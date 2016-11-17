@@ -602,6 +602,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         switch (id)
         {
             case R.id.action_settings:
+
                 return true;
             case R.id.attachment:
                 // attachment icon click event
@@ -614,7 +615,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                 int endradius = Math.max(mRevealView.getWidth(), mRevealView.getHeight());
 
                 // performing circular reveal when icon will be tapped
-                Animator animator = ViewAnimationUtils.createCircularReveal(mRevealView,                     cx, cy, startradius, endradius);
+                Animator animator = ViewAnimationUtils.createCircularReveal(mRevealView,cx, cy, startradius, endradius);
                 animator.setInterpolator(new AccelerateDecelerateInterpolator());
                 animator.setDuration(400);
 

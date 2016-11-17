@@ -4,8 +4,8 @@
           package="net.sharksystem.sharknet">
 
     <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true"/>
+            android:name="android.hardware.camera"
+            android:required="true"/>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -19,13 +19,13 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:allowBackup="true"
-        android:name="net.sharksystem.api.shark.Application"
-        android:icon="@drawable/shark_icon256x256"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:replace="android:icon, android:theme">
+            android:name="net.sharksystem.api.shark.Application"
+            android:allowBackup="true"
+            android:icon="@drawable/shark_icon256x256"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            tools:replace="android:icon, android:theme">
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -34,106 +34,106 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ContactsActivity"
-            android:label="@string/title_activity_contacts"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ContactsActivity"
+                android:label="@string/title_activity_contacts"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".activities.ChatActivity"
-            android:label="@string/title_activity_chat"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ChatActivity"
+                android:label="@string/title_activity_chat"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".activities.InboxActivity"
-            android:label="@string/title_activity_inbox"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.InboxActivity"
+                android:label="@string/title_activity_inbox"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".activities.ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ProfileActivity"
+                android:label="@string/title_activity_profile"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".activities.ChatDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_chat_detail"
-            android:parentActivityName=".activities.ChatActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ChatDetailActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:label="@string/title_activity_chat_detail"
+                android:parentActivityName=".activities.ChatActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ChatActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ChatActivity"/>
         </activity>
         <activity
-            android:name=".activities.ChatNewAcivity"
-            android:label="@string/title_activity_chat_new"
-            android:parentActivityName=".activities.ChatActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ChatNewAcivity"
+                android:label="@string/title_activity_chat_new"
+                android:parentActivityName=".activities.ChatActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ChatActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ChatActivity"/>
         </activity>
         <activity
-            android:name=".activities.ContactsDetailViewActivity"
-            android:label="@string/title_activity_con_detail_view"
-            android:parentActivityName=".activities.ContactsActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ContactsDetailViewActivity"
+                android:label="@string/title_activity_con_detail_view"
+                android:parentActivityName=".activities.ContactsActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ContactsActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ContactsActivity"/>
         </activity>
         <activity
-            android:name=".activities.ProfileDetailActivity"
-            android:label="@string/title_activity_profile_detail"
-            android:parentActivityName=".activities.ProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ProfileDetailActivity"
+                android:label="@string/title_activity_profile_detail"
+                android:parentActivityName=".activities.ProfileActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ProfileActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ProfileActivity"/>
         </activity>
         <activity
-            android:name=".activities.ContactsNewActivity"
-            android:label="@string/title_activity_con_new"
-            android:parentActivityName=".activities.ContactsActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ContactsNewActivity"
+                android:label="@string/title_activity_con_new"
+                android:parentActivityName=".activities.ContactsActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ContactsActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ContactsActivity"/>
         </activity>
         <activity
-            android:name=".activities.ProfileDetailInterestsActivity"
-            android:label="@string/title_activity_profile_detail_interests"
-            android:parentActivityName=".activities.ProfileDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ProfileDetailInterestsActivity"
+                android:label="@string/title_activity_profile_detail_interests"
+                android:parentActivityName=".activities.ProfileDetailActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ProfileDetailActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ProfileDetailActivity"/>
         </activity>
         <activity
-            android:name=".activities.InboxNewFeedActivity"
-            android:label="@string/title_activity_timeline_detail_view"
-            android:parentActivityName=".activities.InboxActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.InboxNewFeedActivity"
+                android:label="@string/title_activity_timeline_detail_view"
+                android:parentActivityName=".activities.InboxActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.InboxActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.InboxActivity"/>
         </activity>
         <activity
-            android:name=".activities.ProfileSettingsActivity"
-            android:label="@string/title_activity_profile_settings"
-            android:parentActivityName=".activities.ProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ProfileSettingsActivity"
+                android:label="@string/title_activity_profile_settings"
+                android:parentActivityName=".activities.ProfileActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ProfileActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ProfileActivity"/>
         </activity>
         <activity
-            android:name=".activities.NewInterestActivity"
-            android:label="@string/title_activity_new_interest"
-            android:parentActivityName=".activities.ProfileDetailInterestsActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.NewInterestActivity"
+                android:label="@string/title_activity_new_interest"
+                android:parentActivityName=".activities.ProfileDetailInterestsActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ProfileDetailInterestsActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ProfileDetailInterestsActivity"/>
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -142,18 +142,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ChatDetailAddContactActivity"
-            android:label="@string/title_activity_chat_detail_add_contact"
-            android:parentActivityName=".activities.ChatDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.ChatDetailAddContactActivity"
+                android:label="@string/title_activity_chat_detail_add_contact"
+                android:parentActivityName=".activities.ChatDetailActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.sharksystem.sharknet.activities.ChatDetailActivity"/>
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ChatDetailActivity"/>
         </activity>
         <activity
-            android:name="net.sharksystem.sharknet.activities.RadarActivity"
-            android:label="@string/title_activity_radar"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".activities.RadarActivity"
+                android:label="@string/title_activity_radar"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity android:name=".ChatDetailSettins">
         </activity>
     </application>
 
