@@ -135,18 +135,10 @@ public class ChatNewAcivity extends AppCompatActivity {
         selected_contacts = new ArrayList<>();
         try {
             this.contacts = SharkNetEngine.getSharkNet().getContacts();
-<<<<<<< HEAD
-            // TODO: lädt alle Kontakte auch sich selber
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
-=======
             this.contacts.remove(SharkNetEngine.getSharkNet().getMyProfile());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
->>>>>>> Rework for Wifi.
         ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.line_item_con_new_chat,contacts);
         lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
