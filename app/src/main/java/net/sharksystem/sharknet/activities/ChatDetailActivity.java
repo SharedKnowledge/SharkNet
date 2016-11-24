@@ -34,7 +34,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
-import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.adapters.MsgListAdapter;
@@ -602,8 +601,12 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         switch (id)
         {
             case R.id.action_settings:
-
+                Intent intent = new Intent(ChatDetailActivity.this, ChatDetailSettings.class);
+                //identifies the chat
+                intent.putExtra(CHAT_ID, chatID);
+                startActivity(intent);
                 return true;
+
             case R.id.attachment:
                 // attachment icon click event
                 // finding X and Y co-ordinates

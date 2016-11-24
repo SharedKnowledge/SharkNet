@@ -9,7 +9,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="net.sharksystem.sharknet.ChatDetailSettins">
+        tools:context="net.sharksystem.sharknet.activities.ChatDetailSettings">
 
 <LinearLayout android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -17,38 +17,55 @@
 
     <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/ChatInfo">
+            android:layout_height="wrap_content"
+            android:id="@+id/ChatInfo">
         <ImageView
                 android:layout_width="match_parent"
-                android:id="@+id/ChatPicture" android:background="@drawable/ic_account_circle_pink_500_48dp"
-                android:scaleType="fitCenter" android:adjustViewBounds="false"
-                android:baselineAlignBottom="false" android:layout_height="207dp"
+                android:id="@+id/ChatPicture"
+                android:background="@drawable/ic_account_circle_pink_500_48dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="false"
+                android:baselineAlignBottom="false"
+                android:layout_height="207dp"
                 android:elevation="10dp"/>
         <TextView
-                android:text="TextView"
+                android:text="Title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/ChatName" android:layout_gravity="bottom"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/ChatName"
+                android:layout_gravity="bottom"/>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/ChatSettings">
+            android:layout_height="wrap_content"
+            android:id="@+id/ChatSettings">
         <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
             <TextView
                     android:text="TextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView2"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2"/>
             <SeekBar
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/seekBar" android:layout_gravity="right"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/seekBar"
+                    android:layout_gravity="right"/>
         </TableRow>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/ChatMember"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/ChatMember"/>
+    <Button
+            android:text="LEAVE CHAT"
+            android:layout_width="match_parent"
+            android:background="@color/colorAccent"
+            android:textColor="@color/abc_primary_text_disable_only_material_dark"
+            android:layout_height="wrap_content" android:id="@+id/btn_leave_chat"/>
 </LinearLayout>
 
 </RelativeLayout>
