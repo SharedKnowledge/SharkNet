@@ -155,7 +155,14 @@
                 android:label="@string/title_activity_radar"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
-        <activity android:name=".activities.ChatDetailSettings">
+        <activity
+                android:name=".activities.ChatDetailSettings"
+                android:label="Settings"
+                android:parentActivityName=".activities.ChatDetailActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ChatDetailActivity"/>
         </activity>
     </application>
 

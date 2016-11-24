@@ -77,6 +77,12 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
     ImageButton ib_file,ib_camera;
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        TODO: back button not working properly
+
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState)
