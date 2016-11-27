@@ -42,6 +42,14 @@ public class ChatDetailSettings extends AppCompatActivity implements View.OnClic
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: ChatID to ChatDetailActivity back
+                Log.d("test","testi");
+            }
+        });
+
         btn_leave_chat = (Button) findViewById(R.id.btn_leave_chat);
         btn_leave_chat.setOnClickListener(this);
 
@@ -91,11 +99,24 @@ public class ChatDetailSettings extends AppCompatActivity implements View.OnClic
         }
     }
 
+    /**
+     * click Back-Button on Phone
+     * */
+    @Override
+    public void onBackPressed()
+    {
+        // TODO: ChatID to ChatDetailActivity back
+        Log.d("test","test");
+    }
+
     @Override
     public void onClick(View view)
     {
         switch (view.getId())
         {
+            case R.id.home:
+                onBackPressed();
+                break;
             case R.id.btn_leave_chat:
                 this.chat.delete();
                 Intent intent = new Intent(ChatDetailSettings.this, ChatActivity.class);
