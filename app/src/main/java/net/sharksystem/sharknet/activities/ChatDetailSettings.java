@@ -45,7 +45,10 @@ public class ChatDetailSettings extends AppCompatActivity implements View.OnClic
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: ChatID to ChatDetailActivity back
+                Intent intent = new Intent(ChatDetailSettings.this, ChatDetailActivity.class);
+                //identifies the chat
+                intent.putExtra(CHAT_ID, chatID);
+                startActivity(intent);
                 Log.d("test","testi");
             }
         });
@@ -105,8 +108,10 @@ public class ChatDetailSettings extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed()
     {
-        // TODO: ChatID to ChatDetailActivity back
-        Log.d("test","test");
+        Intent intent = new Intent(ChatDetailSettings.this, ChatDetailActivity.class);
+        //identifies the chat
+        intent.putExtra(CHAT_ID, chatID);
+        startActivity(intent);
     }
 
     @Override
