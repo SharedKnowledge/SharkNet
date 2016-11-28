@@ -47,15 +47,15 @@ public class ContactsDetailViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        TextView t = (TextView) findViewById(R.id.con_nickname_label);
+        TextView nickname = (TextView) findViewById(R.id.con_nickname_edit);
         //t.setTypeface(type);
-        TextView n = (TextView) findViewById(R.id.con_name_label);
+        TextView name = (TextView) findViewById(R.id.con_name_edit);
         //n.setTypeface(type);
-        TextView e = (TextView) findViewById(R.id.con_email_label);
+        TextView email = (TextView) findViewById(R.id.con_email_edit);
         //e.setTypeface(type);
-        TextView p = (TextView) findViewById(R.id.con_phone_label);
+        TextView phone = (TextView) findViewById(R.id.con_phone_edit);
         //p.setTypeface(type);
-        TextView no = (TextView) findViewById(R.id.con_note_label);
+        TextView note = (TextView) findViewById(R.id.con_note_edit);
         //no.setTypeface(type);
 
         for(Contact contact : contacts)
@@ -64,44 +64,39 @@ public class ContactsDetailViewActivity extends AppCompatActivity {
                 if(Objects.equals(contact.getNickname(), con_nickname))
                 {
                     this.contact = contact;
-                    EditText nickname = (EditText)findViewById(R.id.con_nickname_edit);
                     assert nickname != null;
-                    if(contact.getNickname() == null)
+                    if(contact.getNickname() != null)
                     {
                         //nickname.setTypeface(type);
-                        nickname.setText(this.con_nickname);
-                    }
-                    else
-                    {
                         nickname.setText(contact.getNickname());
                     }
 
-                    // TODO: die funktionen sind noch nicht implementiert
-                    this.name = "no Name entered";
-                    EditText name = (EditText)findViewById(R.id.con_name_edit);
-                    assert name != null;
-                    //name.setTypeface(type);
-                    name.setHint(this.name);
+                    if(contact.getName() != null)
+                    {
+                        //name.setTypeface(type);
+                        name.setText(contact.getName());
+                    }
+
+                    if(contact.getEmail() != null)
+                    {
+                        //name.setTypeface(type);
+                        email.setText(contact.getEmail());
+                    }
+
+                    //TODO: bei mehreren Nummern muss noch eine TextEdit rangehangen werden
+                    if(contact.getTelephoneNumber() != null)
+                    {
+                        //name.setTypeface(type);
+                        phone.setText(contact.getTelephoneNumber().get(0));
+                    }
 
 
-                    this.email= "no email";
-                    EditText email = (EditText)findViewById(R.id.con_email_edit);
-                    assert email != null;
-                    //email.setTypeface(type);
-                    email.setHint(this.email);
+                    if(contact.getNote() != null)
+                    {
+                        //name.setTypeface(type);
+                        note.setText(contact.getNote());
+                    }
 
-
-                    this.phone= "no phone";
-                    EditText phone = (EditText)findViewById(R.id.con_phone_edit);
-                    assert phone != null;
-                    //phone.setTypeface(type);
-                    phone.setHint(this.phone);
-
-                    this.note= "no note";
-                    EditText note = (EditText)findViewById(R.id.con_not_edit);
-                    assert note != null;
-                    //note.setTypeface(type);
-                    note.setHint(this.note);
                 }
             } catch (SharkKBException e1) {
                 e1.printStackTrace();

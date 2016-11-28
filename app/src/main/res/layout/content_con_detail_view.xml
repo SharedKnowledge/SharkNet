@@ -41,7 +41,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:theme="@style/MyEditTextTheme"
-
                     android:hint="@string/nickname"
                     android:ems="10"
                     android:id="@+id/con_nickname_edit"/>
@@ -110,7 +109,7 @@
 
                 android:hint="@string/some_notes"
                 android:ems="10"
-                android:id="@+id/con_not_edit"/>
+                android:id="@+id/con_note_edit"/>
 
     </LinearLayout>
 </ScrollView>

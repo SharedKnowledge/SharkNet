@@ -3,6 +3,7 @@ package net.sharksystem.sharknet.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,6 @@ public class ContactsActivity extends BaseActivity {
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-
         ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.line_item_con,contacts);
         ListView lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)

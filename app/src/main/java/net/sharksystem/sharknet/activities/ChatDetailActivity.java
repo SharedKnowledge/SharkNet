@@ -80,8 +80,6 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-//        TODO: back button not working properly
-
     }
 
     @Override
