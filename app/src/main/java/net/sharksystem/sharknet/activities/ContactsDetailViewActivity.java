@@ -3,9 +3,12 @@ package net.sharksystem.sharknet.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,12 +20,13 @@ import net.sharksystem.sharknet.R;
 import java.util.List;
 import java.util.Objects;
 
-public class ContactsDetailViewActivity extends AppCompatActivity {
+public class ContactsDetailViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String con_nickname;
     private Contact contact;
     private List<Contact> contacts;
     private String name,email,phone,note;
+    private Button block,delete;
 
 
     @Override
@@ -47,6 +51,10 @@ public class ContactsDetailViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        block = (Button) findViewById(R.id.btn_block);
+        delete= (Button) findViewById(R.id.btn_delete);
+        block.setOnClickListener(this);
+        delete.setOnClickListener(this);
         TextView nickname = (TextView) findViewById(R.id.con_nickname_edit);
         //t.setTypeface(type);
         TextView name = (TextView) findViewById(R.id.con_name_edit);
@@ -141,4 +149,30 @@ public class ContactsDetailViewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+//            TODO: ist noch nicht implementiert von der API-Seite
+//            case R.id.btn_block:
+//                try {
+//                    Log.d("testi",this.contact.getName());
+//                    SharkNetEngine.getSharkNet().getMyProfile().getBlacklist().add(this.contact);
+//                    finish();
+//                } catch (SharkKBException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+//            case R.id.btn_delete:
+//                try {
+//                    Log.d("testi",this.contact.getName());
+//                    contact.delete();
+//                    finish();
+//                } catch (SharkKBException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+
+        }
+    }
 }

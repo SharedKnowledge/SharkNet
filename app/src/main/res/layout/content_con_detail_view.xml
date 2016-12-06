@@ -111,6 +111,23 @@
                 android:ems="10"
                 android:id="@+id/con_note_edit"/>
 
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:textColor="@color/abc_primary_text_disable_only_material_dark"
+                android:id="@+id/btn_block"
+                android:text="block contact"/>
+            <Button android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:textColor="@color/abc_primary_text_disable_only_material_dark"
+                    android:id="@+id/btn_delete"
+                    android:text="delete contact"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 </RelativeLayout>
