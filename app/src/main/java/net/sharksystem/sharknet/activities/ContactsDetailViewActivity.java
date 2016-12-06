@@ -1,5 +1,6 @@
 package net.sharksystem.sharknet.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,10 +28,11 @@ public class ContactsDetailViewActivity extends AppCompatActivity implements Vie
     private List<Contact> contacts;
     private String name,email,phone,note;
     private Button block,delete;
-
+    private static final String CONTACT_NICKNAME = "CONTACT_NICKNAME";
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.con_detail_menu, menu);
         return true;
@@ -143,6 +145,16 @@ public class ContactsDetailViewActivity extends AppCompatActivity implements Vie
             //ContactsDetailViewActivity.this.contact.setPublicKey();
             finish();
             return true;
+        }
+        if(id == R.id.nfc)
+        {
+            Intent intent = new Intent(ContactsDetailViewActivity.this,NFCActivity.class);
+            try {
+                intent.putExtra(CONTACT_NICKNAME,contact.getNickname());
+            } catch (SharkKBException e) {
+                e.printStackTrace();
+            }
+            startActivity(intent);
         }
 
 

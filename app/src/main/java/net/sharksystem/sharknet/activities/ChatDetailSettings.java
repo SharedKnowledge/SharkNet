@@ -49,7 +49,6 @@ public class ChatDetailSettings extends AppCompatActivity implements View.OnClic
                 //identifies the chat
                 intent.putExtra(CHAT_ID, chatID);
                 startActivity(intent);
-                Log.d("test","testi");
             }
         });
 

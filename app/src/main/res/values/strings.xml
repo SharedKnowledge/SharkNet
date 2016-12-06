@@ -75,4 +75,5 @@
     <string name="attachment">attachment</string>
     <string name="file">file</string>
     <string name="title_activity_chat_detail_settings">ChatDetailSettings</string>
+    <string name="title_activity_nfc">NFCActivity</string>
 </resources>

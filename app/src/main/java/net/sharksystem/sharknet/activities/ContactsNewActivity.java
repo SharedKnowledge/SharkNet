@@ -1,5 +1,6 @@
 package net.sharksystem.sharknet.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,6 +43,11 @@ public class ContactsNewActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.nfc)
+        {
+            Intent intent = new Intent(ContactsNewActivity.this,NFCActivity.class);
+            startActivity(intent);
         }
         if (id == R.id.save)
         {

@@ -121,6 +121,9 @@
                 android:textColor="@color/abc_primary_text_disable_only_material_dark"
                 android:id="@+id/btn_block"
                 android:text="block contact"/>
+            <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"/>
             <Button android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorAccent"
