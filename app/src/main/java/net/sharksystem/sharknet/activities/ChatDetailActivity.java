@@ -25,15 +25,20 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import android.widget.LinearLayout;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.sync.SyncKB;
+import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
@@ -52,8 +57,8 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class ChatDetailActivity extends AppCompatActivity implements View.OnClickListener
-{
+public class ChatDetailActivity extends AppCompatActivity implements View.OnClickListener, SyncKB.SyncChangeListener {
+
     public static final int ADD_CONTACT = 1050;
     private static final int REQUEST_MICROPHONE = 101;
     private net.sharksystem.api.interfaces.Chat chat;
@@ -172,11 +177,13 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(t);
         mRevealView.setVisibility(View.INVISIBLE);
 
+        L.d("ChatId: "+ chatID, this);
 
         assert chats != null;
         for (net.sharksystem.api.interfaces.Chat chat : chats) {
             try {
                 if (Objects.equals(chat.getID(), chatID)) {
+                    L.d("We found our chat!", this);
                     try {
                         msgs = chat.getMessages(false);
                     } catch (SharkKBException e) {
@@ -223,20 +230,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                     msgListAdapter.notifyDataSetChanged();
 
                     try {
-                        for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
-                            if (Objects.equals(c.getID(), chat.getID())) {
-                                msgListAdapter = new MsgListAdapter(chat.getMessages(false));
-                                RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
-                                if (lv != null) {
-                                    LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-                                    lv.setLayoutManager(llm);
-                                    llm.setStackFromEnd(true);
-                                    lv.setItemAnimator(new DefaultItemAnimator());
-                                    lv.setAdapter(msgListAdapter);
-                                    lv.scrollToPosition(chat.getMessages(false).size() - 1);
-                                }
-                            }
-                        }
+                        updateMessages();
                     } catch (SharkKBException e) {
                         e.printStackTrace();
                     }
@@ -298,6 +292,19 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         return true;
     }
 
+    private void updateMessages() throws SharkKBException {
+        this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
+        RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
+        if (lv != null) {
+            LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+            lv.setLayoutManager(llm);
+            llm.setStackFromEnd(true);
+            lv.setItemAnimator(new DefaultItemAnimator());
+            lv.setAdapter(msgListAdapter);
+            lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
+        }
+    }
+
     public void sendMessage(View view) throws JSONException, SharkKBException {
         EditText msg_text = (EditText) findViewById(R.id.write_msg_edit_text);
 
@@ -314,20 +321,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                 this.chat.update();
                 this.msgListAdapter.notifyDataSetChanged();
                 msg_text.getText().clear();
-                for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
-                    if (Objects.equals(c.getID(), this.chat.getID())) {
-                        this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
-                        RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
-                        if (lv != null) {
-                            LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-                            lv.setLayoutManager(llm);
-                            llm.setStackFromEnd(true);
-                            lv.setItemAnimator(new DefaultItemAnimator());
-                            lv.setAdapter(msgListAdapter);
-                            lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
-                        }
-                    }
-                }
+                this.updateMessages();
             }
         }
 
@@ -410,20 +404,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                 this.msgListAdapter.notifyDataSetChanged();
 
                 try {
-                    for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
-                        if (Objects.equals(c.getID(), this.chat.getID())) {
-                            this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
-                            RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
-                            if (lv != null) {
-                                LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-                                lv.setLayoutManager(llm);
-                                llm.setStackFromEnd(true);
-                                lv.setItemAnimator(new DefaultItemAnimator());
-                                lv.setAdapter(msgListAdapter);
-                                lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
-                            }
-                        }
-                    }
+                    this.updateMessages();
                 } catch (SharkKBException e) {
                     e.printStackTrace();
                 }
@@ -460,20 +441,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             this.msgListAdapter.notifyDataSetChanged();
 
             try {
-                for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
-                    if (Objects.equals(c.getID(), this.chat.getID())) {
-                        this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
-                        RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
-                        if (lv != null) {
-                            LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-                            lv.setLayoutManager(llm);
-                            llm.setStackFromEnd(true);
-                            lv.setItemAnimator(new DefaultItemAnimator());
-                            lv.setAdapter(msgListAdapter);
-                            lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
-                        }
-                    }
-                }
+                this.updateMessages();
             } catch (SharkKBException e) {
                 e.printStackTrace();
             }
@@ -482,20 +450,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 
         this.msgListAdapter.notifyDataSetChanged();
         try {
-            for (net.sharksystem.api.interfaces.Chat c : SharkNetEngine.getSharkNet().getChats()) {
-                if (Objects.equals(c.getID(), this.chat.getID())) {
-                    this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));
-                    RecyclerView lv = (RecyclerView) findViewById(R.id.msg_list_view);
-                    if (lv != null) {
-                        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-                        lv.setLayoutManager(llm);
-                        llm.setStackFromEnd(true);
-                        lv.setItemAnimator(new DefaultItemAnimator());
-                        lv.setAdapter(msgListAdapter);
-                        lv.scrollToPosition(this.chat.getMessages(false).size() - 1);
-                    }
-                }
-            }
+            this.updateMessages();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -666,6 +621,17 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                 mRevealView.setVisibility(View.INVISIBLE);
                 hidden = true;
                 break;
+        }
+    }
+
+    @Override
+    public void onChange() {
+        try {
+            this.chat.update();
+            this.msgListAdapter.notifyDataSetChanged();
+            this.updateMessages();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
         }
     }
 }

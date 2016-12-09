@@ -79,42 +79,42 @@ public class Dummy {
         // Create contacts
 
         Contact alice = engine.newContact(aliceName, aliceSI);
-        alice.setEmail(aliceMail);
+//        alice.setEmail(aliceMail);
         alice.setNickname(aliceNickName);
         alice.addTelephoneNumber(aliceTelephoneHome);
         alice.addTelephoneNumber(aliceTelephoneMobile);
         alice.addNote(aliceNote);
 
         Contact bob = engine.newContact(bobName, bobSI);
-        bob.setEmail(bobMail);
+//        bob.setEmail(bobMail);
         bob.setNickname(bobNickName);
         bob.addTelephoneNumber(bobTelephoneHome);
         bob.addTelephoneNumber(bobTelephoneMobile);
         bob.addNote(bobNote);
 
         Contact charlie = engine.newContact(charlieName, charlieSI);
-        charlie.setEmail(charlieMail);
+//        charlie.setEmail(charlieMail);
         charlie.setNickname(charlieNickName);
         charlie.addTelephoneNumber(charlieTelephoneHome);
         charlie.addTelephoneNumber(charlieTelephoneMobile);
         charlie.addNote(charlieNote);
 
         Profile david = engine.newProfile(davidName, davidSI);
-        david.setEmail(davidMail);
+//        david.setEmail(davidMail);
         david.setNickname(davidNickName);
         david.addTelephoneNumber(davidTelephoneHome);
         david.addTelephoneNumber(davidTelephoneMobile);
         david.addNote(davidNote);
 
         Profile elise = engine.newProfile(eliseName, eliseSI);
-        elise.setEmail(eliseMail);
+//        elise.setEmail(eliseMail);
         elise.setNickname(eliseNickName);
         elise.addTelephoneNumber(eliseTelephoneHome);
         elise.addTelephoneNumber(eliseTelephoneMobile);
         elise.addNote(eliseNote);
 
         Profile frank = engine.newProfile(frankName, frankSI);
-        frank.setEmail(frankMail);
+//        frank.setEmail(frankMail);
         frank.setNickname(frankNickName);
         frank.addTelephoneNumber(frankTelephoneHome);
         frank.addTelephoneNumber(frankTelephoneMobile);

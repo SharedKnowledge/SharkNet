@@ -12,12 +12,13 @@ import android.widget.ListView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.adapters.ChatListAdapter;
 
 import java.util.List;
 
-public class ChatActivity extends BaseActivity {
+public class ChatActivity extends BaseActivity implements SharkNetEngine.EventListener {
 
     public static final String CHAT_ID = "CHAT_ID";
     private List<net.sharksystem.api.interfaces.Chat> chats;
@@ -115,7 +116,34 @@ public class ChatActivity extends BaseActivity {
             return true;
         }
 
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onNewChat(Chat chat) {
+        try {
+            chats = SharkNetEngine.getSharkNet().getChats();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.line_item_chat, chats);
+        ListView lv = (ListView) findViewById(R.id.chatsListView);
+
+        if (lv != null) {
+            lv.setAdapter(chatListAdapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
+                    //identifies the chat for the detailView
+                    try {
+                        intent.putExtra(CHAT_ID, chats.get(position).getID());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

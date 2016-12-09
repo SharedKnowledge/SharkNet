@@ -46,9 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             Dummy.createDummyData();
-        } catch (SharkKBException | JSONException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (SharkKBException | JSONException | InterruptedException e) {
             e.printStackTrace();
         }
         index = 0;

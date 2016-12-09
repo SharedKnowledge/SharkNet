@@ -9,30 +9,10 @@
     tools:context="net.sharksystem.sharknet.activities.RadarActivity"
     tools:showIn="@layout/app_bar_radar">
 
-    <LinearLayout
+    <ListView
+        android:padding="16dp"
+        android:id="@+id/radar_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ListView
-            android:padding="16dp"
-            android:id="@+id/radar_list_view"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="4"/>
-
-        <TextView
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:padding="10dp"
-            android:text="This is just a sample"
-            android:textColor="@android:color/white"
-            android:background="@android:color/background_dark"
-            android:layout_weight="1"
-            android:id="@+id/radar_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-
-    </LinearLayout>
-
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
