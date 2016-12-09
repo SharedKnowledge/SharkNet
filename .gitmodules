@@ -1,3 +1,3 @@
 [submodule "SharkNet-Api-Android"]
 	path = SharkNet-Api-Android
-	url = git@github.com:SharedKnowledge/SharkNet-Api-Android.git
+	url = https://github.com/SharedKnowledge/SharkNet-Api-Android.git
