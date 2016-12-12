@@ -61,7 +61,8 @@ public class ContactsNewActivity extends AppCompatActivity {
             EditText note = (EditText) findViewById(R.id.con_not_edit);
 
             assert nickname != null;
-            // TODO: bei Timmo nachfragen ob ich so richtig mache
+            // TODO: muss noch geschaut werden ob es so richtig ist
+            // kommt eine newContact(Contact)
             try {
                 SharkNetEngine.getSharkNet().newContact(nickname.getText().toString(),"234234234","public key lkajljk234234");
             } catch (SharkKBException e) {

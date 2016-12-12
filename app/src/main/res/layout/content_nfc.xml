@@ -13,5 +13,91 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_nfc"
         tools:context="net.sharksystem.sharknet.activities.NFCActivity">
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
 
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="wrap_content">
+
+            <TextView android:layout_width="wrap_content"
+                      android:text="Your Name: "
+                      android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="TextView"
+                    android:maxLines="1"
+                    android:hint="kein Name hinterlegt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/nfc_name"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content"
+                      android:text="Your Public Key: "
+                      android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="TextView"
+                    android:maxLines="1"
+                    android:hint="no Key entered!"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nfc_key"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:id="@+id/nfc_layout_found_name"
+                      android:visibility="invisible"
+                      android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content"
+                      android:text="Found Name: "
+                      android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="TextView"
+                    android:hint="no Name entered"
+                    android:maxLines="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nfc_found_name"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:id="@+id/nfc_layout_found_key"
+                      android:visibility="invisible"
+                      android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content"
+                      android:text="Found Public Key: "
+                      android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="TextView"
+                    android:hint="no Key entered!"
+                    android:maxLines="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nfc_found_key"/>
+        </LinearLayout>
+        <Button android:layout_width="wrap_content"
+                android:text="ACCEPT"
+                android:visibility="invisible"
+                android:id="@+id/nfc_accept"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <RelativeLayout
+            android:id="@+id/nfc_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+    </RelativeLayout>
 </RelativeLayout>

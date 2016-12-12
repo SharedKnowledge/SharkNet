@@ -47,6 +47,8 @@ public class ChatDetailAddContactActivity extends AppCompatActivity
             e.printStackTrace();
         }
         // TODO: Kontakte die bereits im ChatActivity sind sollen rausgenommen werden durch ChatID!!
+//        TODO: nicht rausnehmen sondern kennzeichnen mit icon dass sie schon drin sind
+
         ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.line_item_con_new_chat,contacts);
         lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)

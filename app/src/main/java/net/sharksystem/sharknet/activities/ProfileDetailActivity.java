@@ -58,7 +58,7 @@ public class ProfileDetailActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
                 //TODO: mycontact.setPicture();
-                //TODO: mycontact.setUID();
+                //TODO: mycontact.setUID(); soll raus
                 //TODO: mycontact.setPublicKey();
 
                 finish();
