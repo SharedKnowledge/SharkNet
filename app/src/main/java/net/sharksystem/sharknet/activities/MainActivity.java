@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void openChat(View view) {
 //        Intent inbox = new Intent(this, InboxActivity.class);
-        Intent radar = new Intent(this, RadarActivity.class);
+//        Intent radar = new Intent(this, RadarActivity.class);
+        Intent profile = new Intent(this, ProfileActivity.class);
 
         try {
             SharkNetEngine.getSharkNet().setActiveProfile(this.profiles.get(index), "");
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         Menu m = nv.getMenu();
         txtV.setTypeface(face);
 */
-        startActivity(radar);
+        startActivity(profile);
     }
 
     public void backProfile(View view) throws SharkKBException {

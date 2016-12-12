@@ -45,6 +45,7 @@ public class NFCActivity extends AppCompatActivity implements View.OnClickListen
                 startActivity(intent);
             }
         });
+        accept = (Button) findViewById(R.id.nfc_accept);
         accept.setOnClickListener(this);
         // hört auf das NFC
         SharkNetEngine.getSharkNet().exchangeContactNFC(this);
@@ -55,8 +56,6 @@ public class NFCActivity extends AppCompatActivity implements View.OnClickListen
 
         layout_found_name = (LinearLayout) findViewById(R.id.nfc_layout_found_name);
         layout_found_key = (LinearLayout) findViewById(R.id.nfc_layout_found_key);
-
-        accept = (Button) findViewById(R.id.nfc_accept);
 
         try {
             name.setText(SharkNetEngine.getSharkNet().getMyProfile().getName());
@@ -93,7 +92,9 @@ public class NFCActivity extends AppCompatActivity implements View.OnClickListen
                 } catch (SharkKBException e) {
                     e.printStackTrace();
                 }
-                finish();
+                Intent intent = new Intent(NFCActivity.this,ContactsActivity.class);
+                startActivity(intent);
+//                finish();
         }
     }
 

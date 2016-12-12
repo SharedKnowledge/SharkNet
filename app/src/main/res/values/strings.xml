@@ -76,4 +76,5 @@
     <string name="file">file</string>
     <string name="title_activity_chat_detail_settings">ChatDetailSettings</string>
     <string name="title_activity_nfc">NFCActivity</string>
+    <string name="title_activity_profile_keys">ProfileKeys</string>
 </resources>

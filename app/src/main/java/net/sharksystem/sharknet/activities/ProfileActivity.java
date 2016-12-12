@@ -8,15 +8,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.Button;
 import net.sharksystem.sharknet.R;
 
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity implements View.OnClickListener {
 
+    private Button detail, keys;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_profile);
         super.onCreate(savedInstanceState);
 
+        detail = (Button) findViewById(R.id.pro_edit_button);
+        keys = (Button) findViewById(R.id.pro_keys_button);
+        detail.setOnClickListener(this);
+        keys.setOnClickListener(this);
+        //TODO soll möglich machen ein neues Profil erstellen zu könnne
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,14 +63,27 @@ public class ProfileActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void callProfileDetail(View view)
+    @Override
+    public void onClick(View view)
     {
-        Intent intent = new Intent(this, ProfileDetailActivity.class);
-        startActivity(intent);
-    }
-    public void callProfileDetailInterests(View view)
-    {
-        Intent intent = new Intent(this, ProfileDetailInterestsActivity.class);
-        startActivity(intent);
+        Intent intent;
+        switch (view.getId())
+        {
+            case R.id.pro_edit_button:
+                intent = new Intent(this, ProfileDetailActivity.class);
+                startActivity(intent);
+                break;
+//TODO: nocht nicht in der API drin
+//            case R.id.pro_interests_button:
+//                intent = new Intent(this, ProfileDetailInterestsActivity.class);
+//                startActivity(intent);
+//                break;
+
+            case R.id.pro_keys_button:
+                intent = new Intent(this, ProfileKeys.class);
+                startActivity(intent);
+
+        }
+
     }
 }

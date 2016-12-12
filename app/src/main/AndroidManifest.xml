@@ -169,6 +169,15 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="net.sharksystem.sharknet.activities.ContactsDetailViewActivity"/>
         </activity>
+        <activity
+                android:name=".activities.ProfileKeys"
+                android:label="Keys"
+                android:parentActivityName=".activities.ProfileActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="net.sharksystem.sharknet.activities.ProfileActivity"/>
+        </activity>
     </application>
 
 </manifest>

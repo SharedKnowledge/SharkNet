@@ -25,13 +25,13 @@
                 android:backgroundTint="@color/sharknet"
                 android:text="@string/pro_edit"
                 android:id="@+id/pro_edit_button" android:layout_gravity="center_horizontal"
-                android:onClick="callProfileDetail"
         />
-        <Button android:layout_width="227dp" android:layout_height="wrap_content" android:text="@string/pro_interests"
-                android:id="@+id/pro_interests_button" android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/sharknet"
-                android:textColor="@color/abc_primary_text_material_dark"
-                android:onClick="callProfileDetailInterests"/>
+        <!--TODO: interests ist noch nicht implementiert in der API
+        <Button android:layout_width="227dp" android:layout_height="wrap_content" android:text="@string/pro_interests"-->
+                <!--android:id="@+id/pro_interests_button" android:layout_gravity="center_horizontal"-->
+                <!--android:backgroundTint="@color/sharknet"-->
+                <!--android:textColor="@color/abc_primary_text_material_dark"-->
+                />
         <Button
                 android:layout_width="222dp"
                 android:layout_height="wrap_content"
