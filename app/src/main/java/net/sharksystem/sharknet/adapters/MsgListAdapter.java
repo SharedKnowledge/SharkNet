@@ -20,7 +20,8 @@ import java.util.List;
 /**
  * Created by viktorowich on 01/06/16.
  */
-public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHolderBase> {
+public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHolderBase>
+{
     private List<Message> msgs;
     //Drawable check,cross;
 
@@ -215,6 +216,8 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
     public int getItemCount() {
         return msgs.size();
     }
+
+
 
     public class ViewHolderBase extends RecyclerView.ViewHolder {
         public TextView msg, timestamp;

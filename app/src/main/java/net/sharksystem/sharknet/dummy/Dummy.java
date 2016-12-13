@@ -84,6 +84,7 @@ public class Dummy {
         alice.addTelephoneNumber(aliceTelephoneHome);
         alice.addTelephoneNumber(aliceTelephoneMobile);
         alice.addNote(aliceNote);
+        alice.setPublicKey("2983749283490982304823094820394802398402398402938409238409238409238487239");
 
         Contact bob = engine.newContact(bobName, bobSI);
 //        bob.setEmail(bobMail);
@@ -91,6 +92,7 @@ public class Dummy {
         bob.addTelephoneNumber(bobTelephoneHome);
         bob.addTelephoneNumber(bobTelephoneMobile);
         bob.addNote(bobNote);
+        bob.setPublicKey("209284092384j2j34ou23o");
 
         Contact charlie = engine.newContact(charlieName, charlieSI);
 //        charlie.setEmail(charlieMail);
@@ -98,6 +100,8 @@ public class Dummy {
         charlie.addTelephoneNumber(charlieTelephoneHome);
         charlie.addTelephoneNumber(charlieTelephoneMobile);
         charlie.addNote(charlieNote);
+        charlie.setPublicKey("20928409238asdfasdf4j2j34ou23o");
+
 
         Profile david = engine.newProfile(davidName, davidSI);
 //        david.setEmail(davidMail);
@@ -105,6 +109,8 @@ public class Dummy {
         david.addTelephoneNumber(davidTelephoneHome);
         david.addTelephoneNumber(davidTelephoneMobile);
         david.addNote(davidNote);
+        david.setPublicKey("209284092384jasdfasdfasdfasdf2j34ou23o");
+
 
         Profile elise = engine.newProfile(eliseName, eliseSI);
 //        elise.setEmail(eliseMail);
@@ -112,6 +118,8 @@ public class Dummy {
         elise.addTelephoneNumber(eliseTelephoneHome);
         elise.addTelephoneNumber(eliseTelephoneMobile);
         elise.addNote(eliseNote);
+        elise.setPublicKey("209284092384j2j34ou23o");
+
 
         Profile frank = engine.newProfile(frankName, frankSI);
 //        frank.setEmail(frankMail);
@@ -119,6 +127,8 @@ public class Dummy {
         frank.addTelephoneNumber(frankTelephoneHome);
         frank.addTelephoneNumber(frankTelephoneMobile);
         frank.addNote(frankNote);
+        bob.setPublicKey("20928asdfasdf4092384j2j34ou23o");
+
 
         engine.setActiveProfile(david, "password");
 
