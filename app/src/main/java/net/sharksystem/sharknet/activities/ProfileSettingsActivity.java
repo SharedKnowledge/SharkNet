@@ -15,7 +15,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Spinner sync = (Spinner) findViewById(R.id.sync_spinner);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
