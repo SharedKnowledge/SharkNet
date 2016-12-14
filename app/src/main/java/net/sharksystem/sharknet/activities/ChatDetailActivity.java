@@ -215,8 +215,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 
                     FileInputStream fileStream = null;
                     try {
-                        fileStream = new FileInputStream(file
-                        );
+                        fileStream = new FileInputStream(file);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }

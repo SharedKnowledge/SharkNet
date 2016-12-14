@@ -43,6 +43,11 @@ public class RadarActivity extends BaseActivity implements RadarListener {
 
                 ArrayList<Contact> recipients = new ArrayList<>();
                 recipients.add(contact);
+                try {
+                    recipients.add(SharkNetEngine.getSharkNet().getMyProfile());
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
 
                 try {
                     Chat chat = SharkNetEngine.getSharkNet().newChat(recipients);

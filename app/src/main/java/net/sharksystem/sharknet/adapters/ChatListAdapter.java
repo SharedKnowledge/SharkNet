@@ -2,7 +2,6 @@ package net.sharksystem.sharknet.adapters;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.sharksystem.sharknet.R;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
+import net.sharksystem.sharknet.R;
 
 import java.util.List;
 
@@ -50,26 +49,28 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
         List<Message> msgs = null;
         try {
             msgs = chat.getMessages(false);
+//            L.d("Number of Messages for chat " + chat.getTitle() + ": " + msgs.size(), this);
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        Log.d("adapter", String.valueOf(msgs.size()));
-        Message last_msg = msgs.get(msgs.size() - 1);
-        String content = null;
-        try {
-            content = last_msg.getContent().getMessage();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        String sender = null;
-        try {
-            sender = last_msg.getSender().getNickname();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+        if(msgs.size()>0){
+            Message last_msg = msgs.get(msgs.size() - 1);
+            String content = null;
+            try {
+                content = last_msg.getContent().getMessage();
+            } catch (SharkKBException e) {
+                e.printStackTrace();
+            }
+            String sender = null;
+            try {
+                sender = last_msg.getSender().getNickname();
+            } catch (SharkKBException e) {
+                e.printStackTrace();
+            }
 
-        String last_msg_content = sender + ":" + content;
-        text.setText(last_msg_content);
+            String last_msg_content = sender + ":" + content;
+            text.setText(last_msg_content);
+        }
 
 
         //Image
