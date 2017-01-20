@@ -163,11 +163,7 @@
         <activity
                 android:name=".activities.NFCActivity"
                 android:label="NFC Search"
-                android:parentActivityName=".activities.ContactsDetailViewActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="net.sharksystem.sharknet.activities.ContactsDetailViewActivity"/>
         </activity>
         <activity
                 android:name=".activities.ProfileKeys"

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import net.sharkfw.kep.SharkProtocolNotSupportedException;
+import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void openChat(View view) {
 //        Intent inbox = new Intent(this, InboxActivity.class);
-//        Intent radar = new Intent(this, RadarActivity.class);
-        Intent profile = new Intent(this, ProfileActivity.class);
+        Intent radar = new Intent(this, RadarActivity.class);
+//        Intent profile = new Intent(this, ProfileActivity.class);
 
         try {
             SharkNetEngine.getSharkNet().setActiveProfile(this.profiles.get(index), "");
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         Menu m = nv.getMenu();
         txtV.setTypeface(face);
 */
-        startActivity(profile);
+        startActivity(radar);
     }
 
     public void backProfile(View view) throws SharkKBException {

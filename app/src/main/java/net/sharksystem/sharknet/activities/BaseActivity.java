@@ -68,6 +68,9 @@ public class BaseActivity extends AppCompatActivity
             case R.id.radar:
                 startActivity(new Intent(this, RadarActivity.class));
                 return true;
+            case R.id.nfc:
+                startActivity(new Intent(this, NFCActivity.class));
+                return true;
             default:
                 break;
 
