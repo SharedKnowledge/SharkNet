@@ -1,9 +1,9 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.profile;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Spinner;
+
 import net.sharksystem.sharknet.R;
 
 public class ProfileSettingsActivity extends AppCompatActivity {

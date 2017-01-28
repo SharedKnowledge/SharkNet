@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.dummy.Dummy;
+import net.sharksystem.sharknet.radar.RadarActivity;
 
 import org.json.JSONException;
 

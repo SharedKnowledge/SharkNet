@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.adapters;
+package net.sharksystem.sharknet.radar;
 
 import android.content.Context;
 import android.view.LayoutInflater;

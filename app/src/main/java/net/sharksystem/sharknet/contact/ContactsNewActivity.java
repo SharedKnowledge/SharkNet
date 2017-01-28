@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.contact;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.nfc.NFCActivity;
 
 public class ContactsNewActivity extends AppCompatActivity {
 

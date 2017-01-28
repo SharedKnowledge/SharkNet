@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.inbox;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

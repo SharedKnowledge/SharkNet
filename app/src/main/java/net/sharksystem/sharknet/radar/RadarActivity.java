@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.radar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,9 @@ import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.RadarListener;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.adapters.RadarListAdapter;
+import net.sharksystem.sharknet.chat.ChatDetailActivity;
 
 import org.json.JSONException;
 

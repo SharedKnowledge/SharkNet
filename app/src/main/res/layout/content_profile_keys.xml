@@ -13,7 +13,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_profile_keys"
 
-        tools:context="net.sharksystem.sharknet.activities.ProfileKeys">
+        tools:context=".profile.ProfileKeys">
 
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

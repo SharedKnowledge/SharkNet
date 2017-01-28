@@ -1,10 +1,9 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.contact;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +16,7 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.nfc.NFCActivity;
 
 import java.util.List;
 import java.util.Objects;

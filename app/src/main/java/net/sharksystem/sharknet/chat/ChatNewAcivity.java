@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.chat;
 
 
 import android.content.Intent;
@@ -19,7 +19,6 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.adapters.ChatNewConListAdapter;
 
 import org.json.JSONException;
 

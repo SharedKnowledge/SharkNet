@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.chat.ChatActivity;
+import net.sharksystem.sharknet.contact.ContactsActivity;
+import net.sharksystem.sharknet.inbox.InboxActivity;
+import net.sharksystem.sharknet.nfc.NFCActivity;
+import net.sharksystem.sharknet.profile.ProfileActivity;
+import net.sharksystem.sharknet.radar.RadarActivity;
 
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener

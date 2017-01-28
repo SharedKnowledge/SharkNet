@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.profile;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

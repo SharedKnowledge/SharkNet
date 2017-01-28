@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.adapters;
+package net.sharksystem.sharknet.inbox;
 
 import android.content.Context;
 import android.view.LayoutInflater;

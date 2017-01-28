@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.nfc;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,9 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.SharkNet;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.contact.ContactsActivity;
 
 public class NFCActivity extends BaseActivity implements View.OnClickListener, SharkNet.NFCListener{
 

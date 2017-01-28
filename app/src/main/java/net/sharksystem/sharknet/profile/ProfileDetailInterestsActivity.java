@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.activities.NewInterestActivity;
 import net.sharksystem.sharknet.adapters.InterestsListAdapter;
 
 public class ProfileDetailInterestsActivity extends AppCompatActivity

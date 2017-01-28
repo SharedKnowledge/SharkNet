@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
+
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 
 public class ProfileActivity extends BaseActivity implements View.OnClickListener {

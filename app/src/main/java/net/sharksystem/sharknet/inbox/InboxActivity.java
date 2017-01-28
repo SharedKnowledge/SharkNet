@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.inbox;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.ListView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Feed;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.adapters.InboxListAdapter;
 
 import java.util.List;
 

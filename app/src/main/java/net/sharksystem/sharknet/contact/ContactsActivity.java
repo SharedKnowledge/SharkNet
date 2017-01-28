@@ -1,9 +1,8 @@
-package net.sharksystem.sharknet.activities;
+package net.sharksystem.sharknet.contact;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +12,8 @@ import android.widget.ListView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.adapters.ContactsListAdapter;
 
 import java.util.List;
 
