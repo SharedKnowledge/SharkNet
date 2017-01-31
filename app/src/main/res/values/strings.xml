@@ -78,4 +78,23 @@
     <string name="title_activity_chat_detail_settings">ChatDetailSettings</string>
     <string name="title_activity_nfc">NFCActivity</string>
     <string name="title_activity_profile_keys">ProfileKeys</string>
+
+    <!--SideNav / Menu-->
+    <!-- SideNav / Menu -->
+    <string name="sidenav_drawer_open">open</string>
+    <string name="sidenav_drawer_close">close</string>
+
+    <!--<string name="sidenav_menu_cat_system">System</string>-->
+    <!--<string name="sidenav_item_settings">Settings</string>-->
+    <!--<string name="sidenav_item_log">Logs</string>-->
+
+    <string name="sidenav_menu_cat_modules">Modules</string>
+    <string name="sidenav_item_radar">Radar</string>
+    <string name="sidenav_item_contacts">Kontakte</string>
+    <string name="sidenav_item_chats">Chats</string>
+    <string name="sidenav_item_profile">Profil</string>
+    <string name="sidenav_item_nfc">NFC</string>
+    <string name="sidenav_item_inbox">Inbox</string>
+
+
 </resources>
