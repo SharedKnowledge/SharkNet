@@ -37,28 +37,28 @@
         </activity>
         <activity
                 android:name=".contact.ContactsActivity"
-                android:label="@string/title_activity_contacts"
+                android:label="@string/activity_title_contacts"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
                 android:name=".chat.ChatActivity"
-                android:label="@string/title_activity_chat"
+                android:label="@string/activity_title_chat"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
                 android:name=".inbox.InboxActivity"
-                android:label="@string/title_activity_inbox"
+                android:label="@string/activity_title_inbox"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
                 android:name=".profile.ProfileActivity"
-                android:label="@string/title_activity_profile"
+                android:label="@string/activity_title_profile"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
                 android:name=".chat.ChatDetailActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="@string/title_activity_chat_detail"
+                android:label="@string/activity_title_chat_detail"
                 android:parentActivityName=".chat.ChatActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -67,7 +67,7 @@
         </activity>
         <activity
                 android:name=".chat.ChatNewActivity"
-                android:label="@string/title_activity_chat_new"
+                android:label="@string/activity_title_chat_new"
                 android:parentActivityName=".chat.ChatActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -76,7 +76,7 @@
         </activity>
         <activity
                 android:name=".contact.ContactsDetailViewActivity"
-                android:label="@string/title_activity_con_detail_view"
+                android:label="@string/activity_title_con_detail_view"
                 android:parentActivityName=".contact.ContactsActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -85,7 +85,7 @@
         </activity>
         <activity
                 android:name=".profile.ProfileDetailActivity"
-                android:label="@string/title_activity_profile_detail"
+                android:label="@string/activity_title_profile_detail"
                 android:parentActivityName=".profile.ProfileActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -94,7 +94,7 @@
         </activity>
         <activity
                 android:name=".contact.ContactsNewActivity"
-                android:label="@string/title_activity_con_new"
+                android:label="@string/activity_title_con_new"
                 android:parentActivityName=".contact.ContactsActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -103,7 +103,7 @@
         </activity>
         <activity
                 android:name=".profile.ProfileDetailInterestsActivity"
-                android:label="@string/title_activity_profile_detail_interests"
+                android:label="@string/activity_title_profile_detail_interests"
                 android:parentActivityName=".profile.ProfileDetailActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -112,7 +112,7 @@
         </activity>
         <activity
                 android:name=".inbox.InboxNewFeedActivity"
-                android:label="@string/title_activity_timeline_detail_view"
+                android:label="@string/activity_title_timeline_detail_view"
                 android:parentActivityName=".inbox.InboxActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -121,7 +121,7 @@
         </activity>
         <activity
                 android:name=".profile.ProfileSettingsActivity"
-                android:label="@string/title_activity_profile_settings"
+                android:label="@string/activity_title_profile_settings"
                 android:parentActivityName=".profile.ProfileActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -130,7 +130,7 @@
         </activity>
         <activity
                 android:name=".profile.NewInterestActivity"
-                android:label="@string/title_activity_new_interest"
+                android:label="@string/activity_title_new_interest"
                 android:parentActivityName=".profile.ProfileDetailInterestsActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -139,7 +139,7 @@
         </activity>
         <activity
                 android:name=".chat.ChatDetailAddContactActivity"
-                android:label="@string/title_activity_chat_detail_add_contact"
+                android:label="@string/activity_title_chat_detail_add_contact"
                 android:parentActivityName=".chat.ChatDetailActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -148,12 +148,12 @@
         </activity>
         <activity
                 android:name=".radar.RadarActivity"
-                android:label="@string/title_activity_radar"
+                android:label="@string/activity_title_radar"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
                 android:name=".chat.ChatDetailSettings"
-                android:label="Settings"
+                android:label="@string/activity_title_chat_detail_settings"
                 android:parentActivityName=".chat.ChatDetailActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -162,12 +162,12 @@
         </activity>
         <activity
                 android:name=".nfc.NFCActivity"
-                android:label="NFC Search"
+                android:label="@string/activity_title_nfc"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
                 android:name=".profile.ProfileKeys"
-                android:label="Keys"
+                android:label="@string/activity_title_profile_keys"
                 android:parentActivityName=".profile.ProfileActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data

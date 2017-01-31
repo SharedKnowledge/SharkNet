@@ -14,6 +14,8 @@ import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.RadarListener;
 import net.sharksystem.sharknet.BaseActivity;
+import net.sharksystem.sharknet.NavigationDrawerActivity;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.chat.ChatDetailActivity;
 
@@ -22,7 +24,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RadarActivity extends BaseActivity implements RadarListener {
+public class RadarActivity extends NavigationDrawerActivity implements RadarListener {
 
     public static final String CHAT_ID = "CHAT_ID";
 
@@ -64,8 +66,8 @@ public class RadarActivity extends BaseActivity implements RadarListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_radar);
         super.onCreate(savedInstanceState);
+        setLayoutResource(R.layout.content_radar);
     }
 
     @Override

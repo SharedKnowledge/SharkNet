@@ -146,7 +146,7 @@ public class ContactsDetailViewActivity extends AppCompatActivity implements Vie
             finish();
             return true;
         }
-        if(id == R.id.nfc)
+        if(id == R.id.sidenav_nfc)
         {
             Intent intent = new Intent(ContactsDetailViewActivity.this,NFCActivity.class);
             try {

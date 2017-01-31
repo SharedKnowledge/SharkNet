@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--TODO: es soll das Menu geändert werden, sodass auch die Hausaufgaben mit reinkommen-->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/sidenav_inbox"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_inbox" />
+        <item
+            android:id="@+id/sidenav_chat"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_chats" />
+        <item
+            android:id="@+id/sidenav_profile"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_profile" />
+        <item
+            android:id="@+id/sidenav_contact"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_contacts" />
+        <item
+            android:id="@+id/sidenav_radar"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_radar" />
+        <item
+            android:id="@+id/sidenav_nfc"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_nfc" />
+    </group>
+    <!--
+        <item android:title="@string/action_settings">
+            <menu>
+                <item
+                        android:id="@+id/nav_share"
+                        android:title="@string/about"/>
+                <item
+                        android:id="@+id/nav_send"
+                        android:title="@string/help"/>
+            </menu>
+        </item>
+    -->
+</menu>

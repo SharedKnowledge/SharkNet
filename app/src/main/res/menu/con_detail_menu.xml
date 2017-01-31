@@ -9,7 +9,7 @@
           android:icon="@drawable/ic_check_white_48dp"
           android:title="@string/save"
           app:showAsAction="always"/>
-    <item android:id="@+id/nfc"
+    <item android:id="@+id/sidenav_nfc"
           android:title="@string/nfc"
           android:orderInCategory="100"
           android:icon="@drawable/ic_nfc_white_48dp"

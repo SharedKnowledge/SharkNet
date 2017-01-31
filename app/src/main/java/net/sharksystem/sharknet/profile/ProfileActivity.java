@@ -11,15 +11,17 @@ import android.view.View;
 import android.widget.Button;
 
 import net.sharksystem.sharknet.BaseActivity;
+import net.sharksystem.sharknet.NavigationDrawerActivity;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
-public class ProfileActivity extends BaseActivity implements View.OnClickListener {
+public class ProfileActivity extends NavigationDrawerActivity implements View.OnClickListener {
 
     private Button detail, keys;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_profile);
         super.onCreate(savedInstanceState);
+        setLayoutResource(R.layout.content_profile);
 
         detail = (Button) findViewById(R.id.pro_edit_button);
         keys = (Button) findViewById(R.id.pro_keys_button);

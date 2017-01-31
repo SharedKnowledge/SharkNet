@@ -45,7 +45,7 @@ public class ContactsNewActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.nfc)
+        if (id == R.id.sidenav_nfc)
         {
             Intent intent = new Intent(ContactsNewActivity.this,NFCActivity.class);
             startActivity(intent);

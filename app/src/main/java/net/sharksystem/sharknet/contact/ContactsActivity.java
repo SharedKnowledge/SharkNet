@@ -13,11 +13,13 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.BaseActivity;
+import net.sharksystem.sharknet.NavigationDrawerActivity;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
 import java.util.List;
 
-public class ContactsActivity extends BaseActivity {
+public class ContactsActivity extends NavigationDrawerActivity {
 
     private static final String CONTACT_NICKNAME = "CONTACT_NICKNAME";
     private List<Contact> contacts;
@@ -54,8 +56,8 @@ public class ContactsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_contacts);
         super.onCreate(savedInstanceState);
+        setLayoutResource(R.layout.content_contacts);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;

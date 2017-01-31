@@ -13,11 +13,13 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Feed;
 import net.sharksystem.sharknet.BaseActivity;
+import net.sharksystem.sharknet.NavigationDrawerActivity;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
 import java.util.List;
 
-public class InboxActivity extends BaseActivity {
+public class InboxActivity extends NavigationDrawerActivity {
     private List<Feed> feeds;
     public InboxListAdapter inboxListAdapter;
 
@@ -47,8 +49,8 @@ public class InboxActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_timeline);
         super.onCreate(savedInstanceState);
+        setLayoutResource(R.layout.content_timeline);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;

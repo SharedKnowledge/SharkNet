@@ -20,12 +20,14 @@ import net.sharksystem.api.interfaces.SharkNet;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.api.shark.protocols.nfc.NfcMessageStub;
 import net.sharksystem.sharknet.BaseActivity;
+import net.sharksystem.sharknet.NavigationDrawerActivity;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.contact.ContactsActivity;
 
 import java.io.IOException;
 
-public class NFCActivity extends BaseActivity implements SharkNet.NFCListener, NfcMessageStub.NFCMessageListener{
+public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NFCListener, NfcMessageStub.NFCMessageListener{
 
     final Context context = this;
 
@@ -36,8 +38,8 @@ public class NFCActivity extends BaseActivity implements SharkNet.NFCListener, N
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_nfc);
         super.onCreate(savedInstanceState);
+        setLayoutResource(R.layout.content_nfc2);
 
         final AndroidSharkEngine sharkEngine = SharkNetEngine.getSharkNet().getSharkEngine();
 
