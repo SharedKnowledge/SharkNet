@@ -3,6 +3,7 @@ package net.sharksystem.sharknet;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -38,8 +39,15 @@ public class ParentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.system_parent_activity);
+        // Make FloatingActionButton invisible at default
+        findViewById(R.id.fab).setVisibility(View.GONE);
+    }
+
+    protected FloatingActionButton activateFloatingActionButton(){
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+        return fab;
     }
 
     protected void setOptionsMenu(int resource) {

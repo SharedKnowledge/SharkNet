@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactsActivity;
@@ -27,6 +28,8 @@ public class NavigationDrawerActivity extends ParentActivity implements Navigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.system_navigation_drawer_activity);
+        // Make FloatingActionButton invisible at default
+        findViewById(R.id.fab).setVisibility(View.GONE);
         installActionBarAndSideNavDrawer();
     }
 
