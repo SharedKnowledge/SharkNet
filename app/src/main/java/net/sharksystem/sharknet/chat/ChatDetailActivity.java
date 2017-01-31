@@ -41,6 +41,7 @@ import net.sharkfw.knowledgeBase.sync.SyncKB;
 import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Message;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
 import org.json.JSONException;
@@ -56,7 +57,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class ChatDetailActivity extends AppCompatActivity implements View.OnClickListener, SyncKB.SyncChangeListener {
+public class ChatDetailActivity extends ParentActivity implements View.OnClickListener, SyncKB.SyncChangeListener {
 
     public static final int ADD_CONTACT = 1050;
     private static final int REQUEST_MICROPHONE = 101;
@@ -89,6 +90,9 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_chat_detail);
+        setLayoutResource(R.layout.content_chat_detail);
+        setOptionsMenu(R.menu.chat_detail);
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
@@ -96,7 +100,6 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
         } else {
             chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
         }
-        setContentView(R.layout.activity_chat_detail);
         this.image_capture = (ImageView) findViewById(R.id.image_capture);
         // pics taken by the camera using this application.
         this.dir_photo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/SharkNet/";
@@ -155,7 +158,6 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
             e.printStackTrace();
         }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
 //        ib_audio=(ImageButton)findViewById(R.id.audio);
         ib_file = (ImageButton) findViewById(R.id.file);
@@ -172,8 +174,6 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 //        ib_location.setOnClickListener(this);
 //        ib_video.setOnClickListener(this);
 
-        Toolbar t = (Toolbar) findViewById(R.id.toolbar_chatdetail);
-        setSupportActionBar(t);
         mRevealView.setVisibility(View.INVISIBLE);
 
         L.d("ChatId: "+ chatID, this);
@@ -190,7 +190,7 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
                     }
                     this.chat = chat;
                     try {
-                        getSupportActionBar().setTitle(this.chat.getTitle());
+                        setToolbarTitle(this.chat.getTitle());
                     } catch (SharkKBException e) {
                         e.printStackTrace();
                     }
@@ -283,12 +283,6 @@ public class ChatDetailActivity extends AppCompatActivity implements View.OnClic
 
         }
     };
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.chat_detail, menu);
-        return true;
-    }
 
     private void updateMessages() throws SharkKBException {
         this.msgListAdapter = new MsgListAdapter(this.chat.getMessages(false));

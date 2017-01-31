@@ -1,27 +1,16 @@
 package net.sharksystem.sharknet;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
-import net.sharksystem.sharknet.chat.ChatActivity;
-import net.sharksystem.sharknet.contact.ContactsActivity;
-import net.sharksystem.sharknet.inbox.InboxActivity;
-import net.sharksystem.sharknet.nfc.NFCActivity;
-import net.sharksystem.sharknet.profile.ProfileActivity;
-import net.sharksystem.sharknet.radar.RadarActivity;
 
 /**
  * Created by mn-io on 22.01.16.
@@ -40,8 +29,15 @@ public class ParentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.system_parent_activity);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
         // Make FloatingActionButton invisible at default
         findViewById(R.id.fab).setVisibility(View.GONE);
+    }
+
+    protected void setToolbarTitle(String title){
+        ((Toolbar) findViewById(R.id.toolbar)).setTitle(title);
     }
 
     protected FloatingActionButton activateFloatingActionButton(){

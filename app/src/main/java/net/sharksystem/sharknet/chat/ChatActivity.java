@@ -59,7 +59,6 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_chat);
         setLayoutResource(R.layout.content_chat);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
