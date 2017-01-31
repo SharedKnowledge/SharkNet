@@ -42,7 +42,6 @@ import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.adapters.MsgListAdapter;
 
 import org.json.JSONException;
 

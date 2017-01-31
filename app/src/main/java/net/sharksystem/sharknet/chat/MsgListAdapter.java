@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.adapters;
+package net.sharksystem.sharknet.chat;
 
 import android.graphics.BitmapFactory;
 import android.support.v4.content.ContextCompat;

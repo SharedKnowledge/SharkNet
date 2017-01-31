@@ -25,7 +25,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatNewAcivity extends AppCompatActivity {
+public class ChatNewActivity extends AppCompatActivity {
 
     private List<Contact> contacts;
     private List<Contact> selected_contacts;
@@ -103,7 +103,7 @@ public class ChatNewAcivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    startActivity(new Intent( ChatNewAcivity.this, ChatActivity.class ));
+                    startActivity(new Intent( ChatNewActivity.this, ChatActivity.class ));
                 }
                 else
                 {

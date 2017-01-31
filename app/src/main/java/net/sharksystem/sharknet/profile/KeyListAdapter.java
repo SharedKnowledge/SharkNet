@@ -1,4 +1,4 @@
-package net.sharksystem.sharknet.adapters;
+package net.sharksystem.sharknet.profile;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

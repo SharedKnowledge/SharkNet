@@ -11,7 +11,6 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.adapters.KeyListAdapter;
 
 import java.util.List;
 

@@ -64,7 +64,7 @@ public class ChatActivity extends BaseActivity implements SharkNetEngine.EventLi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ChatActivity.this, ChatNewAcivity.class));
+                startActivity(new Intent(ChatActivity.this, ChatNewActivity.class));
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

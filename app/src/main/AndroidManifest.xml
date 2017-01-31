@@ -66,7 +66,7 @@
                     android:value=".chat.ChatActivity"/>
         </activity>
         <activity
-                android:name=".chat.ChatNewAcivity"
+                android:name=".chat.ChatNewActivity"
                 android:label="@string/title_activity_chat_new"
                 android:parentActivityName=".chat.ChatActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -129,7 +129,7 @@
                     android:value=".profile.ProfileActivity"/>
         </activity>
         <activity
-                android:name=".activities.NewInterestActivity"
+                android:name=".profile.NewInterestActivity"
                 android:label="@string/title_activity_new_interest"
                 android:parentActivityName=".profile.ProfileDetailInterestsActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
