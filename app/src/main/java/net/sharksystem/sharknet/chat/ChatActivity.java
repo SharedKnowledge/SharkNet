@@ -25,7 +25,7 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_chat);
+        setLayoutResource(R.layout.chat_activity);
         setOptionsMenu(R.menu.chat);
 
         FloatingActionButton fab = activateFloatingActionButton();
@@ -44,7 +44,7 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        this.chatListAdapter = new ChatListAdapter(this, R.layout.line_item_chat, chats);
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
         ListView lv = (ListView) findViewById(R.id.chatsListView);
 
         if (lv != null) {
@@ -74,7 +74,7 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        this.chatListAdapter = new ChatListAdapter(this, R.layout.line_item_chat, chats);
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
         ListView lv = (ListView) findViewById(R.id.chatsListView);
 
         if (lv != null) {
@@ -102,7 +102,7 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        this.chatListAdapter = new ChatListAdapter(this, R.layout.line_item_chat, chats);
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
         ListView lv = (ListView) findViewById(R.id.chatsListView);
 
         if (lv != null) {

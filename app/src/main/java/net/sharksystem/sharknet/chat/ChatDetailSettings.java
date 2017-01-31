@@ -3,16 +3,12 @@ package net.sharksystem.sharknet.chat;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.ParentActivity;
@@ -30,7 +26,7 @@ public class ChatDetailSettings extends ParentActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_chat_detail_settings);
+        setLayoutResource(R.layout.chat_detail_settings_activity);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

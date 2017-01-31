@@ -3,11 +3,8 @@ package net.sharksystem.sharknet.profile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
@@ -32,7 +29,7 @@ public class ProfileDetailInterestsActivity extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_profile_detail_interests);
+        setLayoutResource(R.layout.profile_detail_interests_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         InterestsListAdapter interestsListAdapter = null;

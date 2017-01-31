@@ -29,7 +29,7 @@ public class RadarActivity extends NavigationDrawerActivity implements RadarList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_radar);
+        setLayoutResource(R.layout.radar_activity);
     }
 
     @Override

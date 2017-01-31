@@ -1,10 +1,6 @@
 package net.sharksystem.sharknet.inbox;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -17,7 +13,7 @@ public class InboxNewFeedActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setLayoutResource(R.layout.content_timeline_detail_view);
+        setLayoutResource(R.layout.inbox_detail_activity);
         setOptionsMenu(R.menu.profile_detail_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 /*

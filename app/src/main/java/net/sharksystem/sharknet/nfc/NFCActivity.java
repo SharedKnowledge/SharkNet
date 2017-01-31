@@ -32,7 +32,7 @@ public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_nfc2);
+        setLayoutResource(R.layout.nfc2_activity);
 
         final AndroidSharkEngine sharkEngine = SharkNetEngine.getSharkNet().getSharkEngine();
 

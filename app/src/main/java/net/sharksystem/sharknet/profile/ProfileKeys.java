@@ -1,11 +1,9 @@
 package net.sharksystem.sharknet.profile;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
@@ -23,7 +21,7 @@ public class ProfileKeys extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_profile_keys);
+        setLayoutResource(R.layout.profile_keys_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {

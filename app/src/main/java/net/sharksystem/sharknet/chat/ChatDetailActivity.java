@@ -86,7 +86,7 @@ public class ChatDetailActivity extends ParentActivity implements View.OnClickLi
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_chat_detail);
+        setLayoutResource(R.layout.chat_detail_activity);
         setOptionsMenu(R.menu.chat_detail);
 
         if (savedInstanceState != null) {

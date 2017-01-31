@@ -68,5 +68,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/content_chat_detail_menu_popup" />
+    <include layout="@layout/chat_detail_menu_popup" />
 </RelativeLayout>

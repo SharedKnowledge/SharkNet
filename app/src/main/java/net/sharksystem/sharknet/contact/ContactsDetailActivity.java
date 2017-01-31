@@ -2,10 +2,6 @@ package net.sharksystem.sharknet.contact;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +18,7 @@ import net.sharksystem.sharknet.nfc.NFCActivity;
 import java.util.List;
 import java.util.Objects;
 
-public class ContactsDetailViewActivity extends ParentActivity implements View.OnClickListener {
+public class ContactsDetailActivity extends ParentActivity implements View.OnClickListener {
 
     private String con_nickname;
     private Contact contact;
@@ -35,7 +31,7 @@ public class ContactsDetailViewActivity extends ParentActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_con_detail_view);
+        setLayoutResource(R.layout.contact_detail_activity);
         setOptionsMenu(R.menu.con_detail_menu);
 
         this.con_nickname = getIntent().getStringExtra("CONTACT_NICKNAME");
@@ -119,21 +115,21 @@ public class ContactsDetailViewActivity extends ParentActivity implements View.O
         if (id == R.id.save) {
             EditText nickname = (EditText) findViewById(R.id.con_nickname_edit);
             assert nickname != null;
-            ContactsDetailViewActivity.this.con_nickname = nickname.getText().toString();
+            ContactsDetailActivity.this.con_nickname = nickname.getText().toString();
             try {
-                ContactsDetailViewActivity.this.contact.setNickname(con_nickname);
+                ContactsDetailActivity.this.contact.setNickname(con_nickname);
             } catch (SharkKBException e) {
                 e.printStackTrace();
             }
             //TODO: muss noch in der API erweitert werden um email usw.
-            //ContactsDetailViewActivity.this.contact.setUID();
-            //ContactsDetailViewActivity.this.contact.setPicture();
-            //ContactsDetailViewActivity.this.contact.setPublicKey();
+            //ContactsDetailActivity.this.contact.setUID();
+            //ContactsDetailActivity.this.contact.setPicture();
+            //ContactsDetailActivity.this.contact.setPublicKey();
             finish();
             return true;
         }
         if (id == R.id.sidenav_nfc) {
-            Intent intent = new Intent(ContactsDetailViewActivity.this, NFCActivity.class);
+            Intent intent = new Intent(ContactsDetailActivity.this, NFCActivity.class);
             try {
                 intent.putExtra(CONTACT_NICKNAME, contact.getNickname());
             } catch (SharkKBException e) {

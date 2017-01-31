@@ -23,7 +23,7 @@ public class ContactsActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_contacts);
+        setLayoutResource(R.layout.contact_activity);
         setOptionsMenu(R.menu.contacts);
 
         FloatingActionButton fab = activateFloatingActionButton();
@@ -43,7 +43,7 @@ public class ContactsActivity extends NavigationDrawerActivity {
             e.printStackTrace();
         }
 
-        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.line_item_con,contacts);
+        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.contact_line_item,contacts);
         ListView lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
         {
@@ -52,7 +52,7 @@ public class ContactsActivity extends NavigationDrawerActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
-                    Intent intent = new Intent(ContactsActivity.this,ContactsDetailViewActivity.class);
+                    Intent intent = new Intent(ContactsActivity.this,ContactsDetailActivity.class);
                     try {
                         intent.putExtra(CONTACT_NICKNAME,contacts.get(position).getNickname());
                     } catch (SharkKBException e) {
@@ -74,7 +74,7 @@ public class ContactsActivity extends NavigationDrawerActivity {
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.line_item_con,contacts);
+        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.contact_line_item,contacts);
         ListView lv = (ListView)findViewById(R.id.con_list_view);
         if (lv != null)
         {
@@ -83,7 +83,7 @@ public class ContactsActivity extends NavigationDrawerActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
-                    Intent intent = new Intent(ContactsActivity.this,ContactsDetailViewActivity.class);
+                    Intent intent = new Intent(ContactsActivity.this,ContactsDetailActivity.class);
                     try {
                         intent.putExtra(CONTACT_NICKNAME,contacts.get(position).getNickname());
                     } catch (SharkKBException e) {

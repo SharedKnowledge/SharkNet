@@ -34,7 +34,7 @@ public class ContactsListAdapter extends ArrayAdapter<Contact>
     {
         if(convertView == null)
         {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.line_item_con,parent,false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.contact_line_item,parent,false);
         }
 
         Contact contact = contacts.get(position);

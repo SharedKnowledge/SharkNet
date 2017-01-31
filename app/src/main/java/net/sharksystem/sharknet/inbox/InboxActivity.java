@@ -22,7 +22,7 @@ public class InboxActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_timeline);
+        setLayoutResource(R.layout.inbox_activity);
         setOptionsMenu(R.menu.inbox);
 
         FloatingActionButton fab = activateFloatingActionButton();

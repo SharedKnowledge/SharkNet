@@ -3,10 +3,7 @@ package net.sharksystem.sharknet.chat;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -33,7 +30,7 @@ public class ChatDetailAddContactActivity extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_chat_detail_add_contact);
+        setLayoutResource(R.layout.chat_detail_add_contact_activity);
         setOptionsMenu(R.menu.menu_chat_detail_add_con);
 
         this.chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);

@@ -31,7 +31,7 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.line_item_chat, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.chat_line_item, parent, false);
         }
 
         net.sharksystem.api.interfaces.Chat chat = chats.get(position);

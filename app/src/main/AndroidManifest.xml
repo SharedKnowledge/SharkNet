@@ -75,7 +75,7 @@
                     android:value=".chat.ChatActivity"/>
         </activity>
         <activity
-                android:name=".contact.ContactsDetailViewActivity"
+                android:name=".contact.ContactsDetailActivity"
                 android:label="@string/activity_title_con_detail_view"
                 android:parentActivityName=".contact.ContactsActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">

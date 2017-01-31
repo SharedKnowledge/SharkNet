@@ -17,7 +17,7 @@ public class ProfileActivity extends NavigationDrawerActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.content_profile);
+        setLayoutResource(R.layout.profile_activity);
         setOptionsMenu(R.menu.profile);
 
         detail = (Button) findViewById(R.id.pro_edit_button);
