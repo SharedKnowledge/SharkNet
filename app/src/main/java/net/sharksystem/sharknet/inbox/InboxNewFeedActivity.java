@@ -7,16 +7,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
-public class InboxNewFeedActivity extends AppCompatActivity {
+public class InboxNewFeedActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline_detail_view);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        setLayoutResource(R.layout.content_timeline_detail_view);
+        setOptionsMenu(R.menu.profile_detail_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
@@ -35,15 +38,6 @@ public class InboxNewFeedActivity extends AppCompatActivity {
         });
                         */
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.profile_detail_menu,menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

@@ -17,15 +17,12 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -76,7 +73,6 @@ public class ChatDetailActivity extends ParentActivity implements View.OnClickLi
     private List<Message> msgs;
     private MediaRecorder mediaRecorder;
 
-    Toolbar toolbar;
     boolean hidden = true;
     LinearLayout mRevealView;
     ImageButton ib_gallery, ib_contacts, ib_location;
@@ -90,7 +86,6 @@ public class ChatDetailActivity extends ParentActivity implements View.OnClickLi
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_chat_detail);
         setLayoutResource(R.layout.content_chat_detail);
         setOptionsMenu(R.menu.chat_detail);
 

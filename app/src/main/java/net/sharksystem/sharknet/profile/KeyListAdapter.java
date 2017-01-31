@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
@@ -16,22 +17,18 @@ import java.util.List;
  * Created by viktorowich on 12/12/2016.
  */
 
-public class KeyListAdapter extends RecyclerView.Adapter<KeyListAdapter.ViewHolderBase>
-{
+public class KeyListAdapter extends RecyclerView.Adapter<KeyListAdapter.ViewHolderBase> {
     private List<Contact> contacts;
 
-    public KeyListAdapter(List<Contact> objects)
-    {
+    public KeyListAdapter(List<Contact> objects) {
         contacts = objects;
     }
 
     @Override
-    public KeyListAdapter.ViewHolderBase onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public KeyListAdapter.ViewHolderBase onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
 
-        switch (viewType)
-        {
+        switch (viewType) {
             case 0:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_item_key, parent, false);
                 return new KeyListAdapter.ViewHolderKey(itemView);
@@ -44,14 +41,12 @@ public class KeyListAdapter extends RecyclerView.Adapter<KeyListAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(KeyListAdapter.ViewHolderBase holder, int position)
-    {
+    public void onBindViewHolder(KeyListAdapter.ViewHolderBase holder, int position) {
         Contact contact = contacts.get(position);
-        if(contact != null)
-        {
+        if (contact != null) {
 //            TODO: zeit wann er abläuft ist null... Dummy erweitern
 //            String expiration = new java.text.SimpleDateFormat("HH:mm dd.MM.yyyy").format(contact.getPublicKeyExpiration());
-    //        TODO: wann der key erstellt bzw. aufgenommen wird von der API nicht unterstützt bis jetzt
+            //        TODO: wann der key erstellt bzw. aufgenommen wird von der API nicht unterstützt bis jetzt
 
             holder.textView_created.setText("");
 //            holder.textView_expiration.setText(expiration);
@@ -70,16 +65,13 @@ public class KeyListAdapter extends RecyclerView.Adapter<KeyListAdapter.ViewHold
     }
 
     @Override
-    public int getItemViewType(int position)
-    {
+    public int getItemViewType(int position) {
         Contact contact = contacts.get(position);
 
         try {
-            if(SharkNetEngine.getSharkNet().getMyProfile().getUID() == contact.getUID())
-            {
+            if (SharkNetEngine.getSharkNet().getMyProfile().getUID() == contact.getUID()) {
                 return 1;
-            }
-            else
+            } else
                 return 0;
         } catch (SharkKBException e) {
             e.printStackTrace();
@@ -101,16 +93,14 @@ public class KeyListAdapter extends RecyclerView.Adapter<KeyListAdapter.ViewHold
 
     }
 
-    public class ViewHolderMyKey extends ViewHolderBase
-    {
+    public class ViewHolderMyKey extends ViewHolderBase {
 
         public ViewHolderMyKey(View itemView) {
             super(itemView);
         }
     }
 
-    public class ViewHolderKey extends ViewHolderBase
-    {
+    public class ViewHolderKey extends ViewHolderBase {
         public ViewHolderKey(View itemView) {
             super(itemView);
         }

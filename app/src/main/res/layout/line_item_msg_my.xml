@@ -29,7 +29,7 @@
 
     <ImageView android:layout_width="wrap_content"
                android:id="@+id/image_capture"
-               android:background="@color/sharknet"
+               android:background="@color/accent"
                android:padding="1dp"
                android:layout_marginLeft="40dp"
                android:layout_marginBottom="5dp"
@@ -46,7 +46,7 @@
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/timestamp"
                   android:layout_marginRight="7dp"
-                  android:textColor="@color/sharknet"
+                  android:textColor="@color/accent"
                   android:layout_height="wrap_content"
         />
     </LinearLayout>

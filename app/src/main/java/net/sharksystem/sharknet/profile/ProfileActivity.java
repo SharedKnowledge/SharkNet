@@ -4,15 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.widget.Button;
 
-import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
-import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
 public class ProfileActivity extends NavigationDrawerActivity implements View.OnClickListener {
@@ -22,13 +18,14 @@ public class ProfileActivity extends NavigationDrawerActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.content_profile);
+        setOptionsMenu(R.menu.profile);
 
         detail = (Button) findViewById(R.id.pro_edit_button);
         keys = (Button) findViewById(R.id.pro_keys_button);
         detail.setOnClickListener(this);
         keys.setOnClickListener(this);
         //TODO soll möglich machen ein neues Profil erstellen zu könnne
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = activateFloatingActionButton();
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,13 +37,6 @@ public class ProfileActivity extends NavigationDrawerActivity implements View.On
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.profile, menu);
-        return true;
     }
 
     @Override

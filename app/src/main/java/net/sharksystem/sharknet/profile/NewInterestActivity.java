@@ -8,18 +8,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
-public class NewInterestActivity extends AppCompatActivity {
+public class NewInterestActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_interest);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        setLayoutResource(R.layout.content_new_interest);
+        setOptionsMenu(R.menu.profile_detail_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        /*
+        FloatingActionButton fab = activateFloatingActionButton();
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,14 +32,6 @@ public class NewInterestActivity extends AppCompatActivity {
                 finish();
             }
         });*/
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.profile_detail_menu,menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

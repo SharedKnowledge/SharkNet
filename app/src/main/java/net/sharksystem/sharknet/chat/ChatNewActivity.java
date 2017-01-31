@@ -18,6 +18,7 @@ import android.widget.ListView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
 import org.json.JSONException;
@@ -25,22 +26,57 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatNewActivity extends AppCompatActivity {
+public class ChatNewActivity extends ParentActivity {
 
     private List<Contact> contacts;
     private List<Contact> selected_contacts;
     private ListView lv;
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setLayoutResource(R.layout.content_chat_new);
+        setOptionsMenu(R.menu.menu_chat_new);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_chat_new,menu);
-        return super.onCreateOptionsMenu(menu);
+        selected_contacts = new ArrayList<>();
+        try {
+            this.contacts = SharkNetEngine.getSharkNet().getContacts();
+            this.contacts.remove(SharkNetEngine.getSharkNet().getMyProfile());
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.line_item_con_new_chat,contacts);
+        lv = (ListView)findViewById(R.id.con_list_view);
+        if (lv != null)
+        {
+            lv.setAdapter(chatListAdapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                {
+//                    if(selected_contacts != null)
+//                    {
+//                        if(!selected_contacts.contains(contacts.get(position)))
+//                        {
+//                            selected_contacts.add(contacts.get(position));
+//                            lv.getChildAt(position).setBackgroundColor(Color.rgb(255,64,124));
+//                        }
+//                        else
+//                        {
+//                            selected_contacts.remove(contacts.get(position));
+//                            lv.getChildAt(position).setBackgroundColor(Color.WHITE);
+//
+//                        }
+//                    }
+//                    else
+//                    {
+//                        selected_contacts.add(contacts.get(position));
+//                        lv.getChildAt(position).setBackgroundColor(Color.rgb(255,64,124));
+//                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -123,53 +159,6 @@ public class ChatNewActivity extends AppCompatActivity {
         }
 
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_new);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        selected_contacts = new ArrayList<>();
-        try {
-            this.contacts = SharkNetEngine.getSharkNet().getContacts();
-            this.contacts.remove(SharkNetEngine.getSharkNet().getMyProfile());
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.line_item_con_new_chat,contacts);
-        lv = (ListView)findViewById(R.id.con_list_view);
-        if (lv != null)
-        {
-            lv.setAdapter(chatListAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-//                    if(selected_contacts != null)
-//                    {
-//                        if(!selected_contacts.contains(contacts.get(position)))
-//                        {
-//                            selected_contacts.add(contacts.get(position));
-//                            lv.getChildAt(position).setBackgroundColor(Color.rgb(255,64,124));
-//                        }
-//                        else
-//                        {
-//                            selected_contacts.remove(contacts.get(position));
-//                            lv.getChildAt(position).setBackgroundColor(Color.WHITE);
-//
-//                        }
-//                    }
-//                    else
-//                    {
-//                        selected_contacts.add(contacts.get(position));
-//                        lv.getChildAt(position).setBackgroundColor(Color.rgb(255,64,124));
-//                    }
-                }
-            });
-        }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

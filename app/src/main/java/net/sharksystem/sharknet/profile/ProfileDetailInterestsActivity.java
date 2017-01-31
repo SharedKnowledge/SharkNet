@@ -8,15 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
-public class ProfileDetailInterestsActivity extends AppCompatActivity
-{
-    private TextView textView;
+public class ProfileDetailInterestsActivity extends ParentActivity {
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         InterestsListAdapter interestsListAdapter = null;
         interestsListAdapter = new InterestsListAdapter(this, R.layout.line_item_interest,
@@ -25,8 +24,7 @@ public class ProfileDetailInterestsActivity extends AppCompatActivity
                 null
         );
         ListView lv = (ListView) findViewById(R.id.listView_interests);
-        if (lv != null)
-        {
+        if (lv != null) {
             lv.setAdapter(interestsListAdapter);
         }
     }
@@ -34,10 +32,8 @@ public class ProfileDetailInterestsActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_detail_interests);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        setLayoutResource(R.layout.content_profile_detail_interests);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         InterestsListAdapter interestsListAdapter = null;
         interestsListAdapter = new InterestsListAdapter(this, R.layout.line_item_interest,
@@ -46,23 +42,21 @@ public class ProfileDetailInterestsActivity extends AppCompatActivity
                 null
         );
         ListView lv = (ListView) findViewById(R.id.listView_interests);
-        if (lv != null)
-        {
+        if (lv != null) {
             lv.setAdapter(interestsListAdapter);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = activateFloatingActionButton();
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //SharkNetEngine.getSharkNet.getMyProfile().getContact();
-                Intent intent = new Intent(ProfileDetailInterestsActivity.this,NewInterestActivity.class);
+                Intent intent = new Intent(ProfileDetailInterestsActivity.this, NewInterestActivity.class);
                 startActivity(intent);
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

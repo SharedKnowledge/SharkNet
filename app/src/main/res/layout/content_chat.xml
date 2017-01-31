@@ -9,7 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".chat.ChatActivity">
 
-
     <ListView
         android:id="@+id/chatsListView"
         android:layout_width="match_parent"

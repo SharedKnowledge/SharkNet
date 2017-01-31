@@ -10,11 +10,12 @@ import android.support.v7.widget.Toolbar;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
 import java.util.List;
 
-public class ProfileKeys extends AppCompatActivity {
+public class ProfileKeys extends ParentActivity {
 
     private KeyListAdapter keyListAdapter;
     private List<Contact> contacts;
@@ -22,9 +23,8 @@ public class ProfileKeys extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_keys);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setLayoutResource(R.layout.content_profile_keys);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {
             contacts = SharkNetEngine.getSharkNet().getContacts();
@@ -48,7 +48,6 @@ public class ProfileKeys extends AppCompatActivity {
             recyclerView.setAdapter(keyListAdapter);
         }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

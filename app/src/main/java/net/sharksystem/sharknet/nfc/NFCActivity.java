@@ -1,29 +1,22 @@
 package net.sharksystem.sharknet.nfc;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.system.L;
-import net.sharksystem.api.AndroidUtils;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.SharkNet;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.api.shark.protocols.nfc.NfcMessageStub;
-import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
-import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.contact.ContactsActivity;
 
 import java.io.IOException;
 

@@ -12,25 +12,18 @@ import android.widget.ImageView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.nfc.NFCActivity;
 
-public class ContactsNewActivity extends AppCompatActivity {
+public class ContactsNewActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_con_new);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setLayoutResource(R.layout.content_con_new);
+        setOptionsMenu(R.menu.con_new);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.con_new, menu);
-        return true;
     }
 
     @Override
@@ -73,7 +66,6 @@ public class ContactsNewActivity extends AppCompatActivity {
             finish();
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

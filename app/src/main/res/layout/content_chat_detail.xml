@@ -25,7 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/sharknet"
+            android:background="@color/primary"
             android:gravity="bottom"
             android:orientation="horizontal"
             android:weightSum="5">
@@ -68,8 +68,5 @@
         </LinearLayout>
     </LinearLayout>
 
-
     <include layout="@layout/content_chat_detail_menu_popup" />
-
-
 </RelativeLayout>

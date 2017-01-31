@@ -26,7 +26,7 @@ public class RadarListAdapter extends BaseAdapter {
         mContext = context;
     }
 
-    public void updateList(ArrayList<Contact> contacts){
+    public void updateList(ArrayList<Contact> contacts) {
         mContacts = contacts;
         notifyDataSetChanged();
     }
@@ -57,8 +57,8 @@ public class RadarListAdapter extends BaseAdapter {
         }
 
         try {
-            ((TextView)convertView.findViewById(R.id.radar_contact_name)).setText(contact.getName());
-            ((TextView)convertView.findViewById(R.id.radar_contact_last_seen)).setText(contact.getLastWifiContact().toString());
+            ((TextView) convertView.findViewById(R.id.radar_contact_name)).setText(contact.getName());
+            ((TextView) convertView.findViewById(R.id.radar_contact_last_seen)).setText(contact.getLastWifiContact().toString());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
