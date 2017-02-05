@@ -13,7 +13,6 @@ import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
-import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.dummy.Dummy;
 import net.sharksystem.sharknet.nfc.NFCActivity;
 import net.sharksystem.sharknet.radar.RadarActivity;

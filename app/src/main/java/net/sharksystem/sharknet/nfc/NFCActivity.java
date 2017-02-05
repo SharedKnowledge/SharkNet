@@ -7,9 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import net.sharkfw.asip.ASIPKnowledge;
 import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
+import net.sharkfw.knowledgeBase.SemanticNet;
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.inmemory.InMemoASIPKnowledge;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.system.L;
+import net.sharkfw.system.SharkNotSupportedException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.SharkNet;
@@ -19,15 +24,12 @@ import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
 
 import java.io.IOException;
+import java.util.List;
 
-public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NFCListener, NfcMessageStub.NFCMessageListener{
+public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NFCContentListener, NfcMessageStub.NFCMessageListener{
 
     final Context context = this;
-
-    @Override
-    public void onNewContactViaNFC(Contact contact) throws SharkKBException {
-
-    }
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +38,8 @@ public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NF
 
         final AndroidSharkEngine sharkEngine = SharkNetEngine.getSharkNet().getSharkEngine();
 
-        try {
-            sharkEngine.setActivity(this);
-            sharkEngine.setNFCMessageListener(this);
-            sharkEngine.stopNfc();
-        } catch (SharkProtocolNotSupportedException e) {
-            e.printStackTrace();
-        }
+        sharkEngine.setActivity(this);
+        SharkNetEngine.getSharkNet().exchangeContactNFC(this, this);
 
         final EditText edit = (EditText) findViewById(R.id.edittext_nfc);
         final Button setData = (Button) findViewById(R.id.button_set_data);
@@ -51,12 +48,19 @@ public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NF
         setData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                L.d("SetData clicked", this);
                 String string = edit.getText().toString();
                 String message = "";
                 try {
-                    sharkEngine.sendNFCMessage(string);
-                } catch (IOException e) {
-                    message = e.getMessage();
+                    InMemoASIPKnowledge knowledge = new InMemoASIPKnowledge();
+                    knowledge.addInformation(string, InMemoSharkKB.createInMemoASIPInterest());
+                    sharkEngine.offerNFC(knowledge);
+                } catch (SharkProtocolNotSupportedException e) {
+                    e.printStackTrace();
+                } catch (SharkNotSupportedException e) {
+                    e.printStackTrace();
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
                 } finally {
                     if(message.isEmpty()) message = "Data has been set!";
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
@@ -64,21 +68,14 @@ public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NF
             }
         });
 
-        final Button button = (Button) findViewById(R.id.button_nfc_start);
+        button = (Button) findViewById(R.id.button_nfc_start);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 button.setText("NFC started...");
-
-                try {
-                    sharkEngine.startNfc();
-                    L.d("NFC started", this);
-                } catch (SharkProtocolNotSupportedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                SharkNetEngine.getSharkNet().startSendingViaNFC();
+                L.d("NFC started", this);
             }
         });
 
@@ -101,6 +98,38 @@ public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NF
             @Override
             public void run() {
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onExchangeFailure(final String failure) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SharkNetEngine.getSharkNet().getSharkEngine().stopNfc();
+                } catch (SharkProtocolNotSupportedException e) {
+                    e.printStackTrace();
+                }
+                button.setText("Start NFC");
+                Toast.makeText(context, failure, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onNewContact(Contact contact, List<Contact> contacts) throws SharkKBException {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SharkNetEngine.getSharkNet().getSharkEngine().stopNfc();
+                } catch (SharkProtocolNotSupportedException e) {
+                    e.printStackTrace();
+                }
+                button.setText("Start NFC");
+                Toast.makeText(context, "We received a new contact!", Toast.LENGTH_SHORT).show();
             }
         });
     }
