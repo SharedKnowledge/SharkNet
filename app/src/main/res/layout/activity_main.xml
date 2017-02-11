@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/create"
                 android:id="@+id/create"
-                android:backgroundTint="@color/sharknet"
+                android:backgroundTint="@color/primary"
                 android:textColor="@color/abc_background_cache_hint_selector_material_light"/>
         <Button
                 android:layout_width="0dp"
@@ -79,7 +79,7 @@
                 android:text="@string/go"
                 android:id="@+id/go"
                 android:onClick="openChat"
-                android:layout_weight="0.32" android:backgroundTint="@color/sharknet"
+                android:layout_weight="0.32" android:backgroundTint="@color/primary"
                 android:textColor="@color/abc_background_cache_hint_selector_material_light"/>
     </LinearLayout>
 </LinearLayout>

@@ -58,7 +58,7 @@
         <Button
                 android:text="LEAVE CHAT"
                 android:layout_width="match_parent"
-                android:background="@color/colorAccent"
+                android:background="@color/accent"
                 android:textColor="@color/abc_primary_text_disable_only_material_dark"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_leave_chat"/>

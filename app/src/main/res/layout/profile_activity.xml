@@ -23,7 +23,7 @@
             android:layout_width="224dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/sharknet"
+            android:backgroundTint="@color/accent"
             android:text="@string/pro_edit"
             android:textColor="@color/abc_primary_text_material_dark" />
         <!--TODO: interests ist noch nicht implementiert in der API
@@ -38,7 +38,7 @@
             android:layout_width="222dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/sharknet"
+            android:backgroundTint="@color/accent"
             android:text="@string/pro_keys"
             android:textColor="@color/abc_primary_text_material_dark" />
     </LinearLayout>

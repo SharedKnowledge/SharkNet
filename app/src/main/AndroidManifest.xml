@@ -23,7 +23,7 @@
     <application
             android:name="net.sharksystem.api.shark.Application"
             android:allowBackup="true"
-            android:icon="@drawable/shark_icon256x256"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
