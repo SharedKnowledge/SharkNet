@@ -15,6 +15,7 @@ import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactsActivity;
 import net.sharksystem.sharknet.inbox.InboxActivity;
 import net.sharksystem.sharknet.nfc.NFCActivity;
+import net.sharksystem.sharknet.pki.PKIActivity;
 import net.sharksystem.sharknet.profile.ProfileActivity;
 import net.sharksystem.sharknet.radar.RadarActivity;
 
@@ -71,6 +72,9 @@ public class NavigationDrawerActivity extends ParentActivity implements Navigati
                 return true;
             case R.id.sidenav_nfc:
                 startActivity(new Intent(this, NFCActivity.class));
+                return true;
+            case R.id.sidenav_pki:
+                startActivity(new Intent(this, PKIActivity.class));
                 return true;
             default:
                 break;

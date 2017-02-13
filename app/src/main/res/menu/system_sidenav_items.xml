@@ -27,6 +27,10 @@
             android:id="@+id/sidenav_nfc"
             android:actionLayout="@layout/system_sidenav_menu_item"
             android:title="@string/sidenav_item_nfc" />
+        <item
+            android:id="@+id/sidenav_pki"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_pki" />
     </group>
     <!--
         <item android:title="@string/action_settings">

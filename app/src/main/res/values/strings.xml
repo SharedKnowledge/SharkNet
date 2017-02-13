@@ -24,6 +24,7 @@
     <string name="activity_title_chat">Chats</string>
     <string name="activity_title_inbox">Inbox</string>
     <string name="activity_title_profile">Profil</string>
+    <string name="activity_title_pki">PKI</string>
 
     <string name="action_settings">Settings</string>
     <string name="sharknet_logo">Sharknet Logo</string>
@@ -85,6 +86,8 @@
     <string name="sidenav_item_profile">Profil</string>
     <string name="sidenav_item_nfc">NFC</string>
     <string name="sidenav_item_inbox">Inbox</string>
+    <string name="sidenav_item_pki">PKI</string>
 
+    <string name="generate_dummy_data">Generate Dummy data</string>
 
 </resources>

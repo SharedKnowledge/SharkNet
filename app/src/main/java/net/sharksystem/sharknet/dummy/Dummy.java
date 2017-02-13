@@ -5,7 +5,8 @@ package net.sharksystem.sharknet.dummy;
  */
 
         import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.impl.SharkNetEngine;
+        import net.sharkfw.security.PkiStorage;
+        import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.Profile;
@@ -127,7 +128,7 @@ public class Dummy {
         frank.addTelephoneNumber(frankTelephoneHome);
         frank.addTelephoneNumber(frankTelephoneMobile);
         frank.addNote(frankNote);
-        bob.setPublicKey("20928asdfasdf4092384j2j34ou23o");
+        frank.setPublicKey("20928asdfasdf4092384j2j34ou23o");
 
 
         engine.setActiveProfile(david, "password");
@@ -215,6 +216,8 @@ public class Dummy {
         bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null, bob);
         bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null, charlie);
         bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null);
+    }
 
+    public static void createDummyPkiData(){
     }
 }

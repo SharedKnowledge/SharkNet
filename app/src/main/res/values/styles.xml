@@ -1,13 +1,5 @@
 <resources>
 
-    <style name="WhiteLine" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here.-->
-        <item name="colorControlNormal">@color/cardview_light_background</item>
-        <item name="colorPrimary">@color/cardview_light_background</item>
-        <item name="colorPrimaryDark">@color/cardview_light_background</item>
-        <item name="colorAccent">@color/cardview_light_background</item>
-
-    </style>
     <style name="Sharknet" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here.-->
         <item name="colorControlNormal">@color/primary</item>
@@ -18,6 +10,7 @@
     </style>
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
     <style name="drawer_style">
         <item name="android:textSize">18sp</item>
 

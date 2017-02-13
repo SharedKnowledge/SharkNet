@@ -166,6 +166,11 @@
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
+            android:name=".pki.PKIActivity"
+            android:label="@string/activity_title_pki"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
                 android:name=".profile.ProfileKeys"
                 android:label="@string/activity_title_profile_keys"
                 android:parentActivityName=".profile.ProfileActivity"

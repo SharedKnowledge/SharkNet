@@ -41,8 +41,7 @@
                 android:maxHeight="20dp"
                 android:maxLines="3"
                 android:textColor="@color/abc_primary_text_disable_only_material_dark"
-                android:textColorHint="@color/abc_primary_text_disable_only_material_dark"
-                android:theme="@style/WhiteLine" />
+                android:textColorHint="@color/abc_primary_text_disable_only_material_dark" />
 
             <ImageButton
                 android:id="@+id/send_button"

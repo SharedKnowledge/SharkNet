@@ -15,6 +15,7 @@ import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.dummy.Dummy;
 import net.sharksystem.sharknet.nfc.NFCActivity;
+import net.sharksystem.sharknet.pki.PKIActivity;
 import net.sharksystem.sharknet.radar.RadarActivity;
 
 import org.json.JSONException;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     public void openChat(View view) {
         Intent nfc = new Intent(this, NFCActivity.class);
         Intent radar = new Intent(this, RadarActivity.class);
+        Intent pki = new Intent(this, PKIActivity.class);
 
         try {
             SharkNetEngine.getSharkNet().setActiveProfile(this.profiles.get(index), "");
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         Menu m = nv.getMenu();
         txtV.setTypeface(face);
 */
-        startActivity(nfc);
+        startActivity(pki);
     }
 
     public void backProfile(View view) throws SharkKBException {
