@@ -3,7 +3,6 @@ package net.sharksystem.sharknet.pki;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
@@ -55,8 +53,6 @@ public class CertificateListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Log.d("LIST", "clicked");
-
         Intent intent = new Intent(getContext(), CertificateDetailActivity.class);
         startActivity(intent);
     }

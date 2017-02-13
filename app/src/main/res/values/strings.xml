@@ -90,5 +90,6 @@
 
     <string name="generate_dummy_data">Generate Dummy data</string>
     <string name="activity_title_pki_certificate_detail">Certificate Detail</string>
+    <string name="activity_title_pki_public_key_detail">PublicKey Detail</string>
 
 </resources>

@@ -19,9 +19,6 @@ public class CertificateListAdapter extends BaseAdapter {
 
     private List<Object> items = new ArrayList<>();
 
-    public CertificateListAdapter() {
-    }
-
     @Override
     public int getCount() {
         return this.items.size();

@@ -11,12 +11,12 @@ import net.sharksystem.sharknet.R;
  * Created by j4rvis on 2/13/17.
  */
 
-public class CertificateDetailActivity extends ParentActivity {
+public class PublicKeyDetailActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.pki_certificate_detail);
+        setLayoutResource(R.layout.pki_public_key_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

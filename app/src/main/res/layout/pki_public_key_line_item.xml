@@ -25,7 +25,7 @@
         android:text="valid"
         android:textColor="@color/primary_text" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/image_view_delete"
         android:layout_width="0dp"
         android:layout_height="16dp"

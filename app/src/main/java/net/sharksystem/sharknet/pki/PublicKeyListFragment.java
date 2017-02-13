@@ -1,5 +1,6 @@
 package net.sharksystem.sharknet.pki;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import net.sharkfw.system.L;
 import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
@@ -21,18 +23,11 @@ public class PublicKeyListFragment extends ListFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.pki_list_fragment, container, false);
-    }
+        View rootView = inflater.inflate(R.layout.pki_list_fragment, container, false);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        ListView listView = (ListView) getView().findViewById(android.R.id.list);
         PublicKeyListAdapter adapter = new PublicKeyListAdapter();
-        listView.setAdapter(adapter);
 
-        ArrayList<Object> objects = new ArrayList<>();
+        final ArrayList<Object> objects = new ArrayList<>();
 
         objects.add(new Object());
         objects.add(new Object());
@@ -49,5 +44,17 @@ public class PublicKeyListFragment extends ListFragment {
         objects.add(new Object());
 
         adapter.updateItems(objects);
+
+        setListAdapter(adapter);
+
+        return rootView;
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        L.d("clicked", this);
+        Intent intent = new Intent(getContext(), PublicKeyDetailActivity.class);
+        startActivity(intent);
     }
 }
