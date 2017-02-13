@@ -26,7 +26,7 @@ import static net.sharksystem.api.shark.Application.getContext;
 /**
  * Created by j4rvis on 2/11/17.
  */
-public class PKIPublicKeyListAdapter extends BaseAdapter {
+public class PublicKeyListAdapter extends BaseAdapter {
 
     private List<Object> items = new ArrayList<>();
 

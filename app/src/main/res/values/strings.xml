@@ -89,5 +89,6 @@
     <string name="sidenav_item_pki">PKI</string>
 
     <string name="generate_dummy_data">Generate Dummy data</string>
+    <string name="activity_title_pki_certificate_detail">Certificate Detail</string>
 
 </resources>

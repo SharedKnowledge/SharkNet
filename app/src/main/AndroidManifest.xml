@@ -171,6 +171,15 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
+            android:name=".pki.CertificateDetailActivity"
+            android:label="@string/activity_title_pki_certificate_detail"
+            android:parentActivityName=".pki.PKIActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".pki.PKIActivity"/>
+        </activity>
+        <activity
                 android:name=".profile.ProfileKeys"
                 android:label="@string/activity_title_profile_keys"
                 android:parentActivityName=".profile.ProfileActivity"

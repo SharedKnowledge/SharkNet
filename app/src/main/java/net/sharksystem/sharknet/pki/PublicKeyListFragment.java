@@ -2,11 +2,10 @@ package net.sharksystem.sharknet.pki;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import net.sharksystem.sharknet.R;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
  * Created by j4rvis on 2/12/17.
  */
 
-public class CertificatesFragment extends Fragment {
+public class PublicKeyListFragment extends ListFragment {
 
     @Nullable
     @Override
@@ -29,8 +28,8 @@ public class CertificatesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ListView listView = (ListView) getView().findViewById(R.id.list_view_pki);
-        PKICertificateListAdapter adapter = new PKICertificateListAdapter();
+        ListView listView = (ListView) getView().findViewById(android.R.id.list);
+        PublicKeyListAdapter adapter = new PublicKeyListAdapter();
         listView.setAdapter(adapter);
 
         ArrayList<Object> objects = new ArrayList<>();

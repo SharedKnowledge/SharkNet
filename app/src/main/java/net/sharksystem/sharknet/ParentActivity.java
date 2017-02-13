@@ -63,7 +63,7 @@ public class ParentActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (optionsMenuResource <= 0) {
-            return false;
+            return super.onCreateOptionsMenu(menu);
         }
         getMenuInflater().inflate(optionsMenuResource, menu);
         return true;

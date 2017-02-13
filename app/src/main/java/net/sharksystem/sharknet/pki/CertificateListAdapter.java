@@ -15,11 +15,11 @@ import static net.sharksystem.api.shark.Application.getContext;
 /**
  * Created by j4rvis on 2/11/17.
  */
-public class PKICertificateListAdapter extends BaseAdapter {
+public class CertificateListAdapter extends BaseAdapter {
 
     private List<Object> items = new ArrayList<>();
 
-    public PKICertificateListAdapter() {
+    public CertificateListAdapter() {
     }
 
     @Override
@@ -49,8 +49,6 @@ public class PKICertificateListAdapter extends BaseAdapter {
         }
 
 //        SharkCertificate item = (SharkCertificate) this.getItem(position);
-
-
 
         return convertView;
     }
