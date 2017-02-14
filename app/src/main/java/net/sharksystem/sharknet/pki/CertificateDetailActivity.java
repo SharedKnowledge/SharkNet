@@ -4,6 +4,7 @@ package net.sharksystem.sharknet.pki;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import net.sharkfw.security.SharkCertificate;
 import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 
@@ -18,10 +19,14 @@ public class CertificateDetailActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.pki_certificate_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SharkCertificate certificate = PKIDataHolder.getInstance().getCertificate();
     }
 
     @Override
     public void onBackPressed() {
+        // Reset clicked data
+        PKIDataHolder.getInstance().setCertificate(null);
         super.onBackPressed();
     }
 
@@ -29,6 +34,8 @@ public class CertificateDetailActivity extends ParentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                // Reset clicked data
+                PKIDataHolder.getInstance().setCertificate(null);
                 this.finish();
                 return true;
             default:

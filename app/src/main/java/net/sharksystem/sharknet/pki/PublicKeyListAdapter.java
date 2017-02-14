@@ -28,7 +28,7 @@ import static net.sharksystem.api.shark.Application.getContext;
  */
 public class PublicKeyListAdapter extends BaseAdapter {
 
-    private List<Object> items = new ArrayList<>();
+    private List<SharkPublicKey> items = new ArrayList<>();
 
     @Override
     public int getCount() {
@@ -45,7 +45,7 @@ public class PublicKeyListAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void updateItems(List<Object> items) {
+    public void updateItems(List<SharkPublicKey> items) {
         this.items = items;
         notifyDataSetChanged();
     }

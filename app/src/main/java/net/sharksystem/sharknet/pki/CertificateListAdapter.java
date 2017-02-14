@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import net.sharkfw.security.SharkCertificate;
 import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import static net.sharksystem.api.shark.Application.getContext;
  */
 public class CertificateListAdapter extends BaseAdapter {
 
-    private List<Object> items = new ArrayList<>();
+    private List<SharkCertificate> items = new ArrayList<>();
 
     @Override
     public int getCount() {
@@ -34,7 +35,7 @@ public class CertificateListAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void updateItems(List<Object> items) {
+    public void updateItems(List<SharkCertificate> items) {
         this.items = items;
         notifyDataSetChanged();
     }

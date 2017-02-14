@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import net.sharkfw.system.L;
+import net.sharkfw.security.SharkPublicKey;
 import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 public class PublicKeyListFragment extends ListFragment {
 
+    private final ArrayList<SharkPublicKey> publicKeys = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,23 +29,7 @@ public class PublicKeyListFragment extends ListFragment {
 
         PublicKeyListAdapter adapter = new PublicKeyListAdapter();
 
-        final ArrayList<Object> objects = new ArrayList<>();
-
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-
-        adapter.updateItems(objects);
+        adapter.updateItems(publicKeys);
 
         setListAdapter(adapter);
 
@@ -53,7 +39,9 @@ public class PublicKeyListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        L.d("clicked", this);
+
+        PKIDataHolder.getInstance().setPublicKey(this.publicKeys.get(position));
+
         Intent intent = new Intent(getContext(), PublicKeyDetailActivity.class);
         startActivity(intent);
     }

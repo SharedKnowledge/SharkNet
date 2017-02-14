@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import net.sharkfw.security.SharkCertificate;
 import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 public class CertificateListFragment extends ListFragment {
 
+    private final ArrayList<SharkCertificate> certificates = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,23 +30,7 @@ public class CertificateListFragment extends ListFragment {
 
         CertificateListAdapter adapter = new CertificateListAdapter();
 
-        final ArrayList<Object> objects = new ArrayList<>();
-
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-
-        adapter.updateItems(objects);
+        adapter.updateItems(certificates);
 
         setListAdapter(adapter);
 
@@ -53,6 +40,9 @@ public class CertificateListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        PKIDataHolder.getInstance().setCertificate(this.certificates.get(position));
+
         Intent intent = new Intent(getContext(), CertificateDetailActivity.class);
         startActivity(intent);
     }
