@@ -6,4 +6,8 @@
         android:title="@string/generate_dummy_data"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/init_owner"
+        android:title="@string/init_owner"
+        app:showAsAction="never"/>
+
 </menu>

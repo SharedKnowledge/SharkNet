@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
@@ -56,34 +57,33 @@ public class PublicKeyListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.pki_public_key_line_item, parent, false);
         }
 
-//        final SharkPublicKey item = (SharkPublicKey) this.getItem(position);
-//
-//        TextView owner = (TextView) convertView.findViewById(R.id.text_view_owner);
-//        TextView isValid = (TextView) convertView.findViewById(R.id.text_view_is_valid);
-//
-//        owner.setText(item.getOwner().getName());
-//
-//        long validity = item.getValidity();
-//        Date date = new Date(validity);
-//        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm:ss", Locale.GERMANY);
-//        String s = format.format(date);
-//
-//        isValid.setText(s);
-//        if(date.after(new Date(System.currentTimeMillis()))){
-//            isValid.setTextColor(Color.GREEN);
-//        } else {
-//            isValid.setTextColor(Color.RED);
-//        }
-//
-//        ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.imageButton);
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                item.delete();
-//                items.remove(item);
-//                notifyDataSetChanged();
-//            }
-//        });
+        final SharkPublicKey item = (SharkPublicKey) this.getItem(position);
+
+        TextView owner = (TextView) convertView.findViewById(R.id.text_view_owner);
+        TextView isValid = (TextView) convertView.findViewById(R.id.text_view_is_valid);
+
+        owner.setText(item.getOwner().getName());
+
+        long validity = item.getValidity();
+        Date date = new Date(validity);
+
+        if(date.after(new Date(System.currentTimeMillis()))){
+            isValid.setText("valid");
+            isValid.setTextColor(Color.GREEN);
+        } else {
+            isValid.setText("NOT valid");
+            isValid.setTextColor(Color.RED);
+        }
+
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.image_view_delete);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item.delete();
+                items.remove(item);
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }

@@ -35,14 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
         L.setLogLevel(L.LOGLEVEL_ALL);
 
-        WifiManager wifiManager = (WifiManager)this.getSystemService(Context.WIFI_SERVICE);
-        wifiManager.setWifiEnabled(false);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        wifiManager.setWifiEnabled(true);
+//        WifiManager wifiManager = (WifiManager)this.getSystemService(Context.WIFI_SERVICE);
+//        wifiManager.setWifiEnabled(false);
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        wifiManager.setWifiEnabled(true);
 
         SharkNetEngine.getSharkNet().setContext(this);
 
@@ -81,13 +81,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /*
+//        Typeface face= Typeface.createFromAsset(getAssets(),"fonts/RockSalt.ttf");
+//        NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
+//        Menu m = nv.getMenu();
+//        txtV.setTypeface(face);
 
-        Typeface face= Typeface.createFromAsset(getAssets(),"fonts/RockSalt.ttf");
-        NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
-        Menu m = nv.getMenu();
-        txtV.setTypeface(face);
-*/
         startActivity(pki);
     }
 

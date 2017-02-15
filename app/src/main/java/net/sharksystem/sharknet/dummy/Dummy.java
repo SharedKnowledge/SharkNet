@@ -4,9 +4,12 @@ package net.sharksystem.sharknet.dummy;
  * Created by viktorowich on 24/08/16.
  */
 
-        import net.sharkfw.knowledgeBase.SharkKBException;
-        import net.sharkfw.security.PkiStorage;
-        import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
+import net.sharkfw.security.PkiStorage;
+import net.sharkfw.system.L;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.Profile;
@@ -15,6 +18,9 @@ import org.json.JSONException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 /**
@@ -218,6 +224,76 @@ public class Dummy {
         bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null);
     }
 
-    public static void createDummyPkiData(){
+    public static void createDummyPkiData() {
+
+        PkiStorage pkiStorage = SharkNetEngine.getSharkNet().getSharkEngine().getPKIStorage();
+
+        KeyPairGenerator keyPairGenerator = null;
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(2048);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        L.d("KeyGenerator initiated.", Dummy.class.toString());
+
+        long hour = 1000 * 60 * 60;
+        long day = 24 * hour;
+        long week = 7 * day;
+        long today = System.currentTimeMillis();
+        long tomorrow = today + day;
+        long nextWeek = today + week;
+        long yesterday = today - day;
+        long previousWeek = today - week;
+
+        String kName = "Karl";
+        String kSI = "st:k";
+        String kAddr = "tcp://shark.net/k";
+        PeerSemanticTag kTag = InMemoSharkKB.createInMemoPeerSemanticTag(kName, kSI, kAddr);
+        KeyPair kKeyPair = keyPairGenerator.generateKeyPair();
+
+        L.d("Key generated", Dummy.class.toString());
+
+        String lName = "Louis";
+        String lSI = "st:l";
+        String lAddr = "tcp://sharl.net/l";
+        PeerSemanticTag lTag = InMemoSharkKB.createInMemoPeerSemanticTag(lName, lSI, lAddr);
+        KeyPair lKeyPair = keyPairGenerator.generateKeyPair();
+
+        L.d("Key generated", Dummy.class.toString());
+
+        String mName = "Marc";
+        String mSI = "st:m";
+        String mAddr = "tcp://sharm.net/m";
+        PeerSemanticTag mTag = InMemoSharkKB.createInMemoPeerSemanticTag(mName, mSI, mAddr);
+        KeyPair mKeyPair = keyPairGenerator.generateKeyPair();
+
+        L.d("Key generated", Dummy.class.toString());
+
+        String nName = "Ned";
+        String nSI = "st:n";
+        String nAddr = "tcp://sharn.net/n";
+        PeerSemanticTag nTag = InMemoSharkKB.createInMemoPeerSemanticTag(nName, nSI, nAddr);
+        KeyPair nKeyPair = keyPairGenerator.generateKeyPair();
+
+        L.d("Key generated", Dummy.class.toString());
+
+        String oName = "olaf";
+        String oSI = "st:o";
+        String oAddr = "tcp://sharo.net/o";
+        PeerSemanticTag oTag = InMemoSharkKB.createInMemoPeerSemanticTag(oName, oSI, oAddr);
+        KeyPair oKeyPair = keyPairGenerator.generateKeyPair();
+
+        L.d("Key generated", Dummy.class.toString());
+
+        pkiStorage.addUnsignedKey(kTag, kKeyPair.getPublic(), tomorrow);
+        pkiStorage.addUnsignedKey(lTag, lKeyPair.getPublic(), tomorrow);
+        pkiStorage.addUnsignedKey(mTag, mKeyPair.getPublic(), yesterday);
+        pkiStorage.addUnsignedKey(nTag, nKeyPair.getPublic(), nextWeek);
+        pkiStorage.addUnsignedKey(oTag, oKeyPair.getPublic(), previousWeek);
+
+        L.d("Keys added", Dummy.class.toString());
+
     }
 }
