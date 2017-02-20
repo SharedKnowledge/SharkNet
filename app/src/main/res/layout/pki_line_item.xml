@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/text_view_owner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Owner"
+        android:textColor="@color/primary_text" />
+
+    <TextView
+        android:id="@+id/text_view_is_valid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="valid"
+        android:textColor="@color/primary_text" />
+
+    <TextView
+        android:id="@+id/text_view_self_signed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Self-signed"
+        android:textColor="@color/primary_text" />
+
+    <TextView
+        android:id="@+id/text_view_number_of_signers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="# of Signers"
+        android:textColor="@color/primary_text" />
+
+</LinearLayout>

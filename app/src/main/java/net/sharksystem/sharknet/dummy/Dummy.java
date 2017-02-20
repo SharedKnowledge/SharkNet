@@ -8,6 +8,7 @@ import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.security.PkiStorage;
+import net.sharkfw.security.SharkPublicKey;
 import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
@@ -17,6 +18,7 @@ import net.sharksystem.api.interfaces.Profile;
 import org.json.JSONException;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -228,6 +230,14 @@ public class Dummy {
 
         PkiStorage pkiStorage = SharkNetEngine.getSharkNet().getSharkEngine().getPKIStorage();
 
+        SharkNetEngine sharkNetEngine = SharkNetEngine.getSharkNet();
+        try {
+            pkiStorage.setPkiStorageOwner(sharkNetEngine.getMyProfile().getPST());
+            pkiStorage.generateNewKeyPair();
+        } catch (SharkKBException | NoSuchAlgorithmException | IOException e) {
+            L.e(e.getMessage());
+        }
+
         KeyPairGenerator keyPairGenerator = null;
         try {
             keyPairGenerator = KeyPairGenerator.getInstance("RSA");
@@ -287,13 +297,22 @@ public class Dummy {
 
         L.d("Key generated", Dummy.class.toString());
 
-        pkiStorage.addUnsignedKey(kTag, kKeyPair.getPublic(), tomorrow);
-        pkiStorage.addUnsignedKey(lTag, lKeyPair.getPublic(), tomorrow);
-        pkiStorage.addUnsignedKey(mTag, mKeyPair.getPublic(), yesterday);
-        pkiStorage.addUnsignedKey(nTag, nKeyPair.getPublic(), nextWeek);
-        pkiStorage.addUnsignedKey(oTag, oKeyPair.getPublic(), previousWeek);
+        SharkPublicKey sharkPublicKey = pkiStorage.addUnsignedKey(kTag, kKeyPair.getPublic(), tomorrow);
+        SharkPublicKey sharkPublicKey1 = pkiStorage.addUnsignedKey(lTag, lKeyPair.getPublic(), tomorrow+hour);
+        SharkPublicKey sharkPublicKey2 = pkiStorage.addUnsignedKey(mTag, mKeyPair.getPublic(), yesterday);
+        SharkPublicKey sharkPublicKey3 = pkiStorage.addUnsignedKey(nTag, nKeyPair.getPublic(), nextWeek);
+        SharkPublicKey sharkPublicKey4 = pkiStorage.addUnsignedKey(oTag, oKeyPair.getPublic(), previousWeek);
+        try {
+            pkiStorage.sign(sharkPublicKey);
+            pkiStorage.sign(sharkPublicKey1);
+            pkiStorage.sign(sharkPublicKey2);
+            pkiStorage.sign(sharkPublicKey3);
+            pkiStorage.sign(sharkPublicKey4);
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
 
-        L.d("Keys added", Dummy.class.toString());
+        L.d("Certs added", Dummy.class.toString());
 
     }
 }
