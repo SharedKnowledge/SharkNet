@@ -27,13 +27,15 @@ public class PKIDetailActivity extends ParentActivity {
         setLayoutResource(R.layout.pki_detail_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final SharkCertificate certificate = PKIDataHolder.getInstance().getCertificate();
+        final PKICertificateHolder holder = PKIDataHolder.getInstance().getHolder();
 
         TextView owner = (TextView) findViewById(R.id.text_view_owner_content);
         TextView ownerKey = (TextView) findViewById(R.id.text_view_owner_key_content);
         TextView validity = (TextView) findViewById(R.id.text_view_validity_content);
         TextView fingerprint = (TextView) findViewById(R.id.text_view_fingerprint_content);
         TextView dateReceived = (TextView) findViewById(R.id.text_view_date_received_content);
+
+        final SharkCertificate certificate = holder.getCertificates().get(0);
 
         owner.setText(certificate.getOwner().getName() + "\n"
                 + Arrays.toString(certificate.getOwner().getSI()) + "\n"
@@ -65,7 +67,7 @@ public class PKIDetailActivity extends ParentActivity {
     @Override
     public void onBackPressed() {
         // Reset clicked data
-        PKIDataHolder.getInstance().setCertificate(null);
+        PKIDataHolder.getInstance().setHolder(null);
         super.onBackPressed();
     }
 
@@ -74,7 +76,7 @@ public class PKIDetailActivity extends ParentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Reset clicked data
-                PKIDataHolder.getInstance().setCertificate(null);
+                PKIDataHolder.getInstance().setHolder(null);
                 this.finish();
                 return true;
             default:

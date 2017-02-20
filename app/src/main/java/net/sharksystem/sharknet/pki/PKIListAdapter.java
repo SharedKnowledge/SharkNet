@@ -8,13 +8,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.SharkCSAlgebra;
+import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.security.SharkCertificate;
 import net.sharkfw.security.SharkPublicKey;
 import net.sharkfw.system.L;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import static net.sharksystem.api.shark.Application.getContext;
@@ -24,7 +29,7 @@ import static net.sharksystem.api.shark.Application.getContext;
  */
 public class PKIListAdapter extends BaseAdapter {
 
-    private List<SharkCertificate> items = new ArrayList<>();
+    private List<PKICertificateHolder> items = new ArrayList<>();
 
     @Override
     public int getCount() {
@@ -41,7 +46,7 @@ public class PKIListAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void updateItems(List<SharkCertificate> items) {
+    public void updateItems(List<PKICertificateHolder> items) {
         this.items = items;
         notifyDataSetChanged();
     }
@@ -52,15 +57,17 @@ public class PKIListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.pki_line_item, parent, false);
         }
 
-        final SharkCertificate item = (SharkCertificate) this.getItem(position);
+        final PKICertificateHolder item = (PKICertificateHolder) this.getItem(position);
 
         TextView owner = (TextView) convertView.findViewById(R.id.text_view_owner);
         TextView isValid = (TextView) convertView.findViewById(R.id.text_view_is_valid);
+        TextView selfSigned = (TextView) convertView.findViewById(R.id.text_view_self_signed);
+        TextView numberOfSigners = (TextView) convertView.findViewById(R.id.text_view_number_of_signers);
 
         owner.setText(item.getOwner().getName());
 
         long current = System.currentTimeMillis();
-        long validity = item.getValidity();
+        long validity = item.getCertificates().get(0).getValidity();
 
         // calculate days remaining
         String text;
@@ -86,6 +93,26 @@ public class PKIListAdapter extends BaseAdapter {
             isValid.setTextColor(Color.RED);
         }
         isValid.setText(text);
+
+        numberOfSigners.setText(""+item.getCertificates().size());
+
+        try {
+            PeerSemanticTag tag = SharkNetEngine.getSharkNet().getMyProfile().getPST();
+            boolean isSelfSigned = false;
+
+            Iterator<SharkCertificate> iterator = item.getCertificates().iterator();
+            while (iterator.hasNext()){
+                SharkCertificate next = iterator.next();
+                if(SharkCSAlgebra.identical(next.getSigner(), tag)){
+                    isSelfSigned = true;
+                    break;
+                }
+            }
+            selfSigned.setText(isSelfSigned ? "YES" : "NO");
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+
 
         return convertView;
     }

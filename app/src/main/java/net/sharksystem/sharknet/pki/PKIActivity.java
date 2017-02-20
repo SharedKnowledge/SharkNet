@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.security.PkiStorage;
 import net.sharkfw.security.SharkCertificate;
@@ -19,6 +20,8 @@ import net.sharksystem.sharknet.dummy.Dummy;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -52,7 +55,9 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
             e.printStackTrace();
         }
 
-        adapter.updateItems(certificates);
+        List<PKICertificateHolder> holderList = mapCertificates(certificates);
+
+        adapter.updateItems(holderList);
 
         ListView listView = (ListView) findViewById(R.id.list_view_certificates);
         listView.setAdapter(adapter);
@@ -87,6 +92,42 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
 //        viewPager.setAdapter(adapter);
 //        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+    }
+
+    private List<PKICertificateHolder> mapCertificates(List<SharkCertificate> certificates){
+        List<PKICertificateHolder> holderList = new ArrayList<>();
+
+        Iterator<SharkCertificate> certificateIterator = certificates.iterator();
+        while (certificateIterator.hasNext()){
+            SharkCertificate nextCertificate = certificateIterator.next();
+
+            if(holderList.isEmpty()){
+                PKICertificateHolder certificateHolder = new PKICertificateHolder();
+                certificateHolder.addCertificate(nextCertificate);
+                holderList.add(certificateHolder);
+            } else {
+
+                boolean certificateAdded = false;
+
+                Iterator<PKICertificateHolder> holderIterator = holderList.iterator();
+                while (holderIterator.hasNext()){
+                    PKICertificateHolder nextHolder = holderIterator.next();
+
+                    if(SharkCSAlgebra.identical(nextHolder.getOwner(), nextCertificate.getOwner())){
+                        nextHolder.addCertificate(nextCertificate);
+                        certificateAdded = true;
+                        break;
+                    }
+                }
+
+                if(!certificateAdded){
+                    PKICertificateHolder certificateHolder = new PKICertificateHolder();
+                    certificateHolder.addCertificate(nextCertificate);
+                    holderList.add(certificateHolder);
+                }
+            }
+        }
+        return holderList;
     }
 
     @Override
@@ -131,7 +172,9 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
             e.printStackTrace();
         }
 
-        adapter.updateItems(certificates);
+        List<PKICertificateHolder> holderList = mapCertificates(certificates);
+
+        adapter.updateItems(holderList);
     }
 
     @Override
@@ -143,7 +186,10 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        PKIDataHolder.getInstance().setCertificate(certificates.get(position));
+
+        List<PKICertificateHolder> holderList = mapCertificates(certificates);
+
+        PKIDataHolder.getInstance().setHolder(holderList.get(position));
 
         Intent intent = new Intent(this, PKIDetailActivity.class);
         startActivity(intent);

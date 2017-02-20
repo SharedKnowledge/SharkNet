@@ -7,7 +7,6 @@ package net.sharksystem.sharknet.dummy;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
-import net.sharkfw.security.PkiStorage;
 import net.sharkfw.security.SharkPkiStorage;
 import net.sharkfw.security.SharkPublicKey;
 import net.sharkfw.system.L;
@@ -290,7 +289,7 @@ public class Dummy {
 
         L.d("Key generated", Dummy.class.toString());
 
-        String oName = "olaf";
+        String oName = "Olaf";
         String oSI = "st:o";
         String oAddr = "tcp://sharo.net/o";
         PeerSemanticTag oTag = InMemoSharkKB.createInMemoPeerSemanticTag(oName, oSI, oAddr);
@@ -299,7 +298,7 @@ public class Dummy {
         L.d("Key generated", Dummy.class.toString());
 
         SharkPublicKey sharkPublicKey = pkiStorage.addUnsignedKey(kTag, kKeyPair.getPublic(), tomorrow);
-        SharkPublicKey sharkPublicKey1 = pkiStorage.addUnsignedKey(lTag, lKeyPair.getPublic(), tomorrow+hour);
+        SharkPublicKey sharkPublicKey1 = pkiStorage.addUnsignedKey(lTag, lKeyPair.getPublic(), tomorrow + hour);
         SharkPublicKey sharkPublicKey2 = pkiStorage.addUnsignedKey(mTag, mKeyPair.getPublic(), yesterday);
         SharkPublicKey sharkPublicKey3 = pkiStorage.addUnsignedKey(nTag, nKeyPair.getPublic(), nextWeek);
         SharkPublicKey sharkPublicKey4 = pkiStorage.addUnsignedKey(oTag, oKeyPair.getPublic(), previousWeek);
@@ -310,16 +309,16 @@ public class Dummy {
             pkiStorage.sign(sharkPublicKey3);
 
             // Signed by others
-             pkiStorage.sign(sharkPublicKey, kTag, kKeyPair.getPrivate());
-             pkiStorage.sign(sharkPublicKey1, kTag, kKeyPair.getPrivate());
-             pkiStorage.sign(sharkPublicKey2, kTag, kKeyPair.getPrivate());
-             pkiStorage.sign(sharkPublicKey3, kTag, kKeyPair.getPrivate());
-             pkiStorage.sign(sharkPublicKey4, kTag, kKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey, kTag, kKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey1, kTag, kKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey2, kTag, kKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey3, kTag, kKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey4, kTag, kKeyPair.getPrivate());
 
-             pkiStorage.sign(sharkPublicKey1, lTag, lKeyPair.getPrivate());
-             pkiStorage.sign(sharkPublicKey2, lTag, lKeyPair.getPrivate());
-             pkiStorage.sign(sharkPublicKey3, lTag, lKeyPair.getPrivate());
-             pkiStorage.sign(sharkPublicKey4, lTag, lKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey1, lTag, lKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey2, lTag, lKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey3, lTag, lKeyPair.getPrivate());
+            pkiStorage.sign(sharkPublicKey4, lTag, lKeyPair.getPrivate());
 
             pkiStorage.sign(sharkPublicKey, mTag, mKeyPair.getPrivate());
             pkiStorage.sign(sharkPublicKey2, mTag, mKeyPair.getPrivate());
