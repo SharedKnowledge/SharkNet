@@ -92,5 +92,6 @@
     <string name="activity_title_pki_certificate_detail">Certificate Detail</string>
     <string name="activity_title_pki_public_key_detail">PublicKey Detail</string>
     <string name="init_owner">Init Owner</string>
+    <string name="activity_title_pki_detail">PKI Detail</string>
 
 </resources>

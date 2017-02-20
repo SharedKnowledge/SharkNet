@@ -51,7 +51,7 @@ public class PKIDetailActivity extends ParentActivity {
         SimpleDateFormat receiveFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMAN);
         dateReceived.setText(receiveFormat.format(receiveDate));
 
-        Button buttonDelete = (Button) findViewById(R.id.button_public_key_delete);
+        Button buttonDelete = (Button) findViewById(R.id.button_delete);
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override

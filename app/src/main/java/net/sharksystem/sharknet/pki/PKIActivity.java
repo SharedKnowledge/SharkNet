@@ -145,7 +145,7 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
         }
         PKIDataHolder.getInstance().setCertificate(certificates.get(position));
 
-        Intent intent = new Intent(this, CertificateDetailActivity.class);
+        Intent intent = new Intent(this, PKIDetailActivity.class);
         startActivity(intent);
     }
 }
