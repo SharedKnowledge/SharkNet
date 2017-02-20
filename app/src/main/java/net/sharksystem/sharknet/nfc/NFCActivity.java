@@ -83,6 +83,16 @@ public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NF
     }
 
     @Override
+    protected boolean doInBackground() {
+        return false;
+    }
+
+    @Override
+    protected void doWhenFinished(boolean success) {
+
+    }
+
+    @Override
     public void onMessageReceived(final String message) {
         runOnUiThread(new Runnable() {
             @Override

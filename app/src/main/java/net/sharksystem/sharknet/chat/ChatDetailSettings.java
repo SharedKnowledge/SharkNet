@@ -75,6 +75,16 @@ public class ChatDetailSettings extends ParentActivity implements View.OnClickLi
         }
     }
 
+    @Override
+    protected boolean doInBackground() {
+        return false;
+    }
+
+    @Override
+    protected void doWhenFinished(boolean success) {
+
+    }
+
     /**
      * click Back-Button on Phone
      */

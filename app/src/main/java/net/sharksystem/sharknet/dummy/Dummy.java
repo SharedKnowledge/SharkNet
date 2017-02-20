@@ -312,7 +312,6 @@ public class Dummy {
             pkiStorage.sign(sharkPublicKey, kTag, kKeyPair.getPrivate());
             pkiStorage.sign(sharkPublicKey1, kTag, kKeyPair.getPrivate());
             pkiStorage.sign(sharkPublicKey2, kTag, kKeyPair.getPrivate());
-            pkiStorage.sign(sharkPublicKey3, kTag, kKeyPair.getPrivate());
             pkiStorage.sign(sharkPublicKey4, kTag, kKeyPair.getPrivate());
 
             pkiStorage.sign(sharkPublicKey1, lTag, lKeyPair.getPrivate());
@@ -330,7 +329,6 @@ public class Dummy {
             pkiStorage.sign(sharkPublicKey4, nTag, nKeyPair.getPrivate());
 
             pkiStorage.sign(sharkPublicKey, oTag, oKeyPair.getPrivate());
-            pkiStorage.sign(sharkPublicKey1, oTag, oKeyPair.getPrivate());
             pkiStorage.sign(sharkPublicKey3, oTag, oKeyPair.getPrivate());
             pkiStorage.sign(sharkPublicKey4, oTag, oKeyPair.getPrivate());
 

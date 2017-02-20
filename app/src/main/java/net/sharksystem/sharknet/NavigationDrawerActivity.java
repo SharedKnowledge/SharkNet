@@ -23,7 +23,7 @@ import net.sharksystem.sharknet.radar.RadarActivity;
  * Created by j4rvis on 1/31/17.
  */
 
-public class NavigationDrawerActivity extends ParentActivity implements NavigationView.OnNavigationItemSelectedListener{
+public abstract class NavigationDrawerActivity extends ParentActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

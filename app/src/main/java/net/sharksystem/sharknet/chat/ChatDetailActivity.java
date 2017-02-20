@@ -255,6 +255,16 @@ public class ChatDetailActivity extends ParentActivity implements View.OnClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected boolean doInBackground() {
+        return false;
+    }
+
+    @Override
+    protected void doWhenFinished(boolean success) {
+
+    }
+
     private final TextWatcher TextEditorWatcher = new TextWatcher() {
 
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -2,10 +2,8 @@ package net.sharksystem.sharknet.pki;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
@@ -18,8 +16,6 @@ import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.dummy.Dummy;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,10 +24,11 @@ import java.util.List;
  * Created by j4rvis on 2/11/17.
  */
 
-public class PKIActivity extends NavigationDrawerActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class PKIActivity extends NavigationDrawerActivity implements AdapterView.OnItemClickListener {
 
     private PkiStorage pkiStorage;
     private PKIListAdapter adapter;
+    private List<PKICertificateHolder> holderList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +38,13 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
 
         L.setLogLevel(L.LOGLEVEL_ALL);
 
-        pkiStorage = SharkNetEngine.getSharkNet().getSharkEngine().getPKIStorage();
-        adapter = new PKIListAdapter();
+        startBackgroundTask("Zertifikate werden geladen");
+    }
 
-        Button button = (Button) findViewById(R.id.button_reload_list);
-        button.setOnClickListener(this);
+    @Override
+    protected boolean doInBackground() {
+        Dummy.createDummyPkiData();
+        pkiStorage = SharkNetEngine.getSharkNet().getSharkEngine().getPKIStorage();
 
         List<SharkCertificate> certificates = null;
         try {
@@ -55,53 +54,28 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
             e.printStackTrace();
         }
 
-        List<PKICertificateHolder> holderList = mapCertificates(certificates);
+        holderList = mapCertificates(certificates);
+        return true;
+    }
 
+    @Override
+    protected void doWhenFinished(boolean success) {
+        adapter = new PKIListAdapter();
         adapter.updateItems(holderList);
 
         ListView listView = (ListView) findViewById(R.id.list_view_certificates);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
-
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-//        tabLayout.addTab(tabLayout.newTab().setText("Certificates"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Unsigned PublicKeys"));
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-//        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                viewPager.setCurrentItem(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//
-//        // pass the listFragments to the pager
-//        final PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
-//        adapter.addFragment(new CertificateListFragment());
-//        adapter.addFragment(new PublicKeyListFragment());
-//        viewPager.setAdapter(adapter);
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
     }
 
-    private List<PKICertificateHolder> mapCertificates(List<SharkCertificate> certificates){
+    private List<PKICertificateHolder> mapCertificates(List<SharkCertificate> certificates) {
         List<PKICertificateHolder> holderList = new ArrayList<>();
 
         Iterator<SharkCertificate> certificateIterator = certificates.iterator();
-        while (certificateIterator.hasNext()){
+        while (certificateIterator.hasNext()) {
             SharkCertificate nextCertificate = certificateIterator.next();
 
-            if(holderList.isEmpty()){
+            if (holderList.isEmpty()) {
                 PKICertificateHolder certificateHolder = new PKICertificateHolder();
                 certificateHolder.addCertificate(nextCertificate);
                 holderList.add(certificateHolder);
@@ -110,17 +84,17 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
                 boolean certificateAdded = false;
 
                 Iterator<PKICertificateHolder> holderIterator = holderList.iterator();
-                while (holderIterator.hasNext()){
+                while (holderIterator.hasNext()) {
                     PKICertificateHolder nextHolder = holderIterator.next();
 
-                    if(SharkCSAlgebra.identical(nextHolder.getOwner(), nextCertificate.getOwner())){
+                    if (SharkCSAlgebra.identical(nextHolder.getOwner(), nextCertificate.getOwner())) {
                         nextHolder.addCertificate(nextCertificate);
                         certificateAdded = true;
                         break;
                     }
                 }
 
-                if(!certificateAdded){
+                if (!certificateAdded) {
                     PKICertificateHolder certificateHolder = new PKICertificateHolder();
                     certificateHolder.addCertificate(nextCertificate);
                     holderList.add(certificateHolder);
@@ -131,65 +105,8 @@ public class PKIActivity extends NavigationDrawerActivity implements View.OnClic
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.generate_dummy_data:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Dummy.createDummyPkiData();
-                    }
-                }).start();
-                item.setVisible(false);
-                return true;
-            case R.id.init_owner:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SharkNetEngine sharkNetEngine = SharkNetEngine.getSharkNet();
-                        PkiStorage pkiStorage = sharkNetEngine.getSharkEngine().getPKIStorage();
-                        try {
-                            pkiStorage.setPkiStorageOwner(sharkNetEngine.getMyProfile().getPST());
-                            pkiStorage.generateNewKeyPair();
-                        } catch (SharkKBException | NoSuchAlgorithmException | IOException e) {
-                            L.e(e.getMessage(), this);
-                        }
-                    }
-                }).start();
-                item.setVisible(false);
-                return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onClick(View v) {
-        List<SharkCertificate> certificates = null;
-        try {
-            certificates = this.pkiStorage.getAllSharkCertificates();
-            L.d("Certifcates: " + certificates.size(), this);
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
-        List<PKICertificateHolder> holderList = mapCertificates(certificates);
-
-        adapter.updateItems(holderList);
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        List<SharkCertificate> certificates = null;
-        try {
-            certificates = this.pkiStorage.getAllSharkCertificates();
-            L.d("Certifcates: " + certificates.size(), this);
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
-        List<PKICertificateHolder> holderList = mapCertificates(certificates);
-
-        PKIDataHolder.getInstance().setHolder(holderList.get(position));
+        PKIDataHolder.getInstance().setHolder(this.holderList.get(position));
 
         Intent intent = new Intent(this, PKIDetailActivity.class);
         startActivity(intent);

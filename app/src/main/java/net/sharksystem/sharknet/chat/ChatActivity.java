@@ -66,6 +66,16 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
     }
 
     @Override
+    protected boolean doInBackground() {
+        return false;
+    }
+
+    @Override
+    protected void doWhenFinished(boolean success) {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 

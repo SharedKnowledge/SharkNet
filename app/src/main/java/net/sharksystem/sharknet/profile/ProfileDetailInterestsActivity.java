@@ -56,4 +56,14 @@ public class ProfileDetailInterestsActivity extends ParentActivity {
         });
     }
 
+    @Override
+    protected boolean doInBackground() {
+        return false;
+    }
+
+    @Override
+    protected void doWhenFinished(boolean success) {
+
+    }
+
 }

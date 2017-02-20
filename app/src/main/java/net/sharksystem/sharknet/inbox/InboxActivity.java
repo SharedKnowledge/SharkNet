@@ -55,6 +55,16 @@ public class InboxActivity extends NavigationDrawerActivity {
     }
 
     @Override
+    protected boolean doInBackground() {
+        return false;
+    }
+
+    @Override
+    protected void doWhenFinished(boolean success) {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 

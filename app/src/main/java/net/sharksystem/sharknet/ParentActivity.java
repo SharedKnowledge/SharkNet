@@ -1,6 +1,8 @@
 package net.sharksystem.sharknet;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +17,7 @@ import android.widget.RelativeLayout;
 /**
  * Created by mn-io on 22.01.16.
  */
-public class ParentActivity extends AppCompatActivity {
+public abstract class ParentActivity extends AppCompatActivity {
 
     public static final int LAYOUT_OPTION_RESOURCE = 1;
     public static final int LAYOUT_OPTION_FRAGMENT = 2;
@@ -36,11 +38,23 @@ public class ParentActivity extends AppCompatActivity {
         findViewById(R.id.fab).setVisibility(View.GONE);
     }
 
-    protected void setToolbarTitle(String title){
+    protected void startBackgroundTask(){
+        this.startBackgroundTask(null);
+    }
+
+    protected void startBackgroundTask(String information) {
+        new ProgressTask(this, information).execute();
+    }
+
+    protected abstract boolean doInBackground();
+
+    protected abstract void doWhenFinished(boolean success);
+
+    protected void setToolbarTitle(String title) {
         ((Toolbar) findViewById(R.id.toolbar)).setTitle(title);
     }
 
-    protected FloatingActionButton activateFloatingActionButton(){
+    protected FloatingActionButton activateFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
         return fab;
@@ -68,7 +82,6 @@ public class ParentActivity extends AppCompatActivity {
         getMenuInflater().inflate(optionsMenuResource, menu);
         return true;
     }
-
 
     protected void setLayoutResource(int resource) {
         checkIfLayoutIsUsed(LAYOUT_OPTION_RESOURCE);
@@ -103,6 +116,42 @@ public class ParentActivity extends AppCompatActivity {
             throw new IllegalStateException("Layout already set.");
         }
         layoutInUse = layoutOption;
+    }
+
+    private class ProgressTask extends AsyncTask<String, Void, Boolean> {
+        private final ParentActivity activity;
+
+        private final ProgressDialog progressDialog;
+        private final String information;
+
+        public ProgressTask(ParentActivity activity, String information) {
+            this.activity = activity;
+            this.information = information;
+            progressDialog = new ProgressDialog(activity);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            if (information == null || information.isEmpty()) {
+                this.progressDialog.setMessage("Daten werden geladen.");
+            } else {
+                this.progressDialog.setMessage(information);
+            }
+            this.progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (this.progressDialog.isShowing()) {
+                this.progressDialog.dismiss();
+            }
+            this.activity.doWhenFinished(success);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            return this.activity.doInBackground();
+        }
     }
 }
 
