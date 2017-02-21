@@ -93,5 +93,7 @@
     <string name="activity_title_pki_public_key_detail">PublicKey Detail</string>
     <string name="init_owner">Init Owner</string>
     <string name="activity_title_pki_detail">PKI Detail</string>
+    <string name="nfc_message_received_msg">Wir haben eine neue Nachricht erhalten.</string>
+    <string name="nfc_message_received_title">Neue Nachricht</string>
 
 </resources>

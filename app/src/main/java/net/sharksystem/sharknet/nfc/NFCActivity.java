@@ -1,5 +1,6 @@
 package net.sharksystem.sharknet.nfc;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -94,6 +95,15 @@ public class NFCActivity extends NavigationDrawerActivity implements SharkNet.NF
 
     @Override
     public void onMessageReceived(final String message) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(R.string.nfc_message_received_msg).setTitle(R.string.nfc_message_received_title);
+
+        AlertDialog alertDialog = builder.create();
+
+        alertDialog.show();
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

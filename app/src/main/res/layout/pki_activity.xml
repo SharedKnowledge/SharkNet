@@ -4,10 +4,51 @@
     android:layout_height="match_parent"
     android:paddingTop="8dp">
 
+    <LinearLayout
+        android:id="@+id/list_view_labels"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textStyle="bold"
+            android:text="Owner"
+            android:textColor="@color/primary_text" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textStyle="bold"
+            android:text="Valid"
+            android:textColor="@color/primary_text" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="Self-signed"
+            android:textColor="@color/primary_text" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="# Signers"
+            android:textColor="@color/primary_text" />
+
+    </LinearLayout>
+
     <ListView
+        android:layout_below="@+id/list_view_labels"
         android:id="@+id/list_view_certificates"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:padding="8dp"></ListView>
 </RelativeLayout>

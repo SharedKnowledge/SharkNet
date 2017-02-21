@@ -73,16 +73,16 @@ public class PKIListAdapter extends BaseAdapter {
         String text;
         long difference = validity - current;
         if (difference <= 0){
-            text = "0";
+            text = "not valid";
         } else {
             double day = 1000*60*60*24;
             double daysRemaining = difference / day;
 
             if(daysRemaining < 1){
                 double hoursRemaining = daysRemaining * 24;
-                text =  (long) hoursRemaining + " Stunden";
+                text =  (long) hoursRemaining + " hours";
             } else {
-                text = (long) daysRemaining + " Tage";
+                text = (long) daysRemaining + " days";
             }
         }
         Date date = new Date(validity);
@@ -108,7 +108,7 @@ public class PKIListAdapter extends BaseAdapter {
                     break;
                 }
             }
-            selfSigned.setText(isSelfSigned ? "YES" : "NO");
+            selfSigned.setText(isSelfSigned ? "Yes" : "no");
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
