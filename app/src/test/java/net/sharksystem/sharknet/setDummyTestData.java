@@ -250,7 +250,7 @@ public class setDummyTestData
 
         s.informMessage(mlistener2);
         s.informMessage(mlistener1);
-        s.exchangeContactNFC();
+        s.setupNfc();
 
 
         //Set Default ProfileActivity to alice

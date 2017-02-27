@@ -43,13 +43,16 @@ public class PKIActivity extends NavigationDrawerActivity implements AdapterView
 
     @Override
     protected boolean doInBackground() {
-        Dummy.createDummyPkiData();
         pkiStorage = SharkNetEngine.getSharkNet().getSharkEngine().getPKIStorage();
 
         List<SharkCertificate> certificates = null;
         try {
             certificates = this.pkiStorage.getAllSharkCertificates();
             L.d("Certifcates: " + certificates.size(), this);
+            if(certificates.isEmpty()){
+                Dummy.createDummyPkiData();
+                certificates = this.pkiStorage.getAllSharkCertificates();
+            }
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
