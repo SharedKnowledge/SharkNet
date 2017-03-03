@@ -2,85 +2,96 @@
 
 
 <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentStart="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="363dp"
-            android:layout_height="117dp"
-            android:layout_gravity="center_horizontal"
-            android:weightSum="1" android:gravity="center">
-        <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/imageButton3"
-                android:src="@drawable/imagebuttonleft"
-
-                android:onClick="backProfile"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/links"
-                android:background="@null"/>
-
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_gravity="center">
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:theme="@style/MyEditTextTheme"
-                    android:ems="10"
-                    android:id="@+id/userid"
-                    android:hint="@string/nickname" android:textAlignment="center"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:theme="@style/MyEditTextTheme"
-
-                    android:ems="10"
-                    android:id="@+id/password"
-                    android:password="false"
-                    android:hint="@string/password" android:textAlignment="center"/>
-        </LinearLayout>
-        <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/imageButton4"
-                android:src="@drawable/imagebuttonright"
-                android:onClick="nextProfile"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/rechts"
-                android:background="@null"/>
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/ic_person_accent_48dp"
+                   android:contentDescription="@string/profileimage" android:minHeight="100dp"/>
     </LinearLayout>
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:gravity="center">
-        <Button
-                android:layout_width="77dp"
-                android:layout_height="wrap_content"
-                android:text="@string/create"
-                android:id="@+id/create"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/abc_background_cache_hint_selector_material_light"/>
-        <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="363dp"
+        android:layout_height="117dp"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="1" android:gravity="center">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/imageButtonBack"
+            android:src="@drawable/ic_chevron_left_accent_24dp"
+            android:onClick="backProfile"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/links"
+            android:background="@null"/>
 
-                android:text="@string/go"
-                android:id="@+id/go"
-                android:onClick="openChat"
-                android:layout_weight="0.32" android:backgroundTint="@color/primary"
-                android:textColor="@color/abc_background_cache_hint_selector_material_light"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:theme="@style/MyEditTextTheme"
+                android:ems="10"
+                android:id="@+id/userid"
+                android:hint="@string/nickname"
+                android:textAlignment="center"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:theme="@style/MyEditTextTheme"
+
+                android:ems="10"
+                android:id="@+id/password"
+                android:password="false"
+                android:hint="@string/password"
+                android:textAlignment="center"/>
+        </LinearLayout>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/imageButtonForward"
+            android:src="@drawable/ic_chevron_right_accent_24dp"
+            android:onClick="nextProfile"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/rechts"
+            android:background="@null"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:gravity="center">
+        <Button
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:text="@string/create"
+            android:id="@+id/create"
+            android:backgroundTint="@color/accent"
+            android:textColor="@color/abc_primary_text_material_dark"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:text="@string/go"
+            android:id="@+id/go"
+            android:onClick="openChat"
+            android:layout_weight="0.32" android:backgroundTint="@color/accent"
+            android:textColor="@color/abc_primary_text_material_dark"/>
     </LinearLayout>
 </LinearLayout>
 

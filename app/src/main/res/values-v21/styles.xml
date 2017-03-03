@@ -1,7 +1,2 @@
 <resources>
-    <style name="MyEditTextTheme">
-        <item name="colorControlNormal">@color/primary_dark</item>
-        <item name="colorControlActivated">@color/primary</item>
-        <item name="colorControlHighlight">@color/primary</item>
-    </style>
 </resources>
