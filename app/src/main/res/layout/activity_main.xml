@@ -2,95 +2,105 @@
 
 
 <LinearLayout
-    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentTop="true"
     android:layout_alignParentEnd="true"
     android:layout_alignParentStart="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:src="@drawable/ic_person_accent_48dp"
-                   android:contentDescription="@string/profileimage" android:minHeight="100dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/profileimage"
+            android:minHeight="100dp"
+            android:src="@drawable/ic_person_accent_48dp"/>
     </LinearLayout>
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="363dp"
         android:layout_height="117dp"
         android:layout_gravity="center_horizontal"
-        android:weightSum="1" android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
         <ImageButton
+            android:id="@+id/button_previous_profile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:id="@+id/imageButtonBack"
-            android:src="@drawable/ic_chevron_left_accent_24dp"
-            android:onClick="backProfile"
             android:layout_gravity="center_vertical"
+            android:background="@null"
             android:contentDescription="@string/links"
-            android:background="@null"/>
+            android:src="@drawable/ic_chevron_left_accent_24dp"/>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:theme="@style/MyEditTextTheme"
-                android:ems="10"
-                android:id="@+id/userid"
-                android:hint="@string/nickname"
-                android:textAlignment="center"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:theme="@style/MyEditTextTheme"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/userid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:ems="10"
+                android:hint="@string/nickname"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                android:theme="@style/MyEditTextTheme"/>
+
+            <EditText
                 android:id="@+id/password"
-                android:password="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+
                 android:hint="@string/password"
-                android:textAlignment="center"/>
+                android:inputType="textPassword"
+                android:password="false"
+                android:textAlignment="center"
+                android:theme="@style/MyEditTextTheme"/>
         </LinearLayout>
+
         <ImageButton
+            android:id="@+id/button_next_profile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:id="@+id/imageButtonForward"
-            android:src="@drawable/ic_chevron_right_accent_24dp"
-            android:onClick="nextProfile"
             android:layout_gravity="center_vertical"
+            android:background="@null"
             android:contentDescription="@string/rechts"
-            android:background="@null"/>
+            android:src="@drawable/ic_chevron_right_accent_24dp"/>
     </LinearLayout>
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
         <Button
+            android:id="@+id/create"
             android:layout_width="77dp"
             android:layout_height="wrap_content"
-            android:text="@string/create"
-            android:id="@+id/create"
             android:backgroundTint="@color/accent"
+            android:text="@string/create"
             android:textColor="@color/abc_primary_text_material_dark"/>
+
         <Button
+            android:id="@+id/button_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
+            android:layout_weight="0.32"
+            android:backgroundTint="@color/accent"
             android:text="@string/go"
-            android:id="@+id/go"
-            android:onClick="openChat"
-            android:layout_weight="0.32" android:backgroundTint="@color/accent"
             android:textColor="@color/abc_primary_text_material_dark"/>
     </LinearLayout>
 </LinearLayout>

@@ -6,13 +6,16 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.dummy.Dummy;
 import net.sharksystem.sharknet.nfc.NFCActivity;
 import net.sharksystem.sharknet.pki.PKIActivity;
@@ -34,6 +37,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         L.setLogLevel(L.LOGLEVEL_ALL);
+
+        Button login = (Button) findViewById(R.id.button_login);
+        ImageButton next = (ImageButton) findViewById(R.id.button_next_profile);
+        ImageButton previous = (ImageButton) findViewById(R.id.button_previous_profile);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openChat();
+            }
+        });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    nextProfile();
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    previousProfile();
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
 //        WifiManager wifiManager = (WifiManager)this.getSystemService(Context.WIFI_SERVICE);
 //        wifiManager.setWifiEnabled(false);
@@ -66,12 +101,13 @@ public class MainActivity extends AppCompatActivity {
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
+
+        // TODO just for tests - simulates auto-login
+        openChat();
     }
 
-    public void openChat(View view) {
-        Intent nfc = new Intent(this, NFCActivity.class);
-        Intent radar = new Intent(this, RadarActivity.class);
-        Intent pki = new Intent(this, PKIActivity.class);
+    public void openChat() {
+        Intent intent = new Intent(this, ChatActivity.class);
 
         try {
             SharkNetEngine.getSharkNet().setActiveProfile(this.profiles.get(index), "");
@@ -81,15 +117,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        Typeface face= Typeface.createFromAsset(getAssets(),"fonts/RockSalt.ttf");
-//        NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
-//        Menu m = nv.getMenu();
-//        txtV.setTypeface(face);
-
-        startActivity(pki);
+        startActivity(intent);
     }
 
-    public void backProfile(View view) throws SharkKBException {
+    public void previousProfile() throws SharkKBException {
         if (index > 0) {
             index--;
             EditText userid = (EditText) findViewById(R.id.userid);
@@ -105,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void nextProfile(View view) throws SharkKBException {
+    public void nextProfile() throws SharkKBException {
         if (index < this.profiles.size() - 1) {
             index++;
             EditText userid = (EditText) findViewById(R.id.userid);
