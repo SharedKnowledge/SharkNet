@@ -144,34 +144,30 @@ public class Dummy {
         ArrayList<Contact> aliceAndBob = new ArrayList<>();
         aliceAndBob.add(alice);
         aliceAndBob.add(bob);
+        aliceAndBob.add(engine.getMyProfile());
 
         ArrayList<Contact> aliceAndBobAndCharlie = new ArrayList<>();
         aliceAndBobAndCharlie.add(alice);
         aliceAndBobAndCharlie.add(bob);
         aliceAndBobAndCharlie.add(charlie);
+        aliceAndBobAndCharlie.add(engine.getMyProfile());
 
         ArrayList<Contact> aliceAndCharlie = new ArrayList<>();
         aliceAndCharlie.add(alice);
         aliceAndCharlie.add(charlie);
+        aliceAndCharlie.add(engine.getMyProfile());
 
         ArrayList<Contact> bobAndCharlie = new ArrayList<>();
         bobAndCharlie.add(bob);
         bobAndCharlie.add(charlie);
+        bobAndCharlie.add(engine.getMyProfile());
 
         // ChatActivity initiation
 
         Chat aliceAndBobChat = engine.newChat(aliceAndBob);
-        aliceAndBobChat.setTitle("ABD");
-
-        Thread.sleep(10);
         Chat aliceAndBobAndCharlieChat = engine.newChat(aliceAndBobAndCharlie);
-        aliceAndBobAndCharlieChat.setTitle("ABCD");
-        Thread.sleep(10);
         Chat aliceAndCharlieChat = engine.newChat(aliceAndCharlie);
-        aliceAndCharlieChat.setTitle("ACD");
-        Thread.sleep(10);
         Chat bobAndCharlieChat = engine.newChat(bobAndCharlie);
-        bobAndCharlieChat.setTitle("BCD");
 
         aliceAndBobChat.sendMessage(null, "Hallo Bob und David", null, alice);
         aliceAndBobChat.sendMessage(null, "Wie geht es euch beiden?", null, alice);

@@ -10,9 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.interfaces.Chat;
+import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
 
+import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,11 +38,26 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.chat_line_item, parent, false);
         }
 
-        net.sharksystem.api.interfaces.Chat chat = chats.get(position);
+        Chat chat = chats.get(position);
+
+
         //Title
-        TextView title = (TextView) convertView.findViewById(R.id.name);
+        TextView titleView = (TextView) convertView.findViewById(R.id.name);
         try {
-            title.setText(chat.getTitle());
+            String title = chat.getTitle();
+            if(title==null || title.isEmpty()){
+                title = "";
+                List<Contact> contacts = chat.getContacts();
+                Iterator<Contact> iterator = contacts.iterator();
+                while (iterator.hasNext()){
+                    title += iterator.next().getName();
+                    if(iterator.hasNext()){
+                        title += ", ";
+                    }
+                }
+
+            }
+            titleView.setText(title);
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -53,7 +72,7 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        if(msgs.size()>0){
+        if (msgs.size() > 0) {
             Message last_msg = msgs.get(msgs.size() - 1);
             String content = null;
             try {
@@ -80,9 +99,9 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
         //{
         try {
             if (chat.getContacts().size() > 1) {
-                image.setImageResource(R.drawable.ic_group_pink_600_24dp);
+                image.setImageResource(R.drawable.ic_group_accent_24dp);
             } else {
-                image.setImageResource(R.drawable.ic_person_pink_600_24dp);
+                image.setImageResource(R.drawable.ic_person_accent_24dp);
             }
         } catch (SharkKBException e) {
             e.printStackTrace();

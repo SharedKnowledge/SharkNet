@@ -1,66 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:paddingBottom="8dp"
+              android:paddingTop="8dp">
 
     <android.support.v7.widget.CardView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:elevation="12dp"
-            android:id="@+id/view2"
-            app:cardCornerRadius="40dp"
-            android:layout_centerHorizontal="true"
-            android:innerRadius="0dp"
-            android:shape="ring"
-            android:thicknessRatio="1.9">
+        android:id="@+id/view2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:innerRadius="0dp"
+        android:shape="ring"
+        app:cardElevation="0dp"
+        android:background="@color/cardview_dark_background"
+        app:cardCornerRadius="40dp"
+        android:layout_marginRight="8dp">
+
         <ImageView
-                android:layout_height="50dp"
-                android:layout_width="match_parent"
-                android:id="@+id/chat_image"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
+            android:id="@+id/chat_image"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
         </ImageView>
     </android.support.v7.widget.CardView>
-    <!--<ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/chat_image"
-            android:layout_gravity="center"
-            android:contentDescription="@string/profile_picture"/>
-            -->
+
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:lines="1"
-                android:id="@+id/name"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:lines="1"
-                android:ellipsize="end"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:gravity="bottom"
-                android:id="@+id/msg_text"/>
-    </LinearLayout>
-
-   <!-- <ImageView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton2"
-            android:layout_gravity="center_horizontal"
-            android:background="@android:drawable/ic_lock_idle_lock"
-            android:contentDescription="test"/>
-    -->
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/msg_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:lines="1"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+    </LinearLayout>
 </LinearLayout>
