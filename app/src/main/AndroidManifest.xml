@@ -56,7 +56,7 @@
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-                android:name=".chat.ChatDetailActivity"
+                android:name=".chat.ChatObsoleteDetailActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/activity_title_chat_detail"
                 android:parentActivityName=".chat.ChatActivity"
@@ -140,11 +140,11 @@
         <activity
                 android:name=".chat.ChatDetailAddContactActivity"
                 android:label="@string/activity_title_chat_detail_add_contact"
-                android:parentActivityName=".chat.ChatDetailActivity"
+                android:parentActivityName=".chat.ChatObsoleteDetailActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".chat.ChatDetailActivity"/>
+                    android:value=".chat.ChatObsoleteDetailActivity"/>
         </activity>
         <activity
                 android:name=".radar.RadarActivity"
@@ -154,11 +154,11 @@
         <activity
                 android:name=".chat.ChatDetailSettings"
                 android:label="@string/activity_title_chat_detail_settings"
-                android:parentActivityName=".chat.ChatDetailActivity"
+                android:parentActivityName=".chat.ChatObsoleteDetailActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".chat.ChatDetailActivity"/>
+                    android:value=".chat.ChatObsoleteDetailActivity"/>
         </activity>
         <activity
                 android:name=".nfc.NFCActivity"

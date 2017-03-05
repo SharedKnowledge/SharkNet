@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class ChatDetailActivity extends ParentActivity implements View.OnClickListener, SyncKB.SyncChangeListener {
+public class ChatObsoleteDetailActivity extends ParentActivity implements View.OnClickListener, SyncKB.SyncChangeListener {
 
     public static final int ADD_CONTACT = 1050;
     private static final int REQUEST_MICROPHONE = 101;
@@ -120,7 +120,7 @@ public class ChatDetailActivity extends ParentActivity implements View.OnClickLi
                 }
                 if (ContextCompat.checkSelfPermission(getApplicationContext(),
                         Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(ChatDetailActivity.this,
+                    ActivityCompat.requestPermissions(ChatObsoleteDetailActivity.this,
                             new String[]{Manifest.permission.RECORD_AUDIO},
                             REQUEST_MICROPHONE);
                 }
@@ -494,7 +494,7 @@ public class ChatDetailActivity extends ParentActivity implements View.OnClickLi
         switch (id)
         {
             case R.id.action_settings:
-                Intent intent = new Intent(ChatDetailActivity.this, ChatDetailSettings.class);
+                Intent intent = new Intent(ChatObsoleteDetailActivity.this, ChatDetailSettings.class);
                 //identifies the chat
                 intent.putExtra(CHAT_ID, chatID);
                 startActivity(intent);

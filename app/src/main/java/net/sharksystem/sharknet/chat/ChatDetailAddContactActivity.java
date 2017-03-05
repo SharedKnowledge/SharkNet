@@ -108,7 +108,7 @@ public class ChatDetailAddContactActivity extends ParentActivity {
                     returnChatIDIntent.putExtra(ChatActivity.CHAT_ID, chatID);
                     setResult(Activity.RESULT_OK, returnChatIDIntent);
                     finish();
-//                    startActivity(new Intent( ChatDetailAddContactActivity.this, ChatDetailActivity.class ));
+//                    startActivity(new Intent( ChatDetailAddContactActivity.this, ChatObsoleteDetailActivity.class ));
                 }
 
                 return true;
