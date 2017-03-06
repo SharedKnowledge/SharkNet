@@ -10,10 +10,5 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    
-    <LinearLayout
-        android:layout_alignParentEnd="true"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"></LinearLayout>
 
 </RelativeLayout>

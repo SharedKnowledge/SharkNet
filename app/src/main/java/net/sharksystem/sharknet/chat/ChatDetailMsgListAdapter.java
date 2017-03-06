@@ -56,7 +56,6 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
         try {
             // Message Content
             // TODO add Images etc. Using super.getItemViewType()
-            L.d("Message: " + message.getContent().getMessage());
             holder.mMsgView.setText(message.getContent().getMessage());
 
             // Author image
@@ -84,7 +83,8 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
             // Date
             Date date = new Date(message.getTimestamp().getNanos());
             SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm");
-            holder.mMsgView.setText(format.format(date));
+            holder.mDateView.setText(format.format(date));
+            holder.mAuthorTextView.setText(message.getSender().getName());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

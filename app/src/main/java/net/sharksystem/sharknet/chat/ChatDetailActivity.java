@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.ParentActivity;
@@ -49,7 +50,7 @@ public class ChatDetailActivity extends ParentActivity {
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
@@ -57,6 +58,9 @@ public class ChatDetailActivity extends ParentActivity {
 
         try {
             Chat chatById = SharkNetEngine.getSharkNet().getChatById(chatID);
+
+            L.d("Messages.size(): " + chatById.getMessages(true).size(), this);
+
             mAdapter = new ChatDetailMsgListAdapter(chatById.getMessages(true));
         } catch (SharkKBException e) {
             e.printStackTrace();
