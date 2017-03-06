@@ -52,7 +52,7 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(ChatActivity.this, ChatObsoleteDetailActivity.class);
+                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
                     //identifies the chat for the detailView
                     try {
                         intent.putExtra(CHAT_ID, chats.get(position).getID());
@@ -92,7 +92,7 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(ChatActivity.this, ChatObsoleteDetailActivity.class);
+                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
                     //identifies the chat for the detailView
                     try {
                         intent.putExtra(CHAT_ID, chats.get(position).getID());
@@ -120,7 +120,7 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(ChatActivity.this, ChatObsoleteDetailActivity.class);
+                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
                     //identifies the chat for the detailView
                     try {
                         intent.putExtra(CHAT_ID, chats.get(position).getID());

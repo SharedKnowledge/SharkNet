@@ -14,7 +14,6 @@
         android:innerRadius="0dp"
         android:shape="ring"
         app:cardElevation="0dp"
-        android:background="@color/cardview_dark_background"
         app:cardCornerRadius="40dp"
         android:layout_marginRight="8dp">
 

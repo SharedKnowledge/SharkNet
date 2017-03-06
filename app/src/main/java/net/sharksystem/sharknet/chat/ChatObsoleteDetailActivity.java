@@ -86,7 +86,7 @@ public class ChatObsoleteDetailActivity extends ParentActivity implements View.O
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.chat_detail_activity);
+        setLayoutResource(R.layout.chat_obsolete_detail_activity);
         setOptionsMenu(R.menu.chat_detail);
 
         if (savedInstanceState != null) {
