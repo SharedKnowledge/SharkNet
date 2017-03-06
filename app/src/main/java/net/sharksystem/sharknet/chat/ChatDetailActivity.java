@@ -3,6 +3,7 @@ package net.sharksystem.sharknet.chat;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.system.L;
@@ -10,6 +11,7 @@ import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.pki.PKIDataHolder;
 
 /**
  * Created by j4rvis on 3/5/17.
@@ -38,6 +40,7 @@ public class ChatDetailActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.chat_detail_activity);
         setOptionsMenu(R.menu.chat_detail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
@@ -81,5 +84,17 @@ public class ChatDetailActivity extends ParentActivity {
 
         // Restore state members from saved instance
         chatID = savedInstanceState.getString(CHAT_ID);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Reset clicked data
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

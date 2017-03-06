@@ -23,6 +23,9 @@ import java.util.List;
 
 public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsgListAdapter.ViewHolderBase> {
 
+    private final static int MESSAGE_IS_MINE = 0;
+    private final static int MESSAGE_IS_NOT_MINE = 1;
+
     private final List<Message> messages;
 
     public ChatDetailMsgListAdapter(List<Message> messages) {
@@ -33,13 +36,11 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     public ChatDetailMsgListAdapter.ViewHolderBase onCreateViewHolder(ViewGroup parent, int viewType) {
         int layout = 0;
 
-        L.d("viewType: " + viewType, this);
-
         switch (viewType) {
-            case 0:
-                layout = R.layout.chat_detail_msg_line_item;
+            case MESSAGE_IS_MINE:
+                layout = R.layout.chat_detail_my_msg_line_item;
                 break;
-            case 1:
+            case MESSAGE_IS_NOT_MINE:
                 layout = R.layout.chat_detail_msg_line_item;
                 break;
             default:
@@ -65,32 +66,35 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                 holder.mMsgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             }
 
-            // Author image
-            if (message.getSender().getPicture() == null) {
-                holder.mAuthorImageView.setImageResource(R.drawable.ic_person_accent_24dp);
+            if(!message.isMine()){
+                // Author image
+                if (message.getSender().getPicture() == null) {
+                    holder.mAuthorImageView.setImageResource(R.drawable.ic_person_accent_24dp);
 //                holder.mAuthorImageView.setVisibility(View.GONE);
-            } else {
-                // Set the image of the author
-                holder.mAuthorImageView.setImageResource(R.drawable.ic_person_accent_24dp);
+                } else {
+                    // Set the image of the author
+                    holder.mAuthorImageView.setImageResource(R.drawable.ic_person_accent_24dp);
+                }
+
+                // Message State
+                if (message.isVerified()) {
+                    holder.mStateView.setImageResource(R.drawable.ic_verified_user_green_24dp);
+                } else if (message.isSigned()) {
+                    holder.mStateView.setImageResource(R.drawable.ic_warning_dark_grey_24dp);
+                } else {
+                    holder.mStateView.setImageResource(R.drawable.ic_warning_red_24dp);
+                }
+
+                // Encrypted?
+                if (message.isEncrypted()) {
+                    holder.mEncryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
+                }
+                holder.mAuthorTextView.setText(message.getSender().getName());
             }
 
-            // Message State
-            if (message.isVerified()) {
-                holder.mStateView.setImageResource(R.drawable.ic_verified_user_green_24dp);
-            } else if (message.isSigned()) {
-                holder.mStateView.setImageResource(R.drawable.ic_warning_dark_grey_24dp);
-            } else {
-                holder.mStateView.setImageResource(R.drawable.ic_warning_red_24dp);
-            }
-
-            // Encrypted?
-            if (message.isEncrypted()) {
-                holder.mEncryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
-            }
             // Date
             SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm");
             holder.mDateView.setText(format.format(message.getDateReceived()));
-            holder.mAuthorTextView.setText(message.getSender().getName());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -102,9 +106,9 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
         Message message = this.messages.get(position);
         try {
             if (message.isMine()) {
-                return 0;
+                return MESSAGE_IS_MINE;
             } else {
-                return 1;
+                return MESSAGE_IS_NOT_MINE;
             }
         } catch (SharkKBException e) {
             e.printStackTrace();
