@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_corner_incoming"
                     android:padding="8dp"
-                    android:text="There will be a much better fitting text here."/>
+                    android:text="There will be a much "/>
             </LinearLayout>
 
 

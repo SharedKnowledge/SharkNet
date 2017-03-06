@@ -58,10 +58,7 @@ public class ChatDetailActivity extends ParentActivity {
 
         try {
             Chat chatById = SharkNetEngine.getSharkNet().getChatById(chatID);
-
-            L.d("Messages.size(): " + chatById.getMessages(true).size(), this);
-
-            mAdapter = new ChatDetailMsgListAdapter(chatById.getMessages(true));
+            mAdapter = new ChatDetailMsgListAdapter(chatById.getMessages(false));
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

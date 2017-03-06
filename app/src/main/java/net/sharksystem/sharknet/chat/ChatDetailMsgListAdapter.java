@@ -1,10 +1,12 @@
 package net.sharksystem.sharknet.chat;
 
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
@@ -13,7 +15,6 @@ import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,7 +57,13 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
         try {
             // Message Content
             // TODO add Images etc. Using super.getItemViewType()
-            holder.mMsgView.setText(message.getContent().getMessage());
+            String messageContent = message.getContent().getMessage();
+            holder.mMsgView.setText(messageContent);
+
+//            L.d("Message.length: " + messageContent.length(), this);
+            if(messageContent.length() < 30){
+                holder.mMsgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
 
             // Author image
             if (message.getSender().getPicture() == null) {
