@@ -45,7 +45,7 @@ public class InboxListAdapter extends ArrayAdapter<Feed>
 
         String s = null;
         try {
-            s = new java.text.SimpleDateFormat("HH:mm").format(feed.getTimestamp());
+            s = new java.text.SimpleDateFormat("HH:mm").format(feed.getDateReceived());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

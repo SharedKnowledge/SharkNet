@@ -81,9 +81,8 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                 holder.mEncryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
             }
             // Date
-            Date date = new Date(message.getTimestamp().getNanos());
             SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm");
-            holder.mDateView.setText(format.format(date));
+            holder.mDateView.setText(format.format(message.getDateReceived()));
             holder.mAuthorTextView.setText(message.getSender().getName());
         } catch (SharkKBException e) {
             e.printStackTrace();

@@ -78,7 +78,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
         SpannableStringBuilder builder_msg_inf = new SpannableStringBuilder();
         String s = null;
         try {
-            s = new java.text.SimpleDateFormat("HH:mm dd.MM.yyyy").format(message.getTimestamp());
+            s = new java.text.SimpleDateFormat("HH:mm dd.MM.yyyy").format(message.getDateReceived());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
