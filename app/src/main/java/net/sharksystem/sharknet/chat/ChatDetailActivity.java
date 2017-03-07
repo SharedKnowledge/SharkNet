@@ -49,6 +49,14 @@ public class ChatDetailActivity extends ParentActivity {
             chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
         }
 
+        try {
+            Chat chatById = SharkNetEngine.getSharkNet().getChatById(chatID);
+            mAdapter = new ChatDetailMsgListAdapter(chatById.getMessages(false));
+            setTitle(chatById.getTitle());
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+
         mRecyclerView = (RecyclerView) findViewById(R.id.chat_msg_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -59,12 +67,6 @@ public class ChatDetailActivity extends ParentActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        try {
-            Chat chatById = SharkNetEngine.getSharkNet().getChatById(chatID);
-            mAdapter = new ChatDetailMsgListAdapter(chatById.getMessages(false));
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
 
         // specify an adapter (see also next example)
         mRecyclerView.setAdapter(mAdapter);

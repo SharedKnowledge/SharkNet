@@ -4,6 +4,9 @@ package net.sharksystem.sharknet.dummy;
  * Created by viktorowich on 24/08/16.
  */
 
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
+
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
@@ -36,49 +39,31 @@ public class Dummy {
         String aliceNickName = "Ali";
         String aliceSI = "www.facebook.com/alice";
         String aliceMail = "mail://alice.com";
-        String aliceTelephoneHome = "030 123456789";
-        String aliceTelephoneMobile = "01177 123456789";
-        String aliceNote = "This is just a simple note";
 
         String bobName = "Bob";
         String bobNickName = "Bob";
         String bobSI = "www.facebook.com/bob";
         String bobMail = "mail://bob.com";
-        String bobTelephoneHome = "030 1234567891";
-        String bobTelephoneMobile = "01177 1234567891";
-        String bobNote = "This is just a simple note from Bob";
 
         String charlieName = "Charlie";
         String charlieNickName = "Charlie";
         String charlieSI = "www.facebook.com/charlie";
         String charlieMail = "mail://charlie.com";
-        String charlieTelephoneHome = "030 1234567891";
-        String charlieTelephoneMobile = "01177 1234567891";
-        String charlieNote = "This is just a simple note from Charlie";
 
         String davidName = "David";
         String davidNickName = "Dave";
         String davidSI = "www.facebook.com/david";
         String davidMail = "mail://david.com";
-        String davidTelephoneHome = "030 1234567891";
-        String davidTelephoneMobile = "01177 1234567891";
-        String davidNote = "This is just a simple note from David";
 
         String eliseName = "Elise";
         String eliseNickName = "Elli";
         String eliseSI = "www.facebook.com/elise";
         String eliseMail = "mail://elise.com";
-        String eliseTelephoneHome = "030 1234567891";
-        String eliseTelephoneMobile = "01177 1234567891";
-        String eliseNote = "This is just a simple note from Elise";
 
         String frankName = "Frank";
         String frankNickName = "Frank";
         String frankSI = "www.facebook.com/frank";
         String frankMail = "mail://frank.com";
-        String frankTelephoneHome = "030 1234567891";
-        String frankTelephoneMobile = "01177 1234567891";
-        String frankNote = "This is just a simple note from Frank";
 
         byte[] randomByte = new byte[20];
         InputStream stream = new ByteArrayInputStream(randomByte);
@@ -90,55 +75,36 @@ public class Dummy {
         Contact alice = engine.newContact(aliceName, aliceSI);
 //        alice.setEmail(aliceMail);
         alice.setNickname(aliceNickName);
-        alice.addTelephoneNumber(aliceTelephoneHome);
-        alice.addTelephoneNumber(aliceTelephoneMobile);
-        alice.addNote(aliceNote);
         alice.setPublicKey("2983749283490982304823094820394802398402398402938409238409238409238487239");
 
         Contact bob = engine.newContact(bobName, bobSI);
 //        bob.setEmail(bobMail);
         bob.setNickname(bobNickName);
-        bob.addTelephoneNumber(bobTelephoneHome);
-        bob.addTelephoneNumber(bobTelephoneMobile);
-        bob.addNote(bobNote);
         bob.setPublicKey("209284092384j2j34ou23o");
 
         Contact charlie = engine.newContact(charlieName, charlieSI);
 //        charlie.setEmail(charlieMail);
         charlie.setNickname(charlieNickName);
-        charlie.addTelephoneNumber(charlieTelephoneHome);
-        charlie.addTelephoneNumber(charlieTelephoneMobile);
-        charlie.addNote(charlieNote);
         charlie.setPublicKey("20928409238asdfasdf4j2j34ou23o");
 
 
         Profile david = engine.newProfile(davidName, davidSI);
 //        david.setEmail(davidMail);
         david.setNickname(davidNickName);
-        david.addTelephoneNumber(davidTelephoneHome);
-        david.addTelephoneNumber(davidTelephoneMobile);
-        david.addNote(davidNote);
         david.setPublicKey("209284092384jasdfasdfasdfasdf2j34ou23o");
 
 
         Profile elise = engine.newProfile(eliseName, eliseSI);
 //        elise.setEmail(eliseMail);
         elise.setNickname(eliseNickName);
-        elise.addTelephoneNumber(eliseTelephoneHome);
-        elise.addTelephoneNumber(eliseTelephoneMobile);
-        elise.addNote(eliseNote);
         elise.setPublicKey("209284092384j2j34ou23o");
-
 
         Profile frank = engine.newProfile(frankName, frankSI);
 //        frank.setEmail(frankMail);
         frank.setNickname(frankNickName);
-        frank.addTelephoneNumber(frankTelephoneHome);
-        frank.addTelephoneNumber(frankTelephoneMobile);
-        frank.addNote(frankNote);
         frank.setPublicKey("20928asdfasdf4092384j2j34ou23o");
 
-
+        // Set my profile as active
         engine.setActiveProfile(david, "password");
 
         ArrayList<Contact> aliceAndBob = new ArrayList<>();
@@ -162,64 +128,49 @@ public class Dummy {
         bobAndCharlie.add(charlie);
         bobAndCharlie.add(engine.getMyProfile());
 
-        // ChatActivity initiation
+        // Chat initiation
 
         Chat aliceAndBobChat = engine.newChat(aliceAndBob);
+        aliceAndBobChat.setTitle("Erster Chat");
         Chat aliceAndBobAndCharlieChat = engine.newChat(aliceAndBobAndCharlie);
+        aliceAndBobAndCharlieChat.setTitle("Alle zusammen!");
         Chat aliceAndCharlieChat = engine.newChat(aliceAndCharlie);
+        aliceAndCharlieChat.setTitle("Let's roll");
         Chat bobAndCharlieChat = engine.newChat(bobAndCharlie);
+        bobAndCharlieChat.setTitle("Freitagabend");
 
-        aliceAndBobChat.sendMessage(null, "Hallo Bob und David", null, alice);
-        aliceAndBobChat.sendMessage(null, "Wie geht es euch beiden?", null, alice);
-        aliceAndBobChat.sendMessage(null, "Hi mir geht es gut und dir?", null, bob);
-        aliceAndBobChat.sendMessage(null, "Mir geht es auch gut! Was macht ihr so?", null);
-        aliceAndBobChat.sendMessage(null, "Bestens ja! Ich bin gerade am SharkNet testen :D", null, alice);
+        Lorem lorem = LoremIpsum.getInstance();
 
-        aliceAndBobAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing " +
-                "elitr, sed diam nonumy eirmod tempor invidunt ut", null);
-        aliceAndBobAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing " +
-                "elitr, sed diam nonumy eirmod tempor invidunt ut", null, alice);
-        aliceAndBobAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing " +
-                "elitr, sed diam nonumy eirmod tempor invidunt ut", null, bob);
-        aliceAndBobAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing " +
-                "elitr, sed diam nonumy eirmod tempor invidunt ut", null, charlie);
-        aliceAndBobAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing " +
-                "elitr, sed diam nonumy eirmod tempor invidunt ut", null);
+        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null, alice);
+        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null, alice);
+        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null, bob);
+        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null);
+        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null, alice);
 
-        aliceAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr" +
-                ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed " +
-                "diam voluptua. At vero eos et accusam et", null);
-        aliceAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr" +
-                ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed " +
-                "diam voluptua. At vero eos et accusam et", null, alice);
-        aliceAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr" +
-                ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed " +
-                "diam voluptua. At vero eos et accusam et", null, charlie);
-        aliceAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr" +
-                ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed " +
-                "diam voluptua. At vero eos et accusam et", null, alice);
-        aliceAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr" +
-                ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed " +
-                "diam voluptua. At vero eos et accusam et", null);
-        aliceAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr" +
-                ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed " +
-                "diam voluptua. At vero eos et accusam et", null);
-        aliceAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr" +
-                ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed " +
-                "diam voluptua. At vero eos et accusam et", null, charlie);
-        aliceAndCharlieChat.sendMessage(null, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr" +
-                ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed " +
-                "diam voluptua. At vero eos et accusam et", null, alice);
+        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null);
+        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null, alice);
+        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null, bob);
+        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null, charlie);
+        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null);
 
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null);
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor consetetur sadipscing elitr", null, bob);
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null, charlie);
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null);
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null);
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null, bob);
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null, bob);
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null, charlie);
-        bobAndCharlieChat.sendMessage(null, "sed diam nonumy eirmod tempor ", null);
+        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null);
+        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, alice);
+        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, charlie);
+        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, alice);
+        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null);
+        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null);
+        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, charlie);
+        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, alice);
+
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null);
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, bob);
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, charlie);
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null);
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null);
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, bob);
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, bob);
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, charlie);
+        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null);
     }
 
     public static void createDummyPkiData() {
