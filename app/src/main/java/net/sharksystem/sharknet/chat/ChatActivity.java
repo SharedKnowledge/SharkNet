@@ -28,6 +28,43 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
         setLayoutResource(R.layout.chat_activity);
         setOptionsMenu(R.menu.chat);
 
+        startBackgroundTask("Chats werden geladen");
+    }
+
+    @Override
+    protected boolean doInBackground() {
+
+        try {
+            chats = SharkNetEngine.getSharkNet().getChats();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    protected void doWhenFinished(boolean success) {
+
+        this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
+        ListView lv = (ListView) findViewById(R.id.chatsListView);
+
+        if (lv != null) {
+            lv.setAdapter(chatListAdapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
+                    //identifies the chat for the detailView
+                    try {
+                        intent.putExtra(CHAT_ID, chats.get(position).getID());
+                    } catch (SharkKBException e) {
+                        e.printStackTrace();
+                    }
+                    startActivity(intent);
+                }
+            });
+        }
+
         FloatingActionButton fab = activateFloatingActionButton();
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
@@ -38,71 +75,13 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
                         .setAction("Action", null).show();
             }
         });
-
-        try {
-            chats = SharkNetEngine.getSharkNet().getChats();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
-        ListView lv = (ListView) findViewById(R.id.chatsListView);
-
-        if (lv != null) {
-            lv.setAdapter(chatListAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
-                    //identifies the chat for the detailView
-                    try {
-                        intent.putExtra(CHAT_ID, chats.get(position).getID());
-                    } catch (SharkKBException e) {
-                        e.printStackTrace();
-                    }
-                    startActivity(intent);
-                }
-            });
-        }
-    }
-
-    @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        try {
-            chats = SharkNetEngine.getSharkNet().getChats();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
-        ListView lv = (ListView) findViewById(R.id.chatsListView);
-
-        if (lv != null) {
-            lv.setAdapter(chatListAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
-                    //identifies the chat for the detailView
-                    try {
-                        intent.putExtra(CHAT_ID, chats.get(position).getID());
-                    } catch (SharkKBException e) {
-                        e.printStackTrace();
-                    }
-                    startActivity(intent);
-                }
-            });
-        }
+        // TODO needs to bea renewed?
+//        startBackgroundTask("Chats werden geladen");
     }
 
     @Override

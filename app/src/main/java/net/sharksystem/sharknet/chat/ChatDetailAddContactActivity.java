@@ -37,7 +37,7 @@ public class ChatDetailAddContactActivity extends ParentActivity {
 
         selected_contacts = new ArrayList<>();
         try {
-            this.contacts = SharkNetEngine.getSharkNet().getContacts();
+            this.contacts = SharkNetEngine.getSharkNet().getContactsWithoutMe();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

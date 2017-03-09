@@ -111,7 +111,7 @@ public class DummyContactGenerator {
             nickName = loremIpsum.getNameFemale();
             pictureName = femaleProfilePictures[random.nextInt(femaleProfilePictures.length)];
             try {
-                picture = assets.open("pictures/male/" + pictureName);
+                picture = assets.open("pictures/female/" + pictureName);
             } catch (IOException e) {
                 e.printStackTrace();
             }

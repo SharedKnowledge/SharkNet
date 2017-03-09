@@ -38,7 +38,7 @@ public class ContactsActivity extends NavigationDrawerActivity {
         });
 
         try {
-            contacts = SharkNetEngine.getSharkNet().getContacts();
+            contacts = SharkNetEngine.getSharkNet().getContactsWithoutMe();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -80,7 +80,7 @@ public class ContactsActivity extends NavigationDrawerActivity {
     {
         super.onResume();
         try {
-            contacts = SharkNetEngine.getSharkNet().getContacts();
+            contacts = SharkNetEngine.getSharkNet().getContactsWithoutMe();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

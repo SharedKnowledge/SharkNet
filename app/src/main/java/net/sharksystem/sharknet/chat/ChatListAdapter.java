@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.Message;
+import net.sharksystem.api.interfaces.Profile;
 import net.sharksystem.sharknet.R;
 
 import java.sql.Timestamp;
@@ -25,11 +27,17 @@ import java.util.List;
  */
 public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces.Chat> {
 
+    private Profile myProfile = null;
     private List<net.sharksystem.api.interfaces.Chat> chats;
 
     public ChatListAdapter(Context context, int resource, List<net.sharksystem.api.interfaces.Chat> objects) {
         super(context, resource, objects);
         this.chats = objects;
+        try {
+            myProfile = SharkNetEngine.getSharkNet().getMyProfile();
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -40,20 +48,20 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
 
         Chat chat = chats.get(position);
 
-
         //Title
         TextView titleView = (TextView) convertView.findViewById(R.id.name);
         try {
             String title = chat.getTitle();
             if(title==null || title.isEmpty()){
                 title = "";
-                List<Contact> contacts = chat.getContacts();
+                List<Contact> contacts = chat.getContactsWithoutMe();
                 Iterator<Contact> iterator = contacts.iterator();
                 while (iterator.hasNext()){
-                    title += iterator.next().getName();
-                    if(iterator.hasNext()){
+                    Contact next = iterator.next();
+                    if(!title.isEmpty()){
                         title += ", ";
                     }
+                    title += next.getName();
                 }
 
             }
@@ -82,6 +90,7 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
             }
             String sender = null;
             try {
+
                 sender = last_msg.getSender().getNickname();
             } catch (SharkKBException e) {
                 e.printStackTrace();

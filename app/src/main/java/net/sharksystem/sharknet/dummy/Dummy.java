@@ -66,28 +66,41 @@ public class Dummy {
         SharkNetEngine engine = SharkNetEngine.getSharkNet();
 
         // Set male profile as active
-        L.d("MyProfile: " + profiles.get(1).getName(), "DUMMY");
         engine.setActiveProfile(profiles.get(1), "password");
-
         Profile activeProfile = engine.getMyProfile();
-        L.d("MyProfile: " + activeProfile.getName(), "DUMMY");
 
         // TODO Now generate dummy chats...
 
         ArrayList<Chat> chats = new ArrayList<>();
 
-        chats.add(engine.newChat(contacts.subList(0,2)));
+        ArrayList<Contact> firstChat = new ArrayList<>();
+        firstChat.add(contacts.get(0));
+        firstChat.add(contacts.get(1));
+        firstChat.add(contacts.get(2));
+        ArrayList<Contact> secondChat = new ArrayList<>();
+        secondChat.add(contacts.get(0));
+        secondChat.add(contacts.get(1));
+        secondChat.add(contacts.get(2));
+        secondChat.add(contacts.get(3));
+        secondChat.add(contacts.get(4));
+        ArrayList<Contact> thirdChat = new ArrayList<>();
+        thirdChat.add(contacts.get(0));
+        thirdChat.add(contacts.get(1));
+        thirdChat.add(contacts.get(2));
+        thirdChat.add(contacts.get(3));
+
+        chats.add(engine.newChat(firstChat));
         chats.get(chats.size()-1).setTitle("Erster Chat");
-        chats.add(engine.newChat(contacts.subList(1,4)));
+        chats.add(engine.newChat(secondChat));
         chats.get(chats.size()-1).setTitle("Was machen wir am Freitag?");
-        chats.add(engine.newChat(contacts.subList(2,7)));
+        chats.add(engine.newChat(thirdChat));
         chats.get(chats.size()-1).setTitle("PewPew");
-        chats.add(engine.newChat(contacts));
+        chats.add(engine.newChat(new ArrayList<>(contacts)));
         chats.get(chats.size()-1).setTitle("Alle zusammen");
         chats.add(engine.newChat(contacts.get(5)));
         chats.add(engine.newChat(contacts.get(2)));
         chats.add(engine.newChat(contacts.get(6)));
-        chats.add(engine.newChat(contacts.get(3)));
+        chats.add(engine.newChat(contacts.get(7)));
         chats.add(engine.newChat(contacts.get(1)));
 
         Lorem lorem = LoremIpsum.getInstance();
