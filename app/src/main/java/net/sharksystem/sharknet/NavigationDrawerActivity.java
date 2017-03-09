@@ -35,7 +35,6 @@ public abstract class NavigationDrawerActivity extends ParentActivity implements
         // Make FloatingActionButton invisible at default
         findViewById(R.id.fab).setVisibility(View.GONE);
         installActionBarAndSideNavDrawer();
-
     }
 
     private Menu installActionBarAndSideNavDrawer() {

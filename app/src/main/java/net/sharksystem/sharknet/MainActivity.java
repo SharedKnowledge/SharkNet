@@ -26,17 +26,39 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ParentActivity {
 
     private List<net.sharksystem.api.interfaces.Profile> profiles = null;
-    int index;
+    int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         L.setLogLevel(L.LOGLEVEL_ALL);
+
+        SharkNetEngine.getSharkNet().setContext(this);
+
+        startBackgroundTask("Dummy Daten werden erzeugt...");
+    }
+
+    @Override
+    protected boolean doInBackground() {
+        try {
+            Dummy.createDummyData(this);
+            this.profiles = SharkNetEngine.getSharkNet().getProfiles();
+        } catch (SharkKBException | JSONException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return this.profiles!=null;
+    }
+
+    @Override
+    protected void doWhenFinished(boolean success) {
+
+        if(success){
+            openChat();
+        }
 
         Button login = (Button) findViewById(R.id.button_login);
         ImageButton next = (ImageButton) findViewById(R.id.button_next_profile);
@@ -69,32 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-//        WifiManager wifiManager = (WifiManager)this.getSystemService(Context.WIFI_SERVICE);
-//        wifiManager.setWifiEnabled(false);
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        wifiManager.setWifiEnabled(true);
-
-        SharkNetEngine.getSharkNet().setContext(this);
-
-        try {
-            Dummy.createDummyData(this);
-        } catch (SharkKBException | JSONException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        index = 0;
-        try {
-            this.profiles = SharkNetEngine.getSharkNet().getProfiles();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
         EditText userid = (EditText) findViewById(R.id.userid);
-        assert userid != null;
 
         try {
             userid.setText(this.profiles.get(index).getNickname());
@@ -102,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // TODO just for tests - simulates auto-login
-        openChat();
     }
 
     public void openChat() {
@@ -122,32 +117,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void previousProfile() throws SharkKBException {
+        EditText editText = (EditText) findViewById(R.id.userid);
         if (index > 0) {
             index--;
-            EditText userid = (EditText) findViewById(R.id.userid);
-            assert userid != null;
-            userid.setText(this.profiles.get(index).getNickname());
-            Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
         } else {
             index = this.profiles.size() - 1;
-            EditText userid = (EditText) findViewById(R.id.userid);
-            assert userid != null;
-            userid.setText(this.profiles.get(index).getNickname());
         }
+        editText.setText(this.profiles.get(index).getNickname());
     }
 
 
     public void nextProfile() throws SharkKBException {
+        EditText editText = (EditText) findViewById(R.id.userid);
         if (index < this.profiles.size() - 1) {
             index++;
-            EditText userid = (EditText) findViewById(R.id.userid);
-            assert userid != null;
-            userid.setText(this.profiles.get(index).getNickname());
         } else {
             index = 0;
-            EditText userid = (EditText) findViewById(R.id.userid);
-            assert userid != null;
-            userid.setText(this.profiles.get(index).getNickname());
         }
+        editText.setText(this.profiles.get(index).getNickname());
     }
 }
