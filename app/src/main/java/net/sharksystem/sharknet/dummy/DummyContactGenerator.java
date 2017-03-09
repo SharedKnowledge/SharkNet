@@ -43,6 +43,10 @@ public class DummyContactGenerator {
         }
     }
 
+    public Contact newContact(){
+        return newContact(new Random(System.currentTimeMillis()).nextBoolean());
+    }
+
     public Contact newContact(boolean isFemale) {
         Contact contact = null;
         String firstName, lastName, nickName, pictureName;

@@ -4,6 +4,8 @@ package net.sharksystem.sharknet.dummy;
  * Created by viktorowich on 24/08/16.
  */
 
+import android.content.Context;
+
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 
@@ -27,85 +29,37 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by j4rvis on 24.08.16.
  */
 public class Dummy {
 
-    public static void createDummyData() throws SharkKBException, JSONException, InterruptedException {
+    public static void createDummyData(Context context) throws SharkKBException, JSONException, InterruptedException {
 
-        String aliceName = "Alice";
-        String aliceNickName = "Ali";
-        String aliceSI = "www.facebook.com/alice";
-        String aliceMail = "mail://alice.com";
+        ArrayList<Contact> contacts = new ArrayList<>();
+        ArrayList<Profile> profiles = new ArrayList<>();
 
-        String bobName = "Bob";
-        String bobNickName = "Bob";
-        String bobSI = "www.facebook.com/bob";
-        String bobMail = "mail://bob.com";
+        DummyContactGenerator dummyContactGenerator = new DummyContactGenerator(context);
 
-        String charlieName = "Charlie";
-        String charlieNickName = "Charlie";
-        String charlieSI = "www.facebook.com/charlie";
-        String charlieMail = "mail://charlie.com";
+        Random random = new Random(System.currentTimeMillis());
+        int nextInt = random.nextInt(10);
+        int numberOfContacts = nextInt >= 5 ? nextInt : 5;
 
-        String davidName = "David";
-        String davidNickName = "Dave";
-        String davidSI = "www.facebook.com/david";
-        String davidMail = "mail://david.com";
+        for (int i = 0; i < numberOfContacts; i++){
+            contacts.add(dummyContactGenerator.newContact());
+        }
 
-        String eliseName = "Elise";
-        String eliseNickName = "Elli";
-        String eliseSI = "www.facebook.com/elise";
-        String eliseMail = "mail://elise.com";
-
-        String frankName = "Frank";
-        String frankNickName = "Frank";
-        String frankSI = "www.facebook.com/frank";
-        String frankMail = "mail://frank.com";
-
-        byte[] randomByte = new byte[20];
-        InputStream stream = new ByteArrayInputStream(randomByte);
+        profiles.add(dummyContactGenerator.newProfile(true));
+        profiles.add(dummyContactGenerator.newProfile(false));
 
         SharkNetEngine engine = SharkNetEngine.getSharkNet();
 
-        // Create contacts
+        // Set male profile as active
+        engine.setActiveProfile(profiles.get(1), "password");
 
-        Contact alice = engine.newContact(aliceName, aliceSI);
-//        alice.setEmail(aliceMail);
-        alice.setNickname(aliceNickName);
-        alice.setPublicKey("2983749283490982304823094820394802398402398402938409238409238409238487239");
-
-        Contact bob = engine.newContact(bobName, bobSI);
-//        bob.setEmail(bobMail);
-        bob.setNickname(bobNickName);
-        bob.setPublicKey("209284092384j2j34ou23o");
-
-        Contact charlie = engine.newContact(charlieName, charlieSI);
-//        charlie.setEmail(charlieMail);
-        charlie.setNickname(charlieNickName);
-        charlie.setPublicKey("20928409238asdfasdf4j2j34ou23o");
-
-
-        Profile david = engine.newProfile(davidName, davidSI);
-//        david.setEmail(davidMail);
-        david.setNickname(davidNickName);
-        david.setPublicKey("209284092384jasdfasdfasdfasdf2j34ou23o");
-
-
-        Profile elise = engine.newProfile(eliseName, eliseSI);
-//        elise.setEmail(eliseMail);
-        elise.setNickname(eliseNickName);
-        elise.setPublicKey("209284092384j2j34ou23o");
-
-        Profile frank = engine.newProfile(frankName, frankSI);
-//        frank.setEmail(frankMail);
-        frank.setNickname(frankNickName);
-        frank.setPublicKey("20928asdfasdf4092384j2j34ou23o");
-
-        // Set my profile as active
-        engine.setActiveProfile(david, "password");
+        // TODO Now generate dummy chats...
 
         ArrayList<Contact> aliceAndBob = new ArrayList<>();
         aliceAndBob.add(alice);

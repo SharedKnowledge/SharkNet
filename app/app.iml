@@ -120,11 +120,5 @@
     <orderEntry type="library" exported="" name="cardview-v7-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="design-24.2.1" level="project" />
     <orderEntry type="module" module-name="api" exported="" />
-    <orderEntry type="library" exported="" name="guava-18.0" level="project" />
-    <orderEntry type="library" exported="" name="javax.mail-1.5.5" level="project" />
-    <orderEntry type="library" exported="" name="annotations-2.0.1" level="project" />
-    <orderEntry type="library" exported="" name="sharkfw-core-1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="javassist-3.18.2-GA" level="project" />
-    <orderEntry type="library" exported="" name="reflections-0.9.10" level="project" />
   </component>
 </module>
