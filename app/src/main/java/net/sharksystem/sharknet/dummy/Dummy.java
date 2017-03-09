@@ -29,12 +29,22 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
  * Created by j4rvis on 24.08.16.
  */
 public class Dummy {
+
+    static long hour = 1000 * 60 * 60;
+    static long day = 24 * hour;
+    static long week = 7 * day;
+    static long today = System.currentTimeMillis();
+    static long tomorrow = today + day;
+    static long nextWeek = today + week;
+    static long yesterday = today - day;
+    static long lastWeek = today - week;
 
     public static void createDummyData(Context context) throws SharkKBException, JSONException, InterruptedException {
 
@@ -44,9 +54,8 @@ public class Dummy {
         DummyContactGenerator dummyContactGenerator = new DummyContactGenerator(context);
 
         Random random = new Random(System.currentTimeMillis());
-        int nextInt = random.nextInt(10);
-        int numberOfContacts = nextInt >= 5 ? nextInt : 5;
 
+        int numberOfContacts = 8;
         for (int i = 0; i < numberOfContacts; i++){
             contacts.add(dummyContactGenerator.newContact());
         }
@@ -57,74 +66,52 @@ public class Dummy {
         SharkNetEngine engine = SharkNetEngine.getSharkNet();
 
         // Set male profile as active
+        L.d("MyProfile: " + profiles.get(1).getName(), "DUMMY");
         engine.setActiveProfile(profiles.get(1), "password");
+
+        Profile activeProfile = engine.getMyProfile();
+        L.d("MyProfile: " + activeProfile.getName(), "DUMMY");
 
         // TODO Now generate dummy chats...
 
-        ArrayList<Contact> aliceAndBob = new ArrayList<>();
-        aliceAndBob.add(alice);
-        aliceAndBob.add(bob);
-        aliceAndBob.add(engine.getMyProfile());
+        ArrayList<Chat> chats = new ArrayList<>();
 
-        ArrayList<Contact> aliceAndBobAndCharlie = new ArrayList<>();
-        aliceAndBobAndCharlie.add(alice);
-        aliceAndBobAndCharlie.add(bob);
-        aliceAndBobAndCharlie.add(charlie);
-        aliceAndBobAndCharlie.add(engine.getMyProfile());
-
-        ArrayList<Contact> aliceAndCharlie = new ArrayList<>();
-        aliceAndCharlie.add(alice);
-        aliceAndCharlie.add(charlie);
-        aliceAndCharlie.add(engine.getMyProfile());
-
-        ArrayList<Contact> bobAndCharlie = new ArrayList<>();
-        bobAndCharlie.add(bob);
-        bobAndCharlie.add(charlie);
-        bobAndCharlie.add(engine.getMyProfile());
-
-        // Chat initiation
-
-        Chat aliceAndBobChat = engine.newChat(aliceAndBob);
-        aliceAndBobChat.setTitle("Erster Chat");
-        Chat aliceAndBobAndCharlieChat = engine.newChat(aliceAndBobAndCharlie);
-        aliceAndBobAndCharlieChat.setTitle("Alle zusammen!");
-        Chat aliceAndCharlieChat = engine.newChat(aliceAndCharlie);
-        aliceAndCharlieChat.setTitle("Let's roll");
-        Chat bobAndCharlieChat = engine.newChat(bobAndCharlie);
-        bobAndCharlieChat.setTitle("Freitagabend");
+        chats.add(engine.newChat(contacts.subList(0,2)));
+        chats.get(chats.size()-1).setTitle("Erster Chat");
+        chats.add(engine.newChat(contacts.subList(1,4)));
+        chats.get(chats.size()-1).setTitle("Was machen wir am Freitag?");
+        chats.add(engine.newChat(contacts.subList(2,7)));
+        chats.get(chats.size()-1).setTitle("PewPew");
+        chats.add(engine.newChat(contacts));
+        chats.get(chats.size()-1).setTitle("Alle zusammen");
+        chats.add(engine.newChat(contacts.get(5)));
+        chats.add(engine.newChat(contacts.get(2)));
+        chats.add(engine.newChat(contacts.get(6)));
+        chats.add(engine.newChat(contacts.get(3)));
+        chats.add(engine.newChat(contacts.get(1)));
 
         Lorem lorem = LoremIpsum.getInstance();
 
-        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null, alice);
-        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null, alice);
-        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null, bob);
-        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null);
-        aliceAndBobChat.sendMessage(null, lorem.getWords(3, 20), null, alice);
+        for (Chat chat : chats) {
+            List<Contact> contactList = chat.getContacts();
+            int numberOfMessages = random.nextInt(20);
+            long date = lastWeek;
+            for (int i = 0; i < numberOfMessages; i++){
+                Contact contact = contactList.get(random.nextInt(contactList.size()));
+                date = Dummy.getNextRandomDate(date);
+                if(contact.equals(activeProfile)){
+                    chat.sendMessage(null, lorem.getWords(2, 20), null, date);
+                } else {
+                    chat.sendMessage(null, lorem.getWords(2, 20), null, contact, date);
+                }
+            }
+        }
+    }
 
-        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null);
-        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null, alice);
-        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null, bob);
-        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null, charlie);
-        aliceAndBobAndCharlieChat.sendMessage(null, lorem.getWords(3, 20), null);
-
-        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null);
-        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, alice);
-        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, charlie);
-        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, alice);
-        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null);
-        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null);
-        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, charlie);
-        aliceAndCharlieChat.sendMessage(null, lorem.getWords(3, 40), null, alice);
-
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null);
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, bob);
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, charlie);
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null);
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null);
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, bob);
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, bob);
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null, charlie);
-        bobAndCharlieChat.sendMessage(null, lorem.getWords(3, 10), null);
+    private static long getNextRandomDate(long min){
+        long max = System.currentTimeMillis();
+        Random random = new Random(max);
+        return min + random.nextInt((int) (max - min));
     }
 
     public static void createDummyPkiData() {
@@ -148,15 +135,6 @@ public class Dummy {
         }
 
         L.d("KeyGenerator initiated.", Dummy.class.toString());
-
-        long hour = 1000 * 60 * 60;
-        long day = 24 * hour;
-        long week = 7 * day;
-        long today = System.currentTimeMillis();
-        long tomorrow = today + day;
-        long nextWeek = today + week;
-        long yesterday = today - day;
-        long previousWeek = today - week;
 
         String kName = "Karl";
         String kSI = "st:k";
@@ -194,7 +172,7 @@ public class Dummy {
         SharkPublicKey lKey = pkiStorage.addUnsignedKey(lTag, lKeyPair.getPublic(), tomorrow + hour);
         SharkPublicKey mKey = pkiStorage.addUnsignedKey(mTag, mKeyPair.getPublic(), yesterday);
         SharkPublicKey nKey = pkiStorage.addUnsignedKey(nTag, nKeyPair.getPublic(), nextWeek);
-        SharkPublicKey oKey = pkiStorage.addUnsignedKey(oTag, oKeyPair.getPublic(), previousWeek);
+        SharkPublicKey oKey = pkiStorage.addUnsignedKey(oTag, oKeyPair.getPublic(), lastWeek);
         L.d("Keys added", Dummy.class.toString());
         try {
             // Signed by myself

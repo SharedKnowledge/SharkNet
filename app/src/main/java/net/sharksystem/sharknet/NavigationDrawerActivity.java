@@ -10,7 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactsActivity;
 import net.sharksystem.sharknet.inbox.InboxActivity;
@@ -32,6 +35,7 @@ public abstract class NavigationDrawerActivity extends ParentActivity implements
         // Make FloatingActionButton invisible at default
         findViewById(R.id.fab).setVisibility(View.GONE);
         installActionBarAndSideNavDrawer();
+
     }
 
     private Menu installActionBarAndSideNavDrawer() {
@@ -45,6 +49,12 @@ public abstract class NavigationDrawerActivity extends ParentActivity implements
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.sidenav_view);
+        TextView textView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.me);
+        try {
+            textView.setText(SharkNetEngine.getSharkNet().getMyProfile().getName());
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
         navigationView.setNavigationItemSelectedListener(this);
         return navigationView.getMenu();
     }

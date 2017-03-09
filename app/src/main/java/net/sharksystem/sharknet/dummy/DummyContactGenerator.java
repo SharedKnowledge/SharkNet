@@ -7,6 +7,7 @@ import com.thedeanda.lorem.LoremIpsum;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
+import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.Profile;
@@ -34,7 +35,7 @@ public class DummyContactGenerator {
     public DummyContactGenerator(Context context) {
         sharkNet = SharkNetEngine.getSharkNet();
         loremIpsum = LoremIpsum.getInstance();
-        assets = context.getAssets();
+        assets = context.getResources().getAssets();
         try {
             femaleProfilePictures = assets.list("pictures/female");
             maleProfilePictures = assets.list("pictures/male");
@@ -50,6 +51,7 @@ public class DummyContactGenerator {
     public Contact newContact(boolean isFemale) {
         Contact contact = null;
         String firstName, lastName, nickName, pictureName;
+        InputStream picture = null;
         Random random = new Random(System.currentTimeMillis());
 
         if (isFemale) {
@@ -57,25 +59,40 @@ public class DummyContactGenerator {
             lastName = loremIpsum.getLastName();
             nickName = loremIpsum.getNameFemale();
             pictureName = femaleProfilePictures[random.nextInt(femaleProfilePictures.length)];
+            try {
+                picture = assets.open("pictures/female/" + pictureName);
+            } catch (IOException e) {
+                L.d(e.getMessage(), this);
+                e.printStackTrace();
+            }
         } else {
             firstName = loremIpsum.getFirstNameMale();
             lastName = loremIpsum.getLastName();
             nickName = loremIpsum.getNameMale();
             pictureName = maleProfilePictures[random.nextInt(maleProfilePictures.length)];
+            try {
+                picture = assets.open("pictures/male/" + pictureName);
+            } catch (IOException e) {
+                L.d(e.getMessage(), this);
+                e.printStackTrace();
+            }
         }
 
         String fullName = firstName + " " + lastName;
         String[] sis = generateSI(fullName);
-        String[] addresses = new String[random.nextInt(3)];
-        for (int i = 0; i <= addresses.length; i++) {
-            addresses[i] = loremIpsum.getEmail();
+        String[] addresses = new String[random.nextInt(3) + 1];
+        for (int i = 0; i < addresses.length; i++) {
+            addresses[i] = "mail://" + loremIpsum.getEmail();
         }
         try {
             contact = sharkNet.newContact(InMemoSharkKB.createInMemoPeerSemanticTag(fullName, sis, addresses));
             contact.setName(fullName);
             contact.setNickname(nickName);
-            InputStream picture = assets.open(pictureName);
-            contact.setPicture(picture, pictureName, "jpg");
+            if(picture!=null){
+                contact.setPicture(picture, pictureName, "jpg");
+            } else {
+                L.d("Picture is null!", this);
+            }
         } catch (SharkKBException | IOException e) {
             e.printStackTrace();
         }
@@ -84,11 +101,8 @@ public class DummyContactGenerator {
 
     public Profile newProfile(boolean isFemale) {
         Profile profile = null;
-        String firstName = "";
-        String lastName = "";
-        String nickName = "";
-        String pictureName = "";
-
+        String firstName, lastName, nickName, pictureName;
+        InputStream picture = null;
         Random random = new Random(System.currentTimeMillis());
 
         if (isFemale) {
@@ -96,24 +110,39 @@ public class DummyContactGenerator {
             lastName = loremIpsum.getLastName();
             nickName = loremIpsum.getNameFemale();
             pictureName = femaleProfilePictures[random.nextInt(femaleProfilePictures.length)];
+            try {
+                picture = assets.open("pictures/male/" + pictureName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             firstName = loremIpsum.getFirstNameMale();
             lastName = loremIpsum.getLastName();
             nickName = loremIpsum.getNameMale();
             pictureName = maleProfilePictures[random.nextInt(maleProfilePictures.length)];
+            try {
+                picture = assets.open("pictures/male/" + pictureName);
+            } catch (IOException e) {
+                L.d(e.getMessage(), this);
+                e.printStackTrace();
+            }
         }
 
         String fullName = firstName + " " + lastName;
         String[] sis = generateSI(fullName);
-        String[] addresses = new String[random.nextInt(3)];
-        for (int i = 0; i <= addresses.length; i++) {
+        String[] addresses = new String[random.nextInt(3) + 1];
+        for (int i = 0; i < addresses.length; i++) {
             addresses[i] = loremIpsum.getEmail();
         }
         try {
             profile = sharkNet.newProfile(InMemoSharkKB.createInMemoPeerSemanticTag(fullName, sis, addresses));
             profile.setName(fullName);
             profile.setNickname(nickName);
-            InputStream picture = assets.open(pictureName);
+            if(picture!=null){
+                profile.setPicture(picture, pictureName, "jpg");
+            } else {
+                L.d("Picture is null!", this);
+            }
             profile.setPicture(picture, pictureName, "jpg");
         } catch (SharkKBException | IOException e) {
             e.printStackTrace();
@@ -129,7 +158,7 @@ public class DummyContactGenerator {
             e.printStackTrace();
         }
         Random random = new Random(System.currentTimeMillis());
-        int length = random.nextInt(siArray.length);
+        int length = random.nextInt(siArray.length) + 1;
         String[] sis = new String[length];
 
         for (int i = 0; i < length; i++) {

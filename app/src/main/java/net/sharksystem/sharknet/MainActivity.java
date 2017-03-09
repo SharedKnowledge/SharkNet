@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         SharkNetEngine.getSharkNet().setContext(this);
 
         try {
-            Dummy.createDummyData();
+            Dummy.createDummyData(this);
         } catch (SharkKBException | JSONException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -110,10 +110,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChatActivity.class);
 
         try {
-            SharkNetEngine.getSharkNet().setActiveProfile(this.profiles.get(index), "");
+            // TODO reactivate
+//            SharkNetEngine.getSharkNet().setActiveProfile(this.profiles.get(index), "");
             SharkNetEngine.getSharkNet().startShark();
 
-        } catch (SharkKBException | JSONException | SharkProtocolNotSupportedException | IOException e) {
+        } catch (SharkKBException | SharkProtocolNotSupportedException | IOException e) {
             e.printStackTrace();
         }
 
