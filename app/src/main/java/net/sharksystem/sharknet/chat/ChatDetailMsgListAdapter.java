@@ -26,10 +26,15 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     private final static int MESSAGE_IS_MINE = 0;
     private final static int MESSAGE_IS_NOT_MINE = 1;
 
-    private final List<Message> messages;
+    private List<Message> messages;
 
     public ChatDetailMsgListAdapter(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public void setMessages(List<Message> messages){
+        this.messages = messages;
+        notifyDataSetChanged();
     }
 
     @Override

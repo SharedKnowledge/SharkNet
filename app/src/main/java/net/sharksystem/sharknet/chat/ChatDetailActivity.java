@@ -1,17 +1,21 @@
 package net.sharksystem.sharknet.chat;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.pki.PKIDataHolder;
+
+import org.json.JSONException;
 
 /**
  * Created by j4rvis on 3/5/17.
@@ -22,7 +26,7 @@ public class ChatDetailActivity extends ParentActivity {
     private LinearLayoutManager mLayoutManager;
     private ChatDetailMsgListAdapter mAdapter;
     private String chatID;
-
+    private Chat mChat;
     public static final String CHAT_ID = "CHAT_ID";
 
     @Override
@@ -50,9 +54,9 @@ public class ChatDetailActivity extends ParentActivity {
         }
 
         try {
-            Chat chatById = SharkNetEngine.getSharkNet().getChatById(chatID);
-            mAdapter = new ChatDetailMsgListAdapter(chatById.getMessages(false));
-            setTitle(chatById.getTitle());
+            mChat = SharkNetEngine.getSharkNet().getChatById(chatID);
+            mAdapter = new ChatDetailMsgListAdapter(mChat.getMessages(false));
+            setTitle(mChat.getTitle());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
@@ -70,6 +74,34 @@ public class ChatDetailActivity extends ParentActivity {
 
         // specify an adapter (see also next example)
         mRecyclerView.setAdapter(mAdapter);
+
+        final CardView sendButton = (CardView) findViewById(R.id.message_send_button);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editText = (EditText) findViewById(R.id.message_edit_text);
+
+                String msg_string;
+
+                if (editText != null) {
+                    msg_string = editText.getText().toString().trim();
+
+                    if (msg_string.isEmpty()) {
+                        Snackbar.make(sendButton, "No message entered!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    } else {
+                        try {
+                            mChat.sendMessage(msg_string);
+                            editText.getText().clear();
+                            mAdapter.setMessages(mChat.getMessages(false));
+                        } catch (JSONException | SharkKBException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+
     }
 
 

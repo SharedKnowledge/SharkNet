@@ -82,7 +82,7 @@ public class DummyContactGenerator {
         String[] sis = generateSI(fullName);
         String[] addresses = new String[random.nextInt(3) + 1];
         for (int i = 0; i < addresses.length; i++) {
-            addresses[i] = "mail://" + loremIpsum.getEmail();
+            addresses[i] = "tcp://" + "0.0.0.0";
         }
         try {
             contact = sharkNet.newContact(InMemoSharkKB.createInMemoPeerSemanticTag(fullName, sis, addresses));
