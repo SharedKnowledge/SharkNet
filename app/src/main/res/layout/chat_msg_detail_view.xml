@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Message Content"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/text_view_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Message Content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Sender"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/text_view_sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sender"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Date Received"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/text_view_date_received"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Received"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Encrypted?"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/text_view_encrypted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Encrypted?"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Signed?"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/text_view_signed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Signed?"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Verified?"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/text_view_verified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verified?"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Disliked?"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/text_view_disliked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disliked?"/>
+
+
+
+    </LinearLayout>
+
+</ScrollView>
+
