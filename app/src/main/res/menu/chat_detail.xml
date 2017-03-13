@@ -6,7 +6,7 @@
           android:orderInCategory="100"
           app:showAsAction="never"/>
     <item android:id="@+id/block_user"
-          android:title="@string/block_user"
+          android:title="@string/contact_block"
           android:orderInCategory="100"
           app:showAsAction="never"/>
     <!--<item android:id="@+id/action_settings"-->

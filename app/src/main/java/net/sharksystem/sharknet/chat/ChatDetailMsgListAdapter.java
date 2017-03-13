@@ -1,18 +1,23 @@
 package net.sharksystem.sharknet.chat;
 
-import android.support.v7.widget.LinearLayoutCompat;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.system.L;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.contact.ContactsActivity;
+import net.sharksystem.sharknet.contact.ContactsDetailActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -25,11 +30,13 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
 
     private final static int MESSAGE_IS_MINE = 0;
     private final static int MESSAGE_IS_NOT_MINE = 1;
+    private final Context context;
 
     private List<Message> messages;
 
-    public ChatDetailMsgListAdapter(List<Message> messages) {
+    public ChatDetailMsgListAdapter(Context context, List<Message> messages) {
         this.messages = messages;
+        this.context = context;
     }
 
     public void setMessages(List<Message> messages){
@@ -56,9 +63,9 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     }
 
     @Override
-    public void onBindViewHolder(ChatDetailMsgListAdapter.ViewHolderBase holder, int position) {
+    public void onBindViewHolder(final ChatDetailMsgListAdapter.ViewHolderBase holder, int position) {
 
-        Message message = this.messages.get(position);
+        final Message message = this.messages.get(position);
 
         try {
             // Message Content
@@ -71,6 +78,43 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                 holder.mMsgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             }
 
+            final Context finalContext = this.context;
+
+            holder.mMsgView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    PopupMenu popupMenu = new PopupMenu(finalContext, holder.mMsgView);
+
+                    popupMenu.getMenuInflater().inflate(R.menu.chat_detail_message_menu, popupMenu.getMenu());
+
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            switch (item.getItemId()){
+                                case R.id.message_detail:
+                                    Intent intent = new Intent(finalContext, ChatMessageDetailActivity.class);
+                                    ChatMessageDataHolder.getInstance().setMessage(message);
+                                    finalContext.startActivity(intent);
+                                    break;
+                                case R.id.message_dislike:
+                                    Toast.makeText(finalContext, "You disliked the message", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            return false;
+                        }
+                    });
+
+                    popupMenu.show();
+
+                    return true;
+                }
+            });
+
             if(!message.isMine()){
                 // Author image
                 if (message.getSender().getPicture() == null) {
@@ -80,6 +124,45 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                     // Set the image of the author
                     holder.mAuthorImageView.setImageResource(R.drawable.ic_person_accent_24dp);
                 }
+
+                holder.mAuthorImageView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        PopupMenu popupMenu = new PopupMenu(finalContext, holder.mAuthorImageView);
+
+                        popupMenu.getMenuInflater().inflate(R.menu.chat_detail_contact_menu, popupMenu.getMenu());
+
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+
+                                switch (item.getItemId()){
+                                    case R.id.contact_profile:
+                                        Intent intent = new Intent(finalContext, ContactsDetailActivity.class);
+                                        try {
+                                            intent.putExtra("CONTACT_NICKNAME" ,message.getSender().getNickname());
+                                        } catch (SharkKBException e) {
+                                            e.printStackTrace();
+                                        }
+                                        finalContext.startActivity(intent);
+                                        break;
+                                    case R.id.contact_block:
+                                        Toast.makeText(finalContext, "You blocked the user.", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                return false;
+                            }
+                        });
+
+                        popupMenu.show();
+
+                        return true;
+                    }
+                });
 
                 // Message State
                 if (message.isVerified()) {
@@ -143,6 +226,8 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
             mDateView = (TextView) itemView.findViewById(R.id.msg_item_date);
             mStateView = (ImageView) itemView.findViewById(R.id.msg_item_state);
             mEncryptionView = (ImageView) itemView.findViewById(R.id.msg_item_encryption);
+
+
         }
     }
 }

@@ -13,7 +13,7 @@ import net.sharksystem.sharknet.R;
  * Created by j4rvis on 3/10/17.
  */
 
-public class MessageDetailActivity extends ParentActivity{
+public class ChatMessageDetailActivity extends ParentActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

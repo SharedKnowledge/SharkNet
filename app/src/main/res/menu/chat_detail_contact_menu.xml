@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/contact_profile"
+        android:title="@string/contact_profile"/>
+    <item
+        android:id="@+id/contact_block"
+        android:title="@string/contact_block"/>
+</menu>

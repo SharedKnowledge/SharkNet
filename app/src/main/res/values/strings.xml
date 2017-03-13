@@ -67,7 +67,6 @@
     <string name="blacklist">blacklist</string>
     <string name="me">Me</string>
     <string name="delete_chat">delete chat</string>
-    <string name="block_user">block user</string>
     <string name="attachment">attachment</string>
     <string name="file">file</string>
 
@@ -95,5 +94,12 @@
     <string name="activity_title_pki_detail">PKI Detail</string>
     <string name="nfc_message_received_msg">Wir haben eine neue Nachricht erhalten.</string>
     <string name="nfc_message_received_title">Neue Nachricht</string>
+
+    <!--Chat-->
+    <string name="contact_profile">Kontakt Profil</string>
+    <string name="contact_block">Kontakt blocken</string>
+    <string name="message_detail">Nachrichten Details</string>
+    <string name="message_dislike">Nachricht ist blöd</string>
+    <string name="activity_title_chat_message_detail">ChatMessageDetailActivity</string>
 
 </resources>

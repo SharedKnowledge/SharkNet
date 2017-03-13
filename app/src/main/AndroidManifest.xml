@@ -55,6 +55,17 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
+            android:name=".chat.ChatMessageDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/activity_title_chat_message_detail"
+            android:parentActivityName=".chat.ChatDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".chat.ChatDetailActivity"/>
+        </activity>
+
+        <activity
             android:name=".chat.ChatDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/activity_title_chat_detail"
