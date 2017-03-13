@@ -40,6 +40,10 @@ public abstract class ParentActivity extends AppCompatActivity {
         findViewById(R.id.fab).setVisibility(View.GONE);
     }
 
+    public SharkApp getSharkApp(){
+        return (SharkApp) getApplication();
+    }
+
     protected void startBackgroundTask(){
         this.startBackgroundTask(null);
     }
