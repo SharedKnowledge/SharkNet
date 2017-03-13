@@ -24,12 +24,10 @@ public class ContactsDetailActivity extends ParentActivity{
     private List<Contact> contacts;
     private static final String CONTACT_NICKNAME = "CONTACT_NICKNAME";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.contact_detail_activity);
-        setOptionsMenu(R.menu.con_detail_menu);
 
         this.con_nickname = getIntent().getStringExtra("CONTACT_NICKNAME");
         setToolbarTitle(con_nickname);

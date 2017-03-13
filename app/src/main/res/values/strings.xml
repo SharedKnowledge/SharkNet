@@ -66,7 +66,6 @@
     <string name="delete">delete</string>
     <string name="blacklist">blacklist</string>
     <string name="me">Me</string>
-    <string name="delete_chat">delete chat</string>
     <string name="attachment">attachment</string>
     <string name="file">file</string>
 
@@ -101,5 +100,11 @@
     <string name="message_detail">Nachrichten Details</string>
     <string name="message_dislike">Nachricht ist blöd</string>
     <string name="activity_title_chat_message_detail">ChatMessageDetailActivity</string>
+    <string name="chat_delete">Chat löschen</string>
+    <string name="chat_settings">Einstellungen</string>
+    <string name="chat_attachment">Anhänge</string>
+    <string name="chat_attachment_take_photo">Foto erstellen</string>
+    <string name="chat_attachment_send_file">Datei anhängen</string>
+    <string name="chat_attachment_send_photo">Foto hinzufügen</string>
 
 </resources>

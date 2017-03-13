@@ -2,12 +2,14 @@ package net.sharksystem.sharknet.chat;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
@@ -17,17 +19,19 @@ import net.sharksystem.sharknet.R;
 
 import org.json.JSONException;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by j4rvis on 3/5/17.
  */
 
 public class ChatDetailActivity extends ParentActivity {
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
     private ChatDetailMsgListAdapter mAdapter;
     private String chatID;
     private Chat mChat;
     public static final String CHAT_ID = "CHAT_ID";
+    private PopupMenu mPopupMenu;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected boolean doInBackground() {
@@ -43,7 +47,7 @@ public class ChatDetailActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.chat_detail_activity);
-        setOptionsMenu(R.menu.chat_detail);
+        setOptionsMenu(R.menu.chat_detail_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState != null) {
@@ -65,15 +69,17 @@ public class ChatDetailActivity extends ParentActivity {
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-//        mRecyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(layoutManager);
 
 
         // specify an adapter (see also next example)
         mRecyclerView.setAdapter(mAdapter);
+
 
         final CardView sendButton = (CardView) findViewById(R.id.message_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +100,7 @@ public class ChatDetailActivity extends ParentActivity {
                             mChat.sendMessage(msg_string);
                             editText.getText().clear();
                             mAdapter.setMessages(mChat.getMessages(false));
+                            mRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
                         } catch (JSONException | SharkKBException e) {
                             e.printStackTrace();
                         }
@@ -103,7 +110,6 @@ public class ChatDetailActivity extends ParentActivity {
         });
 
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -126,6 +132,10 @@ public class ChatDetailActivity extends ParentActivity {
             case android.R.id.home:
                 // Reset clicked data
                 this.finish();
+                return true;
+            case R.id.chat_attachment_take_photo:
+                return true;
+            case R.id.chat_settings:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -2,6 +2,7 @@ package net.sharksystem.sharknet.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -122,7 +123,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
 //                holder.mAuthorImageView.setVisibility(View.GONE);
                 } else {
                     // Set the image of the author
-                    holder.mAuthorImageView.setImageResource(R.drawable.ic_person_accent_24dp);
+                    holder.mAuthorImageView.setImageBitmap(BitmapFactory.decodeStream(message.getSender().getPicture().getInputStream()));
                 }
 
                 holder.mAuthorImageView.setOnLongClickListener(new View.OnLongClickListener() {

@@ -2,8 +2,6 @@ package net.sharksystem.sharknet.chat;
 
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -26,8 +24,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -87,7 +83,7 @@ public class ChatObsoleteDetailActivity extends ParentActivity implements View.O
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.chat_obsolete_detail_activity);
-        setOptionsMenu(R.menu.chat_detail);
+        setOptionsMenu(R.menu.chat_detail_menu);
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
@@ -500,81 +496,57 @@ public class ChatObsoleteDetailActivity extends ParentActivity implements View.O
                 startActivity(intent);
                 return true;
 
-            case R.id.attachment:
-                // attachment icon click event
-                // finding X and Y co-ordinates
-                int cx = (mRevealView.getLeft() + mRevealView.getRight());
-                int cy = (mRevealView.getTop());
-
-                // to find  radius when icon is tapped for showing layout
-                int startradius=0;
-                int endradius = Math.max(mRevealView.getWidth(), mRevealView.getHeight());
-
-                // performing circular reveal when icon will be tapped
-                Animator animator = ViewAnimationUtils.createCircularReveal(mRevealView,cx, cy, startradius, endradius);
-                animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                animator.setDuration(400);
-
-                //reverse animation
-                // to find radius when icon is tapped again for hiding layout
-                //  starting radius will be the radius or the extent to which circular reveal animation is to be shown
-
-                int reverse_startradius = Math.max(mRevealView.getWidth(),mRevealView.getHeight());
-
-                //endradius will be zero
-                int reverse_endradius=0;
-
-                // performing circular reveal for reverse animation
-                Animator animate = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    animate = ViewAnimationUtils.createCircularReveal(mRevealView,cx,cy,reverse_startradius,reverse_endradius);
-                }
-                if(hidden){
-
-                    // to show the layout when icon is tapped
-                    mRevealView.setVisibility(View.VISIBLE);
-                    animator.start();
-                    hidden = false;
-                }
-                else {
-                    mRevealView.setVisibility(View.VISIBLE);
-
-                    // to hide layout on animation end
-                    animate.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            mRevealView.setVisibility(View.INVISIBLE);
-                            hidden = true;
-                        }
-                    });
-                    animate.start();
-                }
-                return true;
-            case R.id.search:
-                break;
-            case R.id.delete_chat:
-                // TODO: chat.delete() noch nicht implementiert.
-                this.chat.delete();
-                finish();
-                break;
-            case R.id.block_user:
-                // TODO: getBlacklist() noch nicht implementiert.
-                try {
-                    if(this.chat.getContacts().size() == 1)
-                    {
-                        SharkNetEngine.getSharkNet().getMyProfile().getBlacklist().add(this.chat.getContacts().get(0));
-                    }
-                    else
-                    {
-
-                    }
-                } catch (SharkKBException e) {
-                    e.printStackTrace();
-                }
-                break;
-//                Contact user_to_block = this.chat.getContacts().
-//                SharkNetEngine.getSharkNet().getMyProfile().getBlacklist().add(this.chat.getContacts().);
+//            case R.id.attachment:
+//                // attachment icon click event
+//                // finding X and Y co-ordinates
+//                int cx = (mRevealView.getLeft() + mRevealView.getRight());
+//                int cy = (mRevealView.getTop());
+//
+//                // to find  radius when icon is tapped for showing layout
+//                int startradius=0;
+//                int endradius = Math.max(mRevealView.getWidth(), mRevealView.getHeight());
+//
+//                // performing circular reveal when icon will be tapped
+//                Animator animator = ViewAnimationUtils.createCircularReveal(mRevealView,cx, cy, startradius, endradius);
+//                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                animator.setDuration(400);
+//
+//                //reverse animation
+//                // to find radius when icon is tapped again for hiding layout
+//                //  starting radius will be the radius or the extent to which circular reveal animation is to be shown
+//
+//                int reverse_startradius = Math.max(mRevealView.getWidth(),mRevealView.getHeight());
+//
+//                //endradius will be zero
+//                int reverse_endradius=0;
+//
+//                // performing circular reveal for reverse animation
+//                Animator animate = null;
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//                    animate = ViewAnimationUtils.createCircularReveal(mRevealView,cx,cy,reverse_startradius,reverse_endradius);
+//                }
+//                if(hidden){
+//
+//                    // to show the layout when icon is tapped
+//                    mRevealView.setVisibility(View.VISIBLE);
+//                    animator.start();
+//                    hidden = false;
+//                }
+//                else {
+//                    mRevealView.setVisibility(View.VISIBLE);
+//
+//                    // to hide layout on animation end
+//                    animate.addListener(new AnimatorListenerAdapter() {
+//                        @Override
+//                        public void onAnimationEnd(Animator animation) {
+//                            super.onAnimationEnd(animation);
+//                            mRevealView.setVisibility(View.INVISIBLE);
+//                            hidden = true;
+//                        }
+//                    });
+//                    animate.start();
+//                }
+//                return true;
         }
 
         return super.onOptionsItemSelected(item);

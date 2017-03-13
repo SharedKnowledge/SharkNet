@@ -2,6 +2,8 @@ package net.sharksystem.sharknet.chat;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +109,15 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
         //if(chat.getPicture() != null)
         //{
         try {
+
+            if(chat.getPicture() != null){
+                image.setImageBitmap(BitmapFactory.decodeStream(chat.getPicture().getInputStream()));
+            } else {
+                if(chat.getContacts().size() == 1){
+                    image.setImageBitmap(BitmapFactory.decodeStream(chat.getContacts().get(0).getPicture().getInputStream()));
+                }
+            }
+
             if (chat.getContacts().size() > 1) {
                 image.setImageResource(R.drawable.ic_group_accent_24dp);
             } else {

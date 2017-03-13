@@ -45,7 +45,7 @@ public class DummyContactGenerator {
     }
 
     public Contact newContact(){
-        return newContact(new Random(System.currentTimeMillis()).nextBoolean());
+        return newContact(new Random(System.currentTimeMillis()).nextInt(100) % 2 == 0);
     }
 
     public Contact newContact(boolean isFemale) {

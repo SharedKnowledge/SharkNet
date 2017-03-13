@@ -26,7 +26,7 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.chat_activity);
-        setOptionsMenu(R.menu.chat);
+        setTitle("Chats");
 
         startBackgroundTask("Chats werden geladen");
     }

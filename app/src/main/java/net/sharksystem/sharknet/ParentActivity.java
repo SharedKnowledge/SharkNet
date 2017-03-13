@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -26,6 +27,7 @@ public abstract class ParentActivity extends AppCompatActivity {
     private int layoutInUse = LAYOUT_OPTION_NULL;
     private Fragment usedFragment;
     private int optionsMenuResource = 0;
+    protected Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public abstract class ParentActivity extends AppCompatActivity {
             return super.onCreateOptionsMenu(menu);
         }
         getMenuInflater().inflate(optionsMenuResource, menu);
+        this.menu = menu;
         return true;
     }
 

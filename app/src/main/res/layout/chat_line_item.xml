@@ -14,7 +14,7 @@
         android:innerRadius="0dp"
         android:shape="ring"
         app:cardElevation="0dp"
-        app:cardCornerRadius="40dp"
+        app:cardCornerRadius="25dp"
         android:layout_marginRight="8dp">
 
         <ImageView
