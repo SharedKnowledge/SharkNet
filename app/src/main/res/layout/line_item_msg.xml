@@ -33,7 +33,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_person_pink_700_48dp"></ImageView>
+                android:src="@drawable/ic_person_accent_24dp"></ImageView>
         </android.support.v7.widget.CardView>
 
 
@@ -93,31 +93,4 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="50dp"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:id="@+id/msg_key"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_vpn_key_pink_700_18dp"
-            android:visibility="gone"></ImageView>
-        <!--  //TODO: icon src anpassen !-->
-        <ImageView
-            android:id="@+id/msg_key_grey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_vpn_key_pink_700_18dp"
-            android:visibility="gone">
-
-        </ImageView>
-
-    </RelativeLayout>
 </android.support.v7.widget.CardView>

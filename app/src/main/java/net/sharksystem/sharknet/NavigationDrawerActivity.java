@@ -16,7 +16,6 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactsActivity;
-import net.sharksystem.sharknet.inbox.InboxActivity;
 import net.sharksystem.sharknet.nfc.NFCActivity;
 import net.sharksystem.sharknet.pki.PKIActivity;
 import net.sharksystem.sharknet.profile.ProfileActivity;
@@ -66,9 +65,6 @@ public abstract class NavigationDrawerActivity extends ParentActivity implements
         {
             case R.id.sidenav_chat:
                 startActivity(new Intent(this, ChatActivity.class));
-                return true;
-            case R.id.sidenav_inbox:
-                startActivity(new Intent(this, InboxActivity.class));
                 return true;
             case R.id.sidenav_contact:
                 startActivity(new Intent(this, ContactsActivity.class));

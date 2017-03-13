@@ -13,7 +13,7 @@ import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.RadarListener;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.chat.ChatObsoleteDetailActivity;
+import net.sharksystem.sharknet.chat.ChatDetailActivity;
 
 import org.json.JSONException;
 
@@ -66,7 +66,7 @@ public class RadarActivity extends NavigationDrawerActivity implements RadarList
 
                 try {
                     Chat chat = SharkNetEngine.getSharkNet().newChat(recipients);
-                    Intent intent = new Intent(RadarActivity.this, ChatObsoleteDetailActivity.class);
+                    Intent intent = new Intent(RadarActivity.this, ChatDetailActivity.class);
                     intent.putExtra(CHAT_ID, chat.getID());
                     startActivity(intent);
                 } catch (SharkKBException | JSONException e) {

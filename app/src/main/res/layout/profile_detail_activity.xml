@@ -1,101 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/activity_profile_detail"
-        tools:context=".profile.ProfileDetailActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".profile.ProfileDetailActivity">
 
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true" android:layout_alignParentStart="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
         <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:onClick="loadImage"
-                android:id="@+id/con_profile_image" android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_person_pink_600_24dp" android:contentDescription="Prifiel Image"/>
-
-
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Nickname:"
-                android:id="@+id/con_nickname_label"/>
-        <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Nickname"
-                android:ems="10"
-                android:id="@+id/con_nickname_edit"/>
+            android:id="@+id/con_profile_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="Prifiel Image"
+            android:onClick="loadImage"
+            android:src="@drawable/ic_person_accent_24dp"/>
 
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Name:"
-                android:id="@+id/con_name_label"/>
+            android:id="@+id/con_nickname_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nickname:"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
         <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Name"
-                android:ems="10"
-                android:id="@+id/con_name_edit"/>
+            android:id="@+id/con_nickname_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nickname"
+            android:inputType="textPersonName"/>
 
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="e-Mail:"
-                android:id="@+id/con_email_label"/>
+            android:id="@+id/con_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
         <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
-                android:hint="your@email.com"
-                android:id="@+id/con_email_edit"/>
+            android:id="@+id/con_name_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName"/>
+
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Phone:"
-                android:id="@+id/con_phone_label"/>
+            android:id="@+id/con_email_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="e-Mail:"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
         <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/con_phone_edit"/>
+            android:id="@+id/con_email_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="your@email.com"
+            android:inputType="textEmailAddress"/>
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Note:"
-                android:id="@+id/con_note_label" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/con_phone_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone:"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
         <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/con_not_edit"/>
+            android:id="@+id/con_phone_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="phone"/>
+
+        <TextView
+            android:id="@+id/con_note_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Note:"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <EditText
+            android:id="@+id/con_not_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"/>
 
     </LinearLayout>
 </RelativeLayout>

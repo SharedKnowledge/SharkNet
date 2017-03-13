@@ -26,12 +26,8 @@ public class ChatDetailSettings extends ParentActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.chat_detail_settings_activity);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Button btn_leave_chat = (Button) findViewById(R.id.btn_leave_chat);
-        btn_leave_chat.setOnClickListener(this);
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
@@ -56,22 +52,6 @@ public class ChatDetailSettings extends ParentActivity implements View.OnClickLi
             } catch (SharkKBException e) {
                 e.printStackTrace();
             }
-        }
-//            TODO: inputstream bwz. Content ist immer leer
-//            Content image = this.chat.getPicture();
-//            chatPicture.setImageBitmap(BitmapFactory.decodeStream(image.getInputStream()));
-        TextView chatTitle = (TextView) findViewById(R.id.ChatName);
-        try {
-            chatTitle.setText(chat.getTitle());
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
-        TextView chatOwner = (TextView) findViewById(R.id.chat_owner);
-        try {
-            chatOwner.setText(chat.getOwner().getNickname());
-        } catch (SharkKBException e) {
-            e.printStackTrace();
         }
     }
 
@@ -102,10 +82,6 @@ public class ChatDetailSettings extends ParentActivity implements View.OnClickLi
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.btn_leave_chat:
-                this.chat.delete();
-                Intent intent = new Intent(ChatDetailSettings.this, ChatActivity.class);
-                startActivity(intent);
         }
     }
 }

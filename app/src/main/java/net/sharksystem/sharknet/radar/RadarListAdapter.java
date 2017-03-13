@@ -53,7 +53,7 @@ public class RadarListAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext)
-                    .inflate(R.layout.list_item_radar_contact, parent, false);
+                    .inflate(R.layout.radar_contact_list_item, parent, false);
         }
 
         try {

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
-    android:layout_marginTop="5dp"
-    app:cardElevation="0dp"
-    app:cardMaxElevation="0dp">
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginTop="5dp"
+                                    app:cardElevation="0dp"
+                                    app:cardMaxElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,14 +22,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Owner: " />
+                android:text="Owner: "/>
 
             <TextView
                 android:id="@+id/key_owner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="" />
+                android:text=""/>
         </LinearLayout>
 
         <LinearLayout
@@ -40,14 +40,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Received: " />
+                android:text="Received: "/>
 
             <TextView
                 android:id="@+id/key_created"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="" />
+                android:text=""/>
         </LinearLayout>
 
         <LinearLayout
@@ -58,14 +58,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expiration: " />
+                android:text="Expiration: "/>
 
             <TextView
                 android:id="@+id/key_expiration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="" />
+                android:text=""/>
         </LinearLayout>
 
         <LinearLayout
@@ -76,7 +76,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Key: " />
+                android:text="Key: "/>
 
             <TextView
                 android:id="@+id/key_value"
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="" />
+                android:text=""/>
         </LinearLayout>
     </LinearLayout>
 

@@ -18,7 +18,6 @@ public class ContactsNewActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.contact_new_activity);
-        setOptionsMenu(R.menu.con_new);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

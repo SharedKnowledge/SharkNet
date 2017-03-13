@@ -57,7 +57,7 @@ public class ChatNewConListAdapter extends ArrayAdapter<Contact>
 
         //Image
         ImageView image = (ImageView) convertView.findViewById(R.id.contact_image);
-        image.setImageResource(R.drawable.ic_person_pink_700_48dp);
+        image.setImageResource(R.drawable.ic_person_accent_48dp);
         //TODO: != change to ==  then load image works
         /*if(contact.getPicture() != null)
         {

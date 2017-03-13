@@ -24,7 +24,6 @@ public class ContactsActivity extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.contact_activity);
-        setOptionsMenu(R.menu.contacts);
 
         FloatingActionButton fab = activateFloatingActionButton();
         assert fab != null;
