@@ -2,7 +2,6 @@ package net.sharksystem.sharknet.chat;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,10 +15,9 @@ import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.SharkApp;
 
 import org.json.JSONException;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by j4rvis on 3/5/17.
@@ -50,16 +48,17 @@ public class ChatDetailActivity extends ParentActivity {
         setOptionsMenu(R.menu.chat_detail_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState != null) {
-            // Restore value of members from saved state
-            chatID = savedInstanceState.getString(CHAT_ID);
-        } else {
-            chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
-        }
+//        if (savedInstanceState != null) {
+//            // Restore value of members from saved state
+//            chatID = savedInstanceState.getString(CHAT_ID);
+//        } else {
+//            chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
+//        }
 
         try {
-            mChat = SharkNetEngine.getSharkNet().getChatById(chatID);
-            mAdapter = new ChatDetailMsgListAdapter(this, mChat.getMessages(false));
+            mChat = ((SharkApp) getApplication()).getChat();
+//            mChat = SharkNetEngine.getSharkNet().getChatById(chatID);
+            mAdapter = new ChatDetailMsgListAdapter(this, (SharkApp) getApplication(), mChat.getMessages(false));
             setTitle(mChat.getTitle());
         } catch (SharkKBException e) {
             e.printStackTrace();
@@ -127,10 +126,17 @@ public class ChatDetailActivity extends ParentActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        ((SharkApp) getApplication()).resetChat();
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Reset clicked data
+                ((SharkApp) getApplication()).resetChat();
                 this.finish();
                 return true;
             case R.id.chat_attachment_take_photo:

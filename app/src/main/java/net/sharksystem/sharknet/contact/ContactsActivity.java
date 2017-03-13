@@ -12,6 +12,7 @@ import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.SharkApp;
 
 import java.util.List;
 
@@ -29,38 +30,11 @@ public class ContactsActivity extends NavigationDrawerActivity {
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(ContactsActivity.this,ContactsNewActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(ContactsActivity.this, ContactsNewActivity.class);
                 startActivity(intent);
             }
         });
-
-        try {
-            contacts = SharkNetEngine.getSharkNet().getContactsWithoutMe();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
-        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.contact_line_item,contacts);
-        ListView lv = (ListView)findViewById(R.id.con_list_view);
-        if (lv != null)
-        {
-            lv.setAdapter(contactsListAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-                    Intent intent = new Intent(ContactsActivity.this,ContactsDetailActivity.class);
-                    try {
-                        intent.putExtra(CONTACT_NICKNAME,contacts.get(position).getNickname());
-                    } catch (SharkKBException e) {
-                        e.printStackTrace();
-                    }
-                    startActivity(intent);
-                }
-            });
-        }
 
     }
 
@@ -75,29 +49,22 @@ public class ContactsActivity extends NavigationDrawerActivity {
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         try {
             contacts = SharkNetEngine.getSharkNet().getContactsWithoutMe();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.contact_line_item,contacts);
-        ListView lv = (ListView)findViewById(R.id.con_list_view);
-        if (lv != null)
-        {
+        ContactsListAdapter contactsListAdapter = new ContactsListAdapter(this, R.layout.contact_line_item, contacts);
+        ListView lv = (ListView) findViewById(R.id.con_list_view);
+        if (lv != null) {
             lv.setAdapter(contactsListAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-                    Intent intent = new Intent(ContactsActivity.this,ContactsDetailActivity.class);
-                    try {
-                        intent.putExtra(CONTACT_NICKNAME,contacts.get(position).getNickname());
-                    } catch (SharkKBException e) {
-                        e.printStackTrace();
-                    }
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(ContactsActivity.this, ContactsDetailActivity.class);
+                    ((SharkApp) getApplication()).setContact(contacts.get(position));
                     startActivity(intent);
                 }
             });

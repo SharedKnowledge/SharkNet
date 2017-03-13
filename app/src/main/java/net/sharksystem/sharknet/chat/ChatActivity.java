@@ -13,6 +13,7 @@ import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.SharkApp;
 
 import java.util.List;
 
@@ -54,12 +55,13 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
+                    ((SharkApp) getApplication()).setChat(chats.get(position));
                     //identifies the chat for the detailView
-                    try {
-                        intent.putExtra(CHAT_ID, chats.get(position).getID());
-                    } catch (SharkKBException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        intent.putExtra(CHAT_ID, chats.get(position).getID());
+//                    } catch (SharkKBException e) {
+//                        e.printStackTrace();
+//                    }
                     startActivity(intent);
                 }
             });

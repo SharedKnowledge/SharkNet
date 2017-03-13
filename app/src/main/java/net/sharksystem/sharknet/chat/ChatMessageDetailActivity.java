@@ -8,6 +8,7 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.SharkApp;
 
 /**
  * Created by j4rvis on 3/10/17.
@@ -15,13 +16,16 @@ import net.sharksystem.sharknet.R;
 
 public class ChatMessageDetailActivity extends ParentActivity{
 
+    private SharkApp application;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.chat_msg_detail_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Message message = ChatMessageDataHolder.getInstance().getMessage();
+        application = (SharkApp) getApplication();
+        Message message = application.getMessage();
 
         try {
             ((TextView) findViewById(R.id.text_view_content)).setText(message.getContent().getMessage());
@@ -48,7 +52,7 @@ public class ChatMessageDetailActivity extends ParentActivity{
 
     @Override
     public void onBackPressed() {
-        ChatMessageDataHolder.getInstance().resetMessage();
+        application.resetMessage();
         super.onBackPressed();
     }
 
@@ -57,7 +61,7 @@ public class ChatMessageDetailActivity extends ParentActivity{
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Reset clicked data
-                ChatMessageDataHolder.getInstance().resetMessage();
+                application.resetMessage();
                 this.finish();
                 return true;
             default:

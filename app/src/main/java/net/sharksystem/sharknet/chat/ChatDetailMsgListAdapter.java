@@ -17,7 +17,7 @@ import android.widget.Toast;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.contact.ContactsActivity;
+import net.sharksystem.sharknet.SharkApp;
 import net.sharksystem.sharknet.contact.ContactsDetailActivity;
 
 import java.text.SimpleDateFormat;
@@ -31,12 +31,14 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
 
     private final static int MESSAGE_IS_MINE = 0;
     private final static int MESSAGE_IS_NOT_MINE = 1;
+    private final SharkApp application;
     private final Context context;
 
     private List<Message> messages;
 
-    public ChatDetailMsgListAdapter(Context context, List<Message> messages) {
+    public ChatDetailMsgListAdapter(Context context, SharkApp application, List<Message> messages) {
         this.messages = messages;
+        this.application = application;
         this.context = context;
     }
 
@@ -96,7 +98,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                             switch (item.getItemId()){
                                 case R.id.message_detail:
                                     Intent intent = new Intent(finalContext, ChatMessageDetailActivity.class);
-                                    ChatMessageDataHolder.getInstance().setMessage(message);
+                                    application.setMessage(message);
                                     finalContext.startActivity(intent);
                                     break;
                                 case R.id.message_dislike:
@@ -142,10 +144,15 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                                     case R.id.contact_profile:
                                         Intent intent = new Intent(finalContext, ContactsDetailActivity.class);
                                         try {
-                                            intent.putExtra("CONTACT_NICKNAME" ,message.getSender().getNickname());
+                                            application.setContact(message.getSender());
                                         } catch (SharkKBException e) {
                                             e.printStackTrace();
                                         }
+//                                        try {
+//                                            intent.putExtra("CONTACT_NICKNAME" ,message.getSender().getNickname());
+//                                        } catch (SharkKBException e) {
+//                                            e.printStackTrace();
+//                                        }
                                         finalContext.startActivity(intent);
                                         break;
                                     case R.id.contact_block:
