@@ -18,7 +18,6 @@ import java.util.List;
 
 public class ContactsActivity extends NavigationDrawerActivity {
 
-    private static final String CONTACT_NICKNAME = "CONTACT_NICKNAME";
     private List<Contact> contacts;
 
     @Override
@@ -64,7 +63,7 @@ public class ContactsActivity extends NavigationDrawerActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(ContactsActivity.this, ContactsDetailActivity.class);
-                    ((SharkApp) getApplication()).setContact(contacts.get(position));
+                    getSharkApp().setContact(contacts.get(position));
                     startActivity(intent);
                 }
             });

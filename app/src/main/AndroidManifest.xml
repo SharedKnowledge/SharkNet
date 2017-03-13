@@ -38,16 +38,12 @@
         <activity
             android:name=".contact.ContactsActivity"
             android:label="@string/activity_title_contacts"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".chat.ChatActivity"
             android:label="@string/activity_title_chat"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-        <activity
-            android:name=".inbox.InboxActivity"
-            android:label="@string/activity_title_inbox"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
@@ -79,6 +75,7 @@
         <activity
             android:name=".chat.ChatNewActivity"
             android:label="@string/activity_title_chat_new"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".chat.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data

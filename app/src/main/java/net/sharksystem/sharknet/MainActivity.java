@@ -39,7 +39,7 @@ public class MainActivity extends ParentActivity {
         try {
             Dummy.createDummyData(this);
             this.profiles = SharkNetEngine.getSharkNet().getProfiles();
-        } catch (SharkKBException | JSONException | InterruptedException e) {
+        } catch (SharkKBException | JSONException | InterruptedException | IOException e) {
             e.printStackTrace();
         }
         return this.profiles != null;

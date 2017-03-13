@@ -121,8 +121,8 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
             if(!message.isMine()){
                 // Author image
                 if (message.getSender().getPicture() == null) {
-                    holder.mAuthorImageView.setImageResource(R.drawable.ic_person_accent_24dp);
-//                holder.mAuthorImageView.setVisibility(View.GONE);
+                    holder.mAuthorImageView.setImageResource(R.drawable.ic_person_white_24dp);
+                    holder.mAuthorImageView.setLayoutParams(new ViewGroup.LayoutParams(35, 35));
                 } else {
                     // Set the image of the author
                     holder.mAuthorImageView.setImageBitmap(BitmapFactory.decodeStream(message.getSender().getPicture().getInputStream()));
@@ -148,11 +148,6 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                                         } catch (SharkKBException e) {
                                             e.printStackTrace();
                                         }
-//                                        try {
-//                                            intent.putExtra("CONTACT_NICKNAME" ,message.getSender().getNickname());
-//                                        } catch (SharkKBException e) {
-//                                            e.printStackTrace();
-//                                        }
                                         finalContext.startActivity(intent);
                                         break;
                                     case R.id.contact_block:
@@ -229,13 +224,11 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
         public ViewHolderBase(View itemView) {
             super(itemView);
             mMsgView = (TextView) itemView.findViewById(R.id.msg_item_content);
-            mAuthorImageView = (ImageView) itemView.findViewById(R.id.msg_item_author_image);
+            mAuthorImageView = (ImageView) itemView.findViewById(R.id.round_image);
             mAuthorTextView = (TextView) itemView.findViewById(R.id.msg_item_author_name);
             mDateView = (TextView) itemView.findViewById(R.id.msg_item_date);
             mStateView = (ImageView) itemView.findViewById(R.id.msg_item_state);
             mEncryptionView = (ImageView) itemView.findViewById(R.id.msg_item_encryption);
-
-
         }
     }
 }

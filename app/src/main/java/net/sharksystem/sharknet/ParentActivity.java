@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by mn-io on 22.01.16.
  */
@@ -49,7 +51,7 @@ public abstract class ParentActivity extends AppCompatActivity {
     }
 
     protected void startBackgroundTask(String information) {
-        new ProgressTask(this, information).execute();
+        new ProgressTask(new WeakReference<>(this), information).execute();
     }
 
     protected abstract boolean doInBackground();
@@ -126,15 +128,15 @@ public abstract class ParentActivity extends AppCompatActivity {
     }
 
     private class ProgressTask extends AsyncTask<String, Void, Boolean> {
-        private final ParentActivity activity;
+        private final WeakReference<ParentActivity> activity;
 
         private final ProgressDialog progressDialog;
         private final String information;
 
-        public ProgressTask(ParentActivity activity, String information) {
+        public ProgressTask(WeakReference<ParentActivity> activity, String information) {
             this.activity = activity;
             this.information = information;
-            progressDialog = new ProgressDialog(activity);
+            progressDialog = new ProgressDialog(activity.get());
         }
 
         @Override
@@ -152,12 +154,12 @@ public abstract class ParentActivity extends AppCompatActivity {
             if (this.progressDialog.isShowing()) {
                 this.progressDialog.dismiss();
             }
-            this.activity.doWhenFinished(success);
+            this.activity.get().doWhenFinished(success);
         }
 
         @Override
         protected Boolean doInBackground(String... params) {
-            return this.activity.doInBackground();
+            return this.activity.get().doInBackground();
         }
     }
 }

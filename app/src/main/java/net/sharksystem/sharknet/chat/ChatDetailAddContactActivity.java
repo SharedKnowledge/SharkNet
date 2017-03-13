@@ -44,7 +44,7 @@ public class ChatDetailAddContactActivity extends ParentActivity {
         // TODO: Kontakte die bereits im ChatActivity sind sollen rausgenommen werden durch ChatID!!
 //        TODO: nicht rausnehmen sondern kennzeichnen mit icon dass sie schon drin sind
 
-        ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.line_item_con_new_chat, contacts);
+        ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.chat_new_contact_line_item, contacts);
         lv = (ListView) findViewById(R.id.con_list_view);
         if (lv != null) {
             lv.setAdapter(chatListAdapter);

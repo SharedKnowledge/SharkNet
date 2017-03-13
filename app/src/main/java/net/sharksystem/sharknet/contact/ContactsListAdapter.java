@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
@@ -45,13 +46,14 @@ public class ContactsListAdapter extends ArrayAdapter<Contact> {
         }
 
         //Image
-        ImageView image = (ImageView) convertView.findViewById(R.id.contact_image);
+        ImageView image = (ImageView) convertView.findViewById(R.id.round_image);
 
         try {
             if (contact.getPicture() != null) {
                 image.setImageBitmap(BitmapFactory.decodeStream(contact.getPicture().getInputStream()));
             } else {
-                image.setImageResource(R.drawable.ic_person_accent_48dp);
+                image.setImageResource(R.drawable.ic_person_white_48dp);
+                image.setLayoutParams(new LinearLayout.LayoutParams(35, 35));
             }
 
         } catch (SharkKBException e) {

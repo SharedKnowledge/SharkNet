@@ -5,6 +5,7 @@ package net.sharksystem.sharknet.dummy;
  */
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
@@ -46,7 +47,7 @@ public class Dummy {
     static long yesterday = today - day;
     static long lastWeek = today - week;
 
-    public static void createDummyData(Context context) throws SharkKBException, JSONException, InterruptedException {
+    public static void createDummyData(Context context) throws SharkKBException, JSONException, InterruptedException, IOException {
 
         ArrayList<Contact> contacts = new ArrayList<>();
         ArrayList<Profile> profiles = new ArrayList<>();
@@ -89,14 +90,18 @@ public class Dummy {
         thirdChat.add(contacts.get(2));
         thirdChat.add(contacts.get(3));
 
+        AssetManager assets = context.getResources().getAssets();
         chats.add(engine.newChat(firstChat));
         chats.get(chats.size()-1).setTitle("Erster Chat");
+        chats.get(chats.size()-1).setPicture(assets.open("pictures/groups/group01.jpg"), "image/jpg");
         chats.add(engine.newChat(secondChat));
         chats.get(chats.size()-1).setTitle("Was machen wir am Freitag?");
+        chats.get(chats.size()-1).setPicture(assets.open("pictures/groups/group02.jpg"), "image/jpg");
         chats.add(engine.newChat(thirdChat));
         chats.get(chats.size()-1).setTitle("PewPew");
         chats.add(engine.newChat(new ArrayList<>(contacts)));
         chats.get(chats.size()-1).setTitle("Alle zusammen");
+        chats.get(chats.size()-1).setPicture(assets.open("pictures/groups/group04.jpg"), "image/jpg");
         chats.add(engine.newChat(contacts.get(5)));
         chats.add(engine.newChat(contacts.get(2)));
         chats.add(engine.newChat(contacts.get(6)));

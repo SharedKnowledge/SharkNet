@@ -2,13 +2,14 @@ package net.sharksystem.sharknet.chat;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
@@ -19,7 +20,6 @@ import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.api.interfaces.Profile;
 import net.sharksystem.sharknet.R;
 
-import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,13 +54,13 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
         TextView titleView = (TextView) convertView.findViewById(R.id.name);
         try {
             String title = chat.getTitle();
-            if(title==null || title.isEmpty()){
+            if (title == null || title.isEmpty()) {
                 title = "";
                 List<Contact> contacts = chat.getContactsWithoutMe();
                 Iterator<Contact> iterator = contacts.iterator();
-                while (iterator.hasNext()){
+                while (iterator.hasNext()) {
                     Contact next = iterator.next();
-                    if(!title.isEmpty()){
+                    if (!title.isEmpty()) {
                         title += ", ";
                     }
                     title += next.getName();
@@ -104,25 +104,22 @@ public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces
 
 
         //Image
-        ImageView image = (ImageView) convertView.findViewById(R.id.chat_image);
-        //TODO: != change to ==  then load image works
-        //if(chat.getPicture() != null)
-        //{
+        ImageView image = (ImageView) convertView.findViewById(R.id.round_image);
         try {
-
-            if(chat.getPicture() != null){
-                image.setImageBitmap(BitmapFactory.decodeStream(chat.getPicture().getInputStream()));
-            } else {
-                if(chat.getContacts().size() == 1){
-                    image.setImageBitmap(BitmapFactory.decodeStream(chat.getContacts().get(0).getPicture().getInputStream()));
-                }
-            }
-
             if (chat.getContacts().size() > 1) {
-                image.setImageResource(R.drawable.ic_group_accent_24dp);
+                image.setImageResource(R.drawable.ic_group_white_24dp);
             } else {
-                image.setImageResource(R.drawable.ic_person_accent_24dp);
+                image.setImageResource(R.drawable.ic_person_white_24dp);
             }
+//            if (chat.getPicture().getLength() > 0) {
+//                image.setImageBitmap(BitmapFactory.decodeStream(chat.getPicture().getInputStream()));
+//            } else {
+//                if (chat.getContacts().size() == 1) {
+//                    image.setImageBitmap(BitmapFactory.decodeStream(chat.getContacts().get(0).getPicture().getInputStream()));
+//                } else {
+//                }
+//            }
+
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

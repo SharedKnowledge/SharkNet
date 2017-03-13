@@ -3,16 +3,19 @@ package net.sharksystem.sharknet.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.design.widget.Snackbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
@@ -42,37 +45,9 @@ public class ChatNewActivity extends ParentActivity {
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.line_item_con_new_chat,contacts);
-        lv = (ListView)findViewById(R.id.con_list_view);
-        if (lv != null)
-        {
-            lv.setAdapter(chatListAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-//                    if(selected_contacts != null)
-//                    {
-//                        if(!selected_contacts.contains(contacts.get(position)))
-//                        {
-//                            selected_contacts.add(contacts.get(position));
-//                            lv.getChildAt(position).setBackgroundColor(Color.rgb(255,64,124));
-//                        }
-//                        else
-//                        {
-//                            selected_contacts.remove(contacts.get(position));
-//                            lv.getChildAt(position).setBackgroundColor(Color.WHITE);
-//
-//                        }
-//                    }
-//                    else
-//                    {
-//                        selected_contacts.add(contacts.get(position));
-//                        lv.getChildAt(position).setBackgroundColor(Color.rgb(255,64,124));
-//                    }
-                }
-            });
-        }
+        ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.chat_new_contact_line_item, contacts);
+        lv = (ListView) findViewById(R.id.con_list_view);
+        lv.setAdapter(chatListAdapter);
     }
 
     @Override
@@ -86,77 +61,34 @@ public class ChatNewActivity extends ParentActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                View v;
-                CheckBox ck;
-                for (int i = 0; i < lv.getCount(); i++)
-                {
-                    v = lv.getChildAt(i);
-                    ck = (CheckBox) v.findViewById(R.id.checkBox);
-                    if (ck.isChecked())
-                    {
-                        selected_contacts.add(contacts.get(i));
-
-                        try {
-                            Log.d("CHECKED",contacts.get(i).getNickname());
-                        } catch (SharkKBException e) {
-                            e.printStackTrace();
+                for (int i = 0; i < lv.getCount(); i++) {
+                    View v = lv.getChildAt(i);
+                    if(v!=null){
+                        CheckBox ck = (CheckBox) v.findViewById(R.id.checkBox);
+                        if (ck.isChecked()) {
+                            selected_contacts.add(contacts.get(i));
                         }
                     }
-
-//                    if (checked.get(i))
-//                    {
-//                        selected_contacts.add(contacts.get(i));
-//                    }
                 }
-                if(!selected_contacts.isEmpty())
-                {
+                if (!selected_contacts.isEmpty()) {
                     EditText title = (EditText) findViewById(R.id.chat_new_title);
-                    net.sharksystem.api.interfaces.Chat c = null;
                     try {
-                        c = SharkNetEngine.getSharkNet().newChat(selected_contacts);
+                        Chat chat = SharkNetEngine.getSharkNet().newChat(selected_contacts);
+                        if (!title.getText().toString().isEmpty()) {
+                            chat.setTitle(title.getText().toString());
+                        }
+                        getSharkApp().setChat(chat);
                     } catch (SharkKBException | JSONException e) {
                         e.printStackTrace();
                     }
-
-                    assert title != null;
-                    if(!title.getText().toString().trim().isEmpty())
-                    {
-                        try {
-                            assert c != null;
-                            c.setTitle(title.getText().toString());
-                        } catch (SharkKBException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    try {
-                        assert c != null;
-                        Log.d("ChatNewID", c.getID());
-                    } catch (SharkKBException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        c.sendMessage(null,"ChatActivity was created by "
-                                + SharkNetEngine.getSharkNet().getMyProfile().getNickname(),null);
-                    } catch (JSONException | SharkKBException e) {
-                        e.printStackTrace();
-                    }
-
-                    startActivity(new Intent( ChatNewActivity.this, ChatActivity.class ));
+                    startActivity(new Intent(ChatNewActivity.this, ChatDetailActivity.class));
+                } else {
+                    Toast.makeText(this, "Kein Kontakt ausgewählt", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    //TODO: soll den user mit Snackbar angezeigt werden
-                    Log.d("NewChat","kein Kontakt ausgewählt");
-                }
-
                 return true;
-
-
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
