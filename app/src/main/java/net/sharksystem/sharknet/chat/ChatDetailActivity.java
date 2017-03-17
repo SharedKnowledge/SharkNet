@@ -1,5 +1,6 @@
 package net.sharksystem.sharknet.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -25,10 +26,8 @@ import org.json.JSONException;
 
 public class ChatDetailActivity extends ParentActivity {
     private ChatDetailMsgListAdapter mAdapter;
-    private String chatID;
     private Chat mChat;
     public static final String CHAT_ID = "CHAT_ID";
-    private PopupMenu mPopupMenu;
     private RecyclerView mRecyclerView;
 
     @Override
@@ -47,16 +46,13 @@ public class ChatDetailActivity extends ParentActivity {
         setLayoutResource(R.layout.chat_detail_activity);
         setOptionsMenu(R.menu.chat_detail_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-//        if (savedInstanceState != null) {
-//            // Restore value of members from saved state
-//            chatID = savedInstanceState.getString(CHAT_ID);
-//        } else {
-//            chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
-//        }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
         try {
-            mChat = ((SharkApp) getApplication()).getChat();
+            mChat = getSharkApp().getChat();
 //            mChat = SharkNetEngine.getSharkNet().getChatById(chatID);
             mAdapter = new ChatDetailMsgListAdapter(this, (SharkApp) getApplication(), mChat.getMessages(false));
             setTitle(mChat.getTitle());
@@ -75,10 +71,8 @@ public class ChatDetailActivity extends ParentActivity {
         layoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(layoutManager);
 
-
         // specify an adapter (see also next example)
         mRecyclerView.setAdapter(mAdapter);
-
 
         final CardView sendButton = (CardView) findViewById(R.id.message_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -107,27 +101,11 @@ public class ChatDetailActivity extends ParentActivity {
                 }
             }
         });
-
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString(CHAT_ID, getIntent().getStringExtra(ChatActivity.CHAT_ID));
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
-        super.onRestoreInstanceState(savedInstanceState);
-
-        // Restore state members from saved instance
-        chatID = savedInstanceState.getString(CHAT_ID);
     }
 
     @Override
     public void onBackPressed() {
-        ((SharkApp) getApplication()).resetChat();
+        getSharkApp().resetChat();
         super.onBackPressed();
     }
 
@@ -136,12 +114,13 @@ public class ChatDetailActivity extends ParentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Reset clicked data
-                ((SharkApp) getApplication()).resetChat();
+                getSharkApp().resetChat();
                 this.finish();
                 return true;
             case R.id.chat_attachment_take_photo:
                 return true;
             case R.id.chat_settings:
+                startActivity(new Intent(this, ChatSettingsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

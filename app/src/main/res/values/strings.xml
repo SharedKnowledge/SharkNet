@@ -57,7 +57,7 @@
     <string name="links">links</string>
     <string name="rechts">rechts</string>
     <string name="profile_picture">Profile Picture</string>
-    <string name="save">save</string>
+    <string name="Speichern">save</string>
     <string name="search">search</string>
     <string name="profileimage">ProfileImage</string>
     <string name="feeds">Feeds</string>
@@ -106,5 +106,8 @@
     <string name="chat_attachment_take_photo">Foto erstellen</string>
     <string name="chat_attachment_send_file">Datei anhängen</string>
     <string name="chat_attachment_send_photo">Foto hinzufügen</string>
+    <string name="chat_new_create">Erstellen</string>
+    <string name="chat_settings_save">Speichern</string>
+    <string name="activity_title_chat_settings">Einstellungen</string>
 
 </resources>

@@ -41,7 +41,6 @@ public class ChatNewActivity extends ParentActivity {
         selected_contacts = new ArrayList<>();
         try {
             this.contacts = SharkNetEngine.getSharkNet().getContacts();
-            this.contacts.remove(SharkNetEngine.getSharkNet().getMyProfile());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.system.L;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
@@ -68,8 +69,9 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     @Override
     public void onBindViewHolder(final ChatDetailMsgListAdapter.ViewHolderBase holder, int position) {
 
-        final Message message = this.messages.get(position);
+        L.d("bups.", this);
 
+        final Message message = this.messages.get(position);
         try {
             // Message Content
             // TODO add Images etc. Using super.getItemViewType()

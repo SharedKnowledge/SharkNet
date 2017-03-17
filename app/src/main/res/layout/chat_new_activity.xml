@@ -27,6 +27,7 @@
             android:src="@drawable/ic_group_accent_24dp"/>
 
         <ImageView
+            android:id="@+id/chat_new_image_edit_view"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
