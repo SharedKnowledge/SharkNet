@@ -17,7 +17,7 @@ import net.sharksystem.sharknet.R;
 import java.util.List;
 import java.util.Objects;
 
-public class ChatDetailSettings extends ParentActivity implements View.OnClickListener {
+public class ChatDetailSettingsActivity extends ParentActivity implements View.OnClickListener {
 
     private String chatID;
     private Chat chat;
@@ -53,16 +53,6 @@ public class ChatDetailSettings extends ParentActivity implements View.OnClickLi
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
     }
 
     /**

@@ -46,18 +46,6 @@ public abstract class ParentActivity extends AppCompatActivity {
         return (SharkApp) getApplication();
     }
 
-    protected void startBackgroundTask(){
-        this.startBackgroundTask(null);
-    }
-
-    protected void startBackgroundTask(String information) {
-        new ProgressTask(new WeakReference<>(this), information).execute();
-    }
-
-    protected abstract boolean doInBackground();
-
-    protected abstract void doWhenFinished(boolean success);
-
     protected void setToolbarTitle(String title) {
         ((Toolbar) findViewById(R.id.toolbar)).setTitle(title);
     }
@@ -125,42 +113,6 @@ public abstract class ParentActivity extends AppCompatActivity {
             throw new IllegalStateException("Layout already set.");
         }
         layoutInUse = layoutOption;
-    }
-
-    private class ProgressTask extends AsyncTask<String, Void, Boolean> {
-        private final WeakReference<ParentActivity> activity;
-
-        private final ProgressDialog progressDialog;
-        private final String information;
-
-        public ProgressTask(WeakReference<ParentActivity> activity, String information) {
-            this.activity = activity;
-            this.information = information;
-            progressDialog = new ProgressDialog(activity.get());
-        }
-
-        @Override
-        protected void onPreExecute() {
-            if (information == null || information.isEmpty()) {
-                this.progressDialog.setMessage("Daten werden geladen.");
-            } else {
-                this.progressDialog.setMessage(information);
-            }
-            this.progressDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            if (this.progressDialog.isShowing()) {
-                this.progressDialog.dismiss();
-            }
-            this.activity.get().doWhenFinished(success);
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            return this.activity.get().doInBackground();
-        }
     }
 }
 

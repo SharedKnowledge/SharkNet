@@ -28,24 +28,11 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.chat_activity);
         setTitle("Chats");
-
-        startBackgroundTask("Chats werden geladen");
-    }
-
-    @Override
-    protected boolean doInBackground() {
-
         try {
             chats = SharkNetEngine.getSharkNet().getChats();
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
         this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
         ListView lv = (ListView) findViewById(R.id.chatsListView);
 
@@ -77,13 +64,6 @@ public class ChatActivity extends NavigationDrawerActivity implements SharkNetEn
                         .setAction("Action", null).show();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // TODO needs to bea renewed?
-//        startBackgroundTask("Chats werden geladen");
     }
 
     @Override

@@ -37,12 +37,6 @@ public class PKIActivity extends NavigationDrawerActivity implements AdapterView
         setOptionsMenu(R.menu.pki);
 
         L.setLogLevel(L.LOGLEVEL_ALL);
-
-        startBackgroundTask("Zertifikate werden geladen");
-    }
-
-    @Override
-    protected boolean doInBackground() {
         pkiStorage = SharkNetEngine.getSharkNet().getSharkEngine().getPKIStorage();
 
         List<SharkCertificate> certificates = null;
@@ -58,11 +52,6 @@ public class PKIActivity extends NavigationDrawerActivity implements AdapterView
         }
 
         holderList = mapCertificates(certificates);
-        return true;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
         adapter = new PKIListAdapter();
         adapter.updateItems(holderList);
 

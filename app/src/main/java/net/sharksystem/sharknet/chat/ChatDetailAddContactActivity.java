@@ -54,16 +54,6 @@ public class ChatDetailAddContactActivity extends ParentActivity {
     }
 
     @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
-    }
-
-    @Override
     public void onBackPressed() {
         Intent returnChatIDIntent = getIntent();
         returnChatIDIntent.putExtra(ChatActivity.CHAT_ID, this.chatID);

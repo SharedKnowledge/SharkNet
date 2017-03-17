@@ -19,12 +19,6 @@ public class ContactsDetailActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.contact_detail_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        startBackgroundTask("Lade Kontaktinformationen");
-    }
-
-    @Override
-    protected boolean doInBackground() {
         Contact contact = ((SharkApp) getApplication()).getContact();
 
         //Typeface type = Typeface.createFromAsset(getAssets(),"fonts/RockSalt.TTF");
@@ -45,12 +39,6 @@ public class ContactsDetailActivity extends ParentActivity {
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        return true;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
     }
 
     @Override

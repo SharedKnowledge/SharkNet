@@ -31,16 +31,6 @@ public class ChatDetailActivity extends ParentActivity {
     private RecyclerView mRecyclerView;
 
     @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.chat_detail_activity);

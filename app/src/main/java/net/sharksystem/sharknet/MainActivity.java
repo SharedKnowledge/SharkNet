@@ -31,26 +31,13 @@ public class MainActivity extends ParentActivity {
 
         SharkNetEngine.getSharkNet().setContext(this);
 
-        startBackgroundTask("Dummy Daten werden erzeugt...");
-    }
-
-    @Override
-    protected boolean doInBackground() {
         try {
             Dummy.createDummyData(this);
             this.profiles = SharkNetEngine.getSharkNet().getProfiles();
         } catch (SharkKBException | JSONException | InterruptedException | IOException e) {
             e.printStackTrace();
         }
-        return this.profiles != null;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
-        if (success) {
-            openChat();
-        }
+        openChat();
 
         setContentView(R.layout.activity_main);
         Button login = (Button) findViewById(R.id.button_login);
@@ -91,7 +78,6 @@ public class MainActivity extends ParentActivity {
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-
     }
 
     public void openChat() {

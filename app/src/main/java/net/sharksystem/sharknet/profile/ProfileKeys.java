@@ -48,14 +48,4 @@ public class ProfileKeys extends ParentActivity {
 
     }
 
-    @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
-    }
-
 }

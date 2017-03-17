@@ -170,7 +170,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".chat.ChatDetailSettings"
+            android:name=".chat.ChatDetailSettingsActivity"
             android:label="@string/activity_title_chat_detail_settings"
             android:parentActivityName=".chat.ChatDetailActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

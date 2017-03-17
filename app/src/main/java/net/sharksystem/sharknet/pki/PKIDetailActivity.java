@@ -103,16 +103,6 @@ public class PKIDetailActivity extends ParentActivity {
     }
 
     @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
-    }
-
-    @Override
     public void onBackPressed() {
         // Reset clicked data
         PKIDataHolder.getInstance().setHolder(null);

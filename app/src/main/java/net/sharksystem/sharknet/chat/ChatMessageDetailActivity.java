@@ -41,16 +41,6 @@ public class ChatMessageDetailActivity extends ParentActivity{
     }
 
     @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
-    }
-
-    @Override
     public void onBackPressed() {
         application.resetMessage();
         super.onBackPressed();

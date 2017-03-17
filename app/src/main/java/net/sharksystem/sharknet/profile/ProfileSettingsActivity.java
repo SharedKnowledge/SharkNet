@@ -13,14 +13,4 @@ public class ProfileSettingsActivity extends ParentActivity {
         setLayoutResource(R.layout.profile_settings_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
-    @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
-    }
 }

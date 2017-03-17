@@ -33,16 +33,6 @@ public class RadarActivity extends NavigationDrawerActivity implements RadarList
     }
 
     @Override
-    protected boolean doInBackground() {
-        return false;
-    }
-
-    @Override
-    protected void doWhenFinished(boolean success) {
-
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
 
