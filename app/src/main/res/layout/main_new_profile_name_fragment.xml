@@ -13,15 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="31dp"
+        android:labelFor="@+id/profile_name"
         android:text="@string/main_new_profile_name_label"
         android:textColor="@color/grey_300"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"/>
+        app:layout_constraintLeft_toLeftOf="@+id/profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image"/>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/profile_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="32dp"
+        android:labelFor="@+id/profile_image"
         android:text="@string/main_new_profile_image_label"
         android:textAllCaps="false"
         android:textColor="@color/grey_300"
@@ -52,7 +54,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/profile_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginLeft="0dp"
@@ -69,22 +71,25 @@
         android:layout_height="0dp"
         android:layout_marginTop="7dp"
         android:text="@string/main_new_profile_name_info"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name"
         android:layout_marginRight="24dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="1.0"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/editText"
-        app:layout_constraintHorizontal_bias="0.514"/>
+        app:layout_constraintLeft_toLeftOf="@+id/profile_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/next_fragment"/>
 
     <Button
-        android:id="@+id/button"
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/next_fragment"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="268dp"
-        tools:layout_editor_absoluteY="508dp"/>
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:drawableEnd="@drawable/ic_chevron_right_grey_200_24dp"
+        android:text="@string/main_new_profile_next_fragment"
+        android:textColor="@color/grey_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>

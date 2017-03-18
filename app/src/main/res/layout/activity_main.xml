@@ -38,7 +38,7 @@
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:contentDescription="@string/links"
-            android:src="@drawable/ic_chevron_left_accent_24dp"/>
+            android:src="@drawable/ic_chevron_left_accent_48dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:contentDescription="@string/rechts"
-            android:src="@drawable/ic_chevron_right_accent_24dp"/>
+            android:src="@drawable/ic_chevron_right_accent_48dp"/>
     </LinearLayout>
 
     <LinearLayout
