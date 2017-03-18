@@ -131,6 +131,8 @@
     <string name="main_new_profile_address_label">Profil E-Mail Adresse</string>
     <string name="main_new_profile_address_hint">bsp. max@mustermann.de</string>
     <string name="main_new_profile_next_fragment">Weiter</string>
+    <string name="main_new_profile_finish">Account erstellen</string>
+    <string name="main_new_profile_name_hint_1">weitere E-Mails</string>
 
 
 </resources>
