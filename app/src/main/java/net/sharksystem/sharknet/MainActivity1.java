@@ -19,7 +19,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-public class MainActivity extends ParentActivity {
+public class MainActivity1 extends ParentActivity {
 
     int index = 0;
     private List<net.sharksystem.api.interfaces.Profile> profiles = null;

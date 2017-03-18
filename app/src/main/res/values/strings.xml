@@ -110,4 +110,26 @@
     <string name="chat_settings_save">Speichern</string>
     <string name="activity_title_chat_settings">Einstellungen</string>
 
+
+    <string name="main_startup_profile">altes Profil verwenden</string>
+    <string name="main_startup_new_profile">neues Profil erstellen</string>
+    <string name="main_startup_dummy">Dummy Daten erzeugen</string>
+
+
+    <string name="main_new_profile_image_label">Profilbild</string>
+    <string name="main_new_profile_name_info">Lorem ipsum dolor sit amet, consetetur sadipscing
+        elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
+        kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
+    <string name="main_new_profile_name_label">Profilname</string>
+    <string name="main_new_profile_name_hint">bsp. Max Mustermann oder Son Goku</string>
+
+    <string name="main_new_profile_address_info">Lorem ipsum dolor sit amet, consetetur sadipscing
+        elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
+        kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
+    <string name="main_new_profile_address_label">Profil E-Mail Adresse</string>
+    <string name="main_new_profile_address_hint">bsp. max@mustermann.de</string>
+
+
 </resources>
