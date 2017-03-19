@@ -67,7 +67,7 @@ public class ChatSettingsActivity extends ParentActivity {
                     if (!s.isEmpty() && !s.equals(title)) {
                         chat.setTitle(s);
                     }
-                    // TODO Check if image has changed and update the image
+                    // TODO Check if bitmap has changed and update the bitmap
 
                 } catch (SharkKBException e) {
                     e.printStackTrace();

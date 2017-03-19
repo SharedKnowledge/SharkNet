@@ -1,96 +1,103 @@
 package net.sharksystem.sharknet.chat;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
-import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.SharkApp;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
-public class ChatActivity extends NavigationDrawerActivity implements SharkNetEngine.EventListener {
+import rx.Single;
+import rx.SingleSubscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-    public static final String CHAT_ID = "CHAT_ID";
-    private List<net.sharksystem.api.interfaces.Chat> chats;
-    private ChatListAdapter chatListAdapter;
+public class ChatActivity extends NavigationDrawerActivity {
+
+    private List<Chat> mChats;
+    private ChatListAdapter mChatListAdapter;
+    private RecyclerView mChatRecyclerView;
+    private Subscription mSubscription;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        configureLayout();
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Lade Chats...");
+        mProgressDialog.show();
+
+        retrieveChats();
+    }
+
+    private void configureLayout(){
         setLayoutResource(R.layout.chat_activity);
         setTitle("Chats");
-        try {
-            chats = SharkNetEngine.getSharkNet().getChats();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
-        ListView lv = (ListView) findViewById(R.id.chatsListView);
+        mChatListAdapter = new ChatListAdapter(this);
+        mChatRecyclerView = (RecyclerView) findViewById(R.id.chats_recylcer_view);
+        mChatRecyclerView.setAdapter(mChatListAdapter);
+//        mChatRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
+//                getSharkApp().setChat(mChats.get(position));
+//                startActivity(intent);
+//            }
+//        });
 
-        if (lv != null) {
-            lv.setAdapter(chatListAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
-                    ((SharkApp) getApplication()).setChat(chats.get(position));
-                    //identifies the chat for the detailView
-//                    try {
-//                        intent.putExtra(CHAT_ID, chats.get(position).getID());
-//                    } catch (SharkKBException e) {
-//                        e.printStackTrace();
-//                    }
-                    startActivity(intent);
-                }
-            });
-        }
-
-        FloatingActionButton fab = activateFloatingActionButton();
-        assert fab != null;
-        fab.setOnClickListener(new View.OnClickListener() {
+        activateFloatingActionButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ChatActivity.this, ChatNewActivity.class));
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    private void retrieveChats(){
+        Single<List<Chat>> single = Single.fromCallable(new Callable<List<Chat>>() {
+            @Override
+            public List<Chat> call() throws Exception {
+                return SharkNetEngine.getSharkNet().getChats();
+            }
+        });
+
+        mSubscription = single
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleSubscriber<List<Chat>>() {
+            @Override
+            public void onSuccess(List<Chat> value) {
+                if(mProgressDialog.isShowing()){
+                    mProgressDialog.dismiss();
+                }
+                mChatListAdapter.setChats(value);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                L.e(error.getMessage(), this);
             }
         });
     }
 
     @Override
-    public void onNewChat(Chat chat) {
-        try {
-            chats = SharkNetEngine.getSharkNet().getChats();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        this.chatListAdapter = new ChatListAdapter(this, R.layout.chat_line_item, chats);
-        ListView lv = (ListView) findViewById(R.id.chatsListView);
+    protected void onDestroy() {
+        super.onDestroy();
 
-        if (lv != null) {
-            lv.setAdapter(chatListAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
-                    //identifies the chat for the detailView
-                    try {
-                        intent.putExtra(CHAT_ID, chats.get(position).getID());
-                    } catch (SharkKBException e) {
-                        e.printStackTrace();
-                    }
-                    startActivity(intent);
-                }
-            });
+        if(mSubscription != null && !mSubscription.isUnsubscribed()){
+            mSubscription.unsubscribe();
         }
     }
 }

@@ -121,12 +121,12 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
             });
 
             if(!message.isMine()){
-                // Author image
+                // Author bitmap
                 if (message.getSender().getPicture() == null) {
                     holder.mAuthorImageView.setImageResource(R.drawable.ic_person_white_24dp);
                     holder.mAuthorImageView.setLayoutParams(new ViewGroup.LayoutParams(35, 35));
                 } else {
-                    // Set the image of the author
+                    // Set the bitmap of the author
                     holder.mAuthorImageView.setImageBitmap(BitmapFactory.decodeStream(message.getSender().getPicture().getInputStream()));
                 }
 

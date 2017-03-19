@@ -2,6 +2,7 @@ package net.sharksystem.sharknet.main;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.dummy.Dummy;
 
 import java.util.concurrent.Callable;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     public void onCreateDummyDataSelected() {
 
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("Loading Dummy Data");
+        mProgressDialog.setMessage("Lade Dummy Daten...");
         mProgressDialog.show();
 
         final Context that = this;
@@ -83,9 +85,8 @@ public class MainActivity extends AppCompatActivity
                 if(mProgressDialog.isShowing()){
                     mProgressDialog.dismiss();
                 }
-
-                Toast.makeText(that, "It worked!!!!", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(that, ChatActivity.class));
+//                Toast.makeText(that, "It worked!!!!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(that, ChatActivity.class));
             }
 
             @Override

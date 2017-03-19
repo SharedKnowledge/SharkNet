@@ -1,134 +1,165 @@
 package net.sharksystem.sharknet.chat;
 
-
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharkfw.system.L;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.api.interfaces.Message;
-import net.sharksystem.api.interfaces.Profile;
 import net.sharksystem.sharknet.R;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import rx.Single;
+import rx.SingleSubscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Reads the Information from the ChatActivity-List and
  * fills the List-Items-Layout.
  */
-public class ChatListAdapter extends ArrayAdapter<net.sharksystem.api.interfaces.Chat> {
+public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
-    private Profile myProfile = null;
-    private List<net.sharksystem.api.interfaces.Chat> chats;
+    private final Context mContext;
+    private List<Chat> mChats = new ArrayList<>();
+    private Subscription mSubscription;
 
-    public ChatListAdapter(Context context, int resource, List<net.sharksystem.api.interfaces.Chat> objects) {
-        super(context, resource, objects);
-        this.chats = objects;
-        try {
-            myProfile = SharkNetEngine.getSharkNet().getMyProfile();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+    public ChatListAdapter(Context context) {
+        mContext = context;
+    }
+
+    public void setChats(List<Chat> chats) {
+        mChats = chats;
+        notifyDataSetChanged();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.chat_line_item, parent, false);
-        }
+    public ChatListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_line_item, parent, false);
+        return new ViewHolder(view);
+    }
 
-        Chat chat = chats.get(position);
+    @Override
+    public void onBindViewHolder(final ChatListAdapter.ViewHolder holder, final int position) {
+        Single<ChatDataHolder> single = Single.fromCallable(new Callable<ChatDataHolder>() {
+            @Override
+            public ChatDataHolder call() throws Exception {
 
-        //Title
-        TextView titleView = (TextView) convertView.findViewById(R.id.name);
-        try {
-            String title = chat.getTitle();
-            if (title == null || title.isEmpty()) {
-                title = "";
-                List<Contact> contacts = chat.getContactsWithoutMe();
-                Iterator<Contact> iterator = contacts.iterator();
-                while (iterator.hasNext()) {
-                    Contact next = iterator.next();
-                    if (!title.isEmpty()) {
-                        title += ", ";
+                Chat chat = mChats.get(position);
+
+                // name
+                String name = chat.getTitle();
+                if (name == null || name.isEmpty()) {
+                    name = "";
+                    List<Contact> contacts = chat.getContactsWithoutMe();
+                    for (Contact next : contacts) {
+                        if (!name.isEmpty()) {
+                            name += ", ";
+                        }
+                        name += next.getName();
                     }
-                    title += next.getName();
                 }
 
+                // message
+                String message = "";
+                try {
+                    List<Message> messages = chat.getMessages(false);
+                    if (messages.size() > 0) {
+                        Message last_msg = messages.get(messages.size() - 1);
+                        String content = last_msg.getContent().getMessage();
+                        String sender = last_msg.getSender().getNickname();
+                        message = sender + ":" + content;
+                    }
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+
+                // Image
+                Bitmap image;
+                if (chat.getPicture().getLength() > 0) {
+                    image = BitmapFactory.decodeStream(chat.getPicture().getInputStream());
+                } else {
+                    if (chat.getContacts().size() == 1) {
+                        image = BitmapFactory.decodeStream(chat.getContacts().get(0).getPicture().getInputStream());
+                    } else {
+                        if (chat.getContacts().size() > 1) {
+                            image = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_group_white_24dp);
+                        } else {
+                            image = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_person_white_24dp);
+                        }
+                    }
+                }
+
+                return new ChatDataHolder(image, name, message);
             }
-            titleView.setText(title);
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+        });
 
-        //Sender + Lastmessage-Text
-        TextView text = (TextView) convertView.findViewById(R.id.msg_text);
+        mSubscription = single
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleSubscriber<ChatDataHolder>() {
 
-        List<Message> msgs = null;
-        try {
-            msgs = chat.getMessages(false);
-//            L.d("Number of Messages for chat " + chat.getTitle() + ": " + msgs.size(), this);
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        if (msgs.size() > 0) {
-            Message last_msg = msgs.get(msgs.size() - 1);
-            String content = null;
-            try {
-                content = last_msg.getContent().getMessage();
-            } catch (SharkKBException e) {
-                e.printStackTrace();
-            }
-            String sender = null;
-            try {
+                    @Override
+                    public void onSuccess(ChatDataHolder value) {
+                        holder.chatImage.setImageBitmap(value.image);
+                        holder.chatLastMessage.setText(value.message);
+                        holder.chatName.setText(value.name);
+                    }
 
-                sender = last_msg.getSender().getNickname();
-            } catch (SharkKBException e) {
-                e.printStackTrace();
-            }
-
-            String last_msg_content = sender + ":" + content;
-            text.setText(last_msg_content);
-        }
-
-
-        //Image
-        ImageView image = (ImageView) convertView.findViewById(R.id.round_image);
-        try {
-            if (chat.getContacts().size() > 1) {
-                image.setImageResource(R.drawable.ic_group_white_24dp);
-            } else {
-                image.setImageResource(R.drawable.ic_person_white_24dp);
-            }
-//            if (chat.getPicture().getLength() > 0) {
-//                image.setImageBitmap(BitmapFactory.decodeStream(chat.getPicture().getInputStream()));
-//            } else {
-//                if (chat.getContacts().size() == 1) {
-//                    image.setImageBitmap(BitmapFactory.decodeStream(chat.getContacts().get(0).getPicture().getInputStream()));
-//                } else {
-//                }
-//            }
-
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        //}
-        // else
-        //{
-        //TODO: image.setImageResource(chat.getPicture().);
-        //‚}
-
-        return convertView;
+                    @Override
+                    public void onError(Throwable error) {
+                        L.e(error.getMessage(), this);
+                    }
+        });
     }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mChats.size();
+    }
+
+    private class ChatDataHolder {
+        String message;
+        String name;
+        Bitmap image;
+
+        ChatDataHolder(Bitmap image, String name, String message) {
+            this.image = image;
+            this.name = name;
+            this.message = message;
+        }
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView chatImage;
+        TextView chatName;
+        TextView chatLastMessage;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            chatImage = (ImageView) itemView.findViewById(R.id.chat_line_item_image);
+            chatName = (TextView) itemView.findViewById(R.id.chat_line_item_name);
+            chatLastMessage = (TextView) itemView.findViewById(R.id.chat_line_item_last_message);
+        }
+    }
+
 }
