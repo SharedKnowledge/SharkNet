@@ -28,18 +28,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:icon, android:theme">
-        <activity android:name=".MainActivity1">
+        <activity
+            android:name=".main.MainActivity"
+            android:label="MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".contact.ContactsActivity"
             android:label="@string/activity_title_contacts"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".chat.ChatActivity"
@@ -75,9 +77,9 @@
         <activity
             android:name=".chat.ChatNewActivity"
             android:label="@string/activity_title_chat_new"
-            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".chat.ChatActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".chat.ChatActivity"/>
@@ -85,9 +87,9 @@
         <activity
             android:name=".chat.ChatSettingsActivity"
             android:label="@string/activity_title_chat_settings"
-            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".chat.ChatDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".chat.ChatDetailActivity"/>
@@ -127,15 +129,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".profile.ProfileDetailActivity"/>
-        </activity>
-        <activity
-            android:name=".inbox.InboxNewFeedActivity"
-            android:label="@string/activity_title_timeline_detail_view"
-            android:parentActivityName=".inbox.InboxActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".inbox.InboxActivity"/>
         </activity>
         <activity
             android:name=".profile.ProfileSettingsActivity"

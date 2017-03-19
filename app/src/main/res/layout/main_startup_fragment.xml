@@ -23,7 +23,7 @@
         tools:layout_editor_absoluteX="132dp"/>
 
     <Button
-        android:id="@+id/button_use_profile"
+        android:id="@+id/button_use_previous_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -49,10 +49,10 @@
         android:theme="@style/Button.accent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_use_profile"/>
+        app:layout_constraintTop_toBottomOf="@+id/button_use_previous_profile"/>
 
     <Button
-        android:id="@+id/button_use_dummy_data"
+        android:id="@+id/button_create_dummy_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"

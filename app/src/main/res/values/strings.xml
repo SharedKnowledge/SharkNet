@@ -133,6 +133,7 @@
     <string name="main_new_profile_next_fragment">Weiter</string>
     <string name="main_new_profile_finish">Account erstellen</string>
     <string name="main_new_profile_name_hint_1">weitere E-Mails</string>
+    <string name="main_previous_fragment">Zurück</string>
 
 
 </resources>

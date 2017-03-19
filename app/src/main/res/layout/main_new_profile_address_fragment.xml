@@ -99,6 +99,19 @@
         android:text="@string/main_new_profile_finish"
         android:textColor="@color/grey_200"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="9dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <Button
+        android:id="@+id/previous_fragment"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        tools:layout_editor_absoluteX="161dp"/>
+        android:layout_marginLeft="8dp"
+        android:drawableStart="@drawable/ic_chevron_left_grey_200_24dp"
+        android:text="@string/main_previous_fragment"
+        android:textColor="@color/grey_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 </android.support.constraint.ConstraintLayout>
