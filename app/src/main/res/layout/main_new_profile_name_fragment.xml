@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="31dp"
-        android:labelFor="@+id/profile_mail_3"
+        android:labelFor="@+id/profile_name"
         android:text="@string/main_new_profile_name_label"
         android:textColor="@color/grey_300"
         android:textSize="20sp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_image"/>
 
     <EditText
-        android:id="@+id/profile_mail_3"
+        android:id="@+id/profile_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
@@ -71,11 +71,11 @@
         android:layout_height="0dp"
         android:layout_marginTop="7dp"
         android:text="@string/main_new_profile_name_info"
-        app:layout_constraintTop_toBottomOf="@+id/profile_mail_3"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name"
         android:layout_marginRight="24dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/profile_mail_3"
+        app:layout_constraintLeft_toLeftOf="@+id/profile_name"
         app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/next_fragment"/>
