@@ -3,6 +3,7 @@ package net.sharksystem.sharknet.chat;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,17 +46,10 @@ public class ChatActivity extends NavigationDrawerActivity {
     private void configureLayout(){
         setLayoutResource(R.layout.chat_activity);
         setTitle("Chats");
-        mChatListAdapter = new ChatListAdapter(this);
+        mChatListAdapter = new ChatListAdapter(this, getSharkApp());
         mChatRecyclerView = (RecyclerView) findViewById(R.id.chats_recylcer_view);
+        mChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mChatRecyclerView.setAdapter(mChatListAdapter);
-//        mChatRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(ChatActivity.this, ChatDetailActivity.class);
-//                getSharkApp().setChat(mChats.get(position));
-//                startActivity(intent);
-//            }
-//        });
 
         activateFloatingActionButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +81,7 @@ public class ChatActivity extends NavigationDrawerActivity {
 
             @Override
             public void onError(Throwable error) {
-                L.e(error.getMessage(), this);
+                error.printStackTrace();
             }
         });
     }
@@ -98,6 +92,10 @@ public class ChatActivity extends NavigationDrawerActivity {
 
         if(mSubscription != null && !mSubscription.isUnsubscribed()){
             mSubscription.unsubscribe();
+        }
+
+        if(mChatListAdapter.mSubscription != null && !mChatListAdapter.mSubscription.isUnsubscribed()){
+            mChatListAdapter.mSubscription.unsubscribe();
         }
     }
 }

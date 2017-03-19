@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:mApp="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/chat_settings"
         android:orderInCategory="100"
         android:title="@string/chat_settings"
-        app:showAsAction="never"/>
+        mApp:showAsAction="never"/>
     <item
         android:id="@+id/chat_attachment"
         android:icon="@drawable/ic_attach_file_white_24dp"
         android:orderInCategory="100"
         android:title="@string/chat_attachment"
-        app:showAsAction="always">
+        mApp:showAsAction="always">
         <menu>
             <item
                 android:id="@+id/chat_attachment_take_photo"
                 android:icon="@drawable/ic_photo_camera_black_24dp"
                 android:title="@string/chat_attachment_take_photo"
-                app:showAsAction="ifRoom"/>
+                mApp:showAsAction="ifRoom"/>
             <item
                 android:id="@+id/chat_attachment_send_photo"
                 android:icon="@drawable/ic_add_a_photo_black_24dp"
                 android:title="@string/chat_attachment_send_photo"
-                app:showAsAction="ifRoom"/>
+                mApp:showAsAction="ifRoom"/>
             <item
                 android:id="@+id/chat_attachment_send_file"
                 android:icon="@drawable/ic_insert_drive_file_black_24dp"
                 android:title="@string/chat_attachment_send_file"
-                app:showAsAction="ifRoom"/>
+                mApp:showAsAction="ifRoom"/>
 
         </menu>
     </item>

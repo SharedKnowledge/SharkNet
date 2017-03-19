@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:mApp="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/generate_dummy_data"
         android:title="@string/generate_dummy_data"
-        app:showAsAction="never"/>
+        mApp:showAsAction="never"/>
 
     <item android:id="@+id/init_owner"
         android:title="@string/init_owner"
-        app:showAsAction="never"/>
+        mApp:showAsAction="never"/>
 
 </menu>

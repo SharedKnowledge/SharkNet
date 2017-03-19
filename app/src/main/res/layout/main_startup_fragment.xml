@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:mApp="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
@@ -15,11 +15,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="31dp"
         android:contentDescription="@string/app_name"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/shark_red_lowerres"
+        mApp:layout_constraintHorizontal_bias="0.485"
+        mApp:layout_constraintLeft_toLeftOf="parent"
+        mApp:layout_constraintRight_toRightOf="parent"
+        mApp:layout_constraintTop_toTopOf="parent"
+        mApp:srcCompat="@drawable/shark_red_lowerres"
         tools:layout_editor_absoluteX="132dp"/>
 
     <Button
@@ -32,10 +32,10 @@
         android:text="@string/main_startup_profile"
         android:textColor="@color/grey_200"
         android:theme="@style/Button.accent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"/>
+        mApp:layout_constraintHorizontal_bias="0.514"
+        mApp:layout_constraintLeft_toLeftOf="parent"
+        mApp:layout_constraintRight_toRightOf="parent"
+        mApp:layout_constraintTop_toBottomOf="@+id/textView"/>
 
     <Button
         android:id="@+id/button_create_new_profile"
@@ -47,9 +47,9 @@
         android:text="@string/main_startup_new_profile"
         android:textColor="@color/grey_200"
         android:theme="@style/Button.accent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_use_previous_profile"/>
+        mApp:layout_constraintLeft_toLeftOf="parent"
+        mApp:layout_constraintRight_toRightOf="parent"
+        mApp:layout_constraintTop_toBottomOf="@+id/button_use_previous_profile"/>
 
     <Button
         android:id="@+id/button_create_dummy_data"
@@ -61,10 +61,10 @@
         android:text="@string/main_startup_dummy"
         android:textColor="@color/grey_200"
         android:theme="@style/Button.accent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_create_new_profile"
-        app:layout_constraintHorizontal_bias="0.503"/>
+        mApp:layout_constraintLeft_toLeftOf="parent"
+        mApp:layout_constraintRight_toRightOf="parent"
+        mApp:layout_constraintTop_toBottomOf="@+id/button_create_new_profile"
+        mApp:layout_constraintHorizontal_bias="0.503"/>
 
     <TextView
         android:id="@+id/textView"
@@ -76,7 +76,7 @@
         android:text="@string/app_name"
         android:textColor="@color/grey_300"
         android:textSize="40sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+        mApp:layout_constraintLeft_toLeftOf="parent"
+        mApp:layout_constraintRight_toRightOf="parent"
+        mApp:layout_constraintTop_toBottomOf="@+id/imageView"/>
 </android.support.constraint.ConstraintLayout>

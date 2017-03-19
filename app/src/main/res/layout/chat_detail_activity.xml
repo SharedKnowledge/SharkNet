@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:mApp="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -38,8 +38,8 @@
             android:innerRadius="0dp"
             android:shape="ring"
             android:layout_margin="5dp"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="4dp">
+            mApp:cardCornerRadius="25dp"
+            mApp:cardElevation="4dp">
 
             <ImageView
                 android:id="@+id/chat_image"

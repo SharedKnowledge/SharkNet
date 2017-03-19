@@ -33,8 +33,6 @@ public class ChatDetailAddContactActivity extends ParentActivity {
         setLayoutResource(R.layout.chat_detail_add_contact_activity);
         setOptionsMenu(R.menu.menu_chat_detail_add_con);
 
-        this.chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
-
         selected_contacts = new ArrayList<>();
         try {
             this.contacts = SharkNetEngine.getSharkNet().getContactsWithoutMe();
@@ -56,7 +54,6 @@ public class ChatDetailAddContactActivity extends ParentActivity {
     @Override
     public void onBackPressed() {
         Intent returnChatIDIntent = getIntent();
-        returnChatIDIntent.putExtra(ChatActivity.CHAT_ID, this.chatID);
         setResult(Activity.RESULT_OK, returnChatIDIntent);
         finish();
     }
@@ -95,7 +92,6 @@ public class ChatDetailAddContactActivity extends ParentActivity {
                     }
 
                     Intent returnChatIDIntent = getIntent();
-                    returnChatIDIntent.putExtra(ChatActivity.CHAT_ID, chatID);
                     setResult(Activity.RESULT_OK, returnChatIDIntent);
                     finish();
 //                    startActivity(new Intent( ChatDetailAddContactActivity.this, ChatObsoleteDetailActivity.class ));

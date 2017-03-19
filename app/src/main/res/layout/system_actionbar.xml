@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mApp="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            mApp:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -25,7 +25,7 @@
         android:id="@+id/include"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        mApp:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -34,6 +34,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_white_48dp"
-        app:backgroundTint="@color/accent"/>
+        mApp:backgroundTint="@color/accent"/>
 
 </android.support.design.widget.CoordinatorLayout>

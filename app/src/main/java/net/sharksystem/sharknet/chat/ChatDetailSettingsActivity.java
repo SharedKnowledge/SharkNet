@@ -31,9 +31,6 @@ public class ChatDetailSettingsActivity extends ParentActivity implements View.O
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
-            chatID = savedInstanceState.getString(ChatActivity.CHAT_ID);
-        } else {
-            chatID = getIntent().getStringExtra(ChatActivity.CHAT_ID);
         }
 
         List<Chat> chats = null;
@@ -44,15 +41,6 @@ public class ChatDetailSettingsActivity extends ParentActivity implements View.O
         }
 
         assert chats != null;
-        for (net.sharksystem.api.interfaces.Chat chat : chats) {
-            try {
-                if (Objects.equals(chat.getID(), chatID)) {
-                    this.chat = chat;
-                }
-            } catch (SharkKBException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     /**
@@ -61,7 +49,6 @@ public class ChatDetailSettingsActivity extends ParentActivity implements View.O
     @Override
     public void onBackPressed() {
         Intent returnChatIDIntent = getIntent();
-        returnChatIDIntent.putExtra(ChatActivity.CHAT_ID, chatID);
         setResult(Activity.RESULT_OK, returnChatIDIntent);
         finish();
     }
