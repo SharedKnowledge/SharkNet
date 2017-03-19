@@ -48,15 +48,14 @@ configurations.all {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-//    compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: 'g.a.v'
     //    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
-    //    compile 'com.github.SharedKnowledge:SharkNet-Api-Android:-SNAPSHOT'
-    //    compile 'com.github.SharedKnowledge:SharkNet-Api-Android:429ec34877'
-    compile project(':api')
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.thedeanda:lorem:2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile project(':api')
 }
