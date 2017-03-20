@@ -1,8 +1,6 @@
 package net.sharksystem.sharknet;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
@@ -10,12 +8,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Created by mn-io on 22.01.16.
@@ -25,11 +20,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static final int LAYOUT_OPTION_RESOURCE = 1;
     public static final int LAYOUT_OPTION_FRAGMENT = 2;
     public static final int LAYOUT_OPTION_NULL = -1;
-
+    protected Menu menu;
     private int layoutInUse = LAYOUT_OPTION_NULL;
     private Fragment usedFragment;
     private int optionsMenuResource = 0;
-    protected Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         findViewById(R.id.fab).setVisibility(View.GONE);
     }
 
-    public SharkApp getSharkApp(){
+    public SharkApp getSharkApp() {
         return (SharkApp) getApplication();
     }
 
