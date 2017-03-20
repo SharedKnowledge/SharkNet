@@ -14,7 +14,7 @@ import rx.schedulers.Schedulers;
  * Created by j4rvis on 3/20/17.
  */
 
-public abstract class RxSingleBaseActivity<T> extends BaseActivity {
+public abstract class RxSingleNavigationDrawerActivity<T> extends NavigationDrawerActivity {
 
     private Subscription mSubscription;
     private String mProgressMessage;
@@ -43,22 +43,22 @@ public abstract class RxSingleBaseActivity<T> extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleSubscriber<T>() {
-            @Override
-            public void onSuccess(T value) {
-                doOnUIThread(value);
-                if(mProgressDialog!=null && mProgressDialog.isShowing()){
-                    mProgressDialog.dismiss();
-                }
-            }
+                    @Override
+                    public void onSuccess(T value) {
+                        doOnUIThread(value);
+                        if(mProgressDialog!=null && mProgressDialog.isShowing()){
+                            mProgressDialog.dismiss();
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable error) {
-                doOnError(error);
-                if(mProgressDialog!=null && mProgressDialog.isShowing()){
-                    mProgressDialog.dismiss();
-                }
-            }
-        });
+                    @Override
+                    public void onError(Throwable error) {
+                        doOnError(error);
+                        if(mProgressDialog!=null && mProgressDialog.isShowing()){
+                            mProgressDialog.dismiss();
+                        }
+                    }
+                });
     }
 
     protected abstract T doOnBackgroundThread();

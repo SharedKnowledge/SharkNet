@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 
-import net.sharkfw.system.L;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
@@ -42,7 +40,7 @@ public class ChatActivity extends NavigationDrawerActivity {
         retrieveChats();
     }
 
-    private void configureLayout(){
+    private void configureLayout() {
         setLayoutResource(R.layout.chat_activity);
         setTitle("Chats");
         mChatListAdapter = new ChatListAdapter(this, getSharkApp());
@@ -58,7 +56,7 @@ public class ChatActivity extends NavigationDrawerActivity {
         });
     }
 
-    private void retrieveChats(){
+    private void retrieveChats() {
         Single<List<Chat>> single = Single.fromCallable(new Callable<List<Chat>>() {
             @Override
             public List<Chat> call() throws Exception {
@@ -66,13 +64,10 @@ public class ChatActivity extends NavigationDrawerActivity {
             }
         });
 
-        mSubscription = single
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleSubscriber<List<Chat>>() {
+        mSubscription = single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<List<Chat>>() {
             @Override
             public void onSuccess(List<Chat> value) {
-                if(mProgressDialog.isShowing()){
+                if (mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
                 mChatListAdapter.setChats(value);
@@ -89,11 +84,11 @@ public class ChatActivity extends NavigationDrawerActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if(mSubscription != null && !mSubscription.isUnsubscribed()){
+        if (mSubscription != null && !mSubscription.isUnsubscribed()) {
             mSubscription.unsubscribe();
         }
 
-        if(mChatListAdapter.mSubscription != null && !mChatListAdapter.mSubscription.isUnsubscribed()){
+        if (mChatListAdapter.mSubscription != null && !mChatListAdapter.mSubscription.isUnsubscribed()) {
             mChatListAdapter.mSubscription.unsubscribe();
         }
     }
