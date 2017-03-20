@@ -2,6 +2,7 @@ package net.sharksystem.sharknet.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -15,14 +16,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.system.L;
 import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
 import net.sharksystem.sharknet.contact.ContactsDetailActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import rx.Single;
+import rx.SingleSubscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by j4rvis on 3/5/17.
@@ -32,19 +40,19 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
 
     private final static int MESSAGE_IS_MINE = 0;
     private final static int MESSAGE_IS_NOT_MINE = 1;
-    private final SharkApp application;
-    private final Context context;
+    private final SharkApp mApp;
+    private final Context mContext;
 
-    private List<Message> messages;
+    private List<Message> mMessages = new ArrayList<>();
+    public Subscription mSubscription;
 
-    public ChatDetailMsgListAdapter(Context context, SharkApp application, List<Message> messages) {
-        this.messages = messages;
-        this.application = application;
-        this.context = context;
+    public ChatDetailMsgListAdapter(Context context, SharkApp application) {
+        mApp = application;
+        mContext = context;
     }
 
     public void setMessages(List<Message> messages){
-        this.messages = messages;
+        mMessages = messages;
         notifyDataSetChanged();
     }
 
@@ -69,91 +77,62 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     @Override
     public void onBindViewHolder(final ChatDetailMsgListAdapter.ViewHolderBase holder, int position) {
 
-        L.d("bups.", this);
+        final Message message = mMessages.get(position);
 
-        final Message message = this.messages.get(position);
-        try {
-            // Message Content
-            // TODO add Images etc. Using super.getItemViewType()
-            String messageContent = message.getContent().getMessage();
-            holder.mMsgView.setText(messageContent);
+        Single<MessageDataHolder> single = Single.fromCallable(new Callable<MessageDataHolder>() {
+            @Override
+            public MessageDataHolder call() throws Exception {
 
-//            L.d("Message.length: " + messageContent.length(), this);
-            if(messageContent.length() < 30){
-                holder.mMsgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            }
-
-            final Context finalContext = this.context;
-
-            holder.mMsgView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    PopupMenu popupMenu = new PopupMenu(finalContext, holder.mMsgView);
-
-                    popupMenu.getMenuInflater().inflate(R.menu.chat_detail_message_menu, popupMenu.getMenu());
-
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-
-                            switch (item.getItemId()){
-                                case R.id.message_detail:
-                                    Intent intent = new Intent(finalContext, ChatMessageDetailActivity.class);
-                                    application.setMessage(message);
-                                    finalContext.startActivity(intent);
-                                    break;
-                                case R.id.message_dislike:
-                                    Toast.makeText(finalContext, "You disliked the message", Toast.LENGTH_SHORT).show();
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                            return false;
-                        }
-                    });
-
-                    popupMenu.show();
-
-                    return true;
+                String messageContent = message.getContent().getMessage();
+                Bitmap authorImage = null;
+                if(message.getSender().getPicture() != null) {
+                    authorImage = BitmapFactory.decodeStream(message.getSender().getPicture().getInputStream());
                 }
-            });
-
-            if(!message.isMine()){
-                // Author bitmap
-                if (message.getSender().getPicture() == null) {
-                    holder.mAuthorImageView.setImageResource(R.drawable.ic_person_white_24dp);
-                    holder.mAuthorImageView.setLayoutParams(new ViewGroup.LayoutParams(35, 35));
+                int stateResource;
+                if (message.isVerified()) {
+                    stateResource = R.drawable.ic_verified_user_green_24dp;
+                } else if (message.isSigned()) {
+                    stateResource = R.drawable.ic_warning_dark_grey_24dp;
                 } else {
-                    // Set the bitmap of the author
-                    holder.mAuthorImageView.setImageBitmap(BitmapFactory.decodeStream(message.getSender().getPicture().getInputStream()));
+                    stateResource = R.drawable.ic_warning_red_24dp;
                 }
+                String authorName = message.getSender().getName();
+                SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm");
+                String date = format.format(message.getDateReceived());
 
-                holder.mAuthorImageView.setOnLongClickListener(new View.OnLongClickListener() {
+                boolean isEncrypted = message.isEncrypted();
+                boolean isMine = message.isMine();
+
+                return new MessageDataHolder(authorImage, authorName, messageContent, date, stateResource, isEncrypted, isMine);
+            }
+        });
+
+        mSubscription = single.subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<MessageDataHolder>() {
+            @Override
+            public void onSuccess(MessageDataHolder value) {
+                // message
+                holder.msgView.setText(value.messageContent);
+                if (value.messageContent.length() < 30) {
+                    holder.msgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                }
+                holder.msgView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
 
-                        PopupMenu popupMenu = new PopupMenu(finalContext, holder.mAuthorImageView);
-
-                        popupMenu.getMenuInflater().inflate(R.menu.chat_detail_contact_menu, popupMenu.getMenu());
-
+                        PopupMenu popupMenu = new PopupMenu(mContext, holder.msgView);
+                        popupMenu.getMenuInflater().inflate(R.menu.chat_detail_message_menu, popupMenu.getMenu());
                         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
 
-                                switch (item.getItemId()){
-                                    case R.id.contact_profile:
-                                        Intent intent = new Intent(finalContext, ContactsDetailActivity.class);
-                                        try {
-                                            application.setContact(message.getSender());
-                                        } catch (SharkKBException e) {
-                                            e.printStackTrace();
-                                        }
-                                        finalContext.startActivity(intent);
+                                switch (item.getItemId()) {
+                                    case R.id.message_detail:
+                                        Intent intent = new Intent(mContext, ChatMessageDetailActivity.class);
+                                        mApp.setMessage(message);
+                                        mContext.startActivity(intent);
                                         break;
-                                    case R.id.contact_block:
-                                        Toast.makeText(finalContext, "You blocked the user.", Toast.LENGTH_SHORT).show();
+                                    case R.id.message_dislike:
+                                        Toast.makeText(mContext, "You disliked the message", Toast.LENGTH_SHORT).show();
                                         break;
                                     default:
                                         break;
@@ -168,35 +147,76 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                         return true;
                     }
                 });
+                // date
+                holder.dateView.setText(value.date);
+                if (!value.isMine) {
+                    // image
+                    if (value.authorImageBitMap == null) {
+                        holder.authorImageView.setImageResource(R.drawable.ic_person_white_24dp);
+                        holder.authorImageView.setLayoutParams(new ViewGroup.LayoutParams(35, 35));
+                    } else {
+                        holder.authorImageView.setImageBitmap(value.authorImageBitMap);
+                    }
+                    holder.authorImageView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
 
-                // Message State
-                if (message.isVerified()) {
-                    holder.mStateView.setImageResource(R.drawable.ic_verified_user_green_24dp);
-                } else if (message.isSigned()) {
-                    holder.mStateView.setImageResource(R.drawable.ic_warning_dark_grey_24dp);
-                } else {
-                    holder.mStateView.setImageResource(R.drawable.ic_warning_red_24dp);
-                }
+                            PopupMenu popupMenu = new PopupMenu(mContext, holder.authorImageView);
 
-                // Encrypted?
-                if (message.isEncrypted()) {
-                    holder.mEncryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
+                            popupMenu.getMenuInflater().inflate(R.menu.chat_detail_contact_menu, popupMenu.getMenu());
+
+                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+
+                                    switch (item.getItemId()) {
+                                        case R.id.contact_profile:
+                                            Intent intent = new Intent(mContext, ContactsDetailActivity.class);
+                                            try {
+                                                mApp.setContact(message.getSender());
+                                            } catch (SharkKBException e) {
+                                                e.printStackTrace();
+                                            }
+                                            mContext.startActivity(intent);
+                                            break;
+                                        case R.id.contact_block:
+                                            Toast.makeText(mContext, "You blocked the user.", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                    return false;
+                                }
+                            });
+
+                            popupMenu.show();
+
+                            return true;
+                        }
+                    });
+                    // authorName
+                    holder.authorTextView.setText(value.authorName);
+                    //encrypted
+                    if (value.isEncrypted) {
+                        holder.encryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
+                    }
+                    //state
+                    holder.stateView.setImageResource(value.stateResource);
                 }
-                holder.mAuthorTextView.setText(message.getSender().getName());
             }
 
-            // Date
-            SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm");
-            holder.mDateView.setText(format.format(message.getDateReceived()));
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onError(Throwable error) {
+
+            }
+        });
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        Message message = this.messages.get(position);
+        Message message = this.mMessages.get(position);
         try {
             if (message.isMine()) {
                 return MESSAGE_IS_MINE;
@@ -211,26 +231,46 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
 
     @Override
     public int getItemCount() {
-        return this.messages.size();
+        return this.mMessages.size();
+    }
+
+    private class MessageDataHolder{
+        Bitmap authorImageBitMap;
+        String authorName;
+        String messageContent;
+        String date;
+        int stateResource;
+        boolean isEncrypted;
+        boolean isMine;
+
+        private MessageDataHolder(Bitmap authorImageBitMap, String authorName, String messageContent, String date, int stateResource, boolean isEncrypted, boolean isMine) {
+            this.authorImageBitMap = authorImageBitMap;
+            this.authorName = authorName;
+            this.messageContent = messageContent;
+            this.date = date;
+            this.stateResource = stateResource;
+            this.isEncrypted = isEncrypted;
+            this.isMine = isMine;
+        }
     }
 
     class ViewHolderBase extends RecyclerView.ViewHolder {
 
-        ImageView mAuthorImageView;
-        TextView mAuthorTextView;
-        TextView mMsgView;
-        TextView mDateView;
-        ImageView mStateView;
-        ImageView mEncryptionView;
+        ImageView authorImageView;
+        TextView authorTextView;
+        TextView msgView;
+        TextView dateView;
+        ImageView stateView;
+        ImageView encryptionView;
 
         public ViewHolderBase(View itemView) {
             super(itemView);
-            mMsgView = (TextView) itemView.findViewById(R.id.msg_item_content);
-            mAuthorImageView = (ImageView) itemView.findViewById(R.id.round_image);
-            mAuthorTextView = (TextView) itemView.findViewById(R.id.msg_item_author_name);
-            mDateView = (TextView) itemView.findViewById(R.id.msg_item_date);
-            mStateView = (ImageView) itemView.findViewById(R.id.msg_item_state);
-            mEncryptionView = (ImageView) itemView.findViewById(R.id.msg_item_encryption);
+            msgView = (TextView) itemView.findViewById(R.id.msg_item_content);
+            authorImageView = (ImageView) itemView.findViewById(R.id.round_image);
+            authorTextView = (TextView) itemView.findViewById(R.id.msg_item_author_name);
+            dateView = (TextView) itemView.findViewById(R.id.msg_item_date);
+            stateView = (ImageView) itemView.findViewById(R.id.msg_item_state);
+            encryptionView = (ImageView) itemView.findViewById(R.id.msg_item_encryption);
         }
     }
 }

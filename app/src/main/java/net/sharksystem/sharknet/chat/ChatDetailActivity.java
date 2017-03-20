@@ -9,16 +9,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.PopupMenu;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
+import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.ParentActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
 
 import org.json.JSONException;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import rx.Single;
+import rx.SingleSubscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by j4rvis on 3/5/17.
@@ -27,8 +35,8 @@ import org.json.JSONException;
 public class ChatDetailActivity extends ParentActivity {
     private ChatDetailMsgListAdapter mAdapter;
     private Chat mChat;
-    public static final String CHAT_ID = "CHAT_ID";
     private RecyclerView mRecyclerView;
+    private Subscription mSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,32 +44,16 @@ public class ChatDetailActivity extends ParentActivity {
         setLayoutResource(R.layout.chat_detail_activity);
         setOptionsMenu(R.menu.chat_detail_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        createLayout();
+        retrieveChat();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try {
-            mChat = getSharkApp().getChat();
-//            mChat = SharkNetEngine.getSharkNet().getChatById(chatID);
-            mAdapter = new ChatDetailMsgListAdapter(this, (SharkApp) getApplication(), mChat.getMessages(false));
-            setTitle(mChat.getTitle());
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
+    private void createLayout(){
         mRecyclerView = (RecyclerView) findViewById(R.id.chat_msg_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-//        recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
+        mAdapter = new ChatDetailMsgListAdapter(this, (SharkApp) getApplication());
         mRecyclerView.setAdapter(mAdapter);
 
         final CardView sendButton = (CardView) findViewById(R.id.message_send_button);
@@ -91,6 +83,50 @@ public class ChatDetailActivity extends ParentActivity {
                 }
             }
         });
+    }
+
+    private void retrieveChat(){
+        Single<List<Message>> single = Single.fromCallable(new Callable<List<Message>>() {
+            @Override
+            public List<Message> call() throws Exception {
+                mChat = getSharkApp().getChat();
+                setTitle(mChat.getTitle());
+                return mChat.getMessages(false);
+            }
+        });
+
+        mSubscription = single
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleSubscriber<List<Message>>() {
+
+            @Override
+            public void onSuccess(List<Message> value) {
+                mAdapter.setMessages(value);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mSubscription!=null && !mSubscription.isUnsubscribed()){
+            mSubscription.unsubscribe();
+        }
+        if(mAdapter.mSubscription!=null && !mAdapter.mSubscription.isUnsubscribed()){
+            mAdapter.mSubscription.unsubscribe();
+        }
     }
 
     @Override
