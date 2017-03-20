@@ -44,7 +44,7 @@ public class PKIActivity extends NavigationDrawerActivity implements AdapterView
             certificates = this.pkiStorage.getAllSharkCertificates();
             L.d("Certifcates: " + certificates.size(), this);
             if(certificates.isEmpty()){
-                Dummy.createDummyPkiData();
+//                Dummy.createDummyPkiData();
                 certificates = this.pkiStorage.getAllSharkCertificates();
             }
         } catch (SharkKBException e) {

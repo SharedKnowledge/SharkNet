@@ -1,5 +1,6 @@
 package net.sharksystem.sharknet.pki;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,7 @@ public class PKIListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.pki_line_item, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.pki_line_item, parent, false);
         }
 
         final PKICertificateHolder item = (PKICertificateHolder) this.getItem(position);

@@ -148,7 +148,7 @@ public class PKIDetailActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.pki_detail_line_item, parent, false);
+                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.pki_detail_line_item, parent, false);
             }
 
             SharkCertificate certificate = (SharkCertificate) getItem(position);

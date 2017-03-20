@@ -1,9 +1,5 @@
 package net.sharksystem.sharknet.dummy;
 
-/**
- * Created by viktorowich on 24/08/16.
- */
-
 import android.content.Context;
 import android.content.res.AssetManager;
 
@@ -11,6 +7,7 @@ import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.security.SharkPkiStorage;
@@ -30,7 +27,10 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -70,7 +70,7 @@ public class Dummy {
         engine.setActiveProfile(profiles.get(1), "password");
         Profile activeProfile = engine.getMyProfile();
 
-        // TODO Now generate dummy chats...
+        L.d("Contacts created");
 
         ArrayList<Chat> chats = new ArrayList<>();
 
@@ -108,6 +108,8 @@ public class Dummy {
         chats.add(engine.newChat(contacts.get(7)));
         chats.add(engine.newChat(contacts.get(1)));
 
+        L.d("Chats created");
+
         Lorem lorem = LoremIpsum.getInstance();
 
         for (Chat chat : chats) {
@@ -124,15 +126,8 @@ public class Dummy {
                 }
             }
         }
-    }
 
-    private static long getNextRandomDate(long min){
-        long max = System.currentTimeMillis();
-        Random random = new Random(max);
-        return min + random.nextInt((int) (max - min));
-    }
-
-    public static void createDummyPkiData() {
+        L.d("Chats filled with messages");
 
         SharkPkiStorage pkiStorage = (SharkPkiStorage) SharkNetEngine.getSharkNet().getSharkEngine().getPKIStorage();
 
@@ -150,80 +145,53 @@ public class Dummy {
             keyPairGenerator.initialize(2048);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            return;
         }
 
-        L.d("KeyGenerator initiated.", Dummy.class.toString());
+        L.d("PKI initiated");
 
-        String kName = "Karl";
-        String kSI = "st:k";
-        String kAddr = "tcp://shark.net/k";
-        PeerSemanticTag kTag = InMemoSharkKB.createInMemoPeerSemanticTag(kName, kSI, kAddr);
-        KeyPair kKeyPair = keyPairGenerator.generateKeyPair();
-
-        String lName = "Louis";
-        String lSI = "st:l";
-        String lAddr = "tcp://sharl.net/l";
-        PeerSemanticTag lTag = InMemoSharkKB.createInMemoPeerSemanticTag(lName, lSI, lAddr);
-        KeyPair lKeyPair = keyPairGenerator.generateKeyPair();
-
-        String mName = "Marc";
-        String mSI = "st:m";
-        String mAddr = "tcp://sharm.net/m";
-        PeerSemanticTag mTag = InMemoSharkKB.createInMemoPeerSemanticTag(mName, mSI, mAddr);
-        KeyPair mKeyPair = keyPairGenerator.generateKeyPair();
-
-        String nName = "Ned";
-        String nSI = "st:n";
-        String nAddr = "tcp://sharn.net/n";
-        PeerSemanticTag nTag = InMemoSharkKB.createInMemoPeerSemanticTag(nName, nSI, nAddr);
-        KeyPair nKeyPair = keyPairGenerator.generateKeyPair();
-
-        String oName = "Olaf";
-        String oSI = "st:o";
-        String oAddr = "tcp://sharo.net/o";
-        PeerSemanticTag oTag = InMemoSharkKB.createInMemoPeerSemanticTag(oName, oSI, oAddr);
-        KeyPair oKeyPair = keyPairGenerator.generateKeyPair();
-
-        L.d("Keys generated", Dummy.class.toString());
-
-        SharkPublicKey kKey = pkiStorage.addUnsignedKey(kTag, kKeyPair.getPublic(), tomorrow);
-        SharkPublicKey lKey = pkiStorage.addUnsignedKey(lTag, lKeyPair.getPublic(), tomorrow + hour);
-        SharkPublicKey mKey = pkiStorage.addUnsignedKey(mTag, mKeyPair.getPublic(), yesterday);
-        SharkPublicKey nKey = pkiStorage.addUnsignedKey(nTag, nKeyPair.getPublic(), nextWeek);
-        SharkPublicKey oKey = pkiStorage.addUnsignedKey(oTag, oKeyPair.getPublic(), lastWeek);
-        L.d("Keys added", Dummy.class.toString());
-        try {
-            // Signed by myself
-            pkiStorage.sign(kKey);
-            pkiStorage.sign(lKey);
-            pkiStorage.sign(nKey);
-
-            // Signed by others
-            pkiStorage.sign(lKey, kTag, kKeyPair.getPrivate());
-            pkiStorage.sign(mKey, kTag, kKeyPair.getPrivate());
-            pkiStorage.sign(oKey, kTag, kKeyPair.getPrivate());
-
-            pkiStorage.sign(mKey, lTag, lKeyPair.getPrivate());
-            pkiStorage.sign(nKey, lTag, lKeyPair.getPrivate());
-            pkiStorage.sign(oKey, lTag, lKeyPair.getPrivate());
-
-            pkiStorage.sign(kKey, mTag, mKeyPair.getPrivate());
-            pkiStorage.sign(nKey, mTag, mKeyPair.getPrivate());
-            pkiStorage.sign(oKey, mTag, mKeyPair.getPrivate());
-            pkiStorage.sign(lKey, mTag, mKeyPair.getPrivate());
-
-            pkiStorage.sign(kKey, nTag, nKeyPair.getPrivate());
-            pkiStorage.sign(lKey, nTag, nKeyPair.getPrivate());
-            pkiStorage.sign(oKey, nTag, nKeyPair.getPrivate());
-
-            pkiStorage.sign(kKey, oTag, oKeyPair.getPrivate());
-            pkiStorage.sign(nKey, oTag, oKeyPair.getPrivate());
-
-        } catch (SharkKBException e) {
-            e.printStackTrace();
+        HashMap<Contact, KeyPair> contactKeyPairHashMap = new HashMap<>();
+        for (Contact contact : contacts) {
+            contactKeyPairHashMap.put(contact, keyPairGenerator.generateKeyPair());
         }
 
-        L.d("Keys signed", Dummy.class.toString());
+        L.d("KeyPair generated for each contact");
 
+        ArrayList<SharkPublicKey> keys = new ArrayList<>();
+        Iterator<Map.Entry<Contact, KeyPair>> iterator = contactKeyPairHashMap.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Contact, KeyPair> next = iterator.next();
+            int randomDays = new Random(System.currentTimeMillis()).nextInt(100);
+            int sign = (randomDays % 2)==0 ? 1 : -1;
+            keys.add(pkiStorage.addUnsignedKey(next.getKey().getPST(), next.getValue().getPublic(), sign * (randomDays+1) * hour + today));
+        }
+
+        L.d("SharkPublicKeys created for each contact");
+
+        pkiStorage.sign(keys.get(0));
+        pkiStorage.sign(keys.get(1));
+        pkiStorage.sign(keys.get(2));
+
+        L.d("Some keys signed by activeProfile");
+
+        L.d("Start random key signing between foreign keys");
+
+        Iterator<Map.Entry<Contact, KeyPair>> iteratorAgain = contactKeyPairHashMap.entrySet().iterator();
+        while (iteratorAgain.hasNext()){
+            Map.Entry<Contact, KeyPair> next = iteratorAgain.next();
+            for (SharkPublicKey key : keys) {
+                if(!SharkCSAlgebra.identical(key.getOwner(), next.getKey().getPST())){
+                    if((new Random().nextInt(100) % 2)==0){
+                        pkiStorage.sign(key, next.getKey().getPST(), next.getValue().getPrivate());
+                    }
+                }
+            }
+        }
+    }
+
+    private static long getNextRandomDate(long min){
+        long max = System.currentTimeMillis();
+        Random random = new Random(max);
+        return min + random.nextInt((int) (max - min));
     }
 }
