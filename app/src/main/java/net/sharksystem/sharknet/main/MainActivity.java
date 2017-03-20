@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity
                 .subscribe(new SingleSubscriber<Void>() {
             @Override
             public void onSuccess(Void value) {
-                if(mProgressDialog.isShowing()){
-                    mProgressDialog.dismiss();
-                }
+//                if(mProgressDialog.isShowing()){
+//                    mProgressDialog.dismiss();
+//                }
 //                Toast.makeText(that, "It worked!!!!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(that, ChatActivity.class));
             }

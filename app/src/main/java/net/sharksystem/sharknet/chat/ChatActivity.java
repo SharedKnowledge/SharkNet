@@ -25,7 +25,6 @@ import rx.schedulers.Schedulers;
 
 public class ChatActivity extends NavigationDrawerActivity {
 
-    private List<Chat> mChats;
     private ChatListAdapter mChatListAdapter;
     private RecyclerView mChatRecyclerView;
     private Subscription mSubscription;
