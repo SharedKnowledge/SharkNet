@@ -43,7 +43,7 @@ public class ChatDetailAddContactActivity extends BaseActivity {
 //        TODO: nicht rausnehmen sondern kennzeichnen mit icon dass sie schon drin sind
 
         ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.chat_new_contact_line_item, contacts);
-        lv = (ListView) findViewById(R.id.con_list_view);
+        lv = (ListView) findViewById(R.id.contact_recycler_view);
         if (lv != null) {
             lv.setAdapter(chatListAdapter);
         }

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.sharknet.chat.ChatActivity;
-import net.sharksystem.sharknet.contact.ContactsActivity;
+import net.sharksystem.sharknet.contact.ContactActivity;
 import net.sharksystem.sharknet.nfc.NFCActivity;
 import net.sharksystem.sharknet.pki.PKIActivity;
 import net.sharksystem.sharknet.profile.ProfileActivity;
@@ -67,7 +67,7 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
                 startActivity(new Intent(this, ChatActivity.class));
                 return true;
             case R.id.sidenav_contact:
-                startActivity(new Intent(this, ContactsActivity.class));
+                startActivity(new Intent(this, ContactActivity.class));
                 return true;
             case R.id.sidenav_profile:
                 startActivity(new Intent(this, ProfileActivity.class));

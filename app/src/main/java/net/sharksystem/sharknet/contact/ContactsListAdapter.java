@@ -1,65 +1,80 @@
 package net.sharksystem.sharknet.contact;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.sharknet.BaseRecyclerViewAdapter;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.SharkApp;
+import net.sharksystem.sharknet.chat.ChatListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by viktorowich on 08/06/16.
- */
-public class ContactsListAdapter extends ArrayAdapter<Contact> {
+public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
 
-    private List<Contact> contacts;
+    private final SharkApp mApp;
+    private final Context mContext;
+    private List<ContactActivity.ContactDataHolder> mList = new ArrayList<>();
 
-    public ContactsListAdapter(Context context, int resource, List<Contact> objects) {
-        super(context, resource, objects);
-        this.contacts = objects;
+    public ContactsListAdapter(Context context, SharkApp app) {
+        mApp = app;
+        mContext = context;
     }
 
+    public void setList(List<ContactActivity.ContactDataHolder> list){
+        mList = list;
+    }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.contact_line_item, parent, false);
+    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_line_item, parent, false);
+        return new ContactViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ContactViewHolder holder, int position) {
+
+        final ContactActivity.ContactDataHolder item = mList.get(position);
+
+        holder.contactName.setText(item.contactName);
+        if (item.contactImage != null) {
+            holder.contactImage.setImageBitmap(item.contactImage);
+        } else {
+            holder.contactImage.setImageResource(R.drawable.ic_person_white_48dp);
+            holder.contactImage.setLayoutParams(new FrameLayout.LayoutParams(35, 35));
         }
-
-        Contact contact = contacts.get(position);
-
-        //Name
-        TextView title = (TextView) convertView.findViewById(R.id.contact_nickname);
-        try {
-            title.setText(contact.getNickname());
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-
-        //Image
-        ImageView image = (ImageView) convertView.findViewById(R.id.round_image);
-
-        try {
-            if (contact.getPicture() != null) {
-                image.setImageBitmap(BitmapFactory.decodeStream(contact.getPicture().getInputStream()));
-            } else {
-                image.setImageResource(R.drawable.ic_person_white_48dp);
-                image.setLayoutParams(new LinearLayout.LayoutParams(35, 35));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mApp.setContact(item.contact);
+                mContext.startActivity(new Intent(mContext, ContactsDetailActivity.class));
             }
+        });
+    }
 
-        } catch (SharkKBException e) {
-            e.printStackTrace();
+    @Override
+    public int getItemCount() {
+        return mList.size();
+    }
+
+    class ContactViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView contactImage;
+        TextView contactName;
+
+        public ContactViewHolder(View itemView) {
+            super(itemView);
+            contactImage = (ImageView) itemView.findViewById(R.id.round_image);
+            contactName = (TextView) itemView.findViewById(R.id.contact_nickname);
         }
-
-        return convertView;
     }
 }

@@ -42,7 +42,7 @@ public class ChatNewActivity extends BaseActivity {
             e.printStackTrace();
         }
         ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.chat_new_contact_line_item, contacts);
-        lv = (ListView) findViewById(R.id.con_list_view);
+        lv = (ListView) findViewById(R.id.contact_recycler_view);
         lv.setAdapter(chatListAdapter);
     }
 

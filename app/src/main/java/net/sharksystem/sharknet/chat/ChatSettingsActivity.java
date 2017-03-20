@@ -41,7 +41,7 @@ public class ChatSettingsActivity extends BaseActivity {
             contacts = chat.getContacts();
 
             ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.chat_settings_contact_line_item, contacts);
-            lv = (ListView) findViewById(R.id.con_list_view);
+            lv = (ListView) findViewById(R.id.contact_recycler_view);
             lv.setAdapter(chatListAdapter);
 
             editText = (EditText) findViewById(R.id.chat_new_title);
@@ -81,8 +81,9 @@ public class ChatSettingsActivity extends BaseActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-
-
     }
 
+    class ChatSettingsDataHolder{
+
+    }
 }

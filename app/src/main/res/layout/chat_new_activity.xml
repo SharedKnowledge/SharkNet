@@ -35,7 +35,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/con_list_view"
+        android:id="@+id/contact_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"/>
 

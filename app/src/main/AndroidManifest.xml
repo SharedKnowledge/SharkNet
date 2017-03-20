@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".contact.ContactsActivity"
+            android:name=".contact.ContactActivity"
             android:label="@string/activity_title_contacts"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden">
@@ -97,11 +97,11 @@
         <activity
             android:name=".contact.ContactsDetailActivity"
             android:label="@string/activity_title_con_detail_view"
-            android:parentActivityName=".contact.ContactsActivity"
+            android:parentActivityName=".contact.ContactActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".contact.ContactsActivity"/>
+                android:value=".contact.ContactActivity"/>
         </activity>
         <activity
             android:name=".profile.ProfileDetailActivity"
@@ -115,11 +115,11 @@
         <activity
             android:name=".contact.ContactsNewActivity"
             android:label="@string/activity_title_con_new"
-            android:parentActivityName=".contact.ContactsActivity"
+            android:parentActivityName=".contact.ContactActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".contact.ContactsActivity"/>
+                android:value=".contact.ContactActivity"/>
         </activity>
         <activity
             android:name=".profile.ProfileDetailInterestsActivity"
@@ -161,15 +161,6 @@
             android:name=".radar.RadarActivity"
             android:label="@string/activity_title_radar"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-        <activity
-            android:name=".chat.ChatDetailSettingsActivity"
-            android:label="@string/activity_title_chat_detail_settings"
-            android:parentActivityName=".chat.ChatDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".chat.ChatDetailActivity"/>
         </activity>
         <activity
             android:name=".nfc.NFCActivity"

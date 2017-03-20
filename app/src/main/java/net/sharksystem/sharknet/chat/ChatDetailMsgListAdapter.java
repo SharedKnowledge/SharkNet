@@ -36,7 +36,7 @@ import rx.schedulers.Schedulers;
  * Created by j4rvis on 3/5/17.
  */
 
-public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsgListAdapter.ViewHolderBase> {
+public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsgListAdapter.ViewHolderBase>{
 
     private final static int MESSAGE_IS_MINE = 0;
     private final static int MESSAGE_IS_NOT_MINE = 1;

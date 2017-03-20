@@ -15,11 +15,6 @@ import net.sharksystem.sharknet.SharkApp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
-
-import rx.Scheduler;
-import rx.Subscription;
-import rx.schedulers.Schedulers;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
