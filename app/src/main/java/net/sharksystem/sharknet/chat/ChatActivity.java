@@ -1,50 +1,43 @@
 package net.sharksystem.sharknet.chat;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
-import net.sharksystem.sharknet.NavigationDrawerActivity;
+import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import rx.Single;
-import rx.SingleSubscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-public class ChatActivity extends NavigationDrawerActivity {
+public class ChatActivity extends RxSingleNavigationDrawerActivity<List<ChatActivity.ChatDataHolder>> {
 
     private ChatListAdapter mChatListAdapter;
-    private RecyclerView mChatRecyclerView;
-    private Subscription mSubscription;
-    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configureLayout();
 
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("Lade Chats...");
-        mProgressDialog.show();
+        setProgressMessage("Lade Chats..");
 
-        retrieveChats();
+        startSubscription();
     }
 
     private void configureLayout() {
         setLayoutResource(R.layout.chat_activity);
         setTitle("Chats");
         mChatListAdapter = new ChatListAdapter(this, getSharkApp());
-        mChatRecyclerView = (RecyclerView) findViewById(R.id.chats_recylcer_view);
+        RecyclerView mChatRecyclerView = (RecyclerView) findViewById(R.id.chats_recylcer_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mChatRecyclerView.setAdapter(mChatListAdapter);
 
@@ -56,40 +49,73 @@ public class ChatActivity extends NavigationDrawerActivity {
         });
     }
 
-    private void retrieveChats() {
-        Single<List<Chat>> single = Single.fromCallable(new Callable<List<Chat>>() {
-            @Override
-            public List<Chat> call() throws Exception {
-                return SharkNetEngine.getSharkNet().getChats();
-            }
-        });
-
-        mSubscription = single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<List<Chat>>() {
-            @Override
-            public void onSuccess(List<Chat> value) {
-                if (mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
+    @Override
+    protected List<ChatDataHolder> doOnBackgroundThread() throws SharkKBException {
+        List<Chat> chats = SharkNetEngine.getSharkNet().getChats();
+        ArrayList<ChatDataHolder> list = new ArrayList<>();
+        for (Chat chat : chats) {
+            String name = chat.getTitle();
+            if (name == null || name.isEmpty()) {
+                name = "";
+                List<Contact> contacts = chat.getContactsWithoutMe();
+                for (Contact next : contacts) {
+                    if (!name.isEmpty()) {
+                        name += ", ";
+                    }
+                    name += next.getName();
                 }
-                mChatListAdapter.setChats(value);
             }
 
-            @Override
-            public void onError(Throwable error) {
-                error.printStackTrace();
+            // message
+            String message = "";
+            try {
+                List<Message> messages = chat.getMessages(false);
+                if (messages.size() > 0) {
+                    Message last_msg = messages.get(messages.size() - 1);
+                    String content = last_msg.getContent().getMessage();
+                    String sender = last_msg.getSender().getNickname();
+                    message = sender + ":" + content;
+                }
+            } catch (SharkKBException e) {
+                e.printStackTrace();
             }
-        });
+
+            // Image
+            Bitmap image = null;
+            int imageId = 0;
+            if (chat.getPicture().getLength() > 0) {
+                image = BitmapFactory.decodeStream(chat.getPicture().getInputStream());
+            } else {
+                imageId = R.drawable.ic_group_white_24dp;
+            }
+            list.add(new ChatDataHolder(chat, image, imageId, name, message));
+        }
+        return list;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void doOnUIThread(List<ChatDataHolder> chatDataHolders) {
+        mChatListAdapter.setChats(chatDataHolders);
+    }
 
-        if (mSubscription != null && !mSubscription.isUnsubscribed()) {
-            mSubscription.unsubscribe();
-        }
+    @Override
+    protected void doOnError(Throwable error) {
+        error.printStackTrace();
+    }
 
-        if (mChatListAdapter.mSubscription != null && !mChatListAdapter.mSubscription.isUnsubscribed()) {
-            mChatListAdapter.mSubscription.unsubscribe();
+    class ChatDataHolder {
+        Chat chat;
+        Bitmap image;
+        int imageId;
+        String message;
+        String name;
+
+        ChatDataHolder(Chat chat, Bitmap image, int imageId, String name, String message) {
+            this.chat = chat;
+            this.image = image;
+            this.imageId = imageId;
+            this.name = name;
+            this.message = message;
         }
     }
 }

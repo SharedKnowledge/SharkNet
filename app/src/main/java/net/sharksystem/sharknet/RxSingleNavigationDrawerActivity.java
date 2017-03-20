@@ -2,6 +2,8 @@ package net.sharksystem.sharknet;
 
 import android.app.ProgressDialog;
 
+import net.sharkfw.knowledgeBase.SharkKBException;
+
 import java.util.concurrent.Callable;
 
 import rx.Single;
@@ -61,7 +63,7 @@ public abstract class RxSingleNavigationDrawerActivity<T> extends NavigationDraw
                 });
     }
 
-    protected abstract T doOnBackgroundThread();
+    protected abstract T doOnBackgroundThread() throws Exception;
 
     protected abstract void doOnUIThread(T t);
 

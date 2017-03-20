@@ -61,7 +61,7 @@ public abstract class RxSingleBaseActivity<T> extends BaseActivity {
         });
     }
 
-    protected abstract T doOnBackgroundThread();
+    protected abstract T doOnBackgroundThread() throws Exception;
 
     protected abstract void doOnUIThread(T t);
 
