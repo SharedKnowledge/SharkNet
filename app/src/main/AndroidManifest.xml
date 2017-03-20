@@ -113,15 +113,6 @@
                 android:value=".profile.ProfileActivity"/>
         </activity>
         <activity
-            android:name=".contact.ContactsNewActivity"
-            android:label="@string/activity_title_con_new"
-            android:parentActivityName=".contact.ContactActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".contact.ContactActivity"/>
-        </activity>
-        <activity
             android:name=".profile.ProfileDetailInterestsActivity"
             android:label="@string/activity_title_profile_detail_interests"
             android:parentActivityName=".profile.ProfileDetailActivity"

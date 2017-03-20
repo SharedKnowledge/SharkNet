@@ -3,14 +3,14 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
-              android:paddingBottom="8dp"
-              android:paddingTop="8dp">
+              android:paddingBottom="16dp"
+              android:paddingTop="16dp">
 
     <include
         layout="@layout/include_round_image"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginRight="8dp"/>
+        android:layout_marginRight="16dp"/>
 
     <TextView
         android:id="@+id/contact_nickname"

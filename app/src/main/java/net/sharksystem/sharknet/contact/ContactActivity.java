@@ -35,14 +35,6 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
         RecyclerView mChatRecyclerView = (RecyclerView) findViewById(R.id.contact_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mChatRecyclerView.setAdapter(mAdapter);
-
-        activateFloatingActionButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ContactActivity.this, ContactsNewActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
