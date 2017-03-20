@@ -43,7 +43,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     private final SharkApp mApp;
     private final Context mContext;
 
-    private List<Message> mMessages = new ArrayList<>();
+    private List<ChatDetailActivity.MessageDataHolder> mMessages = new ArrayList<>();
     public Subscription mSubscription;
 
     public ChatDetailMsgListAdapter(Context context, SharkApp application) {
@@ -51,7 +51,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
         mContext = context;
     }
 
-    public void setMessages(List<Message> messages){
+    public void setMessages(List<ChatDetailActivity.MessageDataHolder> messages){
         mMessages = messages;
         notifyDataSetChanged();
     }
@@ -77,181 +77,113 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     @Override
     public void onBindViewHolder(final ChatDetailMsgListAdapter.ViewHolderBase holder, int position) {
 
-        final Message message = mMessages.get(position);
+        final ChatDetailActivity.MessageDataHolder messageDataHolder = mMessages.get(position);
 
-        Single<MessageDataHolder> single = Single.fromCallable(new Callable<MessageDataHolder>() {
+        // messageDataHolder
+        holder.msgView.setText(messageDataHolder.messageContent);
+        if (messageDataHolder.messageContent.length() < 30) {
+            holder.msgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        }
+        holder.msgView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public MessageDataHolder call() throws Exception {
+            public boolean onLongClick(View v) {
 
-                String messageContent = message.getContent().getMessage();
-                Bitmap authorImage = null;
-                if(message.getSender().getPicture() != null) {
-                    authorImage = BitmapFactory.decodeStream(message.getSender().getPicture().getInputStream());
-                }
-                int stateResource;
-                if (message.isVerified()) {
-                    stateResource = R.drawable.ic_verified_user_green_24dp;
-                } else if (message.isSigned()) {
-                    stateResource = R.drawable.ic_warning_dark_grey_24dp;
-                } else {
-                    stateResource = R.drawable.ic_warning_red_24dp;
-                }
-                String authorName = message.getSender().getName();
-                SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm");
-                String date = format.format(message.getDateReceived());
-
-                boolean isEncrypted = message.isEncrypted();
-                boolean isMine = message.isMine();
-
-                return new MessageDataHolder(authorImage, authorName, messageContent, date, stateResource, isEncrypted, isMine);
-            }
-        });
-
-        mSubscription = single.subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<MessageDataHolder>() {
-            @Override
-            public void onSuccess(MessageDataHolder value) {
-                // message
-                holder.msgView.setText(value.messageContent);
-                if (value.messageContent.length() < 30) {
-                    holder.msgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                }
-                holder.msgView.setOnLongClickListener(new View.OnLongClickListener() {
+                PopupMenu popupMenu = new PopupMenu(mContext, holder.msgView);
+                popupMenu.getMenuInflater().inflate(R.menu.chat_detail_message_menu, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
-                    public boolean onLongClick(View v) {
+                    public boolean onMenuItemClick(MenuItem item) {
 
-                        PopupMenu popupMenu = new PopupMenu(mContext, holder.msgView);
-                        popupMenu.getMenuInflater().inflate(R.menu.chat_detail_message_menu, popupMenu.getMenu());
-                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.message_detail:
+                                Intent intent = new Intent(mContext, ChatMessageDetailActivity.class);
+                                mApp.setMessage(messageDataHolder.message);
+                                mContext.startActivity(intent);
+                                break;
+                            case R.id.message_dislike:
+                                Toast.makeText(mContext, "You disliked the messageDataHolder", Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                break;
+                        }
 
-                                switch (item.getItemId()) {
-                                    case R.id.message_detail:
-                                        Intent intent = new Intent(mContext, ChatMessageDetailActivity.class);
-                                        mApp.setMessage(message);
-                                        mContext.startActivity(intent);
-                                        break;
-                                    case R.id.message_dislike:
-                                        Toast.makeText(mContext, "You disliked the message", Toast.LENGTH_SHORT).show();
-                                        break;
-                                    default:
-                                        break;
-                                }
-
-                                return false;
-                            }
-                        });
-
-                        popupMenu.show();
-
-                        return true;
+                        return false;
                     }
                 });
-                // date
-                holder.dateView.setText(value.date);
-                if (!value.isMine) {
-                    // image
-                    if (value.authorImageBitMap == null) {
-                        holder.authorImageView.setImageResource(R.drawable.ic_person_white_24dp);
-                        holder.authorImageView.setLayoutParams(new ViewGroup.LayoutParams(35, 35));
-                    } else {
-                        holder.authorImageView.setImageBitmap(value.authorImageBitMap);
-                    }
-                    holder.authorImageView.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
 
-                            PopupMenu popupMenu = new PopupMenu(mContext, holder.authorImageView);
+                popupMenu.show();
 
-                            popupMenu.getMenuInflater().inflate(R.menu.chat_detail_contact_menu, popupMenu.getMenu());
-
-                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-
-                                    switch (item.getItemId()) {
-                                        case R.id.contact_profile:
-                                            Intent intent = new Intent(mContext, ContactsDetailActivity.class);
-                                            try {
-                                                mApp.setContact(message.getSender());
-                                            } catch (SharkKBException e) {
-                                                e.printStackTrace();
-                                            }
-                                            mContext.startActivity(intent);
-                                            break;
-                                        case R.id.contact_block:
-                                            Toast.makeText(mContext, "You blocked the user.", Toast.LENGTH_SHORT).show();
-                                            break;
-                                        default:
-                                            break;
-                                    }
-
-                                    return false;
-                                }
-                            });
-
-                            popupMenu.show();
-
-                            return true;
-                        }
-                    });
-                    // authorName
-                    holder.authorTextView.setText(value.authorName);
-                    //encrypted
-                    if (value.isEncrypted) {
-                        holder.encryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
-                    }
-                    //state
-                    holder.stateView.setImageResource(value.stateResource);
-                }
-            }
-
-            @Override
-            public void onError(Throwable error) {
-
+                return true;
             }
         });
+        // date
+        holder.dateView.setText(messageDataHolder.date);
+        if (!messageDataHolder.isMine) {
+            // image
+            if (messageDataHolder.authorImageBitMap == null) {
+                holder.authorImageView.setImageResource(R.drawable.ic_person_white_24dp);
+                holder.authorImageView.setLayoutParams(new ViewGroup.LayoutParams(35, 35));
+            } else {
+                holder.authorImageView.setImageBitmap(messageDataHolder.authorImageBitMap);
+            }
+            holder.authorImageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    PopupMenu popupMenu = new PopupMenu(mContext, holder.authorImageView);
+
+                    popupMenu.getMenuInflater().inflate(R.menu.chat_detail_contact_menu, popupMenu.getMenu());
+
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            switch (item.getItemId()) {
+                                case R.id.contact_profile:
+                                    Intent intent = new Intent(mContext, ContactsDetailActivity.class);
+                                    mApp.setContact(messageDataHolder.contact);
+                                    mContext.startActivity(intent);
+                                    break;
+                                case R.id.contact_block:
+                                    Toast.makeText(mContext, "You blocked the user.", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            return false;
+                        }
+                    });
+
+                    popupMenu.show();
+
+                    return true;
+                }
+            });
+            // authorName
+            holder.authorTextView.setText(messageDataHolder.authorName);
+            //encrypted
+            if (messageDataHolder.isEncrypted) {
+                holder.encryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
+            }
+            //state
+            holder.stateView.setImageResource(messageDataHolder.stateResource);
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-
-        Message message = this.mMessages.get(position);
-        try {
-            if (message.isMine()) {
-                return MESSAGE_IS_MINE;
-            } else {
-                return MESSAGE_IS_NOT_MINE;
-            }
-        } catch (SharkKBException e) {
-            e.printStackTrace();
+        ChatDetailActivity.MessageDataHolder message = this.mMessages.get(position);
+        if (message.isMine) {
+            return MESSAGE_IS_MINE;
+        } else {
+            return MESSAGE_IS_NOT_MINE;
         }
-        return super.getItemViewType(position);
     }
 
     @Override
     public int getItemCount() {
         return this.mMessages.size();
-    }
-
-    private class MessageDataHolder{
-        Bitmap authorImageBitMap;
-        String authorName;
-        String messageContent;
-        String date;
-        int stateResource;
-        boolean isEncrypted;
-        boolean isMine;
-
-        private MessageDataHolder(Bitmap authorImageBitMap, String authorName, String messageContent, String date, int stateResource, boolean isEncrypted, boolean isMine) {
-            this.authorImageBitMap = authorImageBitMap;
-            this.authorName = authorName;
-            this.messageContent = messageContent;
-            this.date = date;
-            this.stateResource = stateResource;
-            this.isEncrypted = isEncrypted;
-            this.isMine = isMine;
-        }
     }
 
     class ViewHolderBase extends RecyclerView.ViewHolder {
