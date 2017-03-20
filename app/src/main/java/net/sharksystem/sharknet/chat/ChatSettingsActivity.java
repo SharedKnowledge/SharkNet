@@ -40,7 +40,7 @@ public class ChatSettingsActivity extends BaseActivity {
         try {
             contacts = chat.getContacts();
 
-            ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.chat_settings_contact_line_item, contacts);
+            ChatContactsListAdapter chatListAdapter = new ChatContactsListAdapter(this, R.layout.chat_settings_contact_line_item, contacts);
             lv = (ListView) findViewById(R.id.contact_recycler_view);
             lv.setAdapter(chatListAdapter);
 

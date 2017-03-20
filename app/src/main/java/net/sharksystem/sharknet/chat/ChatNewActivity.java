@@ -41,7 +41,7 @@ public class ChatNewActivity extends BaseActivity {
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
-        ChatNewConListAdapter chatListAdapter = new ChatNewConListAdapter(this, R.layout.chat_new_contact_line_item, contacts);
+        ChatContactsListAdapter chatListAdapter = new ChatContactsListAdapter(this, R.layout.chat_new_contact_line_item, contacts);
         lv = (ListView) findViewById(R.id.contact_recycler_view);
         lv.setAdapter(chatListAdapter);
     }

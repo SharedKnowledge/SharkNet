@@ -31,7 +31,7 @@ public class ProfileKeys extends BaseActivity {
         }
 //        TODO: fragen wie am besten eigener Contact/Profile angefügt werden kann
 //        try {
-////            contacts.add(SharkNetEngine.getSharkNet().getMyProfile());
+////            contactCheckableDataHolderList.add(SharkNetEngine.getSharkNet().getMyProfile());
 //        } catch (SharkKBException e) {
 //            e.printStackTrace();
 //        }

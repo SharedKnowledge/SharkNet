@@ -143,6 +143,7 @@
     <string name="main_new_profile_name_hint_1">weitere E-Mails</string>
     <string name="main_previous_fragment">Zurück</string>
     <string name="main_new_profile_empty_name">Der Name darf nicht leer sein.</string>
+    <string name="chat_add_contact">Hinzufügen</string>
 
 
 </resources>

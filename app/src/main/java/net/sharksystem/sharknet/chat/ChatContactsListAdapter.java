@@ -20,11 +20,11 @@ import java.util.List;
 /**
  * Created by viktorowich on 08/06/16.
  */
-public class ChatNewConListAdapter extends ArrayAdapter<Contact> {
+public class ChatContactsListAdapter extends ArrayAdapter<Contact> {
 
     private List<Contact> contacts;
 
-    public ChatNewConListAdapter(Context context, int resource, List<Contact> objects) {
+    public ChatContactsListAdapter(Context context, int resource, List<Contact> objects) {
         super(context, resource, objects);
         this.contacts = objects;
     }

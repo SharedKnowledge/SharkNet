@@ -64,7 +64,7 @@ public class setDummyTestData
 
         //Kontakte von Alice setzen
         Contact alice_bob = s.newContact(bob.getNickname(), bob.getUID(), bob.getPublicKey());
-        assertNotEquals(0,s.getContacts().size());
+        assertNotEquals(0,s.getContactCheckableDataHolderList().size());
         Contact alice_charles = s.newContact("charles", "charlesuid", "charlespublickey");
         Contact alice_dean = s.newContact("dean", "deanuid", "deanpublickey");
         Contact alice_erica = s.newContact("erica", "ericauid", "ericapublickey");

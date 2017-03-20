@@ -3,10 +3,9 @@
       xmlns:mApp="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/save"
+        android:id="@+id/chat_contact_add"
         android:icon="@drawable/ic_check_white_24dp"
-        android:title="@string/chat_new_create"
-        mApp:showAsAction="always"
-        />
+        android:title="@string/chat_add_contact"
+        mApp:showAsAction="always"/>
 
 </menu>
