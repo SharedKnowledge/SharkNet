@@ -42,10 +42,10 @@ public class ContactsNewActivity extends BaseActivity {
         {
             //TODO: image muss zu ImageButton geändert werden
             // damit beim click menu mit der auswahl der fotos kommt
-            ImageView imageView = (ImageView) findViewById(R.id.con_profile_image);
-            EditText nickname = (EditText) findViewById(R.id.con_nickname_edit);
-            EditText name = (EditText) findViewById(R.id.con_name_edit);
-            EditText email = (EditText) findViewById(R.id.con_email_edit);
+            ImageView imageView = (ImageView) findViewById(R.id.contact_image);
+            EditText nickname = (EditText) findViewById(R.id.contact_nickname);
+            EditText name = (EditText) findViewById(R.id.contact_name);
+            EditText email = (EditText) findViewById(R.id.contact_email);
             EditText phone = (EditText) findViewById(R.id.con_phone_edit);
             EditText note = (EditText) findViewById(R.id.con_not_edit);
 

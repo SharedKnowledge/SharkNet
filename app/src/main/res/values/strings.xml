@@ -110,11 +110,19 @@
     <string name="chat_settings_save">Speichern</string>
     <string name="activity_title_chat_settings">Einstellungen</string>
 
+    <!--Contact-->
+    <string name="contact_label_name">Name</string>
+    <string name="contact_image_description">Profilbild</string>
+    <string name="contact_label_nickname">Nickame</string>
+    <string name="contact_label_email">Email</string>
+    <string name="contact_button_block">Blocken</string>
+    <string name="contact_button_delete">Löschen</string>
+    <string name="contact_button_key">PublicKey ansehen</string>
 
+    <!--Startup + login-->
     <string name="main_startup_profile">altes Profil verwenden</string>
     <string name="main_startup_new_profile">neues Profil erstellen</string>
     <string name="main_startup_dummy">Dummy Daten erzeugen</string>
-
 
     <string name="main_new_profile_image_label">Profilbild</string>
     <string name="main_new_profile_name_info">Lorem ipsum dolor sit amet, consetetur sadipscing

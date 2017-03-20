@@ -35,17 +35,17 @@ public class ProfileDetailActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        EditText nickname = (EditText) findViewById(R.id.con_nickname_edit);
+        EditText nickname = (EditText) findViewById(R.id.contact_nickname);
         try {
             nickname.setText(profile.getNickname());
         } catch (SharkKBException e) {
             e.printStackTrace();
         }
 
-        EditText name = (EditText) findViewById(R.id.con_name_edit);
+        EditText name = (EditText) findViewById(R.id.contact_name);
         name.setText("leer");
 
-        EditText email = (EditText) findViewById(R.id.con_email_edit);
+        EditText email = (EditText) findViewById(R.id.contact_email);
         email.setText("leer");
 
         EditText phone = (EditText) findViewById(R.id.con_phone_edit);
@@ -87,10 +87,10 @@ public class ProfileDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.profile_save:
-                ImageView imageView = (ImageView) findViewById(R.id.con_profile_image);
-                EditText nickname = (EditText) findViewById(R.id.con_nickname_edit);
-                EditText name = (EditText) findViewById(R.id.con_name_edit);
-                EditText email = (EditText) findViewById(R.id.con_email_edit);
+                ImageView imageView = (ImageView) findViewById(R.id.contact_image);
+                EditText nickname = (EditText) findViewById(R.id.contact_nickname);
+                EditText name = (EditText) findViewById(R.id.contact_name);
+                EditText email = (EditText) findViewById(R.id.contact_email);
                 EditText phone = (EditText) findViewById(R.id.con_phone_edit);
                 EditText note = (EditText) findViewById(R.id.con_not_edit);
 
@@ -150,7 +150,7 @@ public class ProfileDetailActivity extends BaseActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
 
-                ImageView imageView = (ImageView) findViewById(R.id.con_profile_image);
+                ImageView imageView = (ImageView) findViewById(R.id.contact_image);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();

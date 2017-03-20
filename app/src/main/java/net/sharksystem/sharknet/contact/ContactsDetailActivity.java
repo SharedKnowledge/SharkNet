@@ -1,49 +1,65 @@
 package net.sharksystem.sharknet.contact;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
-import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.SharkApp;
+import net.sharksystem.sharknet.RxSingleBaseActivity;
 
-public class ContactsDetailActivity extends BaseActivity {
+public class ContactsDetailActivity extends RxSingleBaseActivity<ContactsDetailActivity.ContactDataHolder> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.contact_detail_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Contact contact = ((SharkApp) getApplication()).getContact();
 
-        //Typeface type = Typeface.createFromAsset(getAssets(),"fonts/RockSalt.TTF");
+        setProgressMessage("Lade Kontakt...");
 
-        TextView nickname = (TextView) findViewById(R.id.con_nickname_edit);
-        TextView name = (TextView) findViewById(R.id.con_name_edit);
-        TextView email = (TextView) findViewById(R.id.con_email_edit);
-        ImageView image = (ImageView) findViewById(R.id.con_profile_image);
+        startSubscription();
+    }
 
-        try {
-            setToolbarTitle(contact.getNickname());
-            if(contact.getPicture()!=null){
-                image.setImageBitmap(BitmapFactory.decodeStream(contact.getPicture().getInputStream()));
-            }
-            nickname.setText(contact.getNickname());
-            name.setText(contact.getName());
-            email.setText(contact.getEmail());
-        } catch (SharkKBException e) {
-            e.printStackTrace();
+    @Override
+    protected ContactDataHolder doOnBackgroundThread() throws Exception {
+        Contact contact = getSharkApp().getContact();
+        Bitmap image = null;
+        if (contact.getPicture().getLength() > 0) {
+            image = BitmapFactory.decodeStream(contact.getPicture().getInputStream());
         }
+        return new ContactDataHolder(image, contact.getName(), contact.getNickname(), contact.getEmail());
+    }
+
+    @Override
+    protected void doOnUIThread(ContactDataHolder contactDataHolder) {
+        TextView nickname = (TextView) findViewById(R.id.contact_nickname);
+        TextView name = (TextView) findViewById(R.id.contact_name);
+        TextView email = (TextView) findViewById(R.id.contact_email);
+        ImageView image = (ImageView) findViewById(R.id.contact_image);
+
+        setToolbarTitle(contactDataHolder.name);
+        if(contactDataHolder.image != null){
+            image.setImageBitmap(contactDataHolder.image);
+        } else {
+            image.setImageResource(R.drawable.ic_person_white_24dp);
+        }
+        nickname.setText(contactDataHolder.nickname);
+        name.setText(contactDataHolder.name);
+        email.setText(contactDataHolder.address);
+    }
+
+    @Override
+    protected void doOnError(Throwable error) {
+        error.printStackTrace();
     }
 
     @Override
     public void onBackPressed() {
-        ((SharkApp) getApplication()).resetContact();
+        getSharkApp().resetContact();
         super.onBackPressed();
     }
 
@@ -51,12 +67,25 @@ public class ContactsDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // Reset clicked data
-                ((SharkApp) getApplication()).resetContact();
+                getSharkApp().resetContact();
                 this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    class ContactDataHolder {
+        Bitmap image;
+        String name;
+        String nickname;
+        String address;
+
+        public ContactDataHolder(Bitmap image, String contactName, String contactNickName, String contactAddress) {
+            this.image = image;
+            this.name = contactName;
+            this.nickname = contactNickName;
+            this.address = contactAddress;
         }
     }
 }
