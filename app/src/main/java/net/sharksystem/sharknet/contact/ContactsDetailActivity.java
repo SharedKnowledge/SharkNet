@@ -8,11 +8,11 @@ import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Contact;
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
 
-public class ContactsDetailActivity extends ParentActivity {
+public class ContactsDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

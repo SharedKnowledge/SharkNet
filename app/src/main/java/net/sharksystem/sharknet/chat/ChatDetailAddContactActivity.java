@@ -12,7 +12,7 @@ import android.widget.ListView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 
 import org.json.JSONException;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ChatDetailAddContactActivity extends ParentActivity {
+public class ChatDetailAddContactActivity extends BaseActivity {
     private List<Contact> contacts;
     private List<Contact> selected_contacts;
     private String chatID;

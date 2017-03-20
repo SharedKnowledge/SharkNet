@@ -2,10 +2,10 @@ package net.sharksystem.sharknet.profile;
 
 import android.os.Bundle;
 
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 
-public class ProfileSettingsActivity extends ParentActivity {
+public class ProfileSettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

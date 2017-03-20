@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference;
 /**
  * Created by mn-io on 22.01.16.
  */
-public abstract class ParentActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     public static final int LAYOUT_OPTION_RESOURCE = 1;
     public static final int LAYOUT_OPTION_FRAGMENT = 2;
@@ -35,9 +35,7 @@ public abstract class ParentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.system_parent_activity);
-
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
         // Make FloatingActionButton invisible at default
         findViewById(R.id.fab).setVisibility(View.GONE);
     }

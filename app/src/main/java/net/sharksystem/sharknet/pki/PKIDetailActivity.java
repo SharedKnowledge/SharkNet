@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import net.sharkfw.security.SharkCertificate;
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +27,7 @@ import static net.sharksystem.api.shark.Application.getContext;
  * Created by j4rvis on 2/19/17.
  */
 
-public class PKIDetailActivity extends ParentActivity {
+public class PKIDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

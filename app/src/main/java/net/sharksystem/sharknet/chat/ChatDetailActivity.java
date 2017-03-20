@@ -13,7 +13,7 @@ import android.widget.EditText;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Chat;
 import net.sharksystem.api.interfaces.Message;
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
 
@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
  * Created by j4rvis on 3/5/17.
  */
 
-public class ChatDetailActivity extends ParentActivity {
+public class ChatDetailActivity extends BaseActivity {
     private ChatDetailMsgListAdapter mAdapter;
     private Chat mChat;
     private RecyclerView mRecyclerView;

@@ -13,12 +13,12 @@ import android.widget.ImageView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Profile;
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 
 import java.io.IOException;
 
-public class ProfileDetailActivity extends ParentActivity {
+public class ProfileDetailActivity extends BaseActivity {
 
     private Profile profile;
 

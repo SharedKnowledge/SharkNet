@@ -8,11 +8,11 @@ import android.widget.ImageView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.nfc.NFCActivity;
 
-public class ContactsNewActivity extends ParentActivity {
+public class ContactsNewActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

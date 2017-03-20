@@ -8,12 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 
 import java.util.List;
 
-public class ProfileKeys extends ParentActivity {
+public class ProfileKeys extends BaseActivity {
 
     private KeyListAdapter keyListAdapter;
     private List<Contact> contacts;

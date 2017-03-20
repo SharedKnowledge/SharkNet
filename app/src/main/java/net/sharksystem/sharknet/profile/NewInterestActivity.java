@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 
-public class NewInterestActivity extends ParentActivity {
+public class NewInterestActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

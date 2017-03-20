@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.interfaces.Message;
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
 
@@ -14,7 +14,7 @@ import net.sharksystem.sharknet.SharkApp;
  * Created by j4rvis on 3/10/17.
  */
 
-public class ChatMessageDetailActivity extends ParentActivity{
+public class ChatMessageDetailActivity extends BaseActivity {
 
     private SharkApp application;
 

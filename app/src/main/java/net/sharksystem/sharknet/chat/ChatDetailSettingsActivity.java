@@ -4,20 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Chat;
-import net.sharksystem.sharknet.ParentActivity;
-import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.BaseActivity;
 
 import java.util.List;
-import java.util.Objects;
 
-public class ChatDetailSettingsActivity extends ParentActivity implements View.OnClickListener {
+public class ChatDetailSettingsActivity extends BaseActivity implements View.OnClickListener {
 
     private String chatID;
     private Chat chat;

@@ -6,10 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ListView;
 
-import net.sharksystem.sharknet.ParentActivity;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 
-public class ProfileDetailInterestsActivity extends ParentActivity {
+public class ProfileDetailInterestsActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
