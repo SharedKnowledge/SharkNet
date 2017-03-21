@@ -2,35 +2,34 @@ package net.sharksystem.sharknet.contact;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.sharksystem.sharknet.BaseRecyclerViewAdapter;
+import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
-import net.sharksystem.sharknet.chat.ChatListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
+public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
 
     private final SharkApp mApp;
     private final Context mContext;
-    private List<ContactActivity.ContactDataHolder> mList = new ArrayList<>();
+    private List<ContactDataHolder> mList = new ArrayList<>();
 
-    public ContactsListAdapter(Context context, SharkApp app) {
+    public ContactListAdapter(Context context, SharkApp app) {
         mApp = app;
         mContext = context;
     }
 
-    public void setList(List<ContactActivity.ContactDataHolder> list){
+    public void setList(List<ContactDataHolder> list){
         mList = list;
     }
 
@@ -43,7 +42,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
 
-        final ContactActivity.ContactDataHolder item = mList.get(position);
+        final ContactDataHolder item = mList.get(position);
 
         holder.contactName.setText(item.contactName);
         if (item.contactImage != null) {
@@ -56,7 +55,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             @Override
             public void onClick(View v) {
                 mApp.setContact(item.contact);
-                mContext.startActivity(new Intent(mContext, ContactsDetailActivity.class));
+                mContext.startActivity(new Intent(mContext, ContactDetailActivity.class));
             }
         });
     }
@@ -64,6 +63,18 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    public static class ContactDataHolder {
+        Contact contact;
+        Bitmap contactImage;
+        String contactName;
+
+        public ContactDataHolder(Contact contact, Bitmap contactImage, String contactName) {
+            this.contact = contact;
+            this.contactImage = contactImage;
+            this.contactName = contactName;
+        }
     }
 
     class ContactViewHolder extends RecyclerView.ViewHolder {

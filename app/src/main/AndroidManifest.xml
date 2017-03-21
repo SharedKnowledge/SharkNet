@@ -30,7 +30,6 @@
         tools:replace="android:icon, android:theme">
         <activity
             android:name=".main.MainActivity"
-            android:label="MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -75,6 +74,16 @@
                 android:value=".chat.ChatActivity"/>
         </activity>
         <activity
+            android:name=".chat.ChatSettingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/activity_title_chat_settings"
+            android:parentActivityName=".chat.ChatDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".chat.ChatDetailActivity"/>
+        </activity>
+        <activity
             android:name=".chat.ChatNewActivity"
             android:label="@string/activity_title_chat_new"
             android:parentActivityName=".chat.ChatActivity"
@@ -85,17 +94,7 @@
                 android:value=".chat.ChatActivity"/>
         </activity>
         <activity
-            android:name=".chat.ChatSettingsActivity"
-            android:label="@string/activity_title_chat_settings"
-            android:parentActivityName=".chat.ChatDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".chat.ChatDetailActivity"/>
-        </activity>
-        <activity
-            android:name=".contact.ContactsDetailActivity"
+            android:name=".contact.ContactDetailActivity"
             android:label="@string/activity_title_con_detail_view"
             android:parentActivityName=".contact.ContactActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

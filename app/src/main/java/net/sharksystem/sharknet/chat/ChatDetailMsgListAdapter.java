@@ -2,8 +2,6 @@ package net.sharksystem.sharknet.chat;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,22 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.interfaces.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
-import net.sharksystem.sharknet.contact.ContactsDetailActivity;
+import net.sharksystem.sharknet.contact.ContactDetailActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import rx.Single;
-import rx.SingleSubscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by j4rvis on 3/5/17.
@@ -140,7 +130,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
 
                             switch (item.getItemId()) {
                                 case R.id.contact_profile:
-                                    Intent intent = new Intent(mContext, ContactsDetailActivity.class);
+                                    Intent intent = new Intent(mContext, ContactDetailActivity.class);
                                     mApp.setContact(messageDataHolder.contact);
                                     mContext.startActivity(intent);
                                     break;

@@ -11,7 +11,7 @@ import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 
-public class ContactsDetailActivity extends RxSingleBaseActivity<ContactsDetailActivity.ContactDataHolder> {
+public class ContactDetailActivity extends RxSingleBaseActivity<ContactDetailActivity.ContactDataHolder> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,7 @@
-package net.sharksystem.sharknet.chat;
+package net.sharksystem.sharknet.contact;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,50 +11,48 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.sharksystem.api.interfaces.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
-import net.sharksystem.sharknet.contact.ContactActivity;
-import net.sharksystem.sharknet.contact.ContactsDetailActivity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class ChatContactsCheckableListAdapter extends RecyclerView.Adapter<ChatContactsCheckableListAdapter.ContactViewHolder> {
+public class ContactCheckableListAdapter extends RecyclerView.Adapter<ContactCheckableListAdapter.ContactCheckableViewHolder> {
 
     private final SharkApp mApp;
     private final Context mContext;
-    private List<ChatContactsActivity.ContactCheckableDataHolder> mList = new ArrayList<>();
+    private List<ContactCheckableListAdapter.ContactCheckableDataHolder> mList = new ArrayList<>();
 
-    public ChatContactsCheckableListAdapter(Context context, SharkApp app) {
+    public ContactCheckableListAdapter(Context context, SharkApp app) {
         mApp = app;
         mContext = context;
     }
 
-    public void setList(List<ChatContactsActivity.ContactCheckableDataHolder> list){
+    public void setList(List<ContactCheckableListAdapter.ContactCheckableDataHolder> list){
         mList = list;
     }
 
-    public List<ChatContactsActivity.ContactCheckableDataHolder> getCheckedContacts(){
-        ArrayList<ChatContactsActivity.ContactCheckableDataHolder> list = new ArrayList<>();
-        for (ChatContactsActivity.ContactCheckableDataHolder holder : mList) {
+    public List<Contact> getCheckedContacts(){
+        ArrayList<Contact> list = new ArrayList<>();
+        for (ContactCheckableListAdapter.ContactCheckableDataHolder holder : mList) {
             if(holder.checked){
-                list.add(holder);
+                list.add(holder.contact);
             }
         }
         return list;
     }
 
     @Override
-    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ContactCheckableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_checkable_line_item, parent, false);
-        return new ContactViewHolder(view);
+        return new ContactCheckableViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ContactViewHolder holder, int position) {
+    public void onBindViewHolder(final ContactCheckableViewHolder holder, int position) {
 
-        final ChatContactsActivity.ContactCheckableDataHolder item = mList.get(position);
+        final ContactCheckableListAdapter.ContactCheckableDataHolder item = mList.get(position);
 
         holder.contactName.setText(item.contactName);
         if (item.contactImage != null) {
@@ -84,18 +82,32 @@ public class ChatContactsCheckableListAdapter extends RecyclerView.Adapter<ChatC
         return mList.size();
     }
 
-    class ContactViewHolder extends RecyclerView.ViewHolder {
+    class ContactCheckableViewHolder extends RecyclerView.ViewHolder {
 
         ImageView contactImage;
         TextView contactName;
         CheckBox checkBox;
 
-        public ContactViewHolder(View itemView) {
+        public ContactCheckableViewHolder(View itemView) {
             super(itemView);
             contactImage = (ImageView) itemView.findViewById(R.id.round_image);
             contactName = (TextView) itemView.findViewById(R.id.contact_nickname);
             checkBox = (CheckBox) itemView.findViewById(R.id.contact_checkable_checkbox);
             checkBox.setClickable(false);
+        }
+    }
+
+    public static class ContactCheckableDataHolder {
+        Contact contact;
+        Bitmap contactImage;
+        String contactName;
+        boolean checked;
+
+        public ContactCheckableDataHolder(Contact contact, Bitmap contactImage, String contactName, boolean checked) {
+            this.contact = contact;
+            this.contactImage = contactImage;
+            this.contactName = contactName;
+            this.checked = checked;
         }
     }
 }

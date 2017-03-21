@@ -1,12 +1,10 @@
 package net.sharksystem.sharknet.contact;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.interfaces.Contact;
@@ -16,9 +14,9 @@ import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactActivity extends RxSingleNavigationDrawerActivity<List<ContactActivity.ContactDataHolder>> {
+public class ContactActivity extends RxSingleNavigationDrawerActivity<List<ContactListAdapter.ContactDataHolder>> {
 
-    private ContactsListAdapter mAdapter;
+    private ContactListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +29,16 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
     private void configureLayout() {
         setLayoutResource(R.layout.contact_activity);
         setTitle("Kontakte");
-        mAdapter = new ContactsListAdapter(this, getSharkApp());
+        mAdapter = new ContactListAdapter(this, getSharkApp());
         RecyclerView mChatRecyclerView = (RecyclerView) findViewById(R.id.contact_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mChatRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
-    protected List<ContactDataHolder> doOnBackgroundThread() throws Exception {
+    protected List<ContactListAdapter.ContactDataHolder> doOnBackgroundThread() throws Exception {
         List<Contact> contacts = SharkNetEngine.getSharkNet().getContacts();
-        ArrayList<ContactDataHolder> list = new ArrayList<>();
+        ArrayList<ContactListAdapter.ContactDataHolder> list = new ArrayList<>();
         for (Contact contact : contacts) {
 
             // Image
@@ -51,12 +49,12 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
 
             String name = contact.getNickname();
 
-            list.add(new ContactDataHolder(contact, image, name));
+            list.add(new ContactListAdapter.ContactDataHolder(contact, image, name));
         } return list;
     }
 
     @Override
-    protected void doOnUIThread(List<ContactDataHolder> contactDataHolders) {
+    protected void doOnUIThread(List<ContactListAdapter.ContactDataHolder> contactDataHolders) {
         mAdapter.setList(contactDataHolders);
     }
 
@@ -65,15 +63,5 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
         error.printStackTrace();
     }
 
-    class ContactDataHolder {
-        Contact contact;
-        Bitmap contactImage;
-        String contactName;
 
-        public ContactDataHolder(Contact contact, Bitmap contactImage, String contactName) {
-            this.contact = contact;
-            this.contactImage = contactImage;
-            this.contactName = contactName;
-        }
-    }
 }
