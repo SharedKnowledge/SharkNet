@@ -13,12 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.models.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
 import net.sharksystem.sharknet.contact.ContactDetailActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import rx.Subscription;
 
@@ -26,22 +30,21 @@ import rx.Subscription;
  * Created by j4rvis on 3/5/17.
  */
 
-public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsgListAdapter.ViewHolderBase>{
+public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsgListAdapter.ViewHolderBase> {
 
     private final static int MESSAGE_IS_MINE = 0;
     private final static int MESSAGE_IS_NOT_MINE = 1;
     private final SharkApp mApp;
     private final Context mContext;
-
-    private List<ChatDetailActivity.MessageDataHolder> mMessages = new ArrayList<>();
     public Subscription mSubscription;
+    private List<Message> mMessages = new ArrayList<>();
 
     public ChatDetailMsgListAdapter(Context context, SharkApp application) {
         mApp = application;
         mContext = context;
     }
 
-    public void setMessages(List<ChatDetailActivity.MessageDataHolder> messages){
+    public void setMessages(List<Message> messages) {
         mMessages = messages;
         notifyDataSetChanged();
     }
@@ -67,11 +70,11 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     @Override
     public void onBindViewHolder(final ChatDetailMsgListAdapter.ViewHolderBase holder, int position) {
 
-        final ChatDetailActivity.MessageDataHolder messageDataHolder = mMessages.get(position);
+        final Message message = mMessages.get(position);
 
-        // messageDataHolder
-        holder.msgView.setText(messageDataHolder.messageContent);
-        if (messageDataHolder.messageContent.length() < 30) {
+        // message
+        holder.msgView.setText(message.getContent());
+        if (message.getContent().length() < 30) {
             holder.msgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         }
         holder.msgView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -87,11 +90,11 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                         switch (item.getItemId()) {
                             case R.id.message_detail:
                                 Intent intent = new Intent(mContext, ChatMessageDetailActivity.class);
-                                mApp.setMessage(messageDataHolder.message);
+                                mApp.setMessage(message);
                                 mContext.startActivity(intent);
                                 break;
                             case R.id.message_dislike:
-                                Toast.makeText(mContext, "You disliked the messageDataHolder", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "You disliked the message", Toast.LENGTH_SHORT).show();
                                 break;
                             default:
                                 break;
@@ -107,14 +110,16 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
             }
         });
         // date
-        holder.dateView.setText(messageDataHolder.date);
-        if (!messageDataHolder.isMine) {
+        SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm", Locale.GERMANY);
+        String date = format.format(message.getDate());
+        holder.dateView.setText(date);
+        if (!message.getSender().equals(SharkNetApi.getInstance().getAccount())) {
             // image
-            if (messageDataHolder.authorImageBitMap == null) {
+            if (message.getSender().getImage() == null) {
                 holder.authorImageView.setImageResource(R.drawable.ic_person_white_24dp);
                 holder.authorImageView.setLayoutParams(new ViewGroup.LayoutParams(35, 35));
             } else {
-                holder.authorImageView.setImageBitmap(messageDataHolder.authorImageBitMap);
+                holder.authorImageView.setImageBitmap(message.getSender().getImage());
             }
             holder.authorImageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -131,7 +136,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                             switch (item.getItemId()) {
                                 case R.id.contact_profile:
                                     Intent intent = new Intent(mContext, ContactDetailActivity.class);
-                                    mApp.setContact(messageDataHolder.contact);
+                                    mApp.setContact(message.getSender());
                                     mContext.startActivity(intent);
                                     break;
                                 case R.id.contact_block:
@@ -151,20 +156,26 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                 }
             });
             // authorName
-            holder.authorTextView.setText(messageDataHolder.authorName);
+            holder.authorTextView.setText(message.getSender().getName());
             //encrypted
-            if (messageDataHolder.isEncrypted) {
+            if (message.isEncrypted()) {
                 holder.encryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
             }
             //state
-            holder.stateView.setImageResource(messageDataHolder.stateResource);
+            if (message.isVerified()) {
+                holder.stateView.setImageResource(R.drawable.ic_verified_user_green_24dp);
+            } else if (message.isSigned()) {
+                holder.stateView.setImageResource(R.drawable.ic_warning_dark_grey_24dp);
+            } else {
+                holder.stateView.setImageResource(R.drawable.ic_warning_red_24dp);
+            }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        ChatDetailActivity.MessageDataHolder message = this.mMessages.get(position);
-        if (message.isMine) {
+        Message message = this.mMessages.get(position);
+        if (message.getSender().equals(SharkNetApi.getInstance().getAccount())) {
             return MESSAGE_IS_MINE;
         } else {
             return MESSAGE_IS_NOT_MINE;

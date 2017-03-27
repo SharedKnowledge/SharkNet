@@ -7,11 +7,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 
-public class ContactDetailActivity extends RxSingleBaseActivity<ContactDetailActivity.ContactDataHolder> {
+public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,31 +25,25 @@ public class ContactDetailActivity extends RxSingleBaseActivity<ContactDetailAct
     }
 
     @Override
-    protected ContactDataHolder doOnBackgroundThread() throws Exception {
-        Contact contact = getSharkApp().getContact();
-        Bitmap image = null;
-        if (contact.getPicture().getLength() > 0) {
-            image = BitmapFactory.decodeStream(contact.getPicture().getInputStream());
-        }
-        return new ContactDataHolder(image, contact.getName(), contact.getNickname(), contact.getEmail());
+    protected Contact doOnBackgroundThread() throws Exception {
+        return getSharkApp().getContact();
     }
 
     @Override
-    protected void doOnUIThread(ContactDataHolder contactDataHolder) {
+    protected void doOnUIThread(Contact contact) {
         TextView nickname = (TextView) findViewById(R.id.contact_nickname);
         TextView name = (TextView) findViewById(R.id.contact_name);
         TextView email = (TextView) findViewById(R.id.contact_email);
         ImageView image = (ImageView) findViewById(R.id.contact_image);
 
-        setToolbarTitle(contactDataHolder.name);
-        if(contactDataHolder.image != null){
-            image.setImageBitmap(contactDataHolder.image);
+        setToolbarTitle(contact.getName());
+        if(contact.getImage() != null){
+            image.setImageBitmap(contact.getImage());
         } else {
             image.setImageResource(R.drawable.ic_person_white_24dp);
         }
-        nickname.setText(contactDataHolder.nickname);
-        name.setText(contactDataHolder.name);
-        email.setText(contactDataHolder.address);
+        name.setText(contact.getName());
+        email.setText(contact.getEmail());
     }
 
     @Override
@@ -72,20 +66,6 @@ public class ContactDetailActivity extends RxSingleBaseActivity<ContactDetailAct
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    class ContactDataHolder {
-        Bitmap image;
-        String name;
-        String nickname;
-        String address;
-
-        public ContactDataHolder(Bitmap image, String contactName, String contactNickName, String contactAddress) {
-            this.image = image;
-            this.name = contactName;
-            this.nickname = contactNickName;
-            this.address = contactAddress;
         }
     }
 }

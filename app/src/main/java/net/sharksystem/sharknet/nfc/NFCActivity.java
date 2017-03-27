@@ -14,7 +14,6 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.security.SharkCertificate;
 import net.sharkfw.system.L;
 import net.sharkfw.system.SharkNotSupportedException;
-import net.sharksystem.api.impl.SharkNetEngine;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.api.shark.ports.NfcPkiPortEventListener;
 import net.sharksystem.api.shark.ports.NfcPkiPortListener;
@@ -29,7 +28,7 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
     final Context context = this;
     private Button button;
     private NfcPkiPortEventListener nfcPkiPortEventListener;
-    private SharkNetEngine sharkNet;
+//    private SharkNetEngine sharkNet;
     private AndroidSharkEngine sharkEngine;
     private AlertDialog onMessageDialog;
     private AlertDialog onPublicKeyDialog;
@@ -40,16 +39,16 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.nfc_activity);
 
-        sharkNet = SharkNetEngine.getSharkNet();
-        sharkEngine = sharkNet.getSharkEngine();
-        try {
-            L.d(sharkEngine.getPKIStorage().getOwnerPublicKey().toString(), this);
-            nfcPkiPortEventListener = sharkNet.setupNfc(this, this, sharkEngine.getPKIStorage().getPublicKeyAsKnowledge(true));
-        } catch (SharkProtocolNotSupportedException | SharkNotSupportedException e) {
-            e.printStackTrace();
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+//        sharkNet = SharkNetEngine.getSharkNet();
+//        sharkEngine = sharkNet.getSharkEngine();
+//        try {
+//            L.d(sharkEngine.getPKIStorage().getOwnerPublicKey().toString(), this);
+//            nfcPkiPortEventListener = sharkNet.setupNfc(this, this, sharkEngine.getPKIStorage().getPublicKeyAsKnowledge(true));
+//        } catch (SharkProtocolNotSupportedException | SharkNotSupportedException e) {
+//            e.printStackTrace();
+//        } catch (SharkKBException e) {
+//            e.printStackTrace();
+//        }
 
         button = (Button) findViewById(R.id.button_nfc_start);
         button.setOnClickListener(new View.OnClickListener() {
@@ -57,11 +56,11 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
             public void onClick(View v) {
 
                 button.setText("NFC started...");
-                try {
-                    sharkNet.startSendingViaNfc();
-                } catch (SharkProtocolNotSupportedException | IOException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    sharkNet.startSendingViaNfc();
+//                } catch (SharkProtocolNotSupportedException | IOException e) {
+//                    e.printStackTrace();
+//                }
                 L.d("NFC started", this);
             }
         });
@@ -92,16 +91,16 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    SharkNetEngine.getSharkNet().getSharkEngine().stopNfc();
-                } catch (SharkProtocolNotSupportedException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    sharkEngine.stopNfc();
-                } catch (SharkProtocolNotSupportedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    SharkNetEngine.getSharkNet().getSharkEngine().stopNfc();
+//                } catch (SharkProtocolNotSupportedException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    sharkEngine.stopNfc();
+//                } catch (SharkProtocolNotSupportedException e) {
+//                    e.printStackTrace();
+//                }
                 button.setText("Start NFC");
                 Toast.makeText(context, reason, Toast.LENGTH_SHORT).show();
             }

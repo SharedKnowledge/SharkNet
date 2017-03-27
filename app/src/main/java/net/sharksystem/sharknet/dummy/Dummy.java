@@ -123,6 +123,7 @@ public class Dummy {
 
         for (Chat chat : chats) {
             List<Contact> contactList = chat.getContacts();
+            contactList.add(chat.getOwner());
             int numberOfMessages = random.nextInt(20);
             long date = lastWeek;
             for (int i = 0; i < numberOfMessages; i++){

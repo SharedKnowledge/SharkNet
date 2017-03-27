@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements StartupFragment.S
         setContentView(R.layout.main_activity);
         L.setLogLevel(L.LOGLEVEL_ALL);
 
+        SharkNetApi.getInstance().initSharkEngine(this);
+
         if (savedInstanceState != null) {
             return;
         }
@@ -71,13 +73,10 @@ public class MainActivity extends AppCompatActivity implements StartupFragment.S
         mProgressDialog.show();
 
         final Context that = this;
-        SharkNetApi.getInstance();
-//        SharkNetEngine.getSharkNet().setContext(this);
         Single<Void> single = Single.fromCallable(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
                 Dummy.createDummyData(that);
-                SharkNetApi.getInstance().setAccount();
 //                SharkNetEngine.getSharkNet().startShark();
                 return null;
             }

@@ -17,7 +17,6 @@ import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactActivity;
 import net.sharksystem.sharknet.nfc.NFCActivity;
 import net.sharksystem.sharknet.pki.PKIActivity;
-import net.sharksystem.sharknet.profile.ProfileActivity;
 import net.sharksystem.sharknet.radar.RadarActivity;
 
 /**
@@ -62,9 +61,9 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
             case R.id.sidenav_contact:
                 startActivity(new Intent(this, ContactActivity.class));
                 return true;
-            case R.id.sidenav_profile:
-                startActivity(new Intent(this, ProfileActivity.class));
-                return true;
+//            case R.id.sidenav_profile:
+//                startActivity(new Intent(this, ProfileActivity.class));
+//                return true;
             case R.id.sidenav_radar:
                 startActivity(new Intent(this, RadarActivity.class));
                 return true;

@@ -10,6 +10,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.models.Chat;
+import net.sharksystem.api.models.Contact;
+import net.sharksystem.api.models.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
 
@@ -20,15 +24,17 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     private final Context mContext;
     private final SharkApp mApp;
-    private List<ChatActivity.ChatDataHolder> mChats = new ArrayList<>();
+    private final Contact account;
+    private List<Chat> mChats = new ArrayList<>();
 
 
     public ChatListAdapter(Context context, SharkApp app) {
         mContext = context;
         mApp = app;
+        account = SharkNetApi.getInstance().getAccount();
     }
 
-    public void setChats(List<ChatActivity.ChatDataHolder> chats) {
+    public void setChats(List<Chat> chats) {
         mChats = chats;
         notifyDataSetChanged();
     }
@@ -42,25 +48,49 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ChatListAdapter.ViewHolder holder, final int position) {
 
-        final ChatActivity.ChatDataHolder chatDataHolder = mChats.get(position);
+        final Chat chat = mChats.get(position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mApp.setChat(chatDataHolder.chat);
+                mApp.setChat(chat);
                 mContext.startActivity(new Intent(mContext, ChatDetailActivity.class));
             }
         });
-        if (chatDataHolder.image != null) {
-            holder.chatImage.setImageBitmap(chatDataHolder.image);
+        if (chat.getImage() != null) {
+            holder.chatImage.setImageBitmap(chat.getImage());
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
             holder.chatImage.setLayoutParams(params);
             holder.chatImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        } else if (chatDataHolder.imageId != 0) {
-            holder.chatImage.setImageResource(chatDataHolder.imageId);
+        } else if (chat.getContacts().size() > 1) {
+            holder.chatImage.setImageResource(R.drawable.ic_group_white_24dp);
+        } else {
+            holder.chatImage.setImageBitmap(chat.getContacts().get(0).getImage());
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            holder.chatImage.setLayoutParams(params);
+            holder.chatImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
-        holder.chatLastMessage.setText(chatDataHolder.message);
-        holder.chatName.setText(chatDataHolder.name);
+        List<Message> messages = chat.getMessages();
+        Message lastMessage = messages.get(messages.size() - 1);
+        String messageText;
+        if (lastMessage.getSender().equals(account)) {
+            messageText = "Me: " + lastMessage.getContent();
+        } else {
+            messageText = lastMessage.getSender().getName() + ": " + lastMessage.getContent();
+        }
+        holder.chatLastMessage.setText(messageText);
+
+        if (chat.getTitle() != null) {
+            holder.chatName.setText(chat.getTitle());
+        } else if (chat.getContacts().size() == 1) {
+            Contact contact = chat.getContacts().get(0);
+            if (contact.equals(account)) {
+                holder.chatName.setText(chat.getOwner().getName());
+            } else {
+                holder.chatName.setText(contact.getName());
+            }
+        }
+
 
     }
 

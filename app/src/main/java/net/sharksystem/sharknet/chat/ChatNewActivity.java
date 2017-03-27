@@ -4,7 +4,6 @@ package net.sharksystem.sharknet.chat;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,17 +16,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import net.sharkfw.system.L;
-import net.sharksystem.api.impl.SharkNetEngine;
-import net.sharksystem.api.interfaces.Chat;
-import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.models.Chat;
+import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 import net.sharksystem.sharknet.contact.ContactCheckableListAdapter;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -37,7 +33,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ChatNewActivity extends RxSingleBaseActivity<List<ContactCheckableListAdapter.ContactCheckableDataHolder>> {
+public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
 
     private static final int PICK_IMAGE_REQUEST = 1777;
     private ContactCheckableListAdapter mAdapter;
@@ -85,26 +81,26 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<ContactCheckableL
             case R.id.chat_new_create_button:
                 final List<Contact> checkedContacts = mAdapter.getCheckedContacts();
                 String toastMessage = null;
-                if(checkedContacts.isEmpty()){
+                if (checkedContacts.isEmpty()) {
                     toastMessage = "Kein Kontakt ausgewählt.";
                 } else {
-                    if(mChatTitle.getText().toString().isEmpty()){
+                    if (mChatTitle.getText().toString().isEmpty()) {
                         toastMessage = "Kein Titel ausgewählt.";
                     } else {
 
                         Single<Chat> single = Single.fromCallable(new Callable<Chat>() {
                             @Override
                             public Chat call() throws Exception {
-                                Chat chat = SharkNetEngine.getSharkNet().newChat(checkedContacts);
+                                Chat chat = new Chat(SharkNetApi.getInstance().getAccount(), checkedContacts);
                                 chat.setTitle(mChatTitle.getText().toString());
-                                if(mBitmap != null){
-                                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                                    mBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-                                    byte[] bitmapdata = bos.toByteArray();
-                                    ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-                                    chat.setPicture(bs, "image/png");
+                                if (mBitmap != null) {
+                                    chat.setImage(mBitmap);
+//                                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                                    mBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+//                                    byte[] bitmapdata = bos.toByteArray();
+//                                    ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+//                                    chat.setPicture(bs, "image/png");
                                 }
-
                                 return chat;
                             }
                         });
@@ -115,6 +111,7 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<ContactCheckableL
                             @Override
                             public void onSuccess(Chat value) {
                                 getSharkApp().setChat(value);
+                                SharkNetApi.getInstance().addChat(value);
                                 startActivity(new Intent(that, ChatDetailActivity.class));
                             }
 
@@ -125,8 +122,8 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<ContactCheckableL
                         });
                     }
                 }
-                if(toastMessage!=null){
-                    Toast.makeText(this, toastMessage , Toast.LENGTH_SHORT).show();
+                if (toastMessage != null) {
+                    Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             default:
@@ -138,28 +135,38 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<ContactCheckableL
     }
 
     @Override
-    protected List<ContactCheckableListAdapter.ContactCheckableDataHolder> doOnBackgroundThread() throws Exception {
-        List<Contact> contacts = SharkNetEngine.getSharkNet().getContacts();
-        ArrayList<ContactCheckableListAdapter.ContactCheckableDataHolder> list = new ArrayList<>();
-        for (Contact contact : contacts) {
-            Bitmap image = null;
-            if (contact.getPicture().getLength() > 0) {
-                image = BitmapFactory.decodeStream(contact.getPicture().getInputStream());
-            }
-            String name = contact.getNickname();
-            list.add(new ContactCheckableListAdapter.ContactCheckableDataHolder(contact, image, name, false));
-        }
-        return list;
+    protected List<Contact> doOnBackgroundThread() throws Exception {
+//        List<Contact> contacts = SharkNetEngine.getSharkNet().getContacts();
+//        ArrayList<Contact> list = new ArrayList<>();
+//        for (Contact contact : contacts) {
+//            Bitmap image = null;
+//            if (contact.getPicture().getLength() > 0) {
+//                image = BitmapFactory.decodeStream(contact.getPicture().getInputStream());
+//            }
+//            String name = contact.getNickname();
+//            list.add(new Contact(contact, image, name, false));
+//        }
+//        return list;
+        return SharkNetApi.getInstance().getContacts();
     }
 
     @Override
-    protected void doOnUIThread(List<ContactCheckableListAdapter.ContactCheckableDataHolder> contactCheckableDataHolder) {
+    protected void doOnUIThread(List<Contact> contactCheckableDataHolder) {
         mAdapter.setList(contactCheckableDataHolder);
     }
 
     @Override
     protected void doOnError(Throwable error) {
         error.printStackTrace();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
     }
 
     @Override
@@ -180,15 +187,6 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<ContactCheckableL
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if(subscription!=null && !subscription.isUnsubscribed()){
-            subscription.unsubscribe();
         }
     }
 }

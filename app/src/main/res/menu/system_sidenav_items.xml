@@ -7,10 +7,10 @@
             android:id="@+id/sidenav_chat"
             android:actionLayout="@layout/system_sidenav_menu_item"
             android:title="@string/sidenav_item_chats" />
-        <item
-            android:id="@+id/sidenav_profile"
-            android:actionLayout="@layout/system_sidenav_menu_item"
-            android:title="@string/sidenav_item_profile" />
+        <!--<item-->
+            <!--android:id="@+id/sidenav_profile"-->
+            <!--android:actionLayout="@layout/system_sidenav_menu_item"-->
+            <!--android:title="@string/sidenav_item_profile" />-->
         <item
             android:id="@+id/sidenav_contact"
             android:actionLayout="@layout/system_sidenav_menu_item"

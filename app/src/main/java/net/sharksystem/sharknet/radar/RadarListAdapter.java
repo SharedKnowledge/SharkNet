@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.interfaces.Contact;
+import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
@@ -56,12 +56,12 @@ public class RadarListAdapter extends BaseAdapter {
                     .inflate(R.layout.radar_contact_list_item, parent, false);
         }
 
-        try {
-            ((TextView) convertView.findViewById(R.id.radar_contact_name)).setText(contact.getName());
-            ((TextView) convertView.findViewById(R.id.radar_contact_last_seen)).setText(contact.getLastWifiContact().toString());
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+        ((TextView) convertView.findViewById(R.id.radar_contact_name)).setText(contact.getName());
+//        try {
+//            ((TextView) convertView.findViewById(R.id.radar_contact_last_seen)).setText(contact.getLastWifiContact().toString());
+//        } catch (SharkKBException e) {
+//            e.printStackTrace();
+//        }
 
         return convertView;
     }
