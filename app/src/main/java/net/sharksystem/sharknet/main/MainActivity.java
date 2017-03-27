@@ -3,14 +3,13 @@ package net.sharksystem.sharknet.main;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import net.sharkfw.system.L;
-import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.api.dao_impl.SharkNetApi;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.dummy.Dummy;
@@ -23,10 +22,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity
-        implements StartupFragment.StartupFragmentButtonListener,
-            NewProfileFragment.NewProfileFragmentButtonListener,
-            NewProfileAddressFragment.NewProfileAddressFragmentButtonListener{
+public class MainActivity extends AppCompatActivity implements StartupFragment.StartupFragmentButtonListener, NewProfileFragment.NewProfileFragmentButtonListener, NewProfileAddressFragment.NewProfileAddressFragmentButtonListener {
 
     private StartupFragment mStartupFragment;
     private NewProfileFragment mNewProfileFragment;
@@ -50,6 +46,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mSingleSubscription != null && !mSingleSubscription.isUnsubscribed()) {
+            mSingleSubscription.unsubscribe();
+        }
+    }
+
+    @Override
     public void onCreateNewProfileSelected() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         mNewProfileFragment = new NewProfileFragment();
@@ -66,20 +71,19 @@ public class MainActivity extends AppCompatActivity
         mProgressDialog.show();
 
         final Context that = this;
-        SharkNetEngine.getSharkNet().setContext(this);
+        SharkNetApi.getInstance();
+//        SharkNetEngine.getSharkNet().setContext(this);
         Single<Void> single = Single.fromCallable(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
                 Dummy.createDummyData(that);
-                SharkNetEngine.getSharkNet().startShark();
+                SharkNetApi.getInstance().setAccount();
+//                SharkNetEngine.getSharkNet().startShark();
                 return null;
             }
         });
 
-        mSingleSubscription = single
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleSubscriber<Void>() {
+        mSingleSubscription = single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<Void>() {
             @Override
             public void onSuccess(Void value) {
 //                if(mProgressDialog.isShowing()){
@@ -129,14 +133,5 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.remove(mNewProfileAddressFragment).commit();
         getSupportFragmentManager().popBackStack();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if(mSingleSubscription != null && !mSingleSubscription.isUnsubscribed()){
-            mSingleSubscription.unsubscribe();
-        }
     }
 }

@@ -13,10 +13,6 @@ import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.security.SharkPkiStorage;
 import net.sharkfw.security.SharkPublicKey;
 import net.sharkfw.system.L;
-import net.sharksystem.api.impl.SharkNetEngine;
-import net.sharksystem.api.interfaces.Chat;
-import net.sharksystem.api.interfaces.Contact;
-import net.sharksystem.api.interfaces.Profile;
 
 import org.json.JSONException;
 

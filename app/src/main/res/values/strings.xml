@@ -40,7 +40,7 @@
     <string name="pro_nickname">Nickname</string>
     <string name="pro_email_label">e-Mail</string>
     <string name="send">send</string>
-    <string name="write_a_message">write a message</string>
+    <string name="write_a_message">write a content</string>
     <string name="prifiel_image">Prifiel Image</string>
     <string name="e_mail">e-Mail</string>
     <string name="email_fake">your@email.com</string>
@@ -62,7 +62,7 @@
     <string name="profileimage">ProfileImage</string>
     <string name="feeds">Feeds</string>
     <string name="system">System</string>
-    <string name="_1_message_unread">1 message unread</string>
+    <string name="_1_message_unread">1 content unread</string>
     <string name="delete">delete</string>
     <string name="blacklist">blacklist</string>
     <string name="me">Me</string>

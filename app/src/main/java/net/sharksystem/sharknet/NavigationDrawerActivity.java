@@ -12,8 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.impl.SharkNetEngine;
+import net.sharksystem.api.dao_impl.SharkNetApi;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactActivity;
 import net.sharksystem.sharknet.nfc.NFCActivity;
@@ -25,7 +24,7 @@ import net.sharksystem.sharknet.radar.RadarActivity;
  * Created by j4rvis on 1/31/17.
  */
 
-public abstract class NavigationDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
+public abstract class NavigationDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +40,13 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.sidenav_drawer_open, R.string.sidenav_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.sidenav_drawer_open, R.string.sidenav_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.sidenav_view);
         TextView textView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.me);
-        try {
-            textView.setText(SharkNetEngine.getSharkNet().getMyProfile().getName());
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+        textView.setText(SharkNetApi.getInstance().getAccount().getName());
         navigationView.setNavigationItemSelectedListener(this);
         return navigationView.getMenu();
     }
@@ -61,8 +55,7 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id)
-        {
+        switch (id) {
             case R.id.sidenav_chat:
                 startActivity(new Intent(this, ChatActivity.class));
                 return true;
