@@ -2,6 +2,8 @@ package net.sharksystem.sharknet.dummy;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.BitmapFactory;
+import android.provider.ContactsContract;
 
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
@@ -13,6 +15,10 @@ import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.security.SharkPkiStorage;
 import net.sharkfw.security.SharkPublicKey;
 import net.sharkfw.system.L;
+import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.models.Chat;
+import net.sharksystem.api.models.Contact;
+import net.sharksystem.api.models.Message;
 
 import org.json.JSONException;
 
@@ -23,6 +29,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,11 +49,11 @@ public class Dummy {
     static long nextWeek = today + week;
     static long yesterday = today - day;
     static long lastWeek = today - week;
+    private static SharkNetApi api;
 
     public static void createDummyData(Context context) throws SharkKBException, JSONException, InterruptedException, IOException {
 
         ArrayList<Contact> contacts = new ArrayList<>();
-        ArrayList<Profile> profiles = new ArrayList<>();
 
         DummyContactGenerator dummyContactGenerator = new DummyContactGenerator(context);
 
@@ -57,14 +64,11 @@ public class Dummy {
             contacts.add(dummyContactGenerator.newContact());
         }
 
-        profiles.add(dummyContactGenerator.newProfile(true));
-        profiles.add(dummyContactGenerator.newProfile(false));
+        api = SharkNetApi.getInstance();
 
-        SharkNetEngine engine = SharkNetEngine.getSharkNet();
+        api.setAccount(dummyContactGenerator.newContact());
 
-        // Set male profile as active
-        engine.setActiveProfile(profiles.get(1), "password");
-        Profile activeProfile = engine.getMyProfile();
+        Contact account = api.getAccount();
 
         L.d("Contacts created");
 
@@ -87,22 +91,31 @@ public class Dummy {
         thirdChat.add(contacts.get(3));
 
         AssetManager assets = context.getResources().getAssets();
-        chats.add(engine.newChat(firstChat));
-        chats.get(chats.size()-1).setTitle("Erster Chat");
-        chats.get(chats.size()-1).setPicture(assets.open("pictures/groups/group01.jpg"), "image/jpg");
-        chats.add(engine.newChat(secondChat));
-        chats.get(chats.size()-1).setTitle("Was machen wir am Freitag?");
-        chats.get(chats.size()-1).setPicture(assets.open("pictures/groups/group02.jpg"), "image/jpg");
-        chats.add(engine.newChat(thirdChat));
-        chats.get(chats.size()-1).setTitle("PewPew");
-        chats.add(engine.newChat(new ArrayList<>(contacts)));
-        chats.get(chats.size()-1).setTitle("Alle zusammen");
-        chats.get(chats.size()-1).setPicture(assets.open("pictures/groups/group04.jpg"), "image/jpg");
-        chats.add(engine.newChat(contacts.get(5)));
-        chats.add(engine.newChat(contacts.get(2)));
-        chats.add(engine.newChat(contacts.get(6)));
-        chats.add(engine.newChat(contacts.get(7)));
-        chats.add(engine.newChat(contacts.get(1)));
+        Chat chat1 = new Chat(account, firstChat);
+        chat1.setTitle("Erster Chat");
+        chat1.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/group01.jpg")));
+        Chat chat2 = new Chat(account, secondChat);
+        chat2.setTitle("Freitag?!");
+        chat2.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/group02.jpg")));
+        Chat chat3 = new Chat(account, thirdChat);
+        chat3.setTitle("PewPewPew");
+        chat3.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/group03.jpg")));
+        Chat chat4 = new Chat(account, contacts);
+        chat4.setTitle("Allesamt");
+        chat4.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/group04.jpg")));
+        Chat chat5 = new Chat(account, contacts.get(2));
+        Chat chat6 = new Chat(account, contacts.get(5));
+        Chat chat7 = new Chat(account, contacts.get(4));
+        Chat chat8 = new Chat(account, contacts.get(7));
+
+        chats.add(chat1);
+        chats.add(chat2);
+        chats.add(chat3);
+        chats.add(chat4);
+        chats.add(chat5);
+        chats.add(chat6);
+        chats.add(chat7);
+        chats.add(chat8);
 
         L.d("Chats created");
 
@@ -115,21 +128,20 @@ public class Dummy {
             for (int i = 0; i < numberOfMessages; i++){
                 Contact contact = contactList.get(random.nextInt(contactList.size()));
                 date = Dummy.getNextRandomDate(date);
-                if(contact.equals(activeProfile)){
-                    chat.sendMessage(null, lorem.getWords(2, 20), null, date);
-                } else {
-                    chat.sendMessage(null, lorem.getWords(2, 20), null, contact, date);
-                }
+                Message message = new Message(contact);
+                message.setContent(lorem.getWords(2, 20));
+                message.setDate(new Date(date));
+                chat.addMessage(message);
             }
+            api.addChat(chat);
         }
 
         L.d("Chats filled with messages");
 
-        SharkPkiStorage pkiStorage = (SharkPkiStorage) SharkNetEngine.getSharkNet().getSharkEngine().getPKIStorage();
+        SharkPkiStorage pkiStorage = (SharkPkiStorage) api.getSharkEngine().getPKIStorage();
 
-        SharkNetEngine sharkNetEngine = SharkNetEngine.getSharkNet();
         try {
-            pkiStorage.setPkiStorageOwner(sharkNetEngine.getMyProfile().getPST());
+            pkiStorage.setPkiStorageOwner(account.getTag());
             pkiStorage.generateNewKeyPair(1000*60*60*24*365);
         } catch (SharkKBException | NoSuchAlgorithmException | IOException e) {
             L.e(e.getMessage());
@@ -159,7 +171,7 @@ public class Dummy {
             Map.Entry<Contact, KeyPair> next = iterator.next();
             int randomDays = new Random(System.currentTimeMillis()).nextInt(100);
             int sign = (randomDays % 2)==0 ? 1 : -1;
-            keys.add(pkiStorage.addUnsignedKey(next.getKey().getPST(), next.getValue().getPublic(), sign * (randomDays+1) * hour + today));
+            keys.add(pkiStorage.addUnsignedKey(next.getKey().getTag(), next.getValue().getPublic(), sign * (randomDays+1) * hour + today));
         }
 
         L.d("SharkPublicKeys created for each contact");
@@ -176,9 +188,9 @@ public class Dummy {
         while (iteratorAgain.hasNext()){
             Map.Entry<Contact, KeyPair> next = iteratorAgain.next();
             for (SharkPublicKey key : keys) {
-                if(!SharkCSAlgebra.identical(key.getOwner(), next.getKey().getPST())){
+                if(!SharkCSAlgebra.identical(key.getOwner(), next.getKey().getTag())){
                     if((new Random().nextInt(100) % 2)==0){
-                        pkiStorage.sign(key, next.getKey().getPST(), next.getValue().getPrivate());
+                        pkiStorage.sign(key, next.getKey().getTag(), next.getValue().getPrivate());
                     }
                 }
             }
