@@ -8,7 +8,7 @@
                                              android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
@@ -34,9 +34,9 @@
         android:singleLine="true"
         android:textStyle="italic"
         mApp:layout_constraintHorizontal_bias="0.0"
-        mApp:layout_constraintLeft_toLeftOf="@+id/textView2"
+        mApp:layout_constraintLeft_toLeftOf="@+id/textView"
         mApp:layout_constraintRight_toRightOf="parent"
-        mApp:layout_constraintTop_toBottomOf="@+id/textView2"/>
+        mApp:layout_constraintTop_toBottomOf="@+id/textView"/>
 
     <TextView
         android:id="@+id/textView3"

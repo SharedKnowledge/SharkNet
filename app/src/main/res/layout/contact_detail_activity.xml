@@ -34,50 +34,19 @@
         tools:layout_editor_absoluteX="19dp"/>
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="33dp"
-        android:text="@string/contact_label_nickname"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        mApp:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_conversion_absoluteHeight="21dp"
-        tools:layout_conversion_absoluteWidth="80dp"
-        tools:layout_conversion_absoluteX="16dp"
-        tools:layout_conversion_absoluteY="167dp"
-        android:layout_marginTop="24dp"
-        mApp:layout_constraintTop_toBottomOf="@+id/contact_image"/>
-
-    <TextView
-        android:id="@+id/contact_nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/nickname"
-        android:inputType="textPersonName"
-        android:theme="@style/MyEditTextTheme"
-        tools:layout_conversion_absoluteX="16dp"
-        tools:layout_conversion_absoluteY="188dp"
-        tools:layout_conversion_absoluteWidth="216dp"
-        tools:layout_conversion_absoluteHeight="42dp"
-        mApp:layout_constraintLeft_toRightOf="@+id/textView5"
-        android:layout_marginLeft="24dp"
-        mApp:layout_constraintBaseline_toBaselineOf="@+id/textView5"/>
-
-    <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
         android:text="@string/contact_label_name"
         android:textAppearance="?android:attr/textAppearanceMedium"
         mApp:layout_constraintLeft_toLeftOf="parent"
-        mApp:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:layout_conversion_absoluteHeight="21dp"
         tools:layout_conversion_absoluteWidth="48dp"
         tools:layout_conversion_absoluteX="16dp"
-        tools:layout_conversion_absoluteY="231dp"/>
+        tools:layout_conversion_absoluteY="231dp"
+        android:layout_marginTop="24dp"
+        mApp:layout_constraintTop_toBottomOf="@+id/contact_image"/>
 
     <TextView
         android:id="@+id/contact_name"
@@ -93,8 +62,8 @@
         tools:layout_conversion_absoluteWidth="216dp"
         tools:layout_conversion_absoluteHeight="42dp"
         mApp:layout_constraintBaseline_toBaselineOf="@+id/textView7"
-        android:layout_marginLeft="0dp"
-        mApp:layout_constraintLeft_toLeftOf="@+id/contact_nickname"/>
+        mApp:layout_constraintLeft_toRightOf="@+id/textView7"
+        android:layout_marginLeft="32dp"/>
 
     <TextView
         android:id="@+id/textView6"
@@ -124,9 +93,9 @@
         tools:layout_conversion_absoluteY="317dp"
         tools:layout_conversion_absoluteWidth="216dp"
         tools:layout_conversion_absoluteHeight="42dp"
-        android:layout_marginLeft="0dp"
         mApp:layout_constraintBaseline_toBaselineOf="@+id/textView6"
-        mApp:layout_constraintLeft_toLeftOf="@+id/contact_nickname"/>
+        android:layout_marginLeft="0dp"
+        mApp:layout_constraintLeft_toLeftOf="@+id/contact_name"/>
 
 
     <Button

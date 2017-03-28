@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.sharknet.account.AccountDetailActivity;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactActivity;
 import net.sharksystem.sharknet.nfc.NFCActivity;
@@ -46,6 +47,12 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
         NavigationView navigationView = (NavigationView) findViewById(R.id.sidenav_view);
         TextView textView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.me);
         textView.setText(SharkNetApi.getInstance().getAccount().getName());
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AccountDetailActivity.class));
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
         return navigationView.getMenu();
     }
@@ -61,9 +68,6 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
             case R.id.sidenav_contact:
                 startActivity(new Intent(this, ContactActivity.class));
                 return true;
-//            case R.id.sidenav_profile:
-//                startActivity(new Intent(this, ProfileActivity.class));
-//                return true;
             case R.id.sidenav_radar:
                 startActivity(new Intent(this, RadarActivity.class));
                 return true;

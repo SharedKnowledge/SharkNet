@@ -17,7 +17,6 @@ import android.widget.ImageView;
 
 import net.sharksystem.sharknet.R;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -46,7 +45,7 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.main_new_profile_name_fragment, container, false);
+        View view = inflater.inflate(R.layout.main_new_account_name_fragment, container, false);
 
         // Buttons
         view.findViewById(R.id.next_fragment).setOnClickListener(this);

@@ -1,15 +1,16 @@
-package net.sharksystem.sharknet.contact;
+package net.sharksystem.sharknet.account;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.sharksystem.api.dao_impl.SharkNetApi;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 
-public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
+public class AccountDetailActivity extends RxSingleBaseActivity<Contact> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +18,7 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
         setLayoutResource(R.layout.contact_detail_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setProgressMessage("Lade Kontakt...");
+        setProgressMessage("Lade Account...");
 
         startSubscription();
     }
@@ -30,7 +31,7 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
 
     @Override
     protected Contact doOnBackgroundThread() throws Exception {
-        return getSharkApp().getContact();
+        return SharkNetApi.getInstance().getAccount();
     }
 
     @Override
@@ -39,7 +40,7 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
         TextView email = (TextView) findViewById(R.id.contact_email);
         ImageView image = (ImageView) findViewById(R.id.contact_image);
 
-        setToolbarTitle(contact.getName());
+        setToolbarTitle("Account");
         if (contact.getImage() != null) {
             image.setImageBitmap(contact.getImage());
         } else {
@@ -58,7 +59,6 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                getSharkApp().resetContact();
                 this.finish();
                 return true;
             default:

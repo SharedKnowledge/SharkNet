@@ -136,17 +136,6 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
 
     @Override
     protected List<Contact> doOnBackgroundThread() throws Exception {
-//        List<Contact> contacts = SharkNetEngine.getSharkNet().getContacts();
-//        ArrayList<Contact> list = new ArrayList<>();
-//        for (Contact contact : contacts) {
-//            Bitmap image = null;
-//            if (contact.getPicture().getLength() > 0) {
-//                image = BitmapFactory.decodeStream(contact.getPicture().getInputStream());
-//            }
-//            String name = contact.getNickname();
-//            list.add(new Contact(contact, image, name, false));
-//        }
-//        return list;
         return SharkNetApi.getInstance().getContacts();
     }
 

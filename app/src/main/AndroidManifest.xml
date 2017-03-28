@@ -43,13 +43,14 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".chat.ChatActivity"
-            android:label="@string/activity_title_chat"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".account.AccountDetailActivity"
+            android:label="@string/activity_title_account"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".profile.ProfileActivity"
-            android:label="@string/activity_title_profile"
+            android:name=".chat.ChatActivity"
+            android:label="@string/activity_title_chat"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
@@ -103,42 +104,6 @@
                 android:value=".contact.ContactActivity"/>
         </activity>
         <activity
-            android:name=".profile.ProfileDetailActivity"
-            android:label="@string/activity_title_profile_detail"
-            android:parentActivityName=".profile.ProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".profile.ProfileActivity"/>
-        </activity>
-        <activity
-            android:name=".profile.ProfileDetailInterestsActivity"
-            android:label="@string/activity_title_profile_detail_interests"
-            android:parentActivityName=".profile.ProfileDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".profile.ProfileDetailActivity"/>
-        </activity>
-        <activity
-            android:name=".profile.ProfileSettingsActivity"
-            android:label="@string/activity_title_profile_settings"
-            android:parentActivityName=".profile.ProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".profile.ProfileActivity"/>
-        </activity>
-        <activity
-            android:name=".profile.NewInterestActivity"
-            android:label="@string/activity_title_new_interest"
-            android:parentActivityName=".profile.ProfileDetailInterestsActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".profile.ProfileDetailInterestsActivity"/>
-        </activity>
-        <activity
             android:name=".radar.RadarActivity"
             android:label="@string/activity_title_radar"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -161,15 +126,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".pki.PKIActivity"/>
-        </activity>
-        <activity
-            android:name=".profile.ProfileKeys"
-            android:label="@string/activity_title_profile_keys"
-            android:parentActivityName=".profile.ProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".profile.ProfileActivity"/>
         </activity>
     </application>
 
