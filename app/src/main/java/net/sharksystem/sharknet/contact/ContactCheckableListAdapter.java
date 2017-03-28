@@ -38,16 +38,10 @@ public class ContactCheckableListAdapter extends RecyclerView.Adapter<ContactChe
 
     public void setList(List<Contact> list){
         mList = list;
+        notifyDataSetChanged();
     }
 
     public List<Contact> getCheckedContacts(){
-//        ArrayList<Contact> list = new ArrayList<>();
-//        for (Contact holder : mList) {
-//            if(holder.checked){
-//                list.add(holder.contact);
-//            }
-//        }
-//        return list;
         return mCheckedContacts;
     }
 
@@ -70,7 +64,9 @@ public class ContactCheckableListAdapter extends RecyclerView.Adapter<ContactChe
             holder.contactImage.setLayoutParams(new FrameLayout.LayoutParams(35, 35));
         }
         Chat chat = mApp.getChat();
-        holder.checkBox.setChecked(chat.getContacts().contains(contact));
+        if(chat!=null){
+            holder.checkBox.setChecked(chat.getContacts().contains(contact));
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

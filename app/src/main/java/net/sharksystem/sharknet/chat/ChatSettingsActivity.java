@@ -16,13 +16,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import net.sharkfw.system.L;
+import net.sharksystem.api.dao_impl.SharkNetApi;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
+import net.sharksystem.sharknet.contact.ContactCheckableListAdapter;
 import net.sharksystem.sharknet.contact.ContactListAdapter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -35,7 +38,7 @@ import rx.schedulers.Schedulers;
 public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
 
     private static final int PICK_IMAGE_REQUEST = 1777;
-    private ContactListAdapter mAdapter;
+    private ContactCheckableListAdapter mAdapter;
     private ImageView mChatImage;
     private EditText mChatTitle;
     private Subscription subscription;
@@ -51,13 +54,18 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
         setProgressMessage("Lade Kontakte...");
         startSubscription();
 
-        mAdapter = new ContactListAdapter(this, getSharkApp());
+        Chat chat = getSharkApp().getChat();
+
+        mAdapter = new ContactCheckableListAdapter(this, getSharkApp());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.contact_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
 
         mChatImage = (ImageView) findViewById(R.id.chat_new_image);
         mChatTitle = (EditText) findViewById(R.id.chat_new_title);
+
+        mChatImage.setImageBitmap(chat.getImage());
+        mChatTitle.setText(chat.getTitle());
 
         mChatImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +96,8 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
                             chat.setTitle(mChatTitle.getText().toString());
                             if (mBitmap != null) {
                                 chat.setImage(mBitmap);
-//                                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//                                mBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-//                                byte[] bitmapdata = bos.toByteArray();
-//                                ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-//                                chat.setPicture(bs, "image/png");
                             }
+                            chat.setContacts(mAdapter.getCheckedContacts());
                             return chat;
                         }
                     });
@@ -104,6 +108,7 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
                         @Override
                         public void onSuccess(Chat value) {
                             getSharkApp().setChat(value);
+                            SharkNetApi.getInstance().updateChat(value);
                             startActivity(new Intent(that, ChatDetailActivity.class));
                         }
 
@@ -124,17 +129,7 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
 
     @Override
     protected List<Contact> doOnBackgroundThread() throws Exception {
-        return getSharkApp().getChat().getContacts();
-//        ArrayList<Contact> list = new ArrayList<>();
-//        for (Contact contact : contacts) {
-//            Bitmap image = null;
-//            if (contact.getImage() != null) {
-//                image = BitmapFactory.decodeStream(contact.getPicture().getInputStream());
-//            }
-//            String name = contact.getNickname();
-//            list.add(new Contact(contact, image, name));
-//        }
-//        return list;
+        return SharkNetApi.getInstance().getContacts();
     }
 
     @Override

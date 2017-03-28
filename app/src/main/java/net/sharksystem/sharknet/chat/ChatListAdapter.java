@@ -71,14 +71,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             holder.chatImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
         List<Message> messages = chat.getMessages();
-        Message lastMessage = messages.get(messages.size() - 1);
-        String messageText;
-        if (lastMessage.getSender().equals(account)) {
-            messageText = "Me: " + lastMessage.getContent();
-        } else {
-            messageText = lastMessage.getSender().getName() + ": " + lastMessage.getContent();
+        if(!messages.isEmpty()){
+            Message lastMessage = messages.get(messages.size() - 1);
+            String messageText;
+            if (lastMessage.getSender().equals(account)) {
+                messageText = "Me: " + lastMessage.getContent();
+            } else {
+                messageText = lastMessage.getSender().getName() + ": " + lastMessage.getContent();
+            }
+            holder.chatLastMessage.setText(messageText);
         }
-        holder.chatLastMessage.setText(messageText);
 
         if (chat.getTitle() != null) {
             holder.chatName.setText(chat.getTitle());

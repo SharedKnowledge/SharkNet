@@ -46,46 +46,6 @@ public class ChatActivity extends RxSingleNavigationDrawerActivity<List<Chat>> {
 
     @Override
     protected List<Chat> doOnBackgroundThread() throws SharkKBException {
-//        List<Chat> chats = SharkNetEngine.getSharkNet().getChats();
-//        ArrayList<ChatDataHolder> list = new ArrayList<>();
-//        for (Chat chat : chats) {
-//            String name = chat.getTitle();
-//            if (name == null || name.isEmpty()) {
-//                name = "";
-//                List<Contact> contacts = chat.getContactsWithoutMe();
-//                for (Contact next : contacts) {
-//                    if (!name.isEmpty()) {
-//                        name += ", ";
-//                    }
-//                    name += next.getName();
-//                }
-//            }
-//
-//            // message
-//            String message = "";
-//            try {
-//                List<Message> messages = chat.getMessages(false);
-//                if (messages.size() > 0) {
-//                    Message last_msg = messages.get(messages.size() - 1);
-//                    String content = last_msg.getContent().getMessage();
-//                    String sender = last_msg.getSender().getNickname();
-//                    message = sender + ":" + content;
-//                }
-//            } catch (SharkKBException e) {
-//                e.printStackTrace();
-//            }
-//
-//            // Image
-//            Bitmap image = null;
-//            int imageId = 0;
-//            if (chat.getPicture().getLength() > 0) {
-//                image = BitmapFactory.decodeStream(chat.getPicture().getInputStream());
-//            } else {
-//                imageId = R.drawable.ic_group_white_24dp;
-//            }
-//            list.add(new ChatDataHolder(chat, image, imageId, name, message));
-//        }
-//        return list;
         return SharkNetApi.getInstance().getChats();
     }
 

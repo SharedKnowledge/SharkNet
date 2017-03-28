@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApi;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
@@ -56,8 +57,9 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
     }
 
     @Override
-    protected void doOnUIThread(List<Contact> contactDataHolders) {
-        mAdapter.setList(contactDataHolders);
+    protected void doOnUIThread(List<Contact> contacts) {
+        L.d("Contacts: " + contacts.size(), this);
+        mAdapter.setList(contacts);
     }
 
     @Override

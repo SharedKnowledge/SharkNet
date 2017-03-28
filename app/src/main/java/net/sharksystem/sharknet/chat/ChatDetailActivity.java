@@ -89,34 +89,6 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> {
         setTitle(mChat.getTitle());
 
         return mChat.getMessages();
-
-//        List<Message> messages = mChat.getMessages(false);
-//        ArrayList<MessageDataHolder> list = new ArrayList<>();
-//        for (Message message : messages) {
-//            String messageContent = message.getContent().getMessage();
-//            Bitmap authorImage = null;
-//            if (message.getSender().getPicture() != null) {
-//                authorImage = BitmapFactory.decodeStream(message.getSender().getPicture().getInputStream());
-//            }
-//            int stateResource;
-//            if (message.isVerified()) {
-//                stateResource = R.drawable.ic_verified_user_green_24dp;
-//            } else if (message.isSigned()) {
-//                stateResource = R.drawable.ic_warning_dark_grey_24dp;
-//            } else {
-//                stateResource = R.drawable.ic_warning_red_24dp;
-//            }
-//            Contact contact = message.getSender();
-//            String authorName = contact.getName();
-//            SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm");
-//            String date = format.format(message.getDateReceived());
-//
-//            boolean isEncrypted = message.isEncrypted();
-//            boolean isMine = message.isMine();
-//
-//            list.add(new MessageDataHolder(message, contact, authorImage, authorName, messageContent, date, stateResource, isEncrypted, isMine));
-//        }
-//        return list;
     }
 
     @Override
