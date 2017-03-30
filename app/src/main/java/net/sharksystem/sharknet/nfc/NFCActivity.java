@@ -14,6 +14,7 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.security.SharkCertificate;
 import net.sharkfw.system.L;
 import net.sharkfw.system.SharkNotSupportedException;
+import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.api.shark.ports.NfcPkiPortEventListener;
 import net.sharksystem.api.shark.ports.NfcPkiPortListener;
@@ -139,7 +140,7 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
     }
 
     @Override
-    public void onCertificatesReceived(final List<SharkCertificate> certificates) {
+    public void onCertificatesReceived(final List<SharkCertificate> certificates, final List<Contact> contacts) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -149,7 +150,11 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(NFCActivity.this);
-                builder.setMessage("We received " + certificates.size() + " certificates from " + certificates.get(0).getSigner().getName() + ". Do you want to include them?").setTitle("New Certificates");
+                builder.setMessage(
+                        "We received " + certificates.size()
+                                + " certificates from " + certificates.get(0).getSigner().getName()
+                                + ". There where also " + contacts.size() + " Contacts"
+                                + ". Do you want to include them?").setTitle("New Certificates and Contacts");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
