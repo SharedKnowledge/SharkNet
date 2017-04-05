@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.dummy.Dummy;
@@ -22,7 +23,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity implements StartupFragment.StartupFragmentButtonListener, NewProfileFragment.NewProfileFragmentButtonListener, NewProfileAddressFragment.NewProfileAddressFragmentButtonListener {
+public class MainActivity extends BaseActivity implements StartupFragment.StartupFragmentButtonListener, NewProfileFragment.NewProfileFragmentButtonListener, NewProfileAddressFragment.NewProfileAddressFragmentButtonListener {
 
     private StartupFragment mStartupFragment;
     private NewProfileFragment mNewProfileFragment;
@@ -34,9 +35,10 @@ public class MainActivity extends AppCompatActivity implements StartupFragment.S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        L.setLogLevel(L.LOGLEVEL_ALL);
 
         SharkNetApi.getInstance().initSharkEngine(this);
+
+        L.d("App started.", this);
 
         if (savedInstanceState != null) {
             return;

@@ -127,6 +127,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".pki.PKIActivity"/>
         </activity>
+        <service android:name="net.sharksystem.api.service.SharkService"></service>
     </application>
 
 </manifest>

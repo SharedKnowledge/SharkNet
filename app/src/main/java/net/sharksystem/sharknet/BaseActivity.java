@@ -1,7 +1,12 @@
 package net.sharksystem.sharknet;
 
 import android.app.Fragment;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +16,9 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import net.sharkfw.system.L;
+import net.sharksystem.api.service.SharkService;
 
 /**
  * Created by mn-io on 22.01.16.
@@ -25,9 +33,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Fragment usedFragment;
     private int optionsMenuResource = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        L.setLogLevel(L.LOGLEVEL_ALL);
         setContentView(R.layout.system_parent_activity);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         // Make FloatingActionButton invisible at default
@@ -106,5 +116,38 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         layoutInUse = layoutOption;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        L.d("On Resume.", this);
+        Intent intent = new Intent(getApplicationContext(), SharkService.class);
+        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mBound){
+            unbindService(mServiceConnection);
+            mBound = false;
+        }
+    }
+
+    private boolean mBound;
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mBound = true;
+            SharkService sharkService = ((SharkService.LocalBinder) service).getService();
+            L.d("Service connected.", this);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mBound = false;
+            L.d("Service disconnected.", this);
+        }
+    };
 }
 
