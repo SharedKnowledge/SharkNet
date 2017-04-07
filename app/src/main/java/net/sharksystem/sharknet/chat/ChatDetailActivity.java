@@ -71,11 +71,11 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> {
                     if (msg_string.isEmpty()) {
                         Snackbar.make(sendButton, "No message entered!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     } else {
-                        Message message = new Message(SharkNetApiImpl.getInstance().getAccount());
+                        Message message = new Message(mApi.getAccount());
                         message.setContent(msg_string);
                         mChat.addMessage(message);
                         // TODO Save message
-                        SharkNetApiImpl.getInstance().updateChat(mChat);
+                        mApi.updateChat(mChat);
                         editText.getText().clear();
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);

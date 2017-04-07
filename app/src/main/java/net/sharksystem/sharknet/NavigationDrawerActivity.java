@@ -46,7 +46,7 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.sidenav_view);
         TextView textView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.me);
-        textView.setText(SharkNetApiImpl.getInstance().getAccount().getName());
+        textView.setText(getSharkApp().getAccount().getName());
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

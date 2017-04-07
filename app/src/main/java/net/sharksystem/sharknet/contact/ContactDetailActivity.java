@@ -18,8 +18,6 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setProgressMessage("Lade Kontakt...");
-
-        startSubscription();
     }
 
     @Override

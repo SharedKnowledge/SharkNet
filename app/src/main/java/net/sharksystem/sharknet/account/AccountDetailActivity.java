@@ -20,7 +20,6 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> {
 
         setProgressMessage("Lade Account...");
 
-        startSubscription();
     }
 
     @Override
@@ -31,7 +30,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> {
 
     @Override
     protected Contact doOnBackgroundThread() throws Exception {
-        return SharkNetApiImpl.getInstance().getAccount();
+        return mApi.getAccount();
     }
 
     @Override

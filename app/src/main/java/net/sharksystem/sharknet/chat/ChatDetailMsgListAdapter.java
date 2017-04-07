@@ -112,7 +112,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
         SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm", Locale.GERMANY);
         String date = format.format(message.getDate());
         holder.dateView.setText(date);
-        if (!message.getSender().equals(SharkNetApiImpl.getInstance().getAccount())) {
+        if (!message.getSender().equals(mApp.getAccount())) {
             // image
             if (message.getSender().getImage() == null) {
                 holder.authorImageView.setImageResource(R.drawable.ic_person_white_24dp);
@@ -174,7 +174,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     @Override
     public int getItemViewType(int position) {
         Message message = this.mMessages.get(position);
-        if (message.getSender().equals(SharkNetApiImpl.getInstance().getAccount())) {
+        if (message.getSender().equals(mApp.getAccount())) {
             return MESSAGE_IS_MINE;
         } else {
             return MESSAGE_IS_NOT_MINE;

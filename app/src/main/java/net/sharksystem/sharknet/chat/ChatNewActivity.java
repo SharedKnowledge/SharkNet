@@ -52,7 +52,7 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
         setProgressMessage("Lade Kontakte...");
 
         setTitle("Neuer Chat");
-        mAdapter = new ContactCheckableListAdapter(this, getSharkApp());
+        mAdapter = new ContactCheckableListAdapter(getSharkApp());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.contact_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
@@ -90,7 +90,7 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
                         Single<Chat> single = Single.fromCallable(new Callable<Chat>() {
                             @Override
                             public Chat call() throws Exception {
-                                Chat chat = new Chat(SharkNetApiImpl.getInstance().getAccount(), checkedContacts);
+                                Chat chat = new Chat(mApi.getAccount(), checkedContacts);
                                 chat.setTitle(mChatTitle.getText().toString());
                                 if (mBitmap != null) {
                                     chat.setImage(mBitmap);
@@ -110,7 +110,7 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
                             @Override
                             public void onSuccess(Chat value) {
                                 getSharkApp().setChat(value);
-                                SharkNetApiImpl.getInstance().addChat(value);
+                                mApi.addChat(value);
                                 startActivity(new Intent(that, ChatDetailActivity.class));
                             }
 

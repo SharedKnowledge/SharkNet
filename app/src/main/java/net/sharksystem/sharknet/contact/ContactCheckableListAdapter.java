@@ -1,7 +1,5 @@
 package net.sharksystem.sharknet.contact;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,26 +20,24 @@ import java.util.List;
 public class ContactCheckableListAdapter extends RecyclerView.Adapter<ContactCheckableListAdapter.ContactCheckableViewHolder> {
 
     private final SharkApp mApp;
-    private final Context mContext;
     private Chat mChat;
     private List<Contact> mList = new ArrayList<>();
     private List<Contact> mCheckedContacts = new ArrayList<>();
 
-    public ContactCheckableListAdapter(Context context, SharkApp app) {
+    public ContactCheckableListAdapter(SharkApp app) {
         mApp = app;
-        mContext = context;
         mChat = mApp.getChat();
-        if(mChat!=null){
+        if (mChat != null) {
             mCheckedContacts = mChat.getContacts();
         }
     }
 
-    public void setList(List<Contact> list){
+    public void setList(List<Contact> list) {
         mList = list;
         notifyDataSetChanged();
     }
 
-    public List<Contact> getCheckedContacts(){
+    public List<Contact> getCheckedContacts() {
         return mCheckedContacts;
     }
 
@@ -64,14 +60,14 @@ public class ContactCheckableListAdapter extends RecyclerView.Adapter<ContactChe
             holder.contactImage.setLayoutParams(new FrameLayout.LayoutParams(35, 35));
         }
         Chat chat = mApp.getChat();
-        if(chat!=null){
+        if (chat != null) {
             holder.checkBox.setChecked(chat.getContacts().contains(contact));
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.checkBox.isChecked()){
+                if (holder.checkBox.isChecked()) {
                     holder.checkBox.setChecked(false);
                     mCheckedContacts.remove(contact);
                 } else {

@@ -12,6 +12,7 @@ import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.security.SharkCertificate;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.SharkApp;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +23,12 @@ import java.util.List;
  * Created by j4rvis on 2/11/17.
  */
 public class PKIListAdapter extends BaseAdapter {
+
+    private SharkApp mApp;
+
+    public PKIListAdapter(SharkApp mApp) {
+        this.mApp = mApp;
+    }
 
     private List<PKICertificateHolder> items = new ArrayList<>();
 
@@ -85,7 +92,7 @@ public class PKIListAdapter extends BaseAdapter {
 
         numberOfSigners.setText("" + item.getCertificates().size());
 
-        PeerSemanticTag tag = SharkNetApiImpl.getInstance().getAccount().getTag();
+        PeerSemanticTag tag = mApp.getAccount().getTag();
         boolean isSelfSigned = false;
 
         Iterator<SharkCertificate> iterator = item.getCertificates().iterator();

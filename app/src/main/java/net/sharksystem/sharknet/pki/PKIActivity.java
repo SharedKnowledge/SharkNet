@@ -1,7 +1,9 @@
 package net.sharksystem.sharknet.pki;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,6 +16,7 @@ import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,49 +26,52 @@ import java.util.List;
  * Created by j4rvis on 2/11/17.
  */
 
-public class PKIActivity extends NavigationDrawerActivity implements AdapterView.OnItemClickListener {
+public class PKIActivity
+        extends RxSingleNavigationDrawerActivity<List<PKICertificateHolder>>
+        implements AdapterView.OnItemClickListener {
 
-    private PkiStorage pkiStorage;
-    private PKIListAdapter adapter;
-    private List<PKICertificateHolder> holderList;
+    private PKIListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.pki_activity);
         setOptionsMenu(R.menu.pki);
-
         L.setLogLevel(L.LOGLEVEL_ALL);
-        pkiStorage = SharkNetApiImpl.getInstance().getSharkEngine().getPKIStorage();
 
-        List<SharkCertificate> certificates = null;
-        try {
-            certificates = this.pkiStorage.getAllSharkCertificates();
-            L.d("Certifcates: " + certificates.size(), this);
-            if (certificates.isEmpty()) {
-//                Dummy.createDummyPkiData();
-                certificates = this.pkiStorage.getAllSharkCertificates();
-            }
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
+        setProgressMessage("Lade Zertifikate...");
+    }
 
-        holderList = mapCertificates(certificates);
-        adapter = new PKIListAdapter();
-        adapter.updateItems(holderList);
+    @Override
+    protected List<PKICertificateHolder> doOnBackgroundThread() throws Exception {
+        PkiStorage pkiStorage = mApi.getSharkEngine().getPKIStorage();
 
+        List<SharkCertificate> certificates = pkiStorage.getAllSharkCertificates();
+        return mapCertificates(certificates);
+    }
+
+    @Override
+    protected void doOnUIThread(List<PKICertificateHolder> pkiCertificateHolders) {
+        mAdapter = new PKIListAdapter(getSharkApp());
+        mAdapter.updateItems(pkiCertificateHolders);
         ListView listView = (ListView) findViewById(R.id.list_view_certificates);
-        listView.setAdapter(adapter);
+        listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(this);
+    }
+
+    @Override
+    protected void doOnError(Throwable error) {
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
     }
 
     private List<PKICertificateHolder> mapCertificates(List<SharkCertificate> certificates) {
         List<PKICertificateHolder> holderList = new ArrayList<>();
 
-        Iterator<SharkCertificate> certificateIterator = certificates.iterator();
-        while (certificateIterator.hasNext()) {
-            SharkCertificate nextCertificate = certificateIterator.next();
-
+        for (SharkCertificate nextCertificate : certificates) {
             if (holderList.isEmpty()) {
                 PKICertificateHolder certificateHolder = new PKICertificateHolder();
                 certificateHolder.addCertificate(nextCertificate);
@@ -74,10 +80,7 @@ public class PKIActivity extends NavigationDrawerActivity implements AdapterView
 
                 boolean certificateAdded = false;
 
-                Iterator<PKICertificateHolder> holderIterator = holderList.iterator();
-                while (holderIterator.hasNext()) {
-                    PKICertificateHolder nextHolder = holderIterator.next();
-
+                for (PKICertificateHolder nextHolder : holderList) {
                     if (SharkCSAlgebra.identical(nextHolder.getOwner(), nextCertificate.getOwner())) {
                         nextHolder.addCertificate(nextCertificate);
                         certificateAdded = true;
@@ -97,7 +100,7 @@ public class PKIActivity extends NavigationDrawerActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        PKIDataHolder.getInstance().setHolder(this.holderList.get(position));
+        PKIDataHolder.getInstance().setHolder((PKICertificateHolder) mAdapter.getItem(position));
 
         Intent intent = new Intent(this, PKIDetailActivity.class);
         startActivity(intent);

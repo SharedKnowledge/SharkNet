@@ -21,7 +21,6 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
         super.onCreate(savedInstanceState);
         configureLayout();
         setProgressMessage("Lade Kontakte...");
-        startSubscription();
     }
 
     private void configureLayout() {
@@ -35,7 +34,7 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
 
     @Override
     protected List<Contact> doOnBackgroundThread() throws Exception {
-        return SharkNetApiImpl.getInstance().getContacts();
+        return mApi.getContacts();
     }
 
     @Override

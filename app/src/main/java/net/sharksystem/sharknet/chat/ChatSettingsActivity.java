@@ -53,7 +53,7 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
 
         Chat chat = getSharkApp().getChat();
 
-        mAdapter = new ContactCheckableListAdapter(this, getSharkApp());
+        mAdapter = new ContactCheckableListAdapter(getSharkApp());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.contact_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
@@ -105,7 +105,7 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
                         @Override
                         public void onSuccess(Chat value) {
                             getSharkApp().setChat(value);
-                            SharkNetApiImpl.getInstance().updateChat(value);
+                            mApi.updateChat(value);
                             startActivity(new Intent(that, ChatDetailActivity.class));
                         }
 

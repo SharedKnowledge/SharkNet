@@ -51,7 +51,7 @@ public class Dummy {
 
         ArrayList<Contact> contacts = new ArrayList<>();
 
-        DummyContactGenerator dummyContactGenerator = new DummyContactGenerator(context);
+        DummyContactGenerator dummyContactGenerator = new DummyContactGenerator(context, api);
 
         Random random = new Random(System.currentTimeMillis());
 

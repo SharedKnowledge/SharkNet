@@ -8,6 +8,7 @@ import com.thedeanda.lorem.LoremIpsum;
 
 import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
+import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Contact;
 
 import java.io.IOException;
@@ -22,14 +23,16 @@ public class DummyContactGenerator {
 
     private final LoremIpsum loremIpsum;
     private final AssetManager assets;
+    private final SharkNetApi api;
     private String[] maleProfilePictures;
     private String[] femaleProfilePictures;
 
     private String[] siArray = new String[]{"http://www.facebook.de/", "http://www.google-plus.de/", "http://www.snapchat.com/", "http://www.instagram.de/", "http://www.xing.de/", "http://www.linkedin.de/"};
 
-    public DummyContactGenerator(Context context) {
+    public DummyContactGenerator(Context context, SharkNetApi api) {
         loremIpsum = LoremIpsum.getInstance();
         assets = context.getResources().getAssets();
+        this.api = api;
         try {
             femaleProfilePictures = assets.list("pictures/female");
             maleProfilePictures = assets.list("pictures/male");
@@ -72,7 +75,7 @@ public class DummyContactGenerator {
         Contact contact = new Contact(name, mail);
         contact.setImage(BitmapFactory.decodeStream(picture));
 
-        SharkNetApiImpl.getInstance().addContact(contact);
+        api.addContact(contact);
         return contact;
     }
 

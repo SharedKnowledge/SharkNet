@@ -8,28 +8,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
+import net.sharkfw.knowledgeBase.Knowledge;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
-import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.security.SharkCertificate;
-import net.sharkfw.system.L;
-import net.sharkfw.system.SharkNotSupportedException;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.api.shark.ports.NfcPkiPortEventListener;
 import net.sharksystem.api.shark.ports.NfcPkiPortListener;
-import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
 
-import java.io.IOException;
 import java.util.List;
 
-public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortListener {
+public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> implements NfcPkiPortListener {
 
     final Context context = this;
     private Button button;
-    private NfcPkiPortEventListener nfcPkiPortEventListener;
-//    private SharkNetEngine sharkNet;
+    private NfcPkiPortEventListener mNfcPkiPortEventListener;
+    //    private SharkNetEngine sharkNet;
     private AndroidSharkEngine sharkEngine;
     private AlertDialog onMessageDialog;
     private AlertDialog onPublicKeyDialog;
@@ -40,33 +36,7 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.nfc_activity);
 
-//        sharkNet = SharkNetEngine.getSharkNet();
-//        sharkEngine = sharkNet.getSharkEngine();
-//        try {
-//            L.d(sharkEngine.getPKIStorage().getOwnerPublicKey().toString(), this);
-//            nfcPkiPortEventListener = sharkNet.setupNfc(this, this, sharkEngine.getPKIStorage().getPublicKeyAsKnowledge(true));
-//        } catch (SharkProtocolNotSupportedException | SharkNotSupportedException e) {
-//            e.printStackTrace();
-//        } catch (SharkKBException e) {
-//            e.printStackTrace();
-//        }
-
-        button = (Button) findViewById(R.id.button_nfc_start);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                button.setText("NFC started...");
-//                try {
-//                    sharkNet.startSendingViaNfc();
-//                } catch (SharkProtocolNotSupportedException | IOException e) {
-//                    e.printStackTrace();
-//                }
-                L.d("NFC started", this);
-            }
-        });
-
-
+        setProgressMessage("Preparing Exchange");
     }
 
     @Override
@@ -92,16 +62,6 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-//                try {
-//                    SharkNetEngine.getSharkNet().getSharkEngine().stopNfc();
-//                } catch (SharkProtocolNotSupportedException e) {
-//                    e.printStackTrace();
-//                }
-//                try {
-//                    sharkEngine.stopNfc();
-//                } catch (SharkProtocolNotSupportedException e) {
-//                    e.printStackTrace();
-//                }
                 button.setText("Start NFC");
                 Toast.makeText(context, reason, Toast.LENGTH_SHORT).show();
             }
@@ -124,12 +84,12 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
                 builder.setPositiveButton("Sign", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        nfcPkiPortEventListener.onPublicKeyDecision(true);
+                        mNfcPkiPortEventListener.onPublicKeyDecision(true);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        nfcPkiPortEventListener.onPublicKeyDecision(false);
+                        mNfcPkiPortEventListener.onPublicKeyDecision(false);
                     }
                 });
                 onPublicKeyDialog = builder.create();
@@ -150,20 +110,16 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(NFCActivity.this);
-                builder.setMessage(
-                        "We received " + certificates.size()
-                                + " certificates from " + certificates.get(0).getSigner().getName()
-                                + ". There where also " + contacts.size() + " Contacts"
-                                + ". Do you want to include them?").setTitle("New Certificates and Contacts");
+                builder.setMessage("We received " + certificates.size() + " certificates from " + certificates.get(0).getSigner().getName() + ". There where also " + contacts.size() + " Contacts" + ". Do you want to include them?").setTitle("New Certificates and Contacts");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        nfcPkiPortEventListener.onCertificatesDecision(true);
+                        mNfcPkiPortEventListener.onCertificatesDecision(true);
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        nfcPkiPortEventListener.onCertificatesDecision(false);
+                        mNfcPkiPortEventListener.onCertificatesDecision(false);
                     }
                 });
                 onCertificateDialog = builder.create();
@@ -172,4 +128,41 @@ public class NFCActivity extends NavigationDrawerActivity implements NfcPkiPortL
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(onMessageDialog!=null && onMessageDialog.isShowing()){
+            onMessageDialog.dismiss();
+        }
+        if(onPublicKeyDialog!=null && onPublicKeyDialog.isShowing()){
+            onPublicKeyDialog.dismiss();
+        }
+        if(onCertificateDialog!=null && onCertificateDialog.isShowing()){
+            onCertificateDialog.dismiss();
+        }
+    }
+
+    @Override
+    protected Knowledge doOnBackgroundThread() throws Exception {
+        mNfcPkiPortEventListener = mApi.initNFC(this);
+        return null;
+    }
+
+    @Override
+    protected void doOnUIThread(Knowledge knowledge) {
+        button = (Button) findViewById(R.id.button_nfc_start);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                button.setText("NFC started...");
+                mApi.startNFC();
+            }
+        });
+    }
+
+    @Override
+    protected void doOnError(Throwable error) {
+
+    }
 }
