@@ -6,16 +6,12 @@ import android.graphics.BitmapFactory;
 
 import com.thedeanda.lorem.LoremIpsum;
 
-import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.system.L;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Contact;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Random;
 
 /**
@@ -76,7 +72,7 @@ public class DummyContactGenerator {
         Contact contact = new Contact(name, mail);
         contact.setImage(BitmapFactory.decodeStream(picture));
 
-        SharkNetApi.getInstance().addContact(contact);
+        SharkNetApiImpl.getInstance().addContact(contact);
         return contact;
     }
 

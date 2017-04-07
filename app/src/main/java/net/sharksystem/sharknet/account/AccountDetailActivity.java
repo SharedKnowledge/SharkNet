@@ -5,7 +5,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
@@ -31,7 +31,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> {
 
     @Override
     protected Contact doOnBackgroundThread() throws Exception {
-        return SharkNetApi.getInstance().getAccount();
+        return SharkNetApiImpl.getInstance().getAccount();
     }
 
     @Override

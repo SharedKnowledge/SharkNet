@@ -3,28 +3,24 @@ package net.sharksystem.sharknet.dummy;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
-import android.provider.ContactsContract;
 
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 
-import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.security.SharkPkiStorage;
 import net.sharkfw.security.SharkPublicKey;
 import net.sharkfw.system.L;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
+import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
 
 import org.json.JSONException;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -49,9 +45,9 @@ public class Dummy {
     static long nextWeek = today + week;
     static long yesterday = today - day;
     static long lastWeek = today - week;
-    private static SharkNetApi api;
+    private static SharkNetApi mApi;
 
-    public static void createDummyData(Context context) throws SharkKBException, JSONException, InterruptedException, IOException {
+    public static void createDummyData(Context context, SharkNetApi api) throws SharkKBException, JSONException, InterruptedException, IOException {
 
         ArrayList<Contact> contacts = new ArrayList<>();
 
@@ -64,7 +60,7 @@ public class Dummy {
             contacts.add(dummyContactGenerator.newContact());
         }
 
-        api = SharkNetApi.getInstance();
+        mApi = api;
 
         api.setAccount(dummyContactGenerator.newContact());
 

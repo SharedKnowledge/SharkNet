@@ -11,7 +11,7 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.security.PkiStorage;
 import net.sharkfw.security.SharkCertificate;
 import net.sharkfw.system.L;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
 
@@ -36,7 +36,7 @@ public class PKIActivity extends NavigationDrawerActivity implements AdapterView
         setOptionsMenu(R.menu.pki);
 
         L.setLogLevel(L.LOGLEVEL_ALL);
-        pkiStorage = SharkNetApi.getInstance().getSharkEngine().getPKIStorage();
+        pkiStorage = SharkNetApiImpl.getInstance().getSharkEngine().getPKIStorage();
 
         List<SharkCertificate> certificates = null;
         try {

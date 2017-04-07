@@ -16,16 +16,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import net.sharkfw.system.L;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 import net.sharksystem.sharknet.contact.ContactCheckableListAdapter;
-import net.sharksystem.sharknet.contact.ContactListAdapter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -52,7 +50,6 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setProgressMessage("Lade Kontakte...");
-        startSubscription();
 
         Chat chat = getSharkApp().getChat();
 
@@ -108,7 +105,7 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
                         @Override
                         public void onSuccess(Chat value) {
                             getSharkApp().setChat(value);
-                            SharkNetApi.getInstance().updateChat(value);
+                            SharkNetApiImpl.getInstance().updateChat(value);
                             startActivity(new Intent(that, ChatDetailActivity.class));
                         }
 
@@ -129,7 +126,7 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
 
     @Override
     protected List<Contact> doOnBackgroundThread() throws Exception {
-        return SharkNetApi.getInstance().getContacts();
+        return mApi.getContacts();
     }
 
     @Override

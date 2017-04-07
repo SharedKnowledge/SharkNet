@@ -1,18 +1,15 @@
 package net.sharksystem.sharknet.contact;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import net.sharkfw.system.L;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Contact>> {
@@ -38,7 +35,7 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
 
     @Override
     protected List<Contact> doOnBackgroundThread() throws Exception {
-        return SharkNetApi.getInstance().getContacts();
+        return SharkNetApiImpl.getInstance().getContacts();
     }
 
     @Override

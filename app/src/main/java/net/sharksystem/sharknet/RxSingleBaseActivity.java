@@ -1,6 +1,8 @@
 package net.sharksystem.sharknet;
 
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.os.IBinder;
 
 import java.util.concurrent.Callable;
 
@@ -74,5 +76,11 @@ public abstract class RxSingleBaseActivity<T> extends BaseActivity {
         if(mSubscription!=null && !mSubscription.isUnsubscribed()){
             mSubscription.unsubscribe();
         }
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+        startSubscription();
     }
 }

@@ -10,7 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
+import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
@@ -24,14 +25,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     private final Context mContext;
     private final SharkApp mApp;
-    private final Contact account;
     private List<Chat> mChats = new ArrayList<>();
+    private Contact mAccount;
 
 
     public ChatListAdapter(Context context, SharkApp app) {
         mContext = context;
         mApp = app;
-        account = SharkNetApi.getInstance().getAccount();
+        mAccount = mApp.getAccount();
     }
 
     public void setChats(List<Chat> chats) {
@@ -74,7 +75,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         if(!messages.isEmpty()){
             Message lastMessage = messages.get(messages.size() - 1);
             String messageText;
-            if (lastMessage.getSender().equals(account)) {
+            if (lastMessage.getSender().equals(mAccount)) {
                 messageText = "Me: " + lastMessage.getContent();
             } else {
                 messageText = lastMessage.getSender().getName() + ": " + lastMessage.getContent();
@@ -86,7 +87,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             holder.chatName.setText(chat.getTitle());
         } else if (chat.getContacts().size() == 1) {
             Contact contact = chat.getContacts().get(0);
-            if (contact.equals(account)) {
+            if (contact.equals(mAccount)) {
                 holder.chatName.setText(chat.getOwner().getName());
             } else {
                 holder.chatName.setText(contact.getName());

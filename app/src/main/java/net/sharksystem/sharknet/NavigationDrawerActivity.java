@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactActivity;
@@ -46,7 +46,7 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.sidenav_view);
         TextView textView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.me);
-        textView.setText(SharkNetApi.getInstance().getAccount().getName());
+        textView.setText(SharkNetApiImpl.getInstance().getAccount().getName());
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

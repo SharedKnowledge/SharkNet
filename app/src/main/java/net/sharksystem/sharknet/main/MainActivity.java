@@ -1,15 +1,16 @@
 package net.sharksystem.sharknet.main;
 
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import net.sharkfw.system.L;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.chat.ChatActivity;
@@ -36,8 +37,6 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        SharkNetApi.getInstance().initSharkEngine(this);
-
         L.d("App started.", this);
 
         if (savedInstanceState != null) {
@@ -47,6 +46,13 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         mStartupFragment = new StartupFragment();
 
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mStartupFragment).commit();
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+        mApi.initSharkEngine(this);
+        onCreateDummyDataSelected();
     }
 
     @Override
@@ -78,7 +84,8 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         Single<Void> single = Single.fromCallable(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                Dummy.createDummyData(that);
+                Dummy.createDummyData(that, mApi);
+                getSharkApp().setAccount(mApi.getAccount());
 //                SharkNetEngine.getSharkNet().startShark();
                 return null;
             }

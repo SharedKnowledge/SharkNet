@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Message;
 import net.sharksystem.sharknet.R;
@@ -31,8 +31,13 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configureLayout();
+        if (mChat == null) {
+            mChat = getSharkApp().getChat();
+        }
+        // TODO what if we reload the messages?
+        setTitle(mChat.getTitle());
+
         setProgressMessage("Lade Nachrichten...");
-        startSubscription();
     }
 
     @Override
@@ -66,11 +71,11 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> {
                     if (msg_string.isEmpty()) {
                         Snackbar.make(sendButton, "No message entered!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     } else {
-                        Message message = new Message(SharkNetApi.getInstance().getAccount());
+                        Message message = new Message(SharkNetApiImpl.getInstance().getAccount());
                         message.setContent(msg_string);
                         mChat.addMessage(message);
                         // TODO Save message
-                        SharkNetApi.getInstance().updateChat(mChat);
+                        SharkNetApiImpl.getInstance().updateChat(mChat);
                         editText.getText().clear();
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
@@ -82,12 +87,6 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> {
 
     @Override
     protected List<Message> doOnBackgroundThread() throws Exception {
-        if (mChat == null) {
-            mChat = getSharkApp().getChat();
-        }
-        // TODO what if we reload the messages?
-        setTitle(mChat.getTitle());
-
         return mChat.getMessages();
     }
 

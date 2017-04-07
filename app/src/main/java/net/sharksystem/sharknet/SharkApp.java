@@ -14,9 +14,10 @@ import net.sharksystem.api.models.Message;
 
 public class SharkApp extends Application {
 
-    public Chat chat = null;
-    public Contact contact = null;
-    public Message message = null;
+    private Chat chat = null;
+    private Contact contact = null;
+    private Message message = null;
+    private Contact account = null;
 
     private static SharkApp instance;
 
@@ -26,6 +27,14 @@ public class SharkApp extends Application {
 
     public static Context getContext() {
         return instance;
+    }
+
+    public Contact getAccount() {
+        return account;
+    }
+
+    public void setAccount(Contact account) {
+        this.account = account;
     }
 
     public Chat getChat() {

@@ -18,21 +18,23 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import net.sharkfw.system.L;
+import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.service.SharkService;
 
 /**
  * Created by mn-io on 22.01.16.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements ServiceConnection {
 
     public static final int LAYOUT_OPTION_RESOURCE = 1;
     public static final int LAYOUT_OPTION_FRAGMENT = 2;
     public static final int LAYOUT_OPTION_NULL = -1;
     protected Menu menu;
+    protected SharkNetApi mApi;
     private int layoutInUse = LAYOUT_OPTION_NULL;
     private Fragment usedFragment;
     private int optionsMenuResource = 0;
-
+    private boolean mBound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         // Make FloatingActionButton invisible at default
         findViewById(R.id.fab).setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBound) {
+            unbindService(this);
+            mBound = false;
+        }
     }
 
     public SharkApp getSharkApp() {
@@ -70,6 +81,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        L.d("On Resume.", this);
+        Intent intent = new Intent(getApplicationContext(), SharkService.class);
+        bindService(intent, this, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -118,36 +137,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        L.d("On Resume.", this);
-        Intent intent = new Intent(getApplicationContext(), SharkService.class);
-        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        mBound = true;
+        SharkService sharkService = ((SharkService.LocalBinder) service).getService();
+        mApi = sharkService.getApi();
+        L.d("Service connected.", this);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mBound){
-            unbindService(mServiceConnection);
-            mBound = false;
-        }
+    public void onServiceDisconnected(ComponentName name) {
+        mBound = false;
+        L.d("Service disconnected.", this);
     }
-
-    private boolean mBound;
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mBound = true;
-            SharkService sharkService = ((SharkService.LocalBinder) service).getService();
-            L.d("Service connected.", this);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mBound = false;
-            L.d("Service disconnected.", this);
-        }
-    };
 }
 

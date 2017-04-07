@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
@@ -36,7 +36,6 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     private final static int MESSAGE_IS_NOT_MINE = 1;
     private final SharkApp mApp;
     private final Context mContext;
-    public Subscription mSubscription;
     private List<Message> mMessages = new ArrayList<>();
 
     public ChatDetailMsgListAdapter(Context context, SharkApp application) {
@@ -113,7 +112,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
         SimpleDateFormat format = new SimpleDateFormat("d. MMM yyyy, HH:mm", Locale.GERMANY);
         String date = format.format(message.getDate());
         holder.dateView.setText(date);
-        if (!message.getSender().equals(SharkNetApi.getInstance().getAccount())) {
+        if (!message.getSender().equals(SharkNetApiImpl.getInstance().getAccount())) {
             // image
             if (message.getSender().getImage() == null) {
                 holder.authorImageView.setImageResource(R.drawable.ic_person_white_24dp);
@@ -175,7 +174,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
     @Override
     public int getItemViewType(int position) {
         Message message = this.mMessages.get(position);
-        if (message.getSender().equals(SharkNetApi.getInstance().getAccount())) {
+        if (message.getSender().equals(SharkNetApiImpl.getInstance().getAccount())) {
             return MESSAGE_IS_MINE;
         } else {
             return MESSAGE_IS_NOT_MINE;

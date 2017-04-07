@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import net.sharkfw.system.L;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
@@ -50,7 +50,6 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setProgressMessage("Lade Kontakte...");
-        startSubscription();
 
         setTitle("Neuer Chat");
         mAdapter = new ContactCheckableListAdapter(this, getSharkApp());
@@ -91,7 +90,7 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
                         Single<Chat> single = Single.fromCallable(new Callable<Chat>() {
                             @Override
                             public Chat call() throws Exception {
-                                Chat chat = new Chat(SharkNetApi.getInstance().getAccount(), checkedContacts);
+                                Chat chat = new Chat(SharkNetApiImpl.getInstance().getAccount(), checkedContacts);
                                 chat.setTitle(mChatTitle.getText().toString());
                                 if (mBitmap != null) {
                                     chat.setImage(mBitmap);
@@ -111,7 +110,7 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
                             @Override
                             public void onSuccess(Chat value) {
                                 getSharkApp().setChat(value);
-                                SharkNetApi.getInstance().addChat(value);
+                                SharkNetApiImpl.getInstance().addChat(value);
                                 startActivity(new Intent(that, ChatDetailActivity.class));
                             }
 
@@ -136,7 +135,7 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
 
     @Override
     protected List<Contact> doOnBackgroundThread() throws Exception {
-        return SharkNetApi.getInstance().getContacts();
+        return mApi.getContacts();
     }
 
     @Override

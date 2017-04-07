@@ -10,7 +10,7 @@ import android.widget.TextView;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.security.SharkCertificate;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class PKIListAdapter extends BaseAdapter {
 
         numberOfSigners.setText("" + item.getCertificates().size());
 
-        PeerSemanticTag tag = SharkNetApi.getInstance().getAccount().getTag();
+        PeerSemanticTag tag = SharkNetApiImpl.getInstance().getAccount().getTag();
         boolean isSelfSigned = false;
 
         Iterator<SharkCertificate> iterator = item.getCertificates().iterator();

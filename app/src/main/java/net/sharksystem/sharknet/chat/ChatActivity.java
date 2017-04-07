@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.dao_impl.SharkNetApi;
+import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
@@ -24,8 +24,6 @@ public class ChatActivity extends RxSingleNavigationDrawerActivity<List<Chat>> {
         configureLayout();
 
         setProgressMessage("Lade Chats..");
-
-        startSubscription();
     }
 
     private void configureLayout() {
@@ -46,7 +44,7 @@ public class ChatActivity extends RxSingleNavigationDrawerActivity<List<Chat>> {
 
     @Override
     protected List<Chat> doOnBackgroundThread() throws SharkKBException {
-        return SharkNetApi.getInstance().getChats();
+        return mApi.getChats();
     }
 
     @Override

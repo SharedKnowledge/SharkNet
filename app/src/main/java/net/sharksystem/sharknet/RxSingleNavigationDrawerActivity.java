@@ -1,6 +1,8 @@
 package net.sharksystem.sharknet;
 
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.os.IBinder;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 
@@ -76,5 +78,11 @@ public abstract class RxSingleNavigationDrawerActivity<T> extends NavigationDraw
         if(mSubscription!=null && !mSubscription.isUnsubscribed()){
             mSubscription.unsubscribe();
         }
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+        startSubscription();
     }
 }
