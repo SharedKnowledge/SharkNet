@@ -45,6 +45,8 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
         view.findViewById(R.id.next_fragment).setOnClickListener(this);
         view.findViewById(R.id.previous_fragment).setOnClickListener(this);
 
+
+
         return view;
     }
 

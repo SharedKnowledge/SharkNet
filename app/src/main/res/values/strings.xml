@@ -130,6 +130,7 @@
     <string name="main_new_profile_address_label">E-Mail</string>
     <string name="main_new_profile_address_hint">bsp. max@mustermann.de</string>
     <string name="main_new_profile_password_label">Passwort</string>
+    <string name="main_new_profile_username_label">Username</string>
     <string name="main_new_profile_incoming_imap_server_label">Incoming IMAP Server</string>
     <string name="main_new_profile_outgoing_imap_server_label">Outgoing IMAP Server</string>
     <string name="main_new_profile_server_hint">[IP/URL]:[PORT]</string>

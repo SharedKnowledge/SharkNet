@@ -40,22 +40,16 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
-        L.d("App started.", this);
-
         if (savedInstanceState != null) {
             return;
         }
-
         mStartupFragment = new StartupFragment();
-
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mStartupFragment).commit();
     }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
-        mApi.initSharkEngine(this);
         onCreateDummyDataSelected();
     }
 

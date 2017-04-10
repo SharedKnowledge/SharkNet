@@ -27,21 +27,47 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="-1dp"
         android:labelFor="@+id/editTextMailPassword"
         android:text="@string/main_new_profile_password_label"
         android:textColor="@color/grey_300"
         android:textSize="20sp"
         android:textStyle="bold"
-        mApp:layout_constraintLeft_toLeftOf="parent"
-        mApp:layout_constraintTop_toBottomOf="@+id/editTextMailAddress"/>
+        mApp:layout_constraintTop_toBottomOf="@+id/editTextMailAddress"
+        android:layout_marginLeft="24dp"
+        mApp:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/editTextMailPassword"
+        android:text="@string/main_new_profile_username_label"
+        android:textColor="@color/grey_300"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="0dp"
+        mApp:layout_constraintLeft_toLeftOf="@+id/editTextUsername"
+        mApp:layout_constraintTop_toTopOf="@+id/textView5"
+        android:layout_marginTop="0dp"/>
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="159dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/main_new_profile_username_label"
+        android:inputType="text"
+        android:layout_marginRight="24dp"
+        mApp:layout_constraintRight_toRightOf="parent"
+        mApp:layout_constraintTop_toTopOf="@+id/editTextMailPassword"
+        android:layout_marginTop="0dp"/>
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="0dp"
         android:labelFor="@+id/editTextIncoming"
         android:text="@string/main_new_profile_incoming_imap_server_label"
@@ -119,15 +145,18 @@
 
     <EditText
         android:id="@+id/editTextMailPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="1dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
+        mApp:layout_constraintTop_toBottomOf="@+id/textView5"
+        mApp:layout_constraintRight_toLeftOf="@+id/editTextUsername"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="24dp"
         mApp:layout_constraintLeft_toLeftOf="parent"
-        mApp:layout_constraintTop_toBottomOf="@+id/textView5"/>
+        mApp:layout_constraintHorizontal_bias="0.486"/>
 
     <EditText
         android:id="@+id/editTextIncoming"
