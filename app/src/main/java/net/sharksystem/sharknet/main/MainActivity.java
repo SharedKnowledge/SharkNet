@@ -12,6 +12,7 @@ import android.widget.Toast;
 import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
+import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
-        onCreateDummyDataSelected();
+//        onCreateDummyDataSelected();
     }
 
     @Override
@@ -142,5 +143,9 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.remove(mNewProfileAddressFragment).commit();
         getSupportFragmentManager().popBackStack();
+    }
+
+    public SharkNetApi getApi(){
+        return mApi;
     }
 }

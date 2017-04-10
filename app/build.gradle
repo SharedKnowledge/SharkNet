@@ -5,6 +5,7 @@ android {
     buildToolsVersion '25.0.0'
 
     packagingOptions {
+        pickFirst 'META-INF/LICENSE.txt' // picks the JavaMail license file
 
         exclude 'META-INF/maven/plugin.xml'
         exclude 'META-INF/DEPENDENCIES'
@@ -12,6 +13,13 @@ android {
         exclude 'META-INF/maven/commons-io/commons-io/pom.xml'
         exclude 'META-INF/maven/commons-io/commons-io/pom.properties'
         exclude 'META-INF/LICENSE'
+
+        exclude 'META-INF/hk2-locator/default'
+        exclude 'META-INF/gfprobe-provider.xml'
+        exclude 'META-INF/mailcap'
+        exclude 'META-INF/javamail.default.address.map'
+        exclude 'META-INF/javamail.charset.map'
+        exclude 'META-INF/javamail.default.providers'
 
     }
     defaultConfig {
@@ -48,6 +56,8 @@ configurations.all {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    compile 'com.sun.mail:android-mail:1.5.5'
+    compile 'com.sun.mail:android-activation:1.5.5'
     //    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
