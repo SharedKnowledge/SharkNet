@@ -47,8 +47,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ServiceC
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         if (mBound) {
             unbindService(this);
             mBound = false;
@@ -76,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ServiceC
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer!= null && drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
