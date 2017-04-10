@@ -1,17 +1,23 @@
 package net.sharksystem.sharknet.radar;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharksystem.api.models.Contact;
+import net.sharksystem.api.shark.peer.NearbyPeer;
 import net.sharksystem.sharknet.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by j4rvis on 11/11/16.
@@ -19,26 +25,29 @@ import java.util.ArrayList;
 
 public class RadarListAdapter extends BaseAdapter {
 
+    private static boolean mIsTimerRunning;
+    private static int mElapsedTime;
+    private static Timer mTimer;
     private Context mContext = null;
-    private ArrayList<Contact> mContacts = new ArrayList<>();
+    private ArrayList<NearbyPeer> mNearbyPeers = new ArrayList<>();
 
     public RadarListAdapter(Context context) {
         mContext = context;
     }
 
-    public void updateList(ArrayList<Contact> contacts) {
-        mContacts = contacts;
+    public void updateList(ArrayList<NearbyPeer> peers) {
+        mNearbyPeers = peers;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return mContacts.size();
+        return mNearbyPeers.size();
     }
 
     @Override
-    public Contact getItem(int position) {
-        return mContacts.get(position);
+    public NearbyPeer getItem(int position) {
+        return mNearbyPeers.get(position);
     }
 
     @Override
@@ -49,19 +58,15 @@ public class RadarListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Contact contact = getItem(position);
+        NearbyPeer peer = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext)
-                    .inflate(R.layout.radar_contact_list_item, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.radar_contact_list_item, parent, false);
         }
 
-        ((TextView) convertView.findViewById(R.id.radar_contact_name)).setText(contact.getName());
-//        try {
-//            ((TextView) convertView.findViewById(R.id.radar_contact_last_seen)).setText(contact.getLastWifiContact().toString());
-//        } catch (SharkKBException e) {
-//            e.printStackTrace();
-//        }
+        ((TextView) convertView.findViewById(R.id.radar_contact_name)).setText(peer.getSender().getName());
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
+        ((TextView) convertView.findViewById(R.id.radar_contact_last_seen)).setText(format.format(peer.getLastSeen()));
 
         return convertView;
     }

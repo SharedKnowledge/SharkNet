@@ -1,13 +1,24 @@
 package net.sharksystem.sharknet.radar;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import net.sharksystem.api.models.Chat;
+import net.sharksystem.api.models.Contact;
+import net.sharksystem.api.shark.peer.NearbyPeer;
+import net.sharksystem.api.shark.peer.NearbyPeerManager;
 import net.sharksystem.sharknet.NavigationDrawerActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.chat.ChatDetailActivity;
 
-public class RadarActivity extends NavigationDrawerActivity {
+import java.util.ArrayList;
 
-    public static final String CHAT_ID = "CHAT_ID";
+public class RadarActivity extends NavigationDrawerActivity implements NearbyPeerManager.NearbyPeerListener {
 
     private RadarListAdapter mListAdapter;
 
@@ -21,34 +32,34 @@ public class RadarActivity extends NavigationDrawerActivity {
     protected void onResume() {
         super.onResume();
 
-//        SharkNetEngine.getSharkNet().addRadarListener(this);
-//        ListView listView = (ListView) findViewById(R.id.radar_list_view);
-//        mListAdapter = new RadarListAdapter(this);
-//        listView.setAdapter(mListAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                Contact contact = mListAdapter.getItem(position);
-//
-//                ArrayList<Contact> recipients = new ArrayList<>();
-//                recipients.add(contact);
-//                try {
-//                    recipients.add(SharkNetEngine.getSharkNet().getMyProfile());
-//                } catch (SharkKBException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    Chat chat = SharkNetEngine.getSharkNet().newChat(recipients);
-//                    Intent intent = new Intent(RadarActivity.this, ChatDetailActivity.class);
-//                    intent.putExtra(CHAT_ID, chat.getID());
-//                    startActivity(intent);
-//                } catch (SharkKBException | JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
+        ListView listView = (ListView) findViewById(R.id.radar_list_view);
+        mListAdapter = new RadarListAdapter(this);
+        listView.setAdapter(mListAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                NearbyPeer peer = mListAdapter.getItem(position);
+
+                Contact contact = new Contact(peer.getSender());
+                mApi.addContact(contact);
+
+                Chat chat = new Chat(mApi.getAccount(), contact);
+                mApi.addChat(chat);
+                getSharkApp().setChat(chat);
+                startActivity(new Intent(RadarActivity.this, ChatDetailActivity.class));
+            }
+        });
     }
 
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+        mApi.addRadarListener(this);
+    }
+
+    @Override
+    public void onNearbyPeerFound(ArrayList<NearbyPeer> peers) {
+        mListAdapter.updateList(peers);
+    }
 }

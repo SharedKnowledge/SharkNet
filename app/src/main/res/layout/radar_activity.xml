@@ -13,7 +13,6 @@
     tools:context=".radar.RadarActivity">
 
     <ListView
-        android:padding="16dp"
         android:id="@+id/radar_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

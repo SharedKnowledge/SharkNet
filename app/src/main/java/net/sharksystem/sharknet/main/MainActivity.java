@@ -9,13 +9,16 @@ import android.os.IBinder;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
+import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.dummy.Dummy;
+import net.sharksystem.sharknet.radar.RadarActivity;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import rx.Single;
@@ -58,7 +61,6 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (mSingleSubscription != null && !mSingleSubscription.isUnsubscribed()) {
             mSingleSubscription.unsubscribe();
         }
@@ -86,7 +88,6 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
             public Void call() throws Exception {
                 Dummy.createDummyData(that, mApi);
                 getSharkApp().setAccount(mApi.getAccount());
-//                SharkNetEngine.getSharkNet().startShark();
                 return null;
             }
         });
@@ -94,11 +95,16 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         mSingleSubscription = single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<Void>() {
             @Override
             public void onSuccess(Void value) {
-//                if(mProgressDialog.isShowing()){
-//                    mProgressDialog.dismiss();
-//                }
-//                Toast.makeText(that, "It worked!!!!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(that, ChatActivity.class));
+                try {
+                    mApi.getSharkEngine().startBluetooth();
+                } catch (SharkProtocolNotSupportedException | IOException e) {
+                    e.printStackTrace();
+                }
+                mApi.startRadar();
+                // Chat
+//                startActivity(new Intent(that, ChatActivity.class));
+                // Radar
+                startActivity(new Intent(that, RadarActivity.class));
             }
 
             @Override
