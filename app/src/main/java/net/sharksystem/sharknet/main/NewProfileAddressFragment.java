@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 
 /**
@@ -17,7 +18,7 @@ import net.sharksystem.sharknet.R;
 public class NewProfileAddressFragment extends Fragment implements View.OnClickListener {
 
     public interface NewProfileAddressFragmentButtonListener {
-        void onCreateProfile();
+        void onCreateProfile(Contact contact);
         void onBackToNewProfileFragment();
     }
 
@@ -51,7 +52,8 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.next_fragment:
-                mListener.onCreateProfile();
+                // TODO add contact details
+                mListener.onCreateProfile(null);
                 break;
             case R.id.previous_fragment:
                 mListener.onBackToNewProfileFragment();

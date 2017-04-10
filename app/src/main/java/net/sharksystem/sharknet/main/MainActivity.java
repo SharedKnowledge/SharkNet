@@ -12,6 +12,7 @@ import android.widget.Toast;
 import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
+import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.chat.ChatActivity;
@@ -138,7 +139,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     }
 
     @Override
-    public void onCreateProfile() {
+    public void onCreateProfile(Contact contact) {
 
     }
 
