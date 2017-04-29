@@ -15,11 +15,15 @@ import net.sharkfw.ports.KnowledgePort;
 
 public class MailServerPingPort extends KnowledgePort {
 
-    private final OnMailServerPingListener mPingListener;
+    private OnMailServerPingListener mPingListener;
 
     public MailServerPingPort(SharkEngine se, OnMailServerPingListener listener) {
         super(se);
         mPingListener = listener;
+    }
+
+    public void deleteListeners(){
+        mPingListener = null;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class MailServerPingPort extends KnowledgePort {
     protected void handleExpose(ASIPInMessage message, ASIPConnection asipConnection, ASIPInterest interest) throws SharkKBException {
         if (!SharkCSAlgebra.identical(NewProfileAddressFragment.MAIL_SERVER_PING_TYPE, message.getType()))
             return;
-        mPingListener.onPingSuccessful();
+        if(mPingListener!=null) mPingListener.onPingSuccessful();
     }
 
     public interface OnMailServerPingListener {

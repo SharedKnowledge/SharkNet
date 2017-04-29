@@ -2,6 +2,7 @@ package net.sharksystem.sharknet.main;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.protocols.Protocols;
 import net.sharkfw.system.L;
+import net.sharkfw.system.SharkException;
 import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
@@ -42,6 +44,8 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
     private AndroidSharkEngine mEngine;
     private ProgressDialog mProgressDialog;
     private Handler mHandler;
+    private SharkNetApi mApi;
+    private MailServerPingPort mServerPingPort;
 
     @Override
     public void onPingSuccessful() {
@@ -52,6 +56,7 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
                 mTextServerStatus.setText("Ping successful!");
                 mCreateContact.setVisibility(View.VISIBLE);
                 mEngine.stopMail();
+                mServerPingPort.deleteListeners();
                 if(mProgressDialog.isShowing()) mProgressDialog.dismiss();
             }
         });
@@ -70,6 +75,11 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement NewProfileAddressFragmentButtonListener.");
         }
+
+        mApi = ((MainActivity) getActivity()).getApi();
+        mEngine = mApi.getSharkEngine();
+        mEngine.stopMail();
+        mServerPingPort = new MailServerPingPort(mApi.getSharkEngine(), this);
     }
 
     @Nullable
@@ -108,8 +118,6 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
             case R.id.buttonTestServer:
                 L.d("Status checking", this);
                 // TODO check if fields are empty
-                SharkNetApi api = ((MainActivity) getActivity()).getApi();
-                mEngine = api.getSharkEngine();
 
                 String mailAddress = mEditAddress.getText().toString();
                 String mailPassword = mEditPassword.getText().toString();
@@ -121,9 +129,9 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
                 PeerSemanticTag owner = InMemoSharkKB.createInMemoPeerSemanticTag("Owner", "si:owner", Protocols.MAIL_PREFIX + mailAddress);
                 mEngine.setEngineOwnerPeer(owner);
 
+                // Reset MailConfiguration @startup
                 mEngine.setMailConfiguration(mailOutgoingHost, mailUsername, mailPassword, false, mailIncomingHost, mailUsername, mailAddress, mailPassword, 3, false);
-                new MailServerPingPort(api.getSharkEngine(), this);
-                api.pingMailServer(MAIL_SERVER_PING_TYPE, owner);
+                mApi.pingMailServer(MAIL_SERVER_PING_TYPE, owner);
                 mProgressDialog.show();
                 Runnable runnable = new Runnable() {
                     @Override
@@ -134,11 +142,14 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
                         }
                     }
                 };
-                mHandler.postDelayed(runnable, 5000);
+                mHandler.postDelayed(runnable, 10000);
                 break;
             case R.id.next_fragment:
-                // TODO add contact details
-                mListener.onCreateProfile(null);
+                String contactName = ((MainActivity) getActivity()).mContactName;
+                Bitmap contactImage = ((MainActivity) getActivity()).mContactImage;
+                Contact contact = new Contact(contactName, mEditAddress.getText().toString());
+                if(contactImage!=null) contact.setImage(contactImage);
+                mListener.onCreateProfile(contact);
                 break;
             case R.id.previous_fragment:
                 mListener.onBackToNewProfileFragment();

@@ -85,6 +85,7 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                ((MainActivity) getActivity()).mContactImage = bitmap;
                 mProfileImage.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -99,7 +100,7 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
                 if (mProfileName.getText().toString().isEmpty()) {
                     Snackbar.make(v, R.string.main_new_profile_empty_name, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    // TODO save the name somewhere!
+                    ((MainActivity) getActivity()).mContactName = mProfileName.getText().toString();
                     mListener.onNextFragment();
                 }
                 break;

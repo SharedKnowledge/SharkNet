@@ -11,6 +11,7 @@
     mApp:cardElevation="0dp">
 
     <ImageView
+        android:scaleType="centerCrop"
         android:id="@+id/round_image"
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_height="match_parent"

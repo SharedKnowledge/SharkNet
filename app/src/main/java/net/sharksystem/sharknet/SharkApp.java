@@ -1,7 +1,7 @@
 package net.sharksystem.sharknet;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
@@ -12,14 +12,13 @@ import net.sharksystem.api.models.Message;
  * Created by j4rvis on 3/13/17.
  */
 
-public class SharkApp extends Application {
+public class SharkApp extends MultiDexApplication {
 
+    private static SharkApp instance;
     private Chat chat = null;
     private Contact contact = null;
     private Message message = null;
     private Contact account = null;
-
-    private static SharkApp instance;
 
     public SharkApp() {
         instance = this;

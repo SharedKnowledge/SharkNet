@@ -30,6 +30,7 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
     private AlertDialog onMessageDialog;
     private AlertDialog onPublicKeyDialog;
     private AlertDialog onCertificateDialog;
+    private boolean mIsStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
             @Override
             public void run() {
 
-                if (onMessageDialog.isShowing()) {
+                if (onMessageDialog!=null && onMessageDialog.isShowing()) {
                     onMessageDialog.dismiss();
                 }
 
@@ -105,7 +106,7 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
             @Override
             public void run() {
 
-                if (onPublicKeyDialog.isShowing()) {
+                if (onPublicKeyDialog!=null&&onPublicKeyDialog.isShowing()) {
                     onPublicKeyDialog.dismiss();
                 }
 
@@ -154,9 +155,15 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                button.setText("NFC started...");
-                mApi.startNFC();
+                if(mIsStarted){
+                    button.setText("Start NFC");
+                    mApi.stopNFC();
+                    mIsStarted = false;
+                } else {
+                    button.setText("Stop NFC");
+                    mApi.startNFC();
+                    mIsStarted = true;
+                }
             }
         });
     }

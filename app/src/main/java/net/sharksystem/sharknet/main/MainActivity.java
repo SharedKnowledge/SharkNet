@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.FragmentTransaction;
@@ -36,6 +37,9 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     private NewProfileAddressFragment mNewProfileAddressFragment;
     private Subscription mSingleSubscription;
     private ProgressDialog mProgressDialog;
+
+    public Bitmap mContactImage;
+    public String mContactName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +82,10 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         mProgressDialog.setMessage("Lade Dummy Daten...");
         mProgressDialog.show();
 
-        final Context that = this;
         Single<Void> single = Single.fromCallable(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                Dummy.createDummyData(that, mApi);
+                Dummy.createDummyData(MainActivity.this, mApi);
                 getSharkApp().setAccount(mApi.getAccount());
                 return null;
             }
@@ -100,13 +103,14 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
                 // Chat
 //                startActivity(new Intent(that, ChatActivity.class));
                 // Radar
-                startActivity(new Intent(that, RadarActivity.class));
+                startActivity(new Intent(MainActivity.this, RadarActivity.class));
             }
 
             @Override
             public void onError(Throwable error) {
-                L.e(error.getMessage(), that);
-                Toast.makeText(that, "Creating Dummy Data failed.", Toast.LENGTH_SHORT).show();
+                L.e(error.getMessage(), MainActivity.this);
+                Toast.makeText(MainActivity.this, "Creating Dummy Data failed.", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
             }
         });
 
@@ -134,7 +138,43 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     }
 
     @Override
-    public void onCreateProfile(Contact contact) {
+    public void onCreateProfile(final Contact contact) {
+        Single<Object> single = Single.fromCallable(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                mApi.setAccount(contact);
+                getSharkApp().setAccount(mApi.getAccount());
+                mApi.initPki();
+                return null;
+            }
+        });
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Erstelle Kontakt...");
+        mProgressDialog.show();
+
+        mSingleSubscription = single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<Object>() {
+            @Override
+            public void onSuccess(Object value) {
+                try {
+                    mApi.getSharkEngine().startBluetooth();
+                } catch (SharkProtocolNotSupportedException | IOException e) {
+                    e.printStackTrace();
+                }
+                mApi.startRadar();
+                // Chat
+//                startActivity(new Intent(that, ChatActivity.class));
+                // Radar
+                startActivity(new Intent(MainActivity.this, RadarActivity.class));
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                L.e(error.getMessage(), MainActivity.this);
+                Toast.makeText(MainActivity.this, "Kontakt Erstellen schlug fehl...", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+            }
+        });
 
     }
 

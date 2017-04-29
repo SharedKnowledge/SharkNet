@@ -2,6 +2,7 @@ package net.sharksystem.sharknet.account;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +48,9 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> {
         }
         name.setText(contact.getName());
         email.setText(contact.getEmail());
+
+        findViewById(R.id.contact_block).setVisibility(View.GONE);
+        findViewById(R.id.contact_delete).setVisibility(View.GONE);
     }
 
     @Override
