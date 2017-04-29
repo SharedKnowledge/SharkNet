@@ -100,6 +100,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
                     e.printStackTrace();
                 }
                 mApi.startRadar();
+                mApi.allowSyncInvitation(true);
                 // Chat
 //                startActivity(new Intent(that, ChatActivity.class));
                 // Radar
@@ -162,6 +163,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
                     e.printStackTrace();
                 }
                 mApi.startRadar();
+                mApi.allowSyncInvitation(true);
                 // Chat
 //                startActivity(new Intent(that, ChatActivity.class));
                 // Radar

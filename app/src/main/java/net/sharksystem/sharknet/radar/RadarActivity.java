@@ -59,7 +59,17 @@ public class RadarActivity extends NavigationDrawerActivity implements NearbyPee
     }
 
     @Override
-    public void onNearbyPeerFound(ArrayList<NearbyPeer> peers) {
-        mListAdapter.updateList(peers);
+    public void onNearbyPeersFound(final ArrayList<NearbyPeer> peers) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mListAdapter.updateList(peers);
+            }
+        });
+    }
+
+    @Override
+    public void onNearbyPeerFound(NearbyPeer peer) {
+        mApi.addContact(new Contact(peer.getSender()));
     }
 }

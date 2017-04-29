@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -116,7 +117,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
             // image
             if (message.getSender().getImage() == null) {
                 holder.authorImageView.setImageResource(R.drawable.ic_person_white_24dp);
-                holder.authorImageView.setLayoutParams(new ViewGroup.LayoutParams(35, 35));
+                holder.authorImageView.setLayoutParams(new FrameLayout.LayoutParams(35, 35));
             } else {
                 holder.authorImageView.setImageBitmap(message.getSender().getImage());
             }

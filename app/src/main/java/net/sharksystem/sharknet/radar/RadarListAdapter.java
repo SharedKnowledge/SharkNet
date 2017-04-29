@@ -65,7 +65,7 @@ public class RadarListAdapter extends BaseAdapter {
         }
 
         ((TextView) convertView.findViewById(R.id.radar_contact_name)).setText(peer.getSender().getName());
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         ((TextView) convertView.findViewById(R.id.radar_contact_last_seen)).setText(format.format(peer.getLastSeen()));
 
         return convertView;
