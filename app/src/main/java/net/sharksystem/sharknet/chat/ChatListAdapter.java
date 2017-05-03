@@ -51,6 +51,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         final Chat chat = mChats.get(position);
 
+//        if(chat.getMessages().isEmpty()) return;
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
-//        onCreateDummyDataSelected();
+        onCreateDummyDataSelected();
     }
 
     @Override
