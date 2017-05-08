@@ -25,6 +25,9 @@ public abstract class RxSingleBaseActivity<T> extends BaseActivity {
     protected void setProgressMessage(String message){
         mProgressMessage = message;
     }
+    protected void setProgressMessage(int resource){
+        mProgressMessage = getResources().getString(resource);
+    }
 
     protected void startSubscription(){
 

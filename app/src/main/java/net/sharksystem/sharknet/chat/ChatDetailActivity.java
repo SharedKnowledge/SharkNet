@@ -18,6 +18,7 @@ import net.sharkfw.knowledgeBase.sync.manager.SyncComponent;
 import net.sharkfw.knowledgeBase.sync.manager.port.SyncMergeKP;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
+import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
@@ -41,9 +42,16 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
             mChat = getSharkApp().getChat();
         }
         // TODO what if we reload the messages?
-        setTitle(mChat.getTitle());
+        List<Contact> contacts = mChat.getContacts();
+        contacts.remove(getSharkApp().getAccount());
 
-        setProgressMessage("Lade Nachrichten...");
+        if (mChat.getTitle() != null) {
+            setTitle(mChat.getTitle());
+        } else if (contacts.size() == 1) {
+            setTitle(contacts.get(0).getName());
+        }
+
+        setProgressMessage(R.string.chat_progress_load_messages);
     }
 
     @Override

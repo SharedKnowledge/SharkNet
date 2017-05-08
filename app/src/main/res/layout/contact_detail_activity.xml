@@ -54,7 +54,6 @@
 
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/name"
         android:inputType="textPersonName"
         android:theme="@style/MyEditTextTheme"
         tools:layout_conversion_absoluteX="16dp"
@@ -85,8 +84,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-
-        android:hint="@string/email_fake"
         android:inputType="textEmailAddress"
         android:theme="@style/MyEditTextTheme"
         tools:layout_conversion_absoluteX="16dp"

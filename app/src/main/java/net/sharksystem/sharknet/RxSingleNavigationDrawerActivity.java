@@ -27,6 +27,9 @@ public abstract class RxSingleNavigationDrawerActivity<T> extends NavigationDraw
     protected void setProgressMessage(String message){
         mProgressMessage = message;
     }
+    protected void setProgressMessage(int resource){
+        mProgressMessage = getResources().getString(resource);
+    }
 
     protected void startSubscription(){
 

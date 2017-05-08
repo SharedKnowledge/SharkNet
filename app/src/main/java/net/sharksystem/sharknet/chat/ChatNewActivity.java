@@ -49,9 +49,9 @@ public class ChatNewActivity extends RxSingleBaseActivity<List<Contact>> {
         setOptionsMenu(R.menu.chat_new_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setProgressMessage("Lade Kontakte...");
+        setProgressMessage(R.string.chat_progress_load_contacts);
 
-        setTitle("Neuer Chat");
+        setTitle(R.string.chat_new);
         mAdapter = new ContactCheckableListAdapter(getSharkApp());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.contact_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

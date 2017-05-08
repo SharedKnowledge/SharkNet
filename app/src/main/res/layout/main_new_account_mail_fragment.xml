@@ -149,7 +149,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:ems="10"
-        android:hint="@string/password"
         android:inputType="textPassword"
         mApp:layout_constraintTop_toBottomOf="@+id/textView5"
         mApp:layout_constraintRight_toLeftOf="@+id/editTextMailUsername"

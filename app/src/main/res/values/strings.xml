@@ -1,68 +1,21 @@
 <resources>
     <string name="app_name">SharkNet</string>
-    <string name="nickname">Nickname</string>
-    <string name="password">Password</string>
-    <string name="create">New</string>
-    <string name="go">Go</string>
 
     <!--Activity titles-->
     <string name="activity_title_contacts">Contacts</string>
     <string name="activity_title_con_new">New Contact</string>
     <string name="activity_title_con_detail_view">Contact</string>
     <string name="activity_title_chat_new">Create new Chat</string>
-    <string name="activity_title_chat_detail">ChatDetailActivity</string>
+    <string name="activity_title_chat_detail">Chat Messages</string>
     <string name="activity_title_chat_detail_add_contact">New Contact</string>
-    <string name="activity_title_chat_detail_settings">ChatDetailSettings</string>
+    <string name="activity_title_chat_detail_settings">Chat Settings</string>
     <string name="activity_title_radar">Radar</string>
-    <string name="activity_title_nfc">NFCActivity</string>
+    <string name="activity_title_nfc">NFC</string>
     <string name="activity_title_chat">Chats</string>
     <string name="activity_title_profile">Profil</string>
     <string name="activity_title_pki">PKI</string>
     <string name="activity_title_account">Account</string>
-    <string name="activity_title_chat_settings">Einstellungen</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="sharknet_logo">Sharknet Logo</string>
-    <string name="help">Help</string>
-    <string name="about">About</string>
-    <string name="name">Name</string>
-    <string name="default_msg">Text aus der Nachricht</string>
-    <string name="new_chat">Chat title</string>
-    <string name="pro_edit">My Profile</string>
-    <string name="pro_interests">My Interests</string>
-    <string name="pro_email">My e-Mails</string>
-    <string name="pro_keys">My Keys</string>
-    <string name="pro_nickname">Nickname</string>
-    <string name="pro_email_label">e-Mail</string>
-    <string name="send">send</string>
-    <string name="write_a_message">write a content</string>
-    <string name="prifiel_image">Prifiel Image</string>
-    <string name="e_mail">e-Mail</string>
-    <string name="email_fake">your@email.com</string>
-    <string name="phone">Phone</string>
-    <string name="phone_fake">0305655434</string>
-    <string name="note">Note</string>
-    <string name="some_notes">some notes</string>
-    <string name="title">Title</string>
-    <string name="nfc">NFC</string>
-    <string name="bluetooth">Bluetooth</string>
-    <string name="tcp">TCP</string>
-    <string name="wifi">Wifi</string>
-    <string name="radar">Radar</string>
-    <string name="links">links</string>
-    <string name="rechts">rechts</string>
-    <string name="profile_picture">Profile Picture</string>
-    <string name="Speichern">save</string>
-    <string name="search">search</string>
-    <string name="profileimage">ProfileImage</string>
-    <string name="feeds">Feeds</string>
-    <string name="system">System</string>
-    <string name="_1_message_unread">1 content unread</string>
-    <string name="delete">delete</string>
-    <string name="blacklist">blacklist</string>
-    <string name="me">Me</string>
-    <string name="attachment">attachment</string>
-    <string name="file">file</string>
+    <string name="activity_title_chat_settings">Settings</string>
 
     <!--SideNav / Menu-->
     <!-- SideNav / Menu -->
@@ -74,11 +27,10 @@
     <!--<string name="sidenav_item_log">Logs</string>-->
 
     <string name="sidenav_item_radar">Radar</string>
-    <string name="sidenav_item_contacts">Kontakte</string>
+    <string name="sidenav_item_contacts">Contacts</string>
     <string name="sidenav_item_chats">Chats</string>
     <string name="sidenav_item_account">Account</string>
     <string name="sidenav_item_nfc">NFC</string>
-    <string name="sidenav_item_inbox">Inbox</string>
     <string name="sidenav_item_pki">PKI</string>
 
     <string name="generate_dummy_data">Generate Dummy data</string>
@@ -86,58 +38,61 @@
     <string name="activity_title_pki_public_key_detail">PublicKey Detail</string>
     <string name="init_owner">Init Owner</string>
     <string name="activity_title_pki_detail">PKI Detail</string>
-    <string name="nfc_message_received_msg">Wir haben eine neue Nachricht erhalten.</string>
-    <string name="nfc_message_received_title">Neue Nachricht</string>
+    <string name="nfc_message_received_msg">We received a new Message.</string>
+    <string name="nfc_message_received_title">New Message</string>
 
     <!--Chat-->
-    <string name="contact_profile">Kontakt Profil</string>
-    <string name="contact_block">Kontakt blocken</string>
-    <string name="message_detail">Nachrichten Details</string>
-    <string name="message_dislike">Nachricht ist blöd</string>
+    <string name="contact_profile">Contact profile</string>
+    <string name="contact_block">Block Contact</string>
+    <string name="message_detail">Message details</string>
+    <string name="message_dislike">The Message is dumb</string>
     <string name="activity_title_chat_message_detail">ChatMessageDetailActivity</string>
-    <string name="chat_delete">Chat löschen</string>
-    <string name="chat_settings">Einstellungen</string>
-    <string name="chat_attachment">Anhänge</string>
-    <string name="chat_attachment_take_photo">Foto erstellen</string>
-    <string name="chat_attachment_send_file">Datei anhängen</string>
-    <string name="chat_attachment_send_photo">Foto hinzufügen</string>
-    <string name="chat_new_create">Erstellen</string>
-    <string name="chat_settings_save">Speichern</string>
-    <string name="chat_add_contact">Hinzufügen</string>
+    <string name="chat_delete">Delete Chat</string>
+    <string name="chat_settings">Settings</string>
+    <string name="chat_attachment">Attachments</string>
+    <string name="chat_attachment_take_photo">Create Photo</string>
+    <string name="chat_attachment_send_file">Attach file</string>
+    <string name="chat_attachment_send_photo">Add Photo</string>
+    <string name="chat_new_create">Create</string>
+    <string name="chat_settings_save">Save</string>
+    <string name="chat_add_contact">Add</string>
+    <string name="chat_progress_load_messages">Loading Messages</string>
+    <string name="chat_progress_load_chats">Loading Chats</string>
+    <string name="chat_new">New Chat</string>
+    <string name="chat_progress_load_contacts">Loading Contacts</string>
 
     <!--Contact-->
     <string name="contact_label_name">Name</string>
-    <string name="contact_image_description">Profilbild</string>
-    <string name="contact_label_nickname">Nickame</string>
+    <string name="contact_image_description">Profile picture</string>
+    <string name="contact_label_nickname">Username</string>
     <string name="contact_label_email">Email</string>
-    <string name="contact_button_block">Blocken</string>
-    <string name="contact_button_delete">Löschen</string>
-    <string name="contact_button_key">PublicKey ansehen</string>
+    <string name="contact_button_block">Block</string>
+    <string name="contact_button_delete">Delete</string>
+    <string name="contact_button_key">Show PublicKey</string>
 
     <!--Startup + login-->
-    <string name="main_startup_profile">altes Profil verwenden</string>
-    <string name="main_startup_new_profile">neues Profil erstellen</string>
-    <string name="main_startup_dummy">Dummy Daten erzeugen</string>
-    <string name="main_new_profile_image_label">Profilbild</string>
+    <string name="main_startup_profile">Use old Account</string>
+    <string name="main_startup_new_profile">Create new Account</string>
+    <string name="main_new_profile_image_label">Profile picture</string>
     <string name="main_new_profile_name_info"></string>
-    <string name="main_new_profile_name_label">Profilname</string>
-    <string name="main_new_profile_name_hint">bsp. Max Mustermann oder Son Goku</string>
+    <string name="main_new_profile_name_label">Account name</string>
+    <string name="main_new_profile_name_hint">e.g. Max Mustermann or Son Goku</string>
     <string name="main_new_profile_address_info">The here provided Information will allow us to activate the
     Mail functionality. Therefor it will be possible to send and retrieve Messages using Mail.
     We recommend not using Emails from the big companies to provide multiple different servers.</string>
-    <string name="main_new_profile_address_label">E-Mail</string>
-    <string name="main_new_profile_address_hint">bsp. max@mustermann.de</string>
-    <string name="main_new_profile_password_label">Passwort</string>
+    <string name="main_new_profile_address_label">Mail</string>
+    <string name="main_new_profile_address_hint">e.g. max@mustermann.de</string>
+    <string name="main_new_profile_password_label">Password</string>
     <string name="main_new_profile_username_label">Username</string>
-    <string name="main_new_profile_incoming_imap_server_label">Incoming IMAP Server</string>
-    <string name="main_new_profile_outgoing_imap_server_label">Outgoing IMAP Server</string>
-    <string name="main_new_profile_server_hint">[IP/URL]:[PORT]</string>
-    <string name="main_new_profile_server_test_button">Server testen</string>
-    <string name="main_new_profile_server_test_status">noch nicht getestet</string>
-    <string name="main_new_profile_next_fragment">Weiter</string>
-    <string name="main_new_profile_finish">Account erstellen</string>
-    <string name="main_previous_fragment">Zurück</string>
-    <string name="main_new_profile_empty_name">Der Name darf nicht leer sein.</string>
+    <string name="main_new_profile_incoming_imap_server_label">POP3 Server</string>
+    <string name="main_new_profile_outgoing_imap_server_label">SMTP Server</string>
+    <string name="main_new_profile_server_hint">[IP/URL]</string>
+    <string name="main_new_profile_server_test_button">test Server</string>
+    <string name="main_new_profile_server_test_status">not yet tested</string>
+    <string name="main_new_profile_next_fragment">Next</string>
+    <string name="main_new_profile_finish">Create Account</string>
+    <string name="main_previous_fragment">Back</string>
+    <string name="main_new_profile_empty_name">The name should not be empty.</string>
 
     <!-- NFC -->
     <string name="nfc_info_before">NFC will allow you to exchange your profile data with another peer and also

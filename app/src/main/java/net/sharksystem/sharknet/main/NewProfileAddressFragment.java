@@ -54,7 +54,7 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
             @Override
             public void run() {
                 mTextServerStatus.setText("Ping successful!");
-                mCreateContact.setVisibility(View.VISIBLE);
+//                mCreateContact.setVisibility(View.VISIBLE);
                 mEngine.stopMail();
                 mServerPingPort.deleteListeners();
                 if(mProgressDialog.isShowing()) mProgressDialog.dismiss();
@@ -90,7 +90,7 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
 
         mCreateContact = (Button) view.findViewById(R.id.next_fragment);
         mCreateContact.setOnClickListener(this);
-        mCreateContact.setVisibility(View.GONE);
+//        mCreateContact.setVisibility(View.GONE);
 
         view.findViewById(R.id.previous_fragment).setOnClickListener(this);
         view.findViewById(R.id.buttonTestServer).setOnClickListener(this);

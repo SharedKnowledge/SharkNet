@@ -23,7 +23,7 @@ public class ChatActivity extends RxSingleNavigationDrawerActivity<List<Chat>> {
         super.onCreate(savedInstanceState);
         configureLayout();
 
-        setProgressMessage("Lade Chats..");
+        setProgressMessage(R.string.chat_progress_load_chats);
     }
 
     private void configureLayout() {

@@ -20,12 +20,12 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configureLayout();
-        setProgressMessage("Lade Kontakte...");
+        setProgressMessage(R.string.chat_progress_load_contacts);
     }
 
     private void configureLayout() {
         setLayoutResource(R.layout.contact_activity);
-        setTitle("Kontakte");
+        setTitle(R.string.activity_title_contacts);
         mAdapter = new ContactListAdapter(this, getSharkApp());
         RecyclerView mChatRecyclerView = (RecyclerView) findViewById(R.id.contact_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -39,7 +39,6 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
 
     @Override
     protected void doOnUIThread(List<Contact> contacts) {
-        L.d("Contacts: " + contacts.size(), this);
         mAdapter.setList(contacts);
     }
 
