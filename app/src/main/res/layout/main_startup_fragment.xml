@@ -51,21 +51,6 @@
         mApp:layout_constraintRight_toRightOf="parent"
         mApp:layout_constraintTop_toBottomOf="@+id/button_use_previous_profile"/>
 
-    <Button
-        android:id="@+id/button_create_dummy_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/main_startup_dummy"
-        android:textColor="@color/grey_200"
-        android:theme="@style/Button.accent"
-        mApp:layout_constraintLeft_toLeftOf="parent"
-        mApp:layout_constraintRight_toRightOf="parent"
-        mApp:layout_constraintTop_toBottomOf="@+id/button_create_new_profile"
-        mApp:layout_constraintHorizontal_bias="0.503"/>
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

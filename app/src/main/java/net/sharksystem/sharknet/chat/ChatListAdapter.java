@@ -2,6 +2,7 @@ package net.sharksystem.sharknet.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.SharkApp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
@@ -37,6 +39,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     public void setChats(List<Chat> chats) {
         mChats = chats;
+//        Iterator<Chat> iterator = mChats.iterator();
+//        while(iterator.hasNext()) {
+//            Chat next = iterator.next();
+//            if(next.getMessages().isEmpty()) iterator.remove();
+//        }
         notifyDataSetChanged();
     }
 
@@ -50,8 +57,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     public void onBindViewHolder(final ChatListAdapter.ViewHolder holder, final int position) {
 
         final Chat chat = mChats.get(position);
-
-//        if(chat.getMessages().isEmpty()) return;
+        List<Contact> contacts = chat.getContacts();
+        contacts.remove(mAccount);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,13 +72,17 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
             holder.chatImage.setLayoutParams(params);
             holder.chatImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        } else if (chat.getContacts().size() > 1) {
+        } else if (contacts.size() > 1) {
             holder.chatImage.setImageResource(R.drawable.ic_group_white_24dp);
-        } else {
-            holder.chatImage.setImageBitmap(chat.getContacts().get(0).getImage());
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            holder.chatImage.setLayoutParams(params);
-            holder.chatImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        } else if(contacts.size()==1){
+            if(contacts.get(0).getImage()!=null){
+                holder.chatImage.setImageBitmap(contacts.get(0).getImage());
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                holder.chatImage.setLayoutParams(params);
+                holder.chatImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            } else {
+                holder.chatImage.setImageResource(R.drawable.ic_person_white_24dp);
+            }
         }
         List<Message> messages = chat.getMessages();
         if(!messages.isEmpty()){
@@ -87,13 +98,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         if (chat.getTitle() != null) {
             holder.chatName.setText(chat.getTitle());
-        } else if (chat.getContacts().size() == 1) {
-            Contact contact = chat.getContacts().get(0);
-            if (contact.equals(mAccount)) {
-                holder.chatName.setText(chat.getOwner().getName());
-            } else {
-                holder.chatName.setText(contact.getName());
-            }
+        } else if (contacts.size() == 1) {
+            holder.chatName.setText(contacts.get(0).getName());
         }
 
 

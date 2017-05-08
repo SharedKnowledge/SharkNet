@@ -1,43 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:mApp="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    mApp:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/button_nfc_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Start NFC" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <EditText
-                android:id="@+id/edittext_nfc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="3" />
-
-            <Button
-                android:id="@+id/button_set_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Set Data" />
-        </LinearLayout>
-    </LinearLayout>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:mApp="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             mApp:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                             tools:layout_editor_absoluteY="25dp"
+                                             tools:layout_editor_absoluteX="0dp">
 
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textView_nfc_start_info_before"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/nfc_info_before"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        mApp:layout_constraintHorizontal_bias="0.0"
+        mApp:layout_constraintLeft_toLeftOf="parent"
+        mApp:layout_constraintRight_toRightOf="parent"
+        mApp:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/button_nfc_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Start NFC"
+        android:layout_marginRight="8dp"
+        mApp:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        mApp:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        mApp:layout_constraintTop_toBottomOf="@+id/textView_nfc_start_info_before"/>
+
+    <TextView
+        android:id="@+id/textView_nfc_start_info_after"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/nfc_info_after"
+        android:textAlignment="center"
+        mApp:layout_constraintBottom_toBottomOf="parent"
+        mApp:layout_constraintLeft_toLeftOf="parent"
+        mApp:layout_constraintRight_toRightOf="parent"
+        mApp:layout_constraintTop_toBottomOf="@+id/button_nfc_start"/>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,7 +1,9 @@
 package net.sharksystem.sharknet.chat;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import net.sharkfw.knowledgeBase.SharkCSAlgebra;
+import net.sharkfw.knowledgeBase.SharkKB;
+import net.sharkfw.knowledgeBase.sync.manager.SyncComponent;
+import net.sharkfw.knowledgeBase.sync.manager.port.SyncMergeKP;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Message;
@@ -22,7 +28,7 @@ import java.util.List;
  * Created by j4rvis on 3/5/17.
  */
 
-public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> {
+public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> implements SyncMergeKP.SyncMergeListener {
     private ChatDetailMsgListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private Chat mChat;
@@ -44,6 +50,12 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> {
     public void onBackPressed() {
         getSharkApp().resetChat();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+        mApi.getSharkEngine().getSyncManager().addSyncMergeListener(this);
     }
 
     private void configureLayout() {
@@ -115,6 +127,18 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onNewMerge(SyncComponent component, SharkKB changes) {
+        if(SharkCSAlgebra.identical(mChat.getId(), component.getUniqueName())){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    startSubscription();
+                }
+            });
         }
     }
 }

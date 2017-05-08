@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              xmlns:mApp="http://schemas.android.com/apk/res-auto"
               android:background="@color/white"
               android:orientation="horizontal"
               android:padding="8dp">
@@ -11,14 +12,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/include_round_image_small" />
+        <android.support.v7.widget.CardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            mApp:cardElevation="0dp"
+            mApp:cardBackgroundColor="@color/accent"
+            mApp:cardCornerRadius="20dp">
+
+            <ImageView
+                android:id="@+id/round_image"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal">
+            </ImageView>
+
+        </android.support.v7.widget.CardView>
 
         <ImageView
             android:id="@+id/msg_item_state"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_verified_user_green_24dp"/>
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
 
@@ -80,8 +97,7 @@
             <ImageView
                 android:id="@+id/msg_item_encryption"
                 android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_vpn_key_dark_grey_24dp"/>
+                android:layout_height="16dp"/>
 
         </LinearLayout>
 

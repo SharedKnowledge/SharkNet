@@ -100,12 +100,12 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
         mEditUsername = (EditText) view.findViewById(R.id.editTextMailUsername);
         mEditIncoming = (EditText) view.findViewById(R.id.editTextIncoming);
         mEditOutgoing = (EditText) view.findViewById(R.id.editTextOutgoing);
-
-        mEditAddress.setText("mail@j4rvis.de");
-        mEditPassword.setText("password1");
-        mEditUsername.setText("j4rvisde-0001");
-        mEditIncoming.setText("pop.udag.de");
-        mEditOutgoing.setText("smtp.udag.de");
+//
+//        mEditAddress.setText("mail@j4rvis.de");
+//        mEditPassword.setText("password1");
+//        mEditUsername.setText("j4rvisde-0001");
+//        mEditIncoming.setText("pop.udag.de");
+//        mEditOutgoing.setText("smtp.udag.de");
 
         mTextServerStatus = (TextView) view.findViewById(R.id.textViewTestServerStatus);
 

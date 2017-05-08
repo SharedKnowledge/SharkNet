@@ -42,7 +42,7 @@ public class StartupFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.main_startup_fragment, container, false);
 
-        view.findViewById(R.id.button_create_dummy_data).setOnClickListener(this);
+//        view.findViewById(R.id.button_create_dummy_data).setOnClickListener(this);
         view.findViewById(R.id.button_use_previous_profile).setOnClickListener(this);
         view.findViewById(R.id.button_create_new_profile).setOnClickListener(this);
 
@@ -52,9 +52,9 @@ public class StartupFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button_create_dummy_data:
-                mListener.onCreateDummyDataSelected();
-                break;
+//            case R.id.button_create_dummy_data:
+//                mListener.onCreateDummyDataSelected();
+//                break;
             case R.id.button_use_previous_profile:
                 mListener.onUsePreviousProfileSelected();
                 break;

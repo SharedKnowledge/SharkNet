@@ -21,6 +21,7 @@ import net.sharksystem.api.models.Message;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -56,7 +57,7 @@ public class Dummy {
         Random random = new Random(System.currentTimeMillis());
 
         int numberOfContacts = 8;
-        for (int i = 0; i < numberOfContacts; i++){
+        for (int i = 0; i < numberOfContacts; i++) {
             contacts.add(dummyContactGenerator.newContact());
         }
 
@@ -87,18 +88,21 @@ public class Dummy {
         thirdChat.add(contacts.get(3));
 
         AssetManager assets = context.getResources().getAssets();
+
+        String[] pictures = assets.list("pictures/groups");
+
         Chat chat1 = new Chat(account, firstChat);
         chat1.setTitle("Erster Chat");
-        chat1.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/group01.jpg")));
+        chat1.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/" + pictures[0])));
         Chat chat2 = new Chat(account, secondChat);
         chat2.setTitle("Freitag?!");
-        chat2.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/group02.jpg")));
+        chat2.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/" + pictures[1])));
         Chat chat3 = new Chat(account, thirdChat);
         chat3.setTitle("PewPewPew");
-        chat3.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/group03.jpg")));
+        chat3.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/" + pictures[2])));
         Chat chat4 = new Chat(account, contacts);
         chat4.setTitle("Allesamt");
-        chat4.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/group04.jpg")));
+        chat4.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/" + pictures[3])));
         Chat chat5 = new Chat(account, contacts.get(2));
         Chat chat6 = new Chat(account, contacts.get(5));
         Chat chat7 = new Chat(account, contacts.get(4));
@@ -122,11 +126,18 @@ public class Dummy {
             contactList.add(chat.getOwner());
             int numberOfMessages = random.nextInt(20);
             long date = lastWeek;
-            for (int i = 0; i < numberOfMessages; i++){
+            for (int i = 0; i < numberOfMessages; i++) {
                 Contact contact = contactList.get(random.nextInt(contactList.size()));
-                date = Dummy.getNextRandomDate(date);
+                long max = System.currentTimeMillis();
+                Random anotherRandom = new Random(max+i);
+                date = date + anotherRandom.nextInt((int) (max - date));
                 Message message = new Message(contact);
                 message.setContent(lorem.getWords(2, 20));
+                message.setEncrypted(anotherRandom.nextBoolean());
+                message.setSigned(anotherRandom.nextBoolean());
+                if(message.isSigned()){
+                    message.setVerified(anotherRandom.nextBoolean());
+                }
                 message.setDate(new Date(date));
                 chat.addMessage(message);
             }
@@ -139,12 +150,12 @@ public class Dummy {
 
         try {
             pkiStorage.setPkiStorageOwner(account.getTag());
-            pkiStorage.generateNewKeyPair(1000*60*60*24*365);
+            pkiStorage.generateNewKeyPair(1000 * 60 * 60 * 24 * 365);
         } catch (SharkKBException | NoSuchAlgorithmException | IOException e) {
             L.e(e.getMessage());
         }
 
-        KeyPairGenerator keyPairGenerator = null;
+        KeyPairGenerator keyPairGenerator;
         try {
             keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             keyPairGenerator.initialize(2048);
@@ -164,11 +175,11 @@ public class Dummy {
 
         ArrayList<SharkPublicKey> keys = new ArrayList<>();
         Iterator<Map.Entry<Contact, KeyPair>> iterator = contactKeyPairHashMap.entrySet().iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Map.Entry<Contact, KeyPair> next = iterator.next();
             int randomDays = new Random(System.currentTimeMillis()).nextInt(100);
-            int sign = (randomDays % 2)==0 ? 1 : -1;
-            keys.add(pkiStorage.addUnsignedKey(next.getKey().getTag(), next.getValue().getPublic(), sign * (randomDays+1) * hour + today));
+            int sign = (randomDays % 2) == 0 ? 1 : -1;
+            keys.add(pkiStorage.addUnsignedKey(next.getKey().getTag(), next.getValue().getPublic(), sign * (randomDays + 1) * hour + today));
         }
 
         L.d("SharkPublicKeys created for each contact");
@@ -182,11 +193,11 @@ public class Dummy {
         L.d("Start random key signing between foreign keys");
 
         Iterator<Map.Entry<Contact, KeyPair>> iteratorAgain = contactKeyPairHashMap.entrySet().iterator();
-        while (iteratorAgain.hasNext()){
+        while (iteratorAgain.hasNext()) {
             Map.Entry<Contact, KeyPair> next = iteratorAgain.next();
             for (SharkPublicKey key : keys) {
-                if(!SharkCSAlgebra.identical(key.getOwner(), next.getKey().getTag())){
-                    if((new Random().nextInt(100) % 2)==0){
+                if (!SharkCSAlgebra.identical(key.getOwner(), next.getKey().getTag())) {
+                    if ((new Random().nextInt(100) % 2) == 0) {
                         pkiStorage.sign(key, next.getKey().getTag(), next.getValue().getPrivate());
                     }
                 }
@@ -194,9 +205,54 @@ public class Dummy {
         }
     }
 
-    private static long getNextRandomDate(long min){
+    private static long getNextRandomDate(long min) {
         long max = System.currentTimeMillis();
         Random random = new Random(max);
         return min + random.nextInt((int) (max - min));
     }
+
+}
+
+class DummyContactGenerator{
+    private final LoremIpsum loremIpsum;
+    private final AssetManager assets;
+    private final SharkNetApi api;
+    private String[] profilePictures;
+
+    public DummyContactGenerator(Context context, SharkNetApi api) {
+        loremIpsum = LoremIpsum.getInstance();
+        assets = context.getResources().getAssets();
+        this.api = api;
+        try {
+            profilePictures = assets.list("pictures/profiles");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Contact newContact(){
+        return newContact(new Random(System.currentTimeMillis()).nextInt(100) % 2 == 0);
+    }
+
+    public Contact newContact(boolean isFemale) {
+        String name, pictureName;
+        InputStream picture = null;
+        Random random = new Random(System.currentTimeMillis());
+        name = isFemale ? loremIpsum.getNameFemale() : loremIpsum.getNameMale();
+        String mail = "mail@" + name.toLowerCase().replace(" ", "") + ".de";
+        Contact contact = new Contact(name, mail);
+        pictureName = profilePictures[random.nextInt(profilePictures.length)];
+        try {
+            picture = assets.open("pictures/profiles/" + pictureName);
+        } catch (IOException e) {
+            L.d(e.getMessage(), this);
+            e.printStackTrace();
+        }
+        contact.setImage(BitmapFactory.decodeStream(picture));
+
+
+        api.addContact(contact);
+        return contact;
+    }
+
 }

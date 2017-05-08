@@ -31,7 +31,7 @@ public abstract class RxSingleBaseActivity<T> extends BaseActivity {
         if(!mProgressMessage.isEmpty()){
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage(mProgressMessage);
-            mProgressDialog.show();
+            if(!isFinishing()) mProgressDialog.show();
         }
 
         Single<T> single = Single.fromCallable(new Callable<T>() {

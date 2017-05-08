@@ -20,6 +20,8 @@ public class SharkApp extends MultiDexApplication {
     private Message message = null;
     private Contact account = null;
 
+    private boolean isDummy = false;
+
     public SharkApp() {
         instance = this;
     }
@@ -70,5 +72,13 @@ public class SharkApp extends MultiDexApplication {
 
     public void resetMessage() {
         this.message = null;
+    }
+
+    public void activateDummy(){
+        isDummy = true;
+    }
+
+    public boolean isDummy(){
+        return isDummy;
     }
 }

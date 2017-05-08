@@ -55,7 +55,10 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
-        onCreateDummyDataSelected();
+        // Switch dummy content
+//        getSharkApp().activateDummy();
+
+        if(getSharkApp().isDummy()) onCreateDummyDataSelected();
     }
 
     @Override
@@ -80,6 +83,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Lade Dummy Daten...");
+        mProgressDialog.setCancelable(false);
         mProgressDialog.show();
 
         Single<Void> single = Single.fromCallable(new Callable<Void>() {
@@ -102,9 +106,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
                 mApi.startRadar();
                 mApi.allowSyncInvitation(true);
                 // Chat
-//                startActivity(new Intent(that, ChatActivity.class));
-                // Radar
-                startActivity(new Intent(MainActivity.this, RadarActivity.class));
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
             }
 
             @Override
@@ -119,7 +121,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
 
     @Override
     public void onUsePreviousProfileSelected() {
-        Toast.makeText(this, "Load the profile and load the chat activity.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "This is not yet supported.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -165,9 +167,9 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
                 mApi.startRadar();
                 mApi.allowSyncInvitation(true);
                 // Chat
-//                startActivity(new Intent(that, ChatActivity.class));
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 // Radar
-                startActivity(new Intent(MainActivity.this, RadarActivity.class));
+//                startActivity(new Intent(MainActivity.this, RadarActivity.class));
             }
 
             @Override
