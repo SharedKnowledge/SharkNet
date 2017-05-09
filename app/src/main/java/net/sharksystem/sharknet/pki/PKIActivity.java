@@ -38,8 +38,13 @@ public class PKIActivity
         setLayoutResource(R.layout.pki_activity);
         setOptionsMenu(R.menu.pki);
         L.setLogLevel(L.LOGLEVEL_ALL);
-
         setProgressMessage("Lade Zertifikate...");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mNavigationView.setCheckedItem(R.id.sidenav_pki);
     }
 
     @Override

@@ -21,41 +21,46 @@ import java.util.ArrayList;
 public class RadarActivity extends NavigationDrawerActivity implements NearbyPeerManager.NearbyPeerListener {
 
     private RadarListAdapter mListAdapter;
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.radar_activity);
+        mListView = (ListView) findViewById(R.id.radar_list_view);
+        mListAdapter = new RadarListAdapter(this);
+        mListView.setAdapter(mListAdapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        ListView listView = (ListView) findViewById(R.id.radar_list_view);
-        mListAdapter = new RadarListAdapter(this);
-        listView.setAdapter(mListAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                NearbyPeer peer = mListAdapter.getItem(position);
-
-                Contact contact = new Contact(peer.getSender());
-                mApi.addContact(contact);
-
-                Chat chat = new Chat(mApi.getAccount(), contact);
-                mApi.addChat(chat);
-                getSharkApp().setChat(chat);
-                startActivity(new Intent(RadarActivity.this, ChatDetailActivity.class));
-            }
-        });
+        mNavigationView.setCheckedItem(R.id.sidenav_radar);
     }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
         mApi.addRadarListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                NearbyPeer peer = mListAdapter.getItem(position);
+
+                Contact contact = mApi.getContact(peer.getSender());
+                if(contact == null){
+                    contact = new Contact(peer.getSender());
+                    mApi.addContact(contact);
+                }
+
+                // TODO If we already have this contact just open the chat and do not create a new one
+                Chat chat = new Chat(mApi.getAccount(), contact);
+                mApi.addChat(chat);
+                getSharkApp().setChat(chat);
+                startActivity(new Intent(RadarActivity.this, ChatDetailActivity.class));
+            }
+        });
     }
 
     @Override
@@ -70,6 +75,6 @@ public class RadarActivity extends NavigationDrawerActivity implements NearbyPee
 
     @Override
     public void onNearbyPeerFound(NearbyPeer peer) {
-        mApi.addContact(new Contact(peer.getSender()));
+//        mApi.addContact(new Contact(peer.getSender()));
     }
 }

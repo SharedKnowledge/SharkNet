@@ -10,6 +10,8 @@ import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Contact>> {
@@ -23,6 +25,12 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
         setProgressMessage(R.string.chat_progress_load_contacts);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mNavigationView.setCheckedItem(R.id.sidenav_contact);
+    }
+
     private void configureLayout() {
         setLayoutResource(R.layout.contact_activity);
         setTitle(R.string.activity_title_contacts);
@@ -34,7 +42,14 @@ public class ContactActivity extends RxSingleNavigationDrawerActivity<List<Conta
 
     @Override
     protected List<Contact> doOnBackgroundThread() throws Exception {
-        return mApi.getContacts();
+        List<Contact> contacts = mApi.getContacts();
+        Collections.sort(contacts, new Comparator<Contact>() {
+            @Override
+            public int compare(Contact o1, Contact o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return contacts;
     }
 
     @Override

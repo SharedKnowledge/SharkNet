@@ -57,7 +57,9 @@ public class ContactCheckableListAdapter extends RecyclerView.Adapter<ContactChe
             holder.contactImage.setImageBitmap(contact.getImage());
         } else {
             holder.contactImage.setImageResource(R.drawable.ic_person_white_48dp);
-            holder.contactImage.setLayoutParams(new FrameLayout.LayoutParams(35, 35));
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            holder.contactImage.setLayoutParams(params);
+            holder.contactImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
         Chat chat = mApp.getChat();
         if (chat != null) {

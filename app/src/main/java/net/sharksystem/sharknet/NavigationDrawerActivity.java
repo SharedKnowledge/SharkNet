@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
+import net.sharksystem.api.models.Chat;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactActivity;
@@ -24,7 +25,11 @@ import net.sharksystem.sharknet.radar.RadarActivity;
  * Created by j4rvis on 1/31/17.
  */
 
-public abstract class NavigationDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public abstract class NavigationDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener {
+
+    private boolean mDrawerOpen;
+    private DrawerLayout mDrawer;
+    protected NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +40,25 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
         installActionBarAndSideNavDrawer();
     }
 
-    private Menu installActionBarAndSideNavDrawer() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mDrawerOpen){
+            mDrawer.closeDrawer(GravityCompat.START, false);
+        }
+    }
+    private void installActionBarAndSideNavDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.sidenav_drawer_open, R.string.sidenav_drawer_close);
-        drawer.addDrawerListener(toggle);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.sidenav_drawer_open, R.string.sidenav_drawer_close);
+        mDrawer.addDrawerListener(toggle);
+        mDrawer.addDrawerListener(this);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.sidenav_view);
-        TextView textView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.me);
+        mNavigationView = (NavigationView) findViewById(R.id.sidenav_view);
+        TextView textView = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.me);
         textView.setText(getSharkApp().getAccount().getName());
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,36 +66,67 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
                 startActivity(new Intent(getApplicationContext(), AccountDetailActivity.class));
             }
         });
-        navigationView.setNavigationItemSelectedListener(this);
-        return navigationView.getMenu();
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        Intent intent = null;
+
         switch (id) {
             case R.id.sidenav_chat:
-                startActivity(new Intent(this, ChatActivity.class));
-                return true;
+                if(this instanceof ChatActivity) closeDrawer();
+                intent = new Intent(this, ChatActivity.class);
+                break;
             case R.id.sidenav_contact:
-                startActivity(new Intent(this, ContactActivity.class));
-                return true;
+                if(this instanceof ContactActivity) closeDrawer();
+                intent = new Intent(this, ContactActivity.class);
+                break;
             case R.id.sidenav_radar:
-                startActivity(new Intent(this, RadarActivity.class));
-                return true;
+                if(this instanceof RadarActivity) closeDrawer();
+                intent = new Intent(this, RadarActivity.class);
+                break;
             case R.id.sidenav_nfc:
-                startActivity(new Intent(this, NFCActivity.class));
-                return true;
+                if(this instanceof NFCActivity) closeDrawer();
+                intent = new Intent(this, NFCActivity.class);
+                break;
             case R.id.sidenav_pki:
-                startActivity(new Intent(this, PKIActivity.class));
-                return true;
+                if(this instanceof PKIActivity) closeDrawer();
+                intent = new Intent(this, PKIActivity.class);
+                break;
             default:
                 break;
-
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if(intent != null){
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
         return true;
+    }
+
+    private void closeDrawer(){
+        mDrawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+        mDrawerOpen = true;
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+        mDrawerOpen = false;
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }

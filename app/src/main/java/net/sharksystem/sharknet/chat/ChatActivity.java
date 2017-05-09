@@ -26,6 +26,12 @@ public class ChatActivity extends RxSingleNavigationDrawerActivity<List<Chat>> {
         setProgressMessage(R.string.chat_progress_load_chats);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mNavigationView.setCheckedItem(R.id.sidenav_chat);
+    }
+
     private void configureLayout() {
         setLayoutResource(R.layout.chat_activity);
         setTitle("Chats");

@@ -27,7 +27,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:replace="android:icon, android:theme">
+        tools:replace="android:icon, android:theme, android:name">
         <activity
             android:name=".main.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

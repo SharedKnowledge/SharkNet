@@ -21,13 +21,32 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static net.sharksystem.api.shark.Application.getContext;
-
 /**
  * Created by j4rvis on 2/19/17.
  */
 
 public class PKIDetailActivity extends BaseActivity {
+
+    public static void justifyListViewHeightBasedOnChildren(ListView listView) {
+
+        ListAdapter adapter = listView.getAdapter();
+
+        if (adapter == null) {
+            return;
+        }
+        ViewGroup vg = listView;
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, vg);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams par = listView.getLayoutParams();
+        par.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        listView.setLayoutParams(par);
+        listView.requestLayout();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +65,7 @@ public class PKIDetailActivity extends BaseActivity {
 
         final SharkCertificate certificate = holder.getCertificates().get(0);
 
-        owner.setText(certificate.getOwner().getName() + "\n"
-                + Arrays.toString(certificate.getOwner().getSI()) + "\n"
-                + Arrays.toString(certificate.getOwner().getAddresses()));
+        owner.setText(certificate.getOwner().getName() + "\n" + Arrays.toString(certificate.getOwner().getSI()) + "\n" + Arrays.toString(certificate.getOwner().getAddresses()));
 
         ownerKey.setText(certificate.getOwnerPublicKey().toString());
 
@@ -79,27 +96,6 @@ public class PKIDetailActivity extends BaseActivity {
                 onBackPressed();
             }
         });
-    }
-
-    public static void justifyListViewHeightBasedOnChildren (ListView listView) {
-
-        ListAdapter adapter = listView.getAdapter();
-
-        if (adapter == null) {
-            return;
-        }
-        ViewGroup vg = listView;
-        int totalHeight = 0;
-        for (int i = 0; i < adapter.getCount(); i++) {
-            View listItem = adapter.getView(i, null, vg);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams par = listView.getLayoutParams();
-        par.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
-        listView.setLayoutParams(par);
-        listView.requestLayout();
     }
 
     @Override

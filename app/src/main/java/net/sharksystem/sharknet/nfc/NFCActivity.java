@@ -41,6 +41,12 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mNavigationView.setCheckedItem(R.id.sidenav_nfc);
+    }
+
+    @Override
     public void onMessageReceived() {
 
         runOnUiThread(new Runnable() {
