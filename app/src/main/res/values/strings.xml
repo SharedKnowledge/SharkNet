@@ -62,6 +62,7 @@
     <string name="chat_progress_load_chats">Loading Chats</string>
     <string name="chat_new">New Chat</string>
     <string name="chat_progress_load_contacts">Loading Contacts</string>
+    <string name="chat_write_hint">write Message</string>
 
     <!--Contact-->
     <string name="contact_label_name">Name</string>

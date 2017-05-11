@@ -49,7 +49,7 @@ public class ChatSettingsActivity extends RxSingleBaseActivity<List<Contact>> {
         setOptionsMenu(R.menu.chat_new_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setProgressMessage("Lade Kontakte...");
+        setProgressMessage(R.string.chat_progress_load_contacts);
 
         Chat chat = getSharkApp().getChat();
 
