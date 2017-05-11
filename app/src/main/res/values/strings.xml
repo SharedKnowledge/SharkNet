@@ -38,8 +38,10 @@
     <string name="activity_title_pki_public_key_detail">PublicKey Detail</string>
     <string name="init_owner">Init Owner</string>
     <string name="activity_title_pki_detail">PKI Detail</string>
-    <string name="nfc_message_received_msg">We received a new Message.</string>
+    <string name="nfc_message_received_msg">Send and Receive a Message</string>
     <string name="nfc_message_received_title">New Message</string>
+    <string name="nfc_message_completed_msg">The exchange was complete! You can decouple the phones!</string>
+    <string name="nfc_message_completed_title">Exchange complete!</string>
 
     <!--Chat-->
     <string name="contact_profile">Contact profile</string>

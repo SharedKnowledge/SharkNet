@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
         // Switch dummy content
-//        getSharkApp().activateDummy();
+        getSharkApp().activateDummy();
 
         if(getSharkApp().isDummy()) onCreateDummyDataSelected();
     }

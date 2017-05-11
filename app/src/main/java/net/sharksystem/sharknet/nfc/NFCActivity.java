@@ -11,6 +11,7 @@ import android.widget.Toast;
 import net.sharkfw.knowledgeBase.Knowledge;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.security.SharkCertificate;
+import net.sharkfw.system.L;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.api.shark.ports.NfcPkiPortEventListener;
@@ -25,9 +26,8 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
     final Context context = this;
     private Button button;
     private NfcPkiPortEventListener mNfcPkiPortEventListener;
-    //    private SharkNetEngine sharkNet;
-    private AndroidSharkEngine sharkEngine;
     private AlertDialog onMessageDialog;
+    private AlertDialog onMessageCompletedDialog;
     private AlertDialog onPublicKeyDialog;
     private AlertDialog onCertificateDialog;
     private boolean mIsStarted = false;
@@ -48,20 +48,39 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
 
     @Override
     public void onMessageReceived() {
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                if (onMessageDialog == null) {
+        if(onMessageDialog==null){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
                     AlertDialog.Builder builder = new AlertDialog.Builder(NFCActivity.this);
                     builder.setMessage(R.string.nfc_message_received_msg).setTitle(R.string.nfc_message_received_title);
                     onMessageDialog = builder.create();
                     onMessageDialog.show();
                 }
+            });
+        }
+    }
 
-            }
-        });
+    @Override
+    public void onMessageCompleted() {
+        if(onMessageCompletedDialog==null){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    L.d("OnMessage Completed", this);
+
+                    if (onMessageDialog!=null && onMessageDialog.isShowing()) {
+                        L.d("Dismiss onMessage!", this);
+                        onMessageDialog.dismiss();
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NFCActivity.this);
+                    builder.setMessage(R.string.nfc_message_completed_msg).setTitle(R.string.nfc_message_completed_title);
+                    onMessageCompletedDialog = builder.create();
+                    onMessageCompletedDialog.show();
+                }
+            });
+        }
     }
 
     @Override
@@ -82,8 +101,8 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
             @Override
             public void run() {
 
-                if (onMessageDialog!=null && onMessageDialog.isShowing()) {
-                    onMessageDialog.dismiss();
+                if (onMessageCompletedDialog!=null && onMessageCompletedDialog.isShowing()) {
+                    onMessageCompletedDialog.dismiss();
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(NFCActivity.this);
