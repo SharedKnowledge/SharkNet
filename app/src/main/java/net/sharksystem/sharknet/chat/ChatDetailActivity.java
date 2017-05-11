@@ -94,7 +94,6 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
                         Message message = new Message(mApi.getAccount());
                         message.setContent(msg_string);
                         mChat.addMessage(message);
-                        // TODO Save message
                         mApi.updateChat(mChat);
                         editText.getText().clear();
                         startSubscription();
