@@ -73,6 +73,22 @@
     <string name="contact_button_delete">Delete</string>
     <string name="contact_button_key">Show PublicKey</string>
 
+    <!--Account-->
+    <string name="account_label_name">Name</string>
+    <string name="account_label_mail">Mail</string>
+    <string name="account_label_username">Username</string>
+    <string name="account_label_password">Password</string>
+    <string name="account_label_pop_server">POP3 Server</string>
+    <string name="account_label_smtp_server">SMTP Server</string>
+    <string name="account_button_save">Save</string>
+    <string name="account_button_reset">Reset</string>
+    <string name="account_button_test_mail">Test Mail Settings</string>
+    <string name="account_status_mail_settings_untested">Not yet tested.</string>
+    <string name="account_status_mail_settings_tested_success">Test succeeded!</string>
+    <string name="account_status_mail_settings_tested_fail">Test failed. Try again with other Settings</string>
+    <string name="account_progress">Loading Account data.</string>
+
+
     <!--Startup + login-->
     <string name="main_startup_profile">Use old Account</string>
     <string name="main_startup_new_profile">Create new Account</string>

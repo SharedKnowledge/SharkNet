@@ -54,7 +54,7 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
             @Override
             public void run() {
                 mTextServerStatus.setText("Ping successful!");
-//                mCreateContact.setVisibility(View.VISIBLE);
+
                 mEngine.stopMail();
                 mServerPingPort.deleteListeners();
                 if(mProgressDialog.isShowing()) mProgressDialog.dismiss();
@@ -100,12 +100,6 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
         mEditUsername = (EditText) view.findViewById(R.id.editTextMailUsername);
         mEditIncoming = (EditText) view.findViewById(R.id.editTextIncoming);
         mEditOutgoing = (EditText) view.findViewById(R.id.editTextOutgoing);
-//
-//        mEditAddress.setText("mail@j4rvis.de");
-//        mEditPassword.setText("password1");
-//        mEditUsername.setText("j4rvisde-0001");
-//        mEditIncoming.setText("pop.udag.de");
-//        mEditOutgoing.setText("smtp.udag.de");
 
         mTextServerStatus = (TextView) view.findViewById(R.id.textViewTestServerStatus);
 
@@ -149,6 +143,9 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
                 Bitmap contactImage = ((MainActivity) getActivity()).mContactImage;
                 Contact contact = new Contact(contactName, mEditAddress.getText().toString());
                 if(contactImage!=null) contact.setImage(contactImage);
+
+                // TODO Save values somewhere!
+
                 mListener.onCreateProfile(contact);
                 break;
             case R.id.previous_fragment:

@@ -3,6 +3,8 @@ package net.sharksystem.sharknet.account;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,20 +15,35 @@ import net.sharksystem.sharknet.RxSingleBaseActivity;
 
 public class AccountDetailActivity extends RxSingleBaseActivity<Contact> {
 
+    private EditText mName;
+    private EditText mMail;
+    private EditText mUsername;
+    private EditText mPassword;
+    private EditText mPopServer;
+    private EditText mSmtpServer;
+    private Button mTestMail;
+    private TextView mServerTestStatus;
+    private ImageView mImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutResource(R.layout.contact_detail_activity);
+        setLayoutResource(R.layout.account_detail_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setProgressMessage("Lade Account...");
+        setProgressMessage(R.string.account_progress);
 
-    }
+        mImage = (ImageView) findViewById(R.id.contact_image);
 
-    @Override
-    public void onBackPressed() {
-        getSharkApp().resetContact();
-        super.onBackPressed();
+        mName = (EditText) findViewById(R.id.editText_account_name);
+        mMail = (EditText) findViewById(R.id.editText_Account_mail);
+        mUsername = (EditText) findViewById(R.id.editText_account_username);
+        mPassword = (EditText) findViewById(R.id.editText_account_password);
+        mPopServer = (EditText) findViewById(R.id.editText_account_pop_server);
+        mSmtpServer = (EditText) findViewById(R.id.editText_account_smtp_server);
+
+        mTestMail = (Button) findViewById(R.id.button_account_test_mail);
+        mServerTestStatus = (TextView) findViewById(R.id.textView_server_test_status);
     }
 
     @Override
@@ -36,21 +53,12 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> {
 
     @Override
     protected void doOnUIThread(Contact contact) {
-        TextView name = (TextView) findViewById(R.id.contact_name);
-        TextView email = (TextView) findViewById(R.id.contact_email);
-        ImageView image = (ImageView) findViewById(R.id.contact_image);
+        if(contact==null) return;
 
-        setToolbarTitle("Account");
-        if (contact.getImage() != null) {
-            image.setImageBitmap(contact.getImage());
-        } else {
-            image.setImageResource(R.drawable.ic_person_white_24dp);
-        }
-        name.setText(contact.getName());
-        email.setText(contact.getEmail());
+        mName.setText(contact.getName());
+        mImage.setImageBitmap(contact.getImage());
 
-        findViewById(R.id.contact_block).setVisibility(View.GONE);
-        findViewById(R.id.contact_delete).setVisibility(View.GONE);
+
     }
 
     @Override
