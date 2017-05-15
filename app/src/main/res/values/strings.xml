@@ -118,6 +118,7 @@
     changing and signing the keys with the peer. One of both needs to initiate NFC by pressing the button.
         The process may need up to 10 Seconds so hold still!</string>
     <string name="nfc_info_after"></string>
+    <string name="account_save">Save</string>
 
 
 </resources>

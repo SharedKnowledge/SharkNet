@@ -17,7 +17,7 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
         setLayoutResource(R.layout.contact_detail_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setProgressMessage("Lade Kontakt...");
+        setProgressMessage(R.string.chat_progress_load_contacts);
     }
 
     @Override
