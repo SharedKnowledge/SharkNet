@@ -50,6 +50,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
     private Handler mHandler;
     private AndroidSharkEngine mEngine;
     private MailServerPingPort mServerPingPort;
+    private boolean mMailSuccessfull = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,13 +139,15 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 return true;
             case R.id.button_account_save:
                 L.d("Saved Account", this);
-                Settings settings = new Settings();
-                settings.setMailAddress(mMail.getText().toString());
-                settings.setMailUsername(mUsername.getText().toString());
-                settings.setMailPassword(mPassword.getText().toString());
-                settings.setMailPopServer(mPopServer.getText().toString());
-                settings.setMailSmtpServer(mSmtpServer.getText().toString());
-                mApi.setSettings(settings);
+                if(mMailSuccessfull){
+                    Settings settings = new Settings();
+                    settings.setMailAddress(mMail.getText().toString());
+                    settings.setMailUsername(mUsername.getText().toString());
+                    settings.setMailPassword(mPassword.getText().toString());
+                    settings.setMailPopServer(mPopServer.getText().toString());
+                    settings.setMailSmtpServer(mSmtpServer.getText().toString());
+                    mApi.setSettings(settings);
+                }
 
                 Contact account = mApi.getAccount();
                 account.setName(mName.getText().toString());
@@ -167,6 +170,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
             public void run() {
                 mServerTestStatus.setText("Ping successful!");
                 mEngine.stopMail();
+                mMailSuccessfull = true;
                 mServerPingPort.deleteListeners();
                 if (mProgressDialog.isShowing()) mProgressDialog.dismiss();
             }

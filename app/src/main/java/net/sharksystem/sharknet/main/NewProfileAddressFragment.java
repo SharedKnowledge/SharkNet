@@ -23,6 +23,7 @@ import net.sharkfw.system.L;
 import net.sharkfw.system.SharkException;
 import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Contact;
+import net.sharksystem.api.models.Settings;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.sharknet.R;
 
@@ -46,6 +47,7 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
     private Handler mHandler;
     private SharkNetApi mApi;
     private MailServerPingPort mServerPingPort;
+    private boolean mMailSuccessfull = false;
 
     @Override
     public void onPingSuccessful() {
@@ -54,7 +56,7 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
             @Override
             public void run() {
                 mTextServerStatus.setText("Ping successful!");
-
+                mMailSuccessfull = true;
                 mEngine.stopMail();
                 mServerPingPort.deleteListeners();
                 if(mProgressDialog.isShowing()) mProgressDialog.dismiss();
@@ -144,8 +146,17 @@ public class NewProfileAddressFragment extends Fragment implements View.OnClickL
                 Contact contact = new Contact(contactName, mEditAddress.getText().toString());
                 if(contactImage!=null) contact.setImage(contactImage);
 
-                // TODO Save values somewhere!
+                if(mMailSuccessfull){
+                    Settings settings = new Settings();
+                    settings.setMailAddress(mEditAddress.getText().toString());
+                    settings.setMailUsername(mEditUsername.getText().toString());
+                    settings.setMailPassword(mEditPassword.getText().toString());
+                    settings.setMailPopServer(mEditIncoming.getText().toString());
+                    settings.setMailSmtpServer(mEditOutgoing.getText().toString());
+                    mApi.setSettings(settings);
+                }
 
+                // TODO Save values somewhere!
                 mListener.onCreateProfile(contact);
                 break;
             case R.id.previous_fragment:
