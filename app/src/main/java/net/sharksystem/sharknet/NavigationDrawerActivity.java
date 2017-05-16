@@ -1,7 +1,9 @@
 package net.sharksystem.sharknet;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
@@ -59,7 +62,7 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
 
         mNavigationView = (NavigationView) findViewById(R.id.sidenav_view);
         TextView textView = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.me);
-        textView.setText(getSharkApp().getAccount().getName());
+//        textView.setText(getSharkApp().getAccount().getName());
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +70,17 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
             }
         });
         mNavigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+
+        TextView textView = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.me);
+        textView.setText(mApi.getAccount().getName());
+
+        ImageView imageView = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.image_view_profile);
+        imageView.setImageBitmap(mApi.getAccount().getImage());
     }
 
     @Override

@@ -65,6 +65,8 @@ public class Dummy {
 
         api.setAccount(dummyContactGenerator.newContact());
 
+        L.d("Account set.");
+
         Contact account = api.getAccount();
 
         L.d("Contacts created");

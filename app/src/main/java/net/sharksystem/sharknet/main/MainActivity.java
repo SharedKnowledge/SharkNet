@@ -105,8 +105,6 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
                 }
                 mApi.startRadar();
                 mApi.allowSyncInvitation(true);
-                // Chat
-//                startActivity(new Intent(MainActivity.this, RadarActivity.class));
                 // Radar
                 startActivity(new Intent(MainActivity.this, RadarActivity.class));
             }
@@ -168,8 +166,6 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
                 }
                 mApi.startRadar();
                 mApi.allowSyncInvitation(true);
-                // Chat
-//                startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 // Radar
                 startActivity(new Intent(MainActivity.this, RadarActivity.class));
             }

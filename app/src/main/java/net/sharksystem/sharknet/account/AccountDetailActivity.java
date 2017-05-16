@@ -20,6 +20,7 @@ import android.widget.Toast;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.protocols.Protocols;
+import net.sharkfw.system.L;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Settings;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
@@ -63,7 +64,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         mImage = (ImageView) findViewById(R.id.contact_image);
         mName = (EditText) findViewById(R.id.editText_account_name);
 
-        mMail = (EditText) findViewById(R.id.editText_Account_mail);
+        mMail = (EditText) findViewById(R.id.editText_account_mail);
         mUsername = (EditText) findViewById(R.id.editText_account_username);
         mPassword = (EditText) findViewById(R.id.editText_account_password);
         mPopServer = (EditText) findViewById(R.id.editText_account_pop_server);
@@ -101,6 +102,10 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
 
         Settings settings = mApi.getSettings();
 
+        if(settings.getMailAddress() == null || settings.getMailAddress().isEmpty()){
+            settings.setMailAddress(contact.getEmail());
+        }
+
         mMail.setText(settings.getMailAddress());
         mUsername.setText(settings.getMailUsername());
         mPassword.setText(settings.getMailPassword());
@@ -123,8 +128,6 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
 
         mEngine = mApi.getSharkEngine();
         mEngine.stopMail();
-        mServerPingPort = new MailServerPingPort(mApi.getSharkEngine(), this);
-
     }
 
     @Override
@@ -134,6 +137,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 this.finish();
                 return true;
             case R.id.button_account_save:
+                L.d("Saved Account", this);
                 Settings settings = new Settings();
                 settings.setMailAddress(mMail.getText().toString());
                 settings.setMailUsername(mUsername.getText().toString());
@@ -149,6 +153,8 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
 
                 mApi.setAccount(account);
 
+                this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -181,6 +187,10 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 // TODO to be removed
                 PeerSemanticTag owner = InMemoSharkKB.createInMemoPeerSemanticTag("Owner", "si:owner", Protocols.MAIL_PREFIX + mailAddress);
                 mEngine.setEngineOwnerPeer(owner);
+
+                if(mServerPingPort == null){
+                    mServerPingPort = new MailServerPingPort(mApi.getSharkEngine(), this);
+                }
 
                 // Reset MailConfiguration @startup
                 mEngine.setMailConfiguration(mailOutgoingHost, mailUsername, mailPassword, false, mailIncomingHost, mailUsername, mailAddress, mailPassword, 3, false);

@@ -10,7 +10,7 @@
     <dimen name="nav_header_spacing">5dp</dimen>
     <dimen name="nav_header_top">20dp</dimen>
 
-    <dimen name="account_text_view_gap">32dp</dimen>
+    <dimen name="account_text_view_gap">16dp</dimen>
     <dimen name="account_margin_outside">16dp</dimen>
     <dimen name="account_align_edit_text">0dp</dimen>
 </resources>
