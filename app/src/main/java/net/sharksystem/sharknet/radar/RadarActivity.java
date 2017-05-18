@@ -56,7 +56,6 @@ public class RadarActivity extends NavigationDrawerActivity implements NearbyPee
 
                 // TODO If we already have this contact just open the chat and do not create a new one
                 Chat chat = new Chat(mApi.getAccount(), contact);
-                mApi.addChat(chat);
                 getSharkApp().setChat(chat);
                 startActivity(new Intent(RadarActivity.this, ChatDetailActivity.class));
             }
@@ -75,6 +74,5 @@ public class RadarActivity extends NavigationDrawerActivity implements NearbyPee
 
     @Override
     public void onNearbyPeerFound(NearbyPeer peer) {
-//        mApi.addContact(new Contact(peer.getSender()));
     }
 }

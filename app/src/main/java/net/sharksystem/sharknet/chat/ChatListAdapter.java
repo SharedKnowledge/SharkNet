@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Chat;
@@ -58,13 +59,20 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         final Chat chat = mChats.get(position);
         List<Contact> contacts = chat.getContacts();
-        contacts.remove(mAccount);
+//        contacts.remove(mAccount);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mApp.setChat(chat);
                 mContext.startActivity(new Intent(mContext, ChatDetailActivity.class));
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                L.d(chat.toString(), this);
+                return true;
             }
         });
         if (chat.getImage() != null) {
@@ -75,8 +83,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         } else if (contacts.size() > 1) {
             holder.chatImage.setImageResource(R.drawable.ic_group_white_24dp);
         } else if(contacts.size()==1){
-            if(contacts.get(0).getImage()!=null){
-                holder.chatImage.setImageBitmap(contacts.get(0).getImage());
+            Bitmap image;
+            if(contacts.get(0).equals(mAccount)){
+                image = chat.getOwner().getImage();
+            } else {
+                image = contacts.get(0).getImage();
+            }
+            if(image!=null){
+                holder.chatImage.setImageBitmap(image);
                 FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
                 holder.chatImage.setLayoutParams(params);
                 holder.chatImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -99,7 +113,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         if (chat.getTitle() != null) {
             holder.chatName.setText(chat.getTitle());
         } else if (contacts.size() == 1) {
-            holder.chatName.setText(contacts.get(0).getName());
+            String name;
+            if(contacts.get(0).equals(mAccount)){
+                name = chat.getOwner().getName();
+            } else {
+                name = contacts.get(0).getName();
+            }
+            holder.chatName.setText(name);
         }
 
 
