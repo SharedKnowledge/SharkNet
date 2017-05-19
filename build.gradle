@@ -13,6 +13,10 @@ buildscript {
 }
 
 allprojects {
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = "1.7"
+        targetCompatibility = "1.7"
+    }
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
