@@ -59,7 +59,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         final Chat chat = mChats.get(position);
         List<Contact> contacts = chat.getContacts();
-//        contacts.remove(mAccount);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

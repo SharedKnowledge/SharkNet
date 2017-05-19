@@ -127,8 +127,9 @@ public class Dummy {
             List<Contact> contactList = chat.getContacts();
             contactList.add(chat.getOwner());
             int numberOfMessages = random.nextInt(20);
+            numberOfMessages+=3;
             long date = lastWeek;
-            for (int i = 3; i < numberOfMessages; i++) {
+            for (int i = 0; i < numberOfMessages; i++) {
                 Contact contact = contactList.get(random.nextInt(contactList.size()));
                 long max = System.currentTimeMillis();
                 Random anotherRandom = new Random(max+i);

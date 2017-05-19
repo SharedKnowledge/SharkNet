@@ -16,6 +16,7 @@ import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.sync.manager.SyncComponent;
 import net.sharkfw.knowledgeBase.sync.manager.port.SyncMergeKP;
+import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
@@ -139,11 +140,15 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
 
     @Override
     public void onNewMerge(SyncComponent component, SharkKB changes) {
+        L.d("Received a new message?", this);
         if(SharkCSAlgebra.identical(mChat.getId(), component.getUniqueName())){
+            L.d("Yeah it'S the correct chat!", this);
+            mChat = mApi.getChat(mChat.getId());
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    startSubscription();
+                    mAdapter.setMessages(mChat.getMessages());
+                    mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
                 }
             });
         }

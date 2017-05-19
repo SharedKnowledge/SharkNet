@@ -117,7 +117,6 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
             // image
             if (message.getSender().getImage() == null) {
                 holder.authorImageView.setImageResource(R.drawable.ic_person_white_24dp);
-                holder.authorImageView.setLayoutParams(new FrameLayout.LayoutParams(35, 35));
             } else {
                 holder.authorImageView.setImageBitmap(message.getSender().getImage());
             }
