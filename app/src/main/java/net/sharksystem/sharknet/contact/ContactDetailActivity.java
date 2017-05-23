@@ -35,13 +35,12 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
     protected void doOnUIThread(Contact contact) {
         TextView name = (TextView) findViewById(R.id.contact_name);
         TextView email = (TextView) findViewById(R.id.contact_email);
-        ImageView image = (ImageView) findViewById(R.id.contact_image);
+        ImageView image = (ImageView) findViewById(R.id.round_image);
 
         setToolbarTitle(contact.getName());
         if (contact.getImage() != null) {
             image.setImageBitmap(contact.getImage());
-        } else {
-            image.setImageResource(R.drawable.ic_person_white_24dp);
+            image.setPadding(0, 0, 0, 0);
         }
         name.setText(contact.getName());
         email.setText(contact.getEmail());

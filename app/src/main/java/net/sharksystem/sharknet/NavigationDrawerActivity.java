@@ -79,8 +79,9 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
         TextView textView = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.me);
         textView.setText(mApi.getAccount().getName());
 
-        ImageView imageView = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.image_view_profile);
+        ImageView imageView = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.round_image);
         imageView.setImageBitmap(mApi.getAccount().getImage());
+        imageView.setPadding(0, 0, 0, 0);
     }
 
     @Override

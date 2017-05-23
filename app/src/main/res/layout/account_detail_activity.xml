@@ -1,35 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:mApp="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    mApp:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".contact.ContactDetailActivity"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
-    <ImageView
+    <android.support.v7.widget.CardView
         android:id="@+id/contact_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:innerRadius="0dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:contentDescription="@string/contact_image_description"
-        android:maxHeight="40dp"
-        android:maxWidth="40dp"
-        android:minHeight="40dp"
-        android:minWidth="40dp"
-        android:nestedScrollingEnabled="false"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_person_accent_48dp"
-        mApp:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        mApp:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        mApp:layout_constraintLeft_toLeftOf="parent"/>
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="19dp"
+        android:shape="ring"
+        app:cardBackgroundColor="@color/accent"
+        app:cardCornerRadius="100dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person_white_48dp"
+            android:id="@+id/round_image"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        </ImageView>
+    </android.support.v7.widget.CardView>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/contact_image"-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:contentDescription="@string/contact_image_description"-->
+        <!--android:maxHeight="40dp"-->
+        <!--android:maxWidth="40dp"-->
+        <!--android:minHeight="40dp"-->
+        <!--android:minWidth="40dp"-->
+        <!--android:nestedScrollingEnabled="false"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:src="@drawable/ic_person_accent_48dp"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"/>-->
 
     <TextView
         android:id="@+id/textView17"
@@ -42,9 +72,9 @@
         tools:layout_conversion_absoluteX="16dp"
         tools:layout_conversion_absoluteY="231dp"
         android:layout_marginTop="@dimen/account_text_view_gap"
-        mApp:layout_constraintTop_toBottomOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
         android:layout_marginLeft="@dimen/account_margin_outside"
-        mApp:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="@dimen/account_margin_outside"/>
 
     <TextView
@@ -58,9 +88,9 @@
         tools:layout_conversion_absoluteX="16dp"
         tools:layout_conversion_absoluteY="231dp"
         android:layout_marginTop="@dimen/account_text_view_gap"
-        mApp:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
         android:layout_marginLeft="@dimen/account_margin_outside"
-        mApp:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="@dimen/account_margin_outside"/>
 
     <TextView
@@ -74,9 +104,9 @@
         tools:layout_conversion_absoluteX="16dp"
         tools:layout_conversion_absoluteY="231dp"
         android:layout_marginTop="@dimen/account_text_view_gap"
-        mApp:layout_constraintTop_toBottomOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
         android:layout_marginLeft="@dimen/account_margin_outside"
-        mApp:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="@dimen/account_margin_outside"/>
 
     <TextView
@@ -90,9 +120,9 @@
         tools:layout_conversion_absoluteX="16dp"
         tools:layout_conversion_absoluteY="231dp"
         android:layout_marginTop="@dimen/account_text_view_gap"
-        mApp:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
         android:layout_marginLeft="@dimen/account_margin_outside"
-        mApp:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="@dimen/account_margin_outside"/>
 
     <TextView
@@ -106,9 +136,9 @@
         tools:layout_conversion_absoluteX="16dp"
         tools:layout_conversion_absoluteY="231dp"
         android:layout_marginTop="@dimen/account_text_view_gap"
-        mApp:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
         android:layout_marginLeft="@dimen/account_margin_outside"
-        mApp:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="@dimen/account_margin_outside"/>
 
     <TextView
@@ -122,9 +152,9 @@
         tools:layout_conversion_absoluteX="16dp"
         tools:layout_conversion_absoluteY="231dp"
         android:layout_marginLeft="@dimen/account_margin_outside"
-        mApp:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="@dimen/account_text_view_gap"
-        mApp:layout_constraintTop_toBottomOf="@+id/contact_image"
+        app:layout_constraintTop_toBottomOf="@+id/contact_image"
         android:layout_marginStart="@dimen/account_margin_outside"/>
 
     <EditText
@@ -134,12 +164,12 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        mApp:layout_constraintBaseline_toBaselineOf="@+id/textView13"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
         android:layout_marginLeft="@dimen/account_align_edit_text"
-        mApp:layout_constraintLeft_toLeftOf="@+id/editText_account_mail"
+        app:layout_constraintLeft_toLeftOf="@+id/editText_account_mail"
         android:layout_marginRight="@dimen/account_margin_outside"
-        mApp:layout_constraintRight_toRightOf="parent"
-        mApp:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         android:layout_marginStart="@dimen/account_align_edit_text"
         android:layout_marginEnd="@dimen/account_margin_outside"/>
 
@@ -149,11 +179,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        mApp:layout_constraintBaseline_toBaselineOf="@+id/textView12"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView12"
         android:layout_marginLeft="@dimen/account_align_edit_text"
-        mApp:layout_constraintLeft_toLeftOf="@+id/editText_account_username"
+        app:layout_constraintLeft_toLeftOf="@+id/editText_account_username"
         android:layout_marginRight="@dimen/account_margin_outside"
-        mApp:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="@dimen/account_align_edit_text"
         android:layout_marginEnd="@dimen/account_margin_outside"/>
 
@@ -164,11 +194,11 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        mApp:layout_constraintBaseline_toBaselineOf="@+id/textView14"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
         android:layout_marginLeft="@dimen/account_align_edit_text"
-        mApp:layout_constraintLeft_toLeftOf="@+id/editText_account_password"
+        app:layout_constraintLeft_toLeftOf="@+id/editText_account_password"
         android:layout_marginRight="@dimen/account_margin_outside"
-        mApp:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="@dimen/account_align_edit_text"
         android:layout_marginEnd="@dimen/account_margin_outside"/>
 
@@ -178,12 +208,12 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        mApp:layout_constraintBaseline_toBaselineOf="@+id/textView15"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView15"
         android:layout_marginLeft="@dimen/account_align_edit_text"
-        mApp:layout_constraintLeft_toLeftOf="@+id/editText_account_pop_server"
+        app:layout_constraintLeft_toLeftOf="@+id/editText_account_pop_server"
         android:layout_marginRight="@dimen/account_margin_outside"
-        mApp:layout_constraintRight_toRightOf="parent"
-        mApp:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         android:layout_marginStart="@dimen/account_align_edit_text"
         android:layout_marginEnd="@dimen/account_margin_outside"/>
 
@@ -194,11 +224,11 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        mApp:layout_constraintBaseline_toBaselineOf="@+id/textView16"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
         android:layout_marginLeft="@dimen/account_align_edit_text"
-        mApp:layout_constraintLeft_toLeftOf="@+id/editText_account_smtp_server"
+        app:layout_constraintLeft_toLeftOf="@+id/editText_account_smtp_server"
         android:layout_marginRight="@dimen/account_margin_outside"
-        mApp:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="@dimen/account_align_edit_text"
         android:layout_marginEnd="@dimen/account_margin_outside"/>
 
@@ -209,24 +239,24 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        mApp:layout_constraintBaseline_toBaselineOf="@+id/textView17"
-        mApp:layout_constraintLeft_toRightOf="@+id/textView17"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView17"
+        app:layout_constraintLeft_toRightOf="@+id/textView17"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="@dimen/account_margin_outside"
-        mApp:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="@dimen/account_margin_outside"
-        mApp:layout_constraintHorizontal_bias="0.0"/>
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <Button
         android:id="@+id/button_account_test_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/account_button_test_mail"
-        mApp:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
-        mApp:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
         android:id="@+id/textView_server_test_status"
@@ -234,9 +264,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="27dp"
         android:text="@string/account_status_mail_settings_untested"
-        mApp:layout_constraintLeft_toRightOf="@+id/button_account_test_mail"
+        app:layout_constraintLeft_toRightOf="@+id/button_account_test_mail"
         android:layout_marginStart="26dp"
-        mApp:layout_constraintBaseline_toBaselineOf="@+id/button_account_test_mail"/>
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_account_test_mail"/>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -50,7 +50,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
     private Handler mHandler;
     private AndroidSharkEngine mEngine;
     private MailServerPingPort mServerPingPort;
-    private boolean mMailSuccessfull = false;
+    private boolean mMailSuccessful = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
 
         setProgressMessage(R.string.account_progress);
 
-        mImage = (ImageView) findViewById(R.id.contact_image);
+        mImage = (ImageView) findViewById(R.id.round_image);
         mName = (EditText) findViewById(R.id.editText_account_name);
 
         mMail = (EditText) findViewById(R.id.editText_account_mail);
@@ -99,7 +99,10 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         if (contact == null) return;
 
         mName.setText(contact.getName());
-        mImage.setImageBitmap(contact.getImage());
+        if(contact.getImage()!=null){
+            mImage.setImageBitmap(contact.getImage());
+            mImage.setPadding(0, 0, 0, 0);
+        }
 
         Settings settings = mApi.getSettings();
 
@@ -139,7 +142,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 return true;
             case R.id.button_account_save:
                 L.d("Saved Account", this);
-                if(mMailSuccessfull){
+                if(mMailSuccessful){
                     Settings settings = new Settings();
                     settings.setMailAddress(mMail.getText().toString());
                     settings.setMailUsername(mUsername.getText().toString());
@@ -170,7 +173,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
             public void run() {
                 mServerTestStatus.setText("Ping successful!");
                 mEngine.stopMail();
-                mMailSuccessfull = true;
+                mMailSuccessful = true;
                 mServerPingPort.deleteListeners();
                 if (mProgressDialog.isShowing()) mProgressDialog.dismiss();
             }

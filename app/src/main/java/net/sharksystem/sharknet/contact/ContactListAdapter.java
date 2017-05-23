@@ -48,12 +48,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         holder.contactName.setText(contact.getName());
         if (contact.getImage() != null) {
             holder.contactImage.setImageBitmap(contact.getImage());
-        } else {
+            holder.contactImage.setPadding(0, 0, 0, 0);
+        } /*else {
             holder.contactImage.setImageResource(R.drawable.ic_person_white_48dp);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
             holder.contactImage.setLayoutParams(params);
             holder.contactImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        }
+        }*/
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
