@@ -44,13 +44,18 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
         }
         // TODO what if we reload the messages?
         List<Contact> contacts = mChat.getContacts();
-        contacts.remove(getSharkApp().getAccount());
+//        contacts.remove(getSharkApp().getAccount());
 
         if (mChat.getTitle() != null) {
             setTitle(mChat.getTitle());
         } else if (contacts.size() == 1) {
-            setTitle(contacts.get(0).getName());
+            if(contacts.get(0).equals(getSharkApp().getAccount())){
+                setTitle(mChat.getOwner().getName());
+            } else {
+                setTitle(contacts.get(0).getName());
+            }
         }
+        L.d(mChat.toString(), this);
 
         setProgressMessage(R.string.chat_progress_load_messages);
     }

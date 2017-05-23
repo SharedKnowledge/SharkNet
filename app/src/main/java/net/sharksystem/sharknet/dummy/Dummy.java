@@ -56,7 +56,7 @@ public class Dummy {
 
         Random random = new Random(System.currentTimeMillis());
 
-        int numberOfContacts = 8;
+        int numberOfContacts = 5;
         for (int i = 0; i < numberOfContacts; i++) {
             contacts.add(dummyContactGenerator.newContact());
         }
@@ -105,19 +105,11 @@ public class Dummy {
         Chat chat4 = new Chat(account, contacts);
         chat4.setTitle("Allesamt");
         chat4.setImage(BitmapFactory.decodeStream(assets.open("pictures/groups/" + pictures[3])));
-        Chat chat5 = new Chat(account, contacts.get(2));
-        Chat chat6 = new Chat(account, contacts.get(5));
-        Chat chat7 = new Chat(account, contacts.get(4));
-        Chat chat8 = new Chat(account, contacts.get(7));
 
         chats.add(chat1);
         chats.add(chat2);
         chats.add(chat3);
         chats.add(chat4);
-        chats.add(chat5);
-        chats.add(chat6);
-        chats.add(chat7);
-        chats.add(chat8);
 
         L.d("Chats created");
 
@@ -126,7 +118,7 @@ public class Dummy {
         for (Chat chat : chats) {
             List<Contact> contactList = chat.getContacts();
             contactList.add(chat.getOwner());
-            int numberOfMessages = random.nextInt(20);
+            int numberOfMessages = random.nextInt(10);
             numberOfMessages+=3;
             long date = lastWeek;
             for (int i = 0; i < numberOfMessages; i++) {
