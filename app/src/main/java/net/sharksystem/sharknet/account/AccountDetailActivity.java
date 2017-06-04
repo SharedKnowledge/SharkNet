@@ -34,7 +34,7 @@ import static net.sharksystem.sharknet.main.NewProfileAddressFragment.MAIL_SERVE
 
 public class AccountDetailActivity extends RxSingleBaseActivity<Contact> implements View.OnClickListener, MailServerPingPort.OnMailServerPingListener {
 
-    private static final int PICK_IMAGE_REQUEST = 1777;
+    private static final int PICK_IMAGE_REQUEST = 1778;
 
     private EditText mName;
     private EditText mMail;
@@ -84,6 +84,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 // Always show the chooser (if there are multiple options available)
+                L.d("Start picking an Image", this);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
@@ -143,6 +144,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
             case R.id.button_account_save:
                 L.d("Saved Account", this);
                 if(mMailSuccessful){
+                    L.d("Set the mail settings", this);
                     Settings settings = new Settings();
                     settings.setMailAddress(mMail.getText().toString());
                     settings.setMailUsername(mUsername.getText().toString());
@@ -153,8 +155,8 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 }
 
                 Contact account = mApi.getAccount();
-                account.setName(mName.getText().toString());
-                account.setEmail(mMail.getText().toString());
+                if(!mName.getText().toString().isEmpty()) account.setName(mName.getText().toString());
+                if(!mMail.getText().toString().isEmpty()) account.setEmail(mMail.getText().toString());
                 if(mBitmap!=null) account.setImage(mBitmap);
 
                 mApi.setAccount(account);
@@ -228,11 +230,14 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 mBitmap = bitmap;
+                L.d("Image loaded", this);
                 mImage.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+
     }
 
 
