@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import net.sharkfw.system.L;
 import net.sharksystem.sharknet.R;
 
 import java.io.IOException;
@@ -63,6 +64,9 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 // Always show the chooser (if there are multiple options available)
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+//                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(pickPhoto , 1);//one can be replaced with any action code
             }
         });
 
@@ -79,10 +83,10 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
+        L.d("onActivityResult called", this);
 
+        if (requestCode == 1 && data != null && data.getData() != null) {
             Uri uri = data.getData();
-
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 ((MainActivity) getActivity()).mContactImage = bitmap;
@@ -110,5 +114,11 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        L.d("Stop called", this);
     }
 }

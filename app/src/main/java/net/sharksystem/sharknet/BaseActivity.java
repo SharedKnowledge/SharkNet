@@ -44,11 +44,13 @@ public abstract class BaseActivity extends AppCompatActivity implements ServiceC
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         // Make FloatingActionButton invisible at default
         findViewById(R.id.fab).setVisibility(View.GONE);
+        Intent intent = new Intent(getApplicationContext(), SharkService.class);
+        bindService(intent, this, Context.BIND_AUTO_CREATE);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         if (mBound) {
             unbindService(this);
             mBound = false;
@@ -81,14 +83,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ServiceC
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        L.d("On Resume.", this);
-        Intent intent = new Intent(getApplicationContext(), SharkService.class);
-        bindService(intent, this, Context.BIND_AUTO_CREATE);
     }
 
     @Override
