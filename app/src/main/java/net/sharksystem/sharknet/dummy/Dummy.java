@@ -50,6 +50,8 @@ public class Dummy {
 
     public static void createDummyData(Context context, SharkNetApi api) throws SharkKBException, JSONException, InterruptedException, IOException {
 
+        L.d("Dummy");
+
         ArrayList<Contact> contacts = new ArrayList<>();
 
         DummyContactGenerator dummyContactGenerator = new DummyContactGenerator(context, api);
@@ -150,54 +152,54 @@ public class Dummy {
             L.e(e.getMessage());
         }
 
-        KeyPairGenerator keyPairGenerator;
-        try {
-            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        L.d("PKI initiated");
-
-        HashMap<Contact, KeyPair> contactKeyPairHashMap = new HashMap<>();
-        for (Contact contact : contacts) {
-            contactKeyPairHashMap.put(contact, keyPairGenerator.generateKeyPair());
-        }
-
-        L.d("KeyPair generated for each contact");
-
-        ArrayList<SharkPublicKey> keys = new ArrayList<>();
-        Iterator<Map.Entry<Contact, KeyPair>> iterator = contactKeyPairHashMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<Contact, KeyPair> next = iterator.next();
-            int randomDays = new Random(System.currentTimeMillis()).nextInt(100);
-            int sign = (randomDays % 2) == 0 ? 1 : -1;
-            keys.add(pkiStorage.addUnsignedKey(next.getKey().getTag(), next.getValue().getPublic(), sign * (randomDays + 1) * hour + today));
-        }
-
-        L.d("SharkPublicKeys created for each contact");
-
-        pkiStorage.sign(keys.get(0));
-        pkiStorage.sign(keys.get(1));
-        pkiStorage.sign(keys.get(2));
-
-        L.d("Some keys signed by activeProfile");
-
-        L.d("Start random key signing between foreign keys");
-
-        Iterator<Map.Entry<Contact, KeyPair>> iteratorAgain = contactKeyPairHashMap.entrySet().iterator();
-        while (iteratorAgain.hasNext()) {
-            Map.Entry<Contact, KeyPair> next = iteratorAgain.next();
-            for (SharkPublicKey key : keys) {
-                if (!SharkCSAlgebra.identical(key.getOwner(), next.getKey().getTag())) {
-                    if ((new Random().nextInt(100) % 2) == 0) {
-                        pkiStorage.sign(key, next.getKey().getTag(), next.getValue().getPrivate());
-                    }
-                }
-            }
-        }
+//        KeyPairGenerator keyPairGenerator;
+//        try {
+//            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+//            keyPairGenerator.initialize(2048);
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//            return;
+//        }
+//
+//        L.d("PKI initiated");
+//
+//        HashMap<Contact, KeyPair> contactKeyPairHashMap = new HashMap<>();
+//        for (Contact contact : contacts) {
+//            contactKeyPairHashMap.put(contact, keyPairGenerator.generateKeyPair());
+//        }
+//
+//        L.d("KeyPair generated for each contact");
+//
+//        ArrayList<SharkPublicKey> keys = new ArrayList<>();
+//        Iterator<Map.Entry<Contact, KeyPair>> iterator = contactKeyPairHashMap.entrySet().iterator();
+//        while (iterator.hasNext()) {
+//            Map.Entry<Contact, KeyPair> next = iterator.next();
+//            int randomDays = new Random(System.currentTimeMillis()).nextInt(100);
+//            int sign = (randomDays % 2) == 0 ? 1 : -1;
+//            keys.add(pkiStorage.addUnsignedKey(next.getKey().getTag(), next.getValue().getPublic(), sign * (randomDays + 1) * hour + today));
+//        }
+//
+//        L.d("SharkPublicKeys created for each contact");
+//
+//        pkiStorage.sign(keys.get(0));
+//        pkiStorage.sign(keys.get(1));
+//        pkiStorage.sign(keys.get(2));
+//
+//        L.d("Some keys signed by activeProfile");
+//
+//        L.d("Start random key signing between foreign keys");
+//
+//        Iterator<Map.Entry<Contact, KeyPair>> iteratorAgain = contactKeyPairHashMap.entrySet().iterator();
+//        while (iteratorAgain.hasNext()) {
+//            Map.Entry<Contact, KeyPair> next = iteratorAgain.next();
+//            for (SharkPublicKey key : keys) {
+//                if (!SharkCSAlgebra.identical(key.getOwner(), next.getKey().getTag())) {
+//                    if ((new Random().nextInt(100) % 2) == 0) {
+//                        pkiStorage.sign(key, next.getKey().getTag(), next.getValue().getPrivate());
+//                    }
+//                }
+//            }
+//        }
     }
 
     private static long getNextRandomDate(long min) {
@@ -244,7 +246,6 @@ class DummyContactGenerator{
             e.printStackTrace();
         }
         contact.setImage(BitmapFactory.decodeStream(picture));
-
 
         api.addContact(contact);
         return contact;
