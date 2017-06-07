@@ -46,8 +46,6 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
 
     public Bitmap mContactImage;
     public String mContactName;
-    private boolean mBluetoothActive;
-    private boolean mWifiActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,20 +92,6 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
     private boolean bluetoothEnabled(){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         return mBluetoothAdapter.isEnabled();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_ENABLE_BT){
-            if(resultCode == RESULT_OK){
-                mBluetoothActive=true;
-                Toast.makeText(this, "BT is activated", Toast.LENGTH_SHORT).show();
-
-                if(mWifiActive && mBluetoothActive){
-                    Toast.makeText(this, "Yeah everything is activated", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
     }
 
     @Override
