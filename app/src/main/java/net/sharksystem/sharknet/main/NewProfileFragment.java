@@ -85,7 +85,7 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
 
         L.d("onActivityResult called", this);
 
-        if (requestCode == 1 && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
             Uri uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);

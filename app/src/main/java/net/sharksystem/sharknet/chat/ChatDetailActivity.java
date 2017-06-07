@@ -152,8 +152,10 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter.setMessages(mChat.getMessages());
-                    mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+                    if(mChat!=null){
+                        mAdapter.setMessages(mChat.getMessages());
+                        mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+                    }
                 }
             });
         }
