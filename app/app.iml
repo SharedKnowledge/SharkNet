@@ -136,11 +136,11 @@
     <orderEntry type="library" exported="" name="sqldroid-1.0.3" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="rules-0.5" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="uiautomator-v18-2.1.2" level="project" />
-    <orderEntry type="library" exported="" name="lorem-2.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
+    <orderEntry type="library" exported="" name="lorem-2.1" level="project" />
     <orderEntry type="library" exported="" name="sqlite-jdbc-3.16.1" level="project" />
-    <orderEntry type="library" exported="" name="annotations-2.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.inject-1" level="project" />
+    <orderEntry type="library" exported="" name="annotations-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="android-activation-1.5.5" level="project" />
     <orderEntry type="library" exported="" name="android-mail-1.5.5" level="project" />

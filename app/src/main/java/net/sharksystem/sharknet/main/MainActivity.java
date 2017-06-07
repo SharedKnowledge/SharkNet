@@ -1,18 +1,22 @@
 package net.sharksystem.sharknet.main;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.system.L;
-import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.BaseActivity;
@@ -32,6 +36,8 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements StartupFragment.StartupFragmentButtonListener, NewProfileFragment.NewProfileFragmentButtonListener, NewProfileAddressFragment.NewProfileAddressFragmentButtonListener {
 
+    private static final int REQUEST_ENABLE_BT = 87;
+    private static final int REQUEST_ENABLE_WIFI = 5151;
     private StartupFragment mStartupFragment;
     private NewProfileFragment mNewProfileFragment;
     private NewProfileAddressFragment mNewProfileAddressFragment;
@@ -40,6 +46,8 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
 
     public Bitmap mContactImage;
     public String mContactName;
+    private boolean mBluetoothActive;
+    private boolean mWifiActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +66,48 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         // Switch dummy content
         getSharkApp().activateDummy();
 
-        if(getSharkApp().isDummy()) onCreateDummyDataSelected();
+        if(!wifiEnabled() || !bluetoothEnabled()){
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Shark Settings");
+            alertDialogBuilder
+                    .setMessage("Please activate Wifi and Bluetooth to use SharkNet!")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            finish();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } else {
+            if(getSharkApp().isDummy()) onCreateDummyDataSelected();
+        }
+    }
+
+
+    private boolean wifiEnabled(){
+        WifiManager wifiManager = (WifiManager)this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        return wifiManager.isWifiEnabled();
+    }
+
+    private boolean bluetoothEnabled(){
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        return mBluetoothAdapter.isEnabled();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_ENABLE_BT){
+            if(resultCode == RESULT_OK){
+                mBluetoothActive=true;
+                Toast.makeText(this, "BT is activated", Toast.LENGTH_SHORT).show();
+
+                if(mWifiActive && mBluetoothActive){
+                    Toast.makeText(this, "Yeah everything is activated", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     @Override
