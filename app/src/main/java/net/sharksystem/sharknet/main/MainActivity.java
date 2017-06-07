@@ -36,8 +36,6 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements StartupFragment.StartupFragmentButtonListener, NewProfileFragment.NewProfileFragmentButtonListener, NewProfileAddressFragment.NewProfileAddressFragmentButtonListener {
 
-    private static final int REQUEST_ENABLE_BT = 87;
-    private static final int REQUEST_ENABLE_WIFI = 5151;
     private StartupFragment mStartupFragment;
     private NewProfileFragment mNewProfileFragment;
     private NewProfileAddressFragment mNewProfileAddressFragment;
