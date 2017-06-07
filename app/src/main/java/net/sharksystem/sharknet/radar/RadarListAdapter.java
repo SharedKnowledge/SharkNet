@@ -40,6 +40,11 @@ public class RadarListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void clearList(){
+        mNearbyPeers.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mNearbyPeers.size();

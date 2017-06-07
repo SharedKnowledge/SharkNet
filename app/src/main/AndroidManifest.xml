@@ -30,6 +30,8 @@
         tools:replace="android:icon, android:theme, android:name">
         <activity
             android:name=".main.MainActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -38,18 +40,24 @@
         </activity>
         <activity
             android:name=".contact.ContactActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_contacts"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".account.AccountDetailActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_account"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".chat.ChatActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_chat"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
@@ -66,7 +74,8 @@
 
         <activity
             android:name=".chat.ChatDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/activity_title_chat_detail"
             android:parentActivityName=".chat.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -76,7 +85,8 @@
         </activity>
         <activity
             android:name=".chat.ChatSettingsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/activity_title_chat_settings"
             android:parentActivityName=".chat.ChatDetailActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -86,6 +96,8 @@
         </activity>
         <activity
             android:name=".chat.ChatNewActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_chat_new"
             android:parentActivityName=".chat.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -96,6 +108,8 @@
         </activity>
         <activity
             android:name=".contact.ContactDetailActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_con_detail_view"
             android:parentActivityName=".contact.ContactActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -105,21 +119,29 @@
         </activity>
         <activity
             android:name=".radar.RadarActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_radar"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".nfc.NFCActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_nfc"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".pki.PKIActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_pki"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".pki.PKIDetailActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_pki_detail"
             android:parentActivityName=".pki.PKIActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

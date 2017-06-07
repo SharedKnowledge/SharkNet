@@ -119,6 +119,7 @@
         The process may need up to 10 Seconds so hold still!</string>
     <string name="nfc_info_after"></string>
     <string name="account_save">Save</string>
+    <string name="radar_clear">Clear</string>
 
 
 </resources>

@@ -129,16 +129,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         mSingleSubscription = single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<Void>() {
             @Override
             public void onSuccess(Void value) {
-                try {
-                    mApi.getSharkEngine().startBluetooth();
-                } catch (SharkProtocolNotSupportedException | IOException e) {
-                    e.printStackTrace();
-                }
-                mApi.startRadar();
-                mApi.allowSyncInvitation(true);
-                mApi.setNotificationResultActivity(new Intent(MainActivity.this, ChatActivity.class));
-                // Radar
-                startActivity(new Intent(MainActivity.this, RadarActivity.class));
+                MainActivity.this.onSuccess();
             }
 
             @Override
@@ -191,16 +182,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         mSingleSubscription = single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleSubscriber<Object>() {
             @Override
             public void onSuccess(Object value) {
-                try {
-                    mApi.getSharkEngine().startBluetooth();
-                } catch (SharkProtocolNotSupportedException | IOException e) {
-                    e.printStackTrace();
-                }
-                mApi.startRadar();
-                mApi.allowSyncInvitation(true);
-                mApi.setNotificationResultActivity(new Intent(MainActivity.this, ChatActivity.class));
-                // Radar
-                startActivity(new Intent(MainActivity.this, RadarActivity.class));
+                MainActivity.this.onSuccess();
             }
 
             @Override
@@ -222,5 +204,17 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
 
     public SharkNetApi getApi(){
         return mApi;
+    }
+
+    private void onSuccess(){
+        try {
+            mApi.getSharkEngine().startBluetooth();
+        } catch (SharkProtocolNotSupportedException | IOException e) {
+            e.printStackTrace();
+        }
+        mApi.startRadar();
+        mApi.allowSyncInvitation(true);
+        mApi.setNotificationResultActivity(new Intent(MainActivity.this, ChatActivity.class));
+        startActivity(new Intent(MainActivity.this, ChatActivity.class));
     }
 }

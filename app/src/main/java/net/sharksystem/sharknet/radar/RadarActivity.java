@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -48,6 +49,7 @@ public class RadarActivity extends NavigationDrawerActivity implements NearbyPee
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutResource(R.layout.radar_activity);
+        setOptionsMenu(R.menu.radar_menu);
         mListView = (ListView) findViewById(R.id.radar_list_view);
         mListAdapter = new RadarListAdapter(this);
         mListView.setAdapter(mListAdapter);
@@ -133,5 +135,16 @@ public class RadarActivity extends NavigationDrawerActivity implements NearbyPee
 
     @Override
     public void onNearbyPeerFound(NearbyPeer peer) {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.button_clear:
+                mListAdapter.clearList();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
