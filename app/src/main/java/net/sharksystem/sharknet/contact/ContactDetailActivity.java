@@ -2,6 +2,8 @@ package net.sharksystem.sharknet.contact;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,7 +11,7 @@ import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 
-public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
+public class ContactDetailActivity extends RxSingleBaseActivity<Contact> implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,9 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
         }
         name.setText(contact.getName());
         email.setText(contact.getEmail());
+
+        Button buttonDelete = (Button) findViewById(R.id.contact_delete);
+        buttonDelete.setOnClickListener(this);
     }
 
     @Override
@@ -61,5 +66,11 @@ public class ContactDetailActivity extends RxSingleBaseActivity<Contact> {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        mApi.removeContact(getSharkApp().getContact());
+        finish();
     }
 }
