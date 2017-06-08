@@ -16,6 +16,8 @@ import net.sharksystem.sharknet.R;
 
 public class StartupFragment extends Fragment implements View.OnClickListener {
 
+    private View mPreviousAccount;
+
     public interface StartupFragmentButtonListener{
         void onCreateNewProfileSelected();
         void onCreateDummyDataSelected();
@@ -43,7 +45,9 @@ public class StartupFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.main_startup_fragment, container, false);
 
 //        view.findViewById(R.id.button_create_dummy_data).setOnClickListener(this);
-        view.findViewById(R.id.button_use_previous_profile).setOnClickListener(this);
+        mPreviousAccount = view.findViewById(R.id.button_use_previous_profile);
+        mPreviousAccount.setOnClickListener(this);
+        mPreviousAccount.setVisibility(View.GONE);
         view.findViewById(R.id.button_create_new_profile).setOnClickListener(this);
 
         return view;
@@ -64,5 +68,8 @@ public class StartupFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
+    }
+    public void showOldUSerButton(){
+        mPreviousAccount.setVisibility(View.VISIBLE);
     }
 }

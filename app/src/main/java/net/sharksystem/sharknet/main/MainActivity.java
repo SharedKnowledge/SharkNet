@@ -78,6 +78,10 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         } else {
             if(getSharkApp().isDummy()) onCreateDummyDataSelected();
         }
+
+        if(mApi.getAccount()!=null){
+            mStartupFragment.showOldUSerButton();
+        }
     }
 
 
@@ -144,7 +148,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
 
     @Override
     public void onUsePreviousProfileSelected() {
-        Toast.makeText(this, "This is not yet supported.", Toast.LENGTH_SHORT).show();
+       onSuccess();
     }
 
     @Override
@@ -168,6 +172,7 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         Single<Object> single = Single.fromCallable(new Callable<Object>() {
             @Override
             public Object call() throws Exception {
+                mApi.clearDbs();
                 mApi.setAccount(contact);
                 getSharkApp().setAccount(mApi.getAccount());
                 mApi.initPki();

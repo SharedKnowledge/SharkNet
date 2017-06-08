@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
-import com.facebook.stetho.Stetho;
-
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
@@ -28,12 +26,6 @@ public class SharkApp extends MultiDexApplication {
     public SharkApp() {
         instance = this;
         MultiDex.install(this);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Stetho.initializeWithDefaults(this);
     }
 
     public static Context getContext() {
@@ -84,11 +76,11 @@ public class SharkApp extends MultiDexApplication {
         this.message = null;
     }
 
-    public void activateDummy(){
+    public void activateDummy() {
         isDummy = true;
     }
 
-    public boolean isDummy(){
+    public boolean isDummy() {
         return isDummy;
     }
 }

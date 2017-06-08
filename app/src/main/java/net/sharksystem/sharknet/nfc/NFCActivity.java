@@ -135,21 +135,23 @@ public class NFCActivity extends RxSingleNavigationDrawerActivity<Knowledge> imp
                     onPublicKeyDialog.dismiss();
                 }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(NFCActivity.this);
-                builder.setMessage("We received " + certificates.size() + " certificates from " + certificates.get(0).getSigner().getName() + ". There where also " + contacts.size() + " Contacts" + ". Do you want to include them?").setTitle("New Certificates and Contacts");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mNfcPkiPortEventListener.onCertificatesDecision(true);
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mNfcPkiPortEventListener.onCertificatesDecision(false);
-                    }
-                });
-                onCertificateDialog = builder.create();
-                onCertificateDialog.show();
+                if(!certificates.isEmpty()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NFCActivity.this);
+                    builder.setMessage("We received " + certificates.size() + " certificates from " + certificates.get(0).getSigner().getName() + ". There where also " + contacts.size() + " Contacts" + ". Do you want to include them?").setTitle("New Certificates and Contacts");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mNfcPkiPortEventListener.onCertificatesDecision(true);
+                        }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mNfcPkiPortEventListener.onCertificatesDecision(false);
+                        }
+                    });
+                    onCertificateDialog = builder.create();
+                    onCertificateDialog.show();
+                }
             }
         });
     }
