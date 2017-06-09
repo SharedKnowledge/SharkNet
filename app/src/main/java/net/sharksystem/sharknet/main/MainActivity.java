@@ -218,7 +218,6 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
             e.printStackTrace();
         }
         mApi.startRadar();
-        mApi.allowSyncInvitation(true);
         mApi.setNotificationResultActivity(new Intent(MainActivity.this, ChatActivity.class));
         startActivity(new Intent(MainActivity.this, ChatActivity.class));
     }
