@@ -4,37 +4,10 @@
 [About SharkNet][4]
 
 ## Setting Up SharkNet
-  - [ ] Checkout the [SharkFW][2] project (NOT SharkNet!)
-  - [ ] Install maven integration if you don’t use IntelliJ (which supports maven natively)
-  - [ ] After the checkout, run mvn clean install, this will install SharkFW to the local maven repository
-  - [ ] Checkout the SharkNet project [Android Studio]
-  - [ ] Open a command prompt and navigate to the in step 4 ceated folder of SharkNet
-  - [ ] Type and execute the following command: git submodule update --init --recursive –remote
-  - [ ] Within the SharKNet project, execute the Gradle command: installDebug
-  - [ ] You should now be able to run the project (Run ‘app‘)
-
-## Setting up your mobile phone
-  - [ ] It is advisable to test the SharkNet App with one or multiple mobile phones. Emulators are not quite suitable for SharkNet
-  - [ ] Go to the run configurations -> General -> switch Target to Open Select Deployment Target Dialog (and later to the option USB Device)
-  - [ ] Follow [these instructions][5]
-
-## Inspecting the SQL databases of the app
-  - [ ] Install the app on two or more devices
-  - [ ] Enable Bluetooth on all devices
-  - [ ] Create a new account and search for other chat partners via the „+“ button
-  - [ ] Send multiple messages to the chat partner
-  - [ ] Check if the other partner received the messages
-  - [ ] Connect your mobile phone with a PC
-  - [ ] Create a .bat file with the content: „adb pull /sdcard/Android/data/net.sharksystem.sharknet/files“
-  - [ ] Move the .bat to a location where the SQLite databases shall be stored
-  - [ ] Install SQLite Studio: https://sqlitestudio.pl/index.rvt
-  - [ ] Execute the .bat
-  - [ ] Open the new ceated files folder, after that open the chats folder
-  - [ ] Open the .db file with SQliteStudio, choose the .db file which includes the nicknames of you and your chatpartner, e.g. DustinFMichaelS1503514403815.db
-  - [ ] You can now inspect your sent and received messages inside the knowledge table
+[Please refer to the Setup article][6]
 
 ## Contents
-Thee next "graphic" shows the relations between the involved projects. The [SharkNet-Api-Android][1] currently not only uses the Android SharkFW but also inherits it due to some problems reagrding Android-Libraries depending on other Android-Libraries.
+This "graphic" shows the relations between the involved projects. The [SharkNet-Api-Android][1] currently not only uses the Android SharkFW but also inherits it due to some problems reagrding Android-Libraries depending on other Android-Libraries.
 **SharkNet**
 &nbsp;&nbsp;&nbsp;|
 &nbsp;&nbsp;&nbsp;|  *uses*
@@ -65,3 +38,4 @@ Because all projects are developed simultaneously the [SharkFW][2] can not yet b
 [3]: https://github.com/SharedKnowledge/SharkNet
 [4]: http://sharedknowledge.github.io/#sharknet
 [5]: https://developer.android.com/studio/run/device.html
+[6]: https://github.com/SharedKnowledge/SharkNet/wiki/SharkNet-setup-guide-for-developer
