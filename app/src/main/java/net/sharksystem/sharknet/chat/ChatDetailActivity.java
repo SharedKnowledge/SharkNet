@@ -11,6 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
@@ -26,11 +29,15 @@ import net.sharksystem.sharknet.RxSingleBaseActivity;
 
 import java.util.List;
 
+
+
+
 /**
  * Created by j4rvis on 3/5/17.
  */
 
 public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> implements SyncMergeKP.SyncMergeListener {
+    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private ChatDetailMsgListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private Chat mChat;
@@ -82,7 +89,8 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new ChatDetailMsgListAdapter(this, getSharkApp());
         mRecyclerView.setAdapter(mAdapter);
-
+        final LinearLayout mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
+        mRevealView.setVisibility(View.GONE);
         final CardView sendButton = (CardView) findViewById(R.id.message_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +114,64 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
                     }
                 }
+            }
+        });
+
+        final CardView semanticButton = (CardView) findViewById(R.id.semantic_button);
+        semanticButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if (mRevealView.getVisibility() == View.GONE) {
+                mRevealView.setVisibility(View.VISIBLE);
+            }
+            else {
+                mRevealView.setVisibility(View.GONE);
+            }
+            }
+        });
+
+
+        final ImageButton topicButton = (ImageButton) findViewById(R.id.imageButtonTopic);
+        topicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRevealView.setVisibility(View.GONE);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, "Topic");
+                startActivity(intent);
+            }
+        });
+
+        final ImageButton peerButton = (ImageButton) findViewById(R.id.imageButtonPeer);
+        peerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRevealView.setVisibility(View.GONE);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, "Peer");
+                startActivity(intent);
+            }
+        });
+
+        final ImageButton timeButton = (ImageButton) findViewById(R.id.imageButtonTime);
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRevealView.setVisibility(View.GONE);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, "Time");
+                startActivity(intent);
+            }
+        });
+
+        final ImageButton locationButton = (ImageButton) findViewById(R.id.imageButtonLocation);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRevealView.setVisibility(View.GONE);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, "Location");
+                startActivity(intent);
             }
         });
     }

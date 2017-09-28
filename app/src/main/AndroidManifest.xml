@@ -139,6 +139,13 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
+            android:name=".chat.ChatAnnotationActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="ChatAnnotationActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
             android:name=".pki.PKIDetailActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"

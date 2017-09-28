@@ -15,6 +15,68 @@
         android:background="@color/white"
         android:scrollbars="vertical"/>
 
+
+
+        <LinearLayout
+            android:id="@+id/reveal_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"  >
+
+                <ImageButton
+                    android:id="@+id/imageButtonTopic"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/ic_menu_gallery" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:text="Topic" />
+
+                <ImageButton
+            android:id="@+id/imageButtonPeer"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/ic_person_black_48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="Peer" />
+
+            <ImageButton
+                android:id="@+id/imageButtonTime"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_timer_black_48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="Time" />
+
+            <ImageButton
+                android:id="@+id/imageButtonLocation"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_location_on_black_48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="Location" />
+
+            <!-- Other 2 icons here-->
+
+        </LinearLayout>
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -30,6 +92,26 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:theme="@style/MyEditTextTheme"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/semantic_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/grey_400"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:layout_margin="5dp"
+            mApp:cardCornerRadius="25dp"
+            mApp:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/semantic_image"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:src="@drawable/ic_edit_black_24dp">
+            </ImageView>
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:id="@+id/message_send_button"
@@ -52,6 +134,8 @@
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
+
 
 
 
