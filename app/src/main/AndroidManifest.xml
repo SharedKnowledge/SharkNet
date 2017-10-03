@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="net.sharksystem.sharknet">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="net.sharksystem.sharknet">
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true"/>
+        android:required="true" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
-    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL"/>
-    <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name=".SharkApp"
@@ -30,37 +30,35 @@
         tools:replace="android:icon, android:theme, android:name">
         <activity
             android:name=".main.MainActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".contact.ContactActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_contacts"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".account.AccountDetailActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_account"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".chat.ChatActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_chat"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".chat.ChatMessageDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -69,94 +67,103 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".chat.ChatDetailActivity"/>
+                android:value=".chat.ChatDetailActivity" />
         </activity>
-
         <activity
             android:name=".chat.ChatDetailActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/activity_title_chat_detail"
             android:parentActivityName=".chat.ChatActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".chat.ChatActivity"/>
+                android:value=".chat.ChatActivity" />
         </activity>
         <activity
             android:name=".chat.ChatSettingsActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/activity_title_chat_settings"
             android:parentActivityName=".chat.ChatDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".chat.ChatDetailActivity"/>
+                android:value=".chat.ChatDetailActivity" />
         </activity>
         <activity
             android:name=".chat.ChatNewActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_chat_new"
             android:parentActivityName=".chat.ChatActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".chat.ChatActivity"/>
+                android:value=".chat.ChatActivity" />
         </activity>
         <activity
             android:name=".contact.ContactDetailActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_con_detail_view"
             android:parentActivityName=".contact.ContactActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".contact.ContactActivity"/>
+                android:value=".contact.ContactActivity" />
         </activity>
         <activity
             android:name=".radar.RadarActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_radar"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".nfc.NFCActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_nfc"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".pki.PKIActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_pki"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".chat.ChatAnnotationActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="ChatAnnotationActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".pki.PKIDetailActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_title_pki_detail"
             android:parentActivityName=".pki.PKIActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pki.PKIActivity"/>
+                android:value=".pki.PKIActivity" />
         </activity>
-        <service android:name="net.sharksystem.api.service.SharkService"></service>
+
+        <service android:name="net.sharksystem.api.service.SharkService" />
+
+        <activity
+            android:name=".chat.ChatAnnotationTimeActivity"
+            android:label="@string/title_activity_chat_annotation_time"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".chat.ChatAnnotationPeerActivity"
+            android:label="@string/title_activity_peer_annotation_time"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".chat.ChatAnnotationLocationActivity"
+            android:label="@string/title_activity_chat_annotation_location"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,8 @@ package net.sharksystem.sharknet.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import net.sharksystem.api.models.Message;
@@ -23,6 +25,15 @@ public class ChatAnnotationActivity extends BaseActivity {
         setLayoutResource(R.layout.chat_annotation_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
+
+        final ImageButton saveButton = (ImageButton) findViewById(R.id.imageButtonSave);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //final TextView textView = (TextView) findViewById(R.id.text_view_top);
         //textView.setText(intent.getStringExtra(ChatDetailActivity.EXTRA_MESSAGE));

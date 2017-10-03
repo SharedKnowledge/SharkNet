@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.sharksystem.sharknet.chat.ChatAnnotationTimeActivity">
+
+
+    <include layout="@layout/content_chat_annotation_time" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:label="Topic">
+
+    <TextView
+        android:id="@+id/hint"
+        android:text="@string/start_end"
+        android:layout_marginTop="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+         />
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:text="@string/start_time"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+         />
+
+    <Button
+        android:id="@+id/buttonEnd"
+        android:text="@string/end_time"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        />
+
+    <ImageButton
+        android:id="@+id/imageButtonSave"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ic_save_black_48dp" />
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

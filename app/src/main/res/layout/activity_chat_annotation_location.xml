@@ -4,23 +4,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:label="Topic">
+    android:label="Spatial">
 
 
     <EditText
-        android:id="@+id/annotation_si"
+        android:id="@+id/longitudeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Subject Identifier"
+        android:hint="longitude"
         android:gravity="center"
         android:inputType="text" />
+
     <EditText
-        android:id="@+id/annotation_name"
+        android:id="@+id/latitudeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name"
+        android:hint="latitude"
         android:gravity="center"
         android:inputType="text" />
+
 
     <ImageButton
         android:id="@+id/imageButtonSave"

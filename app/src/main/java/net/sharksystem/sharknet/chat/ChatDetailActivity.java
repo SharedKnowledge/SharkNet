@@ -1,5 +1,8 @@
 package net.sharksystem.sharknet.chat;
 
+import android.app.Dialog;
+import android.support.v4.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +11,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
@@ -27,6 +32,7 @@ import net.sharksystem.api.models.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -147,7 +153,7 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
             @Override
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
-                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationPeerActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, "Peer");
                 startActivity(intent);
             }
@@ -158,9 +164,11 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
             @Override
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
-                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, "Time");
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationTimeActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, "Location");
                 startActivity(intent);
+                //DialogFragment newFragment = new TimePickerFragment();
+                //newFragment.show(getSupportFragmentManager(), "timePicker");
             }
         });
 
@@ -169,7 +177,7 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
             @Override
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
-                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationLocationActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, "Location");
                 startActivity(intent);
             }
@@ -224,6 +232,26 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
                     }
                 }
             });
+        }
+    }
+
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // Do something with the time chosen by the user
         }
     }
 }
