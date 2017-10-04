@@ -126,6 +126,7 @@
     <string name="start_end">Please choose start and end time</string>
     <string name="title_activity_chat_annotation_location">ChatAnnotationLocationActivity</string>
     <string name="title_activity_peer_annotation_time">ChatAnnotationPeerActivity</string>
+    <string name="title_activity_semantic_broadcast">SemanticBroadcastActivity</string>
 
 
 </resources>

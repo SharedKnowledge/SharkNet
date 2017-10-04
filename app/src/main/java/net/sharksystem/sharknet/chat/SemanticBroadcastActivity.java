@@ -42,7 +42,7 @@ import java.util.List;
  * Created by j4rvis on 3/5/17.
  */
 
-public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> implements SyncMergeKP.SyncMergeListener {
+public class SemanticBroadcastActivity extends RxSingleBaseActivity<List<Message>> implements SyncMergeKP.SyncMergeListener {
     public static final String EXTRA_MESSAGE = "";
     private ChatDetailMsgListAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -127,12 +127,12 @@ public class ChatDetailActivity extends RxSingleBaseActivity<List<Message>> impl
         semanticButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if (mRevealView.getVisibility() == View.GONE) {
-                mRevealView.setVisibility(View.VISIBLE);
-            }
-            else {
-                mRevealView.setVisibility(View.GONE);
-            }
+                if (mRevealView.getVisibility() == View.GONE) {
+                    mRevealView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    mRevealView.setVisibility(View.GONE);
+                }
             }
         });
 

@@ -163,6 +163,10 @@
         <activity
             android:name=".chat.ChatAnnotationLocationActivity"
             android:label="@string/title_activity_chat_annotation_location"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".chat.SemanticBroadcastActivity"
+            android:label="@string/title_activity_semantic_broadcast"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
