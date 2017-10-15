@@ -24,6 +24,7 @@ import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.sync.manager.SyncComponent;
 import net.sharkfw.knowledgeBase.sync.manager.port.SyncMergeKP;
+import net.sharkfw.routing.SemanticRoutingKP;
 import net.sharkfw.system.L;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
@@ -42,7 +43,7 @@ import java.util.List;
  * Created by j4rvis on 3/5/17.
  */
 
-public class SemanticBroadcastActivity extends RxSingleBaseActivity<List<Message>> implements SyncMergeKP.SyncMergeListener {
+public class SemanticBroadcastActivity extends RxSingleBaseActivity<List<Message>> implements SemanticRoutingKP.SemanticRoutingListener {
     public static final String EXTRA_MESSAGE = "";
     private ChatDetailMsgListAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -82,7 +83,7 @@ public class SemanticBroadcastActivity extends RxSingleBaseActivity<List<Message
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
-        mApi.getSharkEngine().getSyncManager().addSyncMergeListener(this);
+        mApi.getSharkEngine().getSyncManager().addSemanticRoutingListener(this);
     }
 
     private void configureLayout() {
