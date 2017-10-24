@@ -13,10 +13,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import net.sharkfw.asip.ASIPInterest;
+import net.sharkfw.asip.ASIPSpace;
+import net.sharkfw.knowledgeBase.STSet;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.inmemory.InMemoInterest;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSTSet;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Profile;
 import net.sharksystem.sharknet.BaseActivity;
@@ -122,11 +126,25 @@ public class EntryProfileActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AccountDetailActivity.class);
                 Profile profile = new Profile(mApi.getAccount());
+                ASIPInterest interest = null;
+                STSet topics = new InMemoSTSet();
+                try {
+                    topics.createSemanticTag("Topic", topicEditText.getText().toString());
+                    interest = new InMemoInterest(topics, null, null, null, null, null, null, ASIPSpace.DIRECTION_IN);
+                    //TODO: Add the other dimensions
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+                if (interest != null) {
+                    profile.setActiveEntryInterest(interest);
+                    mApi.addProfile(profile);
+                    Toast.makeText(getApplicationContext(), "Added the entry profile!", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Could not save the Entry Profile!", Toast.LENGTH_LONG).show();
+                }
 
-
-                mApi.addProfile(profile);
-
-                startActivity(intent);
             }
         });
 
