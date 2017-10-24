@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.sharksystem.sharknet.profile.EntryProfileActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:label="Entry Profile">
+
+    <TextView
+        android:id="@+id/textView_server_test_status"
+        android:textSize="32sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="27dp"
+        android:text="@string/active_entry_profile" />
+
+    <EditText
+        android:id="@+id/topic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Topic SI"
+        android:gravity="center"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/peer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Peer SI"
+        android:gravity="center"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type SI"
+        android:gravity="center"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/longitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Longitude"
+        android:gravity="center"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/lattitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Lattitude"
+        android:gravity="center"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:text="@string/start_time"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_centerInParent="true" />
+
+
+    <Button
+        android:id="@+id/buttonEnd"
+        android:text="@string/end_time"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_centerInParent="true" />
+
+    <ImageButton
+        android:id="@+id/imageButtonSave"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ic_save_black_48dp" />
+
+
+</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

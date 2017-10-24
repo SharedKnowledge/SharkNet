@@ -26,7 +26,9 @@ import net.sharksystem.api.models.Settings;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
+import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
 import net.sharksystem.sharknet.main.MailServerPingPort;
+import net.sharksystem.sharknet.profile.EntryProfileActivity;
 
 import java.io.IOException;
 
@@ -43,6 +45,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
     private EditText mPopServer;
     private EditText mSmtpServer;
     private Button mTestMail;
+    private Button entryProfileBtn;
     private TextView mServerTestStatus;
     private ImageView mImage;
     private Bitmap mBitmap;
@@ -72,6 +75,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         mSmtpServer = (EditText) findViewById(R.id.editText_account_smtp_server);
 
         mTestMail = (Button) findViewById(R.id.button_account_test_mail);
+        entryProfileBtn = (Button) findViewById(R.id.entry_profile);
         mServerTestStatus = (TextView) findViewById(R.id.textView_server_test_status);
 
         mTestMail.setOnClickListener(this);
@@ -86,6 +90,14 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 // Always show the chooser (if there are multiple options available)
                 L.d("Start picking an Image", this);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+        });
+
+        entryProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EntryProfileActivity.class);
+                startActivity(intent);
             }
         });
     }

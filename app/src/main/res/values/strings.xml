@@ -127,6 +127,9 @@
     <string name="title_activity_chat_annotation_location">ChatAnnotationLocationActivity</string>
     <string name="title_activity_peer_annotation_time">ChatAnnotationPeerActivity</string>
     <string name="title_activity_semantic_broadcast">SemanticBroadcastActivity</string>
+    <string name="entry_profile">Entry Profile</string>
+    <string name="active_entry_profile">Active Entry Profile</string>
+    <string name="title_activity_entry_profile">EntryProfileActivity</string>
 
 
 </resources>

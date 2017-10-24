@@ -71,7 +71,7 @@
         tools:layout_conversion_absoluteWidth="48dp"
         tools:layout_conversion_absoluteX="16dp"
         tools:layout_conversion_absoluteY="231dp"
-        android:layout_marginTop="@dimen/account_text_view_gap"
+        android:layout_marginTop="11dp"
         app:layout_constraintTop_toBottomOf="@+id/textView16"
         android:layout_marginLeft="@dimen/account_margin_outside"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -267,6 +267,18 @@
         app:layout_constraintLeft_toRightOf="@+id/button_account_test_mail"
         android:layout_marginStart="26dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/button_account_test_mail"/>
+
+    <Button
+        android:id="@+id/entry_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/entry_profile"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="457dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="13dp"/>
 
 
 </android.support.constraint.ConstraintLayout>
