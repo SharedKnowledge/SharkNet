@@ -23,5 +23,9 @@
             android:id="@+id/sidenav_pki"
             android:actionLayout="@layout/system_sidenav_menu_item"
             android:title="@string/sidenav_item_pki" />
+        <item
+            android:id="@+id/sidenav_semantic_broadcast"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_semantic_broadcast" />
     </group>
 </menu>

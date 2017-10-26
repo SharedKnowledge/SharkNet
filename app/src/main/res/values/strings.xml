@@ -130,6 +130,8 @@
     <string name="entry_profile">Entry Profile</string>
     <string name="active_entry_profile">Active Entry Profile</string>
     <string name="title_activity_entry_profile">EntryProfileActivity</string>
+    <string name="title_activity_broadcast">BroadcastActivity</string>
+    <string name="sidenav_item_semantic_broadcast">Semantic Broadcast</string>
 
 
 </resources>

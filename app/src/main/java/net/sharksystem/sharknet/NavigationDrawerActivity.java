@@ -18,6 +18,7 @@ import android.widget.TextView;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
+import net.sharksystem.sharknet.broadcast.BroadcastActivity;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.contact.ContactActivity;
 import net.sharksystem.sharknet.nfc.NFCActivity;
@@ -110,6 +111,10 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
             case R.id.sidenav_pki:
                 if(this instanceof PKIActivity) closeDrawer();
                 intent = new Intent(this, PKIActivity.class);
+                break;
+            case R.id.sidenav_semantic_broadcast:
+                //if(this instanceof BroadcastActivity) closeDrawer();
+                intent = new Intent(this, BroadcastActivity.class);
                 break;
             default:
                 break;
