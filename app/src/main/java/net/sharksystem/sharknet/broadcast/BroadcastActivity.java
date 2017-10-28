@@ -100,6 +100,8 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
                     } else {
                         Message message = new Message(mApi.getAccount());
                         message.setContent(msg_string);
+                        broadcast.addMessage(message);
+                        mApi.updateBroadcast(broadcast);
                         //mChat.addMessage(message);
                         //mApi.updateChat(mChat);
                         editText.getText().clear();
@@ -173,8 +175,7 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
 
     @Override
     protected List<Message> doOnBackgroundThread() throws Exception {
-        //return mChat.getMessages();
-        return null; //TODO:
+        return broadcast.getMessages();
     }
 
     @Override
@@ -207,6 +208,17 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
 
     @Override
     public void onNewMerge(SyncComponent component, SharkKB changes) {
+        L.d("Received a new message for the Broadcast channel", this);
+        broadcast = mApi.getBroadcast();
+        runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(broadcast!=null){
+                        mAdapter.setMessages(broadcast.getMessages());
+                        mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+                    }
+                }
+            });
 
     }
 
