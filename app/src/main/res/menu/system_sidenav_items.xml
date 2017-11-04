@@ -27,5 +27,9 @@
             android:id="@+id/sidenav_semantic_broadcast"
             android:actionLayout="@layout/system_sidenav_menu_item"
             android:title="@string/sidenav_item_semantic_broadcast" />
+        <item
+            android:id="@+id/sidenav_schnitzeljagd"
+            android:actionLayout="@layout/system_sidenav_menu_item"
+            android:title="@string/sidenav_item_schnitzeljagd" />
     </group>
 </menu>

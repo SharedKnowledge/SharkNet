@@ -24,6 +24,7 @@ import net.sharksystem.sharknet.contact.ContactActivity;
 import net.sharksystem.sharknet.nfc.NFCActivity;
 import net.sharksystem.sharknet.pki.PKIActivity;
 import net.sharksystem.sharknet.radar.RadarActivity;
+import net.sharksystem.sharknet.schnitzeljagd.SchnitzeljagdMainActivity;
 
 /**
  * Created by j4rvis on 1/31/17.
@@ -115,6 +116,10 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
             case R.id.sidenav_semantic_broadcast:
                 //if(this instanceof BroadcastActivity) closeDrawer();
                 intent = new Intent(this, BroadcastActivity.class);
+                break;
+            case R.id.sidenav_schnitzeljagd:
+                //if(this instanceof SchnitzeljagdMainActivity) closeDrawer();
+                intent = new Intent(this, SchnitzeljagdMainActivity.class);
                 break;
             default:
                 break;

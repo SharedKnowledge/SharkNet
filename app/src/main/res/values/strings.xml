@@ -133,5 +133,7 @@
     <string name="title_activity_broadcast">BroadcastActivity</string>
     <string name="sidenav_item_semantic_broadcast">Semantic Broadcast</string>
 
+    <!-- Schnitzeljagd -->
+    <string name="sidenav_item_schnitzeljagd">Schnitzeljagd</string>
 
 </resources>

@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".SharkApp"
@@ -175,7 +176,8 @@
         <activity
             android:name=".broadcast.BroadcastActivity"
             android:label="@string/title_activity_broadcast"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".schnitzeljagd.SchnitzeljagdMainActivity"></activity>
     </application>
 
 </manifest>
