@@ -52,12 +52,10 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (broadcast == null) {
-            broadcast = new Broadcast(); //TODO:
-        }
         configureLayout();
         setTitle("Semantic Broadcast");
         setProgressMessage(R.string.chat_progress_load_messages);
+
     }
 
     @Override
@@ -84,6 +82,8 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
         mRecyclerView.setAdapter(mAdapter);
         final LinearLayout mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
         mRevealView.setVisibility(View.GONE);
+        //broadcast = mApi.getBroadcast();
+        broadcast = new Broadcast();
         final CardView sendButton = (CardView) findViewById(R.id.message_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +100,7 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
                     } else {
                         Message message = new Message(mApi.getAccount());
                         message.setContent(msg_string);
+                        broadcast = mApi.getBroadcast();
                         broadcast.addMessage(message);
                         mApi.updateBroadcast(broadcast);
                         //mChat.addMessage(message);
