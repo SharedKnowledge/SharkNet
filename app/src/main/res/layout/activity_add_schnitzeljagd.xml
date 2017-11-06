@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.sharksystem.sharknet.schnitzeljagd.AddSchnitzeljagdActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addSchnitzelText"
+        android:textSize="20dp"
+        android:textColor="@android:color/black"
+        android:text="@string/addNewSchnitzelText"/>
+
+    <EditText
+        android:id="@+id/addSchnitzelDescription"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="top"
+        android:paddingTop="10dp"
+        android:layout_below="@id/addSchnitzelText"
+        android:inputType="textMultiLine"
+        android:imeOptions="actionDone"
+        android:maxLength="500"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/addSchnitzelDescription"
+        android:layout_marginTop="69dp"
+        android:onClick="newSchnitzelOnClick"
+        android:text="@string/add_btn" />
+
+    <Button
+        android:id="@+id/finish_btn"
+        android:textColorHighlight="@android:color/holo_purple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="40dp"
+        android:onClick="newSchnitzeljagdOnClick"
+        android:text="@string/finish_btn" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="0"
+        android:layout_alignBaseline="@+id/finish_btn"
+        android:layout_alignBottom="@+id/finish_btn"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

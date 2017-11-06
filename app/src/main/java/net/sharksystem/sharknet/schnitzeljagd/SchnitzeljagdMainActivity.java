@@ -1,7 +1,9 @@
 package net.sharksystem.sharknet.schnitzeljagd;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -32,7 +34,7 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
         setContentView(R.layout.activity_schnitzeljagd_main);
         setProgressMessage("Loading Schnitzeljagden");
         //dbhelper = new DBSchnitzeljagdHelper(getApplicationContext());
-        //FloatingActionButton addNewSchnitzeljagd = (FloatingActionButton) findViewById(R.id.addSchnitzeljagdButton);
+        FloatingActionButton addNewSchnitzeljagd = (FloatingActionButton) findViewById(R.id.addSchnitzeljagdButton);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //Permission granted
             this.locator = new Locator(this);
@@ -42,6 +44,10 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     protected List<Schnitzeljagd> doOnBackgroundThread() throws Exception {
@@ -59,7 +65,38 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
     }
 
     public void fabClicked(View view) {
-        //TODO addnew Activity
-        Toast.makeText(this, "Not yet implemented", Toast.LENGTH_SHORT).show();
+        final Intent intent = new Intent(this, AddSchnitzeljagdActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                //TODO
+            }
+            else if(requestCode == RESULT_CANCELED){
+                Toast.makeText(getApplicationContext(), "Schnitzeljagderstellung abgebrochen", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    //User just granted permission in permission dialog
+                    this.locator = new Locator(this);
+                } else {
+                    Toast.makeText(SchnitzeljagdMainActivity.this, "Permission denied to get location", Toast.LENGTH_SHORT).show();
+                    //TODO kill app (app won't work without location permission)
+                }
+                return;
+            }
+        }
     }
 }

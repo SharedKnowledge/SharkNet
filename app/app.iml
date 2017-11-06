@@ -146,6 +146,5 @@
     <orderEntry type="library" name="com.google.android.gms:play-services-base-11.4.2" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-24.2.1" level="project" />
     <orderEntry type="module" module-name="api" />
-    <orderEntry type="library" name="android-android-24" level="project" />
   </component>
 </module>
