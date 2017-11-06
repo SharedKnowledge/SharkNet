@@ -12,13 +12,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import net.sharksystem.api.locator.Locator;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Message;
-import net.sharksystem.api.models.Schnitzeljagd;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
-
+import net.sharksystem.sharknet.schnitzeljagd.locator.Locator;
 
 import java.util.ArrayList;
 import java.util.List;
