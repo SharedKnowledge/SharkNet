@@ -7,8 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import net.sharksystem.api.locator.Locator;
+import net.sharksystem.api.models.Schnitzeljagd;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.schnitzeljagd.locator.Locator;
+
 
 public class AddSchnitzeljagdActivity extends AppCompatActivity {
 
