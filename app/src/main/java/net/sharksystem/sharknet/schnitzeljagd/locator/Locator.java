@@ -36,7 +36,6 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
     private GoogleApiClient googleApiClient;
     private Context context;
     private ArrayList<LocatorLocationListener> listeners;
-    private boolean googleApiClientConnected = false;
 
     private int locationSource;
 
@@ -78,7 +77,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      * @return true, if the Locator is ready and the GoogleApiClient is connected, else false
      */
     public boolean isGoogleApiClientConnected() {
-        return googleApiClientConnected;
+        return googleApiClient.isConnected();
     }
 
     /**
@@ -189,7 +188,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        this.googleApiClientConnected = true;
+
     }
 
     @Override
