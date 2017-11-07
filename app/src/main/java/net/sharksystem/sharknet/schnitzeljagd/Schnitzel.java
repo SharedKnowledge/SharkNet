@@ -55,4 +55,12 @@ class Schnitzel implements Comparable<Schnitzel> {
             return 0;
         }
     }
+
+    @Override
+    public String toString() {
+        if (message.length() <30 ){
+            return idx + "  " + message;
+        }
+        return idx + "  " + message.substring(0,30);
+    }
 }

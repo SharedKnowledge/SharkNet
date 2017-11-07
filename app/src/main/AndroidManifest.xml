@@ -177,8 +177,17 @@
             android:name=".broadcast.BroadcastActivity"
             android:label="@string/title_activity_broadcast"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".schnitzeljagd.SchnitzeljagdMainActivity" />
-        <activity android:name=".schnitzeljagd.AddSchnitzeljagdActivity"></activity>
+
+
+        <activity
+            android:name=".schnitzeljagd.SchnitzeljagdMainActivity"
+            android:label="Schnitzeljagd"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".schnitzeljagd.AddSchnitzeljagdActivity"
+            android:label="Add Schnitzeljagd"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
     </application>
 
 </manifest>
