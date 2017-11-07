@@ -67,7 +67,7 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
-        mApi.getSharkEngine().getSyncManager().addSemanticRoutingListener(this);
+        mApi.getSharkEngine().getBroadcastManager().addSemanticRoutingListener(this);
     }
 
     private void configureLayout() {
