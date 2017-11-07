@@ -135,5 +135,8 @@
 
     <!-- Schnitzeljagd -->
     <string name="sidenav_item_schnitzeljagd">Schnitzeljagd</string>
+    <string name="addNewSchnitzelText">Wie kommt man zum nächsten Schnitzel</string>
+    <string name="add_btn">Erstelle dieses Schnitzel</string>
+    <string name="finish_btn">Erstelle Schnitzeljagd</string>
 
 </resources>
