@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import net.sharksystem.api.models.Broadcast;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
@@ -17,14 +18,14 @@ public class SharkApp extends MultiDexApplication {
 
     private static SharkApp instance;
     private Chat chat = null;
+    private Broadcast broadcast = null;
     private Contact contact = null;
     private Message message = null;
     private Contact account = null;
 
     private boolean isDummy = false;
 
-    public SharkApp() {
-        instance = this;
+    public SharkApp() {        instance = this;
         MultiDex.install(this);
     }
 
@@ -82,5 +83,13 @@ public class SharkApp extends MultiDexApplication {
 
     public boolean isDummy() {
         return isDummy;
+    }
+
+    public Broadcast getBroadcast() {
+        return broadcast;
+    }
+
+    public void setBroadcast(Broadcast broadcast) {
+        this.broadcast = broadcast;
     }
 }

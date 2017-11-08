@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
+import net.sharksystem.api.models.Broadcast;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
 import net.sharksystem.sharknet.broadcast.BroadcastActivity;
@@ -83,8 +84,7 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
 
         ImageView imageView = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.round_image);
         imageView.setImageBitmap(mApi.getAccount().getImage());
-        imageView.setPadding(0, 0, 0, 0);
-    }
+        imageView.setPadding(0, 0, 0, 0);}
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -115,6 +115,7 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
                 break;
             case R.id.sidenav_semantic_broadcast:
                 //if(this instanceof BroadcastActivity) closeDrawer();
+                getSharkApp().setBroadcast(mApi.getBroadcast());
                 intent = new Intent(this, BroadcastActivity.class);
                 break;
             case R.id.sidenav_schnitzeljagd:

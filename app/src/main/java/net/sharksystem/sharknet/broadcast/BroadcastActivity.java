@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
@@ -26,6 +27,7 @@ import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
+import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationLocationActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationPeerActivity;
@@ -42,7 +44,7 @@ import java.util.List;
  * Created by Dustin Feurich
  */
 
-public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> implements SemanticRoutingKP.SemanticRoutingListener {
+public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Message>> implements SemanticRoutingKP.SemanticRoutingListener {
     public static final String EXTRA_MESSAGE = "";
     private ChatDetailMsgListAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -52,9 +54,13 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (broadcast == null) {
+            broadcast = getSharkApp().getBroadcast();
+        }
         configureLayout();
         setTitle("Semantic Broadcast");
         setProgressMessage(R.string.chat_progress_load_messages);
+        Toast.makeText(this, "Anzahl: " + broadcast.getMessages().size(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -79,11 +85,11 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
         layoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new ChatDetailMsgListAdapter(this, getSharkApp());
+        mAdapter.setMessages(broadcast.getMessages());
         mRecyclerView.setAdapter(mAdapter);
         final LinearLayout mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
         mRevealView.setVisibility(View.GONE);
-        //broadcast = mApi.getBroadcast();
-        broadcast = new Broadcast();
+        //broadcast = new Broadcast();
         final CardView sendButton = (CardView) findViewById(R.id.message_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +200,7 @@ public class BroadcastActivity extends RxSingleBaseActivity<List<Message>> imple
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Reset clicked data
-                getSharkApp().resetChat();
+                getSharkApp().setBroadcast(null);
                 this.finish();
                 return true;
             case R.id.chat_attachment_take_photo:
