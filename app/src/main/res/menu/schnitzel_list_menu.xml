@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/schnitzel_bearbeiten_menu"
+        android:title="@string/schnitzel_bearbeiten" />
+    <item
+        android:id="@+id/schnitzel_loeschen_menu"
+        android:title="@string/schnitzel_loeschen"
+        android:icon="@android:drawable/ic_delete" />
+</menu>

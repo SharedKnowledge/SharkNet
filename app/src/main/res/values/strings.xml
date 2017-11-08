@@ -138,5 +138,7 @@
     <string name="addNewSchnitzelText">Wie kommt man zum nächsten Schnitzel</string>
     <string name="add_btn">Erstelle dieses Schnitzel</string>
     <string name="finish_btn">Erstelle Schnitzeljagd</string>
+    <string name="schnitzel_loeschen">Löschen</string>
+    <string name="schnitzel_bearbeiten">Bearbeiten</string>
 
 </resources>
