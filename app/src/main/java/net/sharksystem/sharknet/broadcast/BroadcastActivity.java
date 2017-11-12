@@ -1,5 +1,6 @@
 package net.sharksystem.sharknet.broadcast;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import net.sharksystem.api.models.Broadcast;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
+import net.sharksystem.api.shark.peer.NearbyPeer;
+import net.sharksystem.api.shark.peer.NearbyPeerManager;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
@@ -34,7 +37,9 @@ import net.sharksystem.sharknet.chat.ChatAnnotationPeerActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationTimeActivity;
 import net.sharksystem.sharknet.chat.ChatDetailMsgListAdapter;
 import net.sharksystem.sharknet.chat.ChatSettingsActivity;
+import net.sharksystem.sharknet.radar.RadarListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,11 +49,17 @@ import java.util.List;
  * Created by Dustin Feurich
  */
 
-public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Message>> implements SemanticRoutingKP.SemanticRoutingListener {
+public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Message>> implements SemanticRoutingKP.SemanticRoutingListener, NearbyPeerManager.NearbyPeerListener {
     public static final String EXTRA_MESSAGE = "";
     private ChatDetailMsgListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private Broadcast broadcast;
+    private RadarListAdapter radarListAdapter;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
 
     @Override
@@ -60,8 +71,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
         configureLayout();
         setTitle("Semantic Broadcast");
         setProgressMessage(R.string.chat_progress_load_messages);
-        Toast.makeText(this, "Anzahl: " + broadcast.getMessages().size(), Toast.LENGTH_SHORT).show();
-
+        radarListAdapter = new RadarListAdapter(this);
     }
 
     @Override
@@ -74,6 +84,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
         mApi.getSharkEngine().getBroadcastManager().addSemanticRoutingListener(this);
+        mApi.addRadarListener(this);
     }
 
     private void configureLayout() {
@@ -229,4 +240,19 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
 
     }
 
+    @Override
+    public void onNearbyPeersFound(final ArrayList<NearbyPeer> peers) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                radarListAdapter.updateList(peers);
+            }
+        });
+        Toast.makeText(this, "Amount of Peers found: " + peers.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNearbyPeerFound(NearbyPeer peer) {
+
+    }
 }
