@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.schnitzeljagd.locator.Locator;
 
 import java.util.Collections;
-import net.sharksystem.sharknet.schnitzeljagd.Schnitzel;
 
 public class AddSchnitzeljagdActivity extends AppCompatActivity {
 

@@ -40,6 +40,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
     private Context context;
     private ArrayList<LocatorLocationListener> listeners;
     private LocationRequest locationRequest;
+    private boolean startUpdatesIfConnected;
 
     private int locationSource;
 
@@ -70,6 +71,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
         this.locationRequest.setInterval(10000);
         this.locationRequest.setFastestInterval(5000);
         this.locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        this.startUpdatesIfConnected = false;
     }
 
     /**
@@ -89,6 +91,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
                 .build();
         this.googleApiClient.connect();
         this.locationRequest = locationRequest;
+        this.startUpdatesIfConnected = false;
     }
 
     /**
@@ -182,10 +185,15 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             throw new SecurityException("Permission denied! Cannot get a location fix without 'ACCESS_FINE_LOCATION'-permission!");
         }
-        //Google Android Developer Documentation states to use deprecated FusedLocationProviderApi class until newer API-version (12.0.0) is available
-        //https://developer.android.com/training/location/retrieve-current.html
-        //noinspection deprecation
-        LocationServices.FusedLocationApi.requestLocationUpdates(this.googleApiClient, this.locationRequest, this);
+        if (googleApiClient.isConnected()) {
+            //Google Android Developer Documentation states to use deprecated FusedLocationProviderApi class until newer API-version (12.0.0) is available
+            // https://developer.android.com/training/location/retrieve-current.html
+            // noinspection deprecation
+            LocationServices.FusedLocationApi.requestLocationUpdates(this.googleApiClient, this.locationRequest, this);
+        }
+        else {
+            startUpdatesIfConnected = true;
+        }
     }
 
     private void startIndoorLocationUpdates() {
@@ -245,7 +253,9 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        if (startUpdatesIfConnected) {
+            startLocationUpdates();
+        }
     }
 
     @Override
