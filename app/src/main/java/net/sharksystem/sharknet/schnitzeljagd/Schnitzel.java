@@ -2,10 +2,6 @@ package net.sharksystem.sharknet.schnitzeljagd;
 
 import android.support.annotation.NonNull;
 
-import net.sharksystem.sharknet.schnitzeljagd.locator.LocatorLocation;
-
-import java.io.Serializable;
-
 /**
  * Created by Yannik on 04.11.2017.
  */
