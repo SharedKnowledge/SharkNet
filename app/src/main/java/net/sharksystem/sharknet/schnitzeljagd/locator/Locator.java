@@ -3,6 +3,7 @@ package net.sharksystem.sharknet.schnitzeljagd.locator;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ import java.util.ArrayList;
  * @author Emil Schoenawa
  * @version 29.10.2017
  */
-public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     public final static int LOCATION_SOURCE_FUSED = 0;
     public final static int LOCATION_SOURCE_INDOOR = 1;
@@ -36,6 +39,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
     private GoogleApiClient googleApiClient;
     private Context context;
     private ArrayList<LocatorLocationListener> listeners;
+    private LocationRequest locationRequest;
 
     private int locationSource;
 
@@ -44,15 +48,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      * @param context The context in which this class should operate (this context must have the 'ACCESS_FINE_LOCATION'-permission)
      */
     public Locator(Context context) {
-        this.context = context;
-        this.listeners = new ArrayList<>();
-        this.locationSource = LOCATION_SOURCE_INDOOR_FUSED;
-        this.googleApiClient = new GoogleApiClient.Builder(context)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        this.googleApiClient.connect();
+        this(context, LOCATION_SOURCE_INDOOR_FUSED);
     }
 
     /**
@@ -70,6 +66,29 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
                 .addApi(LocationServices.API)
                 .build();
         this.googleApiClient.connect();
+        this.locationRequest = new LocationRequest();
+        this.locationRequest.setInterval(10000);
+        this.locationRequest.setFastestInterval(5000);
+        this.locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    /**
+     * Constructs a new Locator instance.
+     * @param context The context in which this class should operate (this context must have the 'ACCESS_FINE_LOCATION'-permission)
+     * @param locationSource The location source (0=Fused only; 1=Indoor only; 2=Indoor if available, fallback to Fused if not)
+     * @param locationRequest The parameters for location updates
+     */
+    public Locator(Context context, int locationSource, LocationRequest locationRequest) {
+        this.context = context;
+        this.listeners = new ArrayList<>();
+        this.locationSource = locationSource;
+        this.googleApiClient = new GoogleApiClient.Builder(context)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        this.googleApiClient.connect();
+        this.locationRequest = locationRequest;
     }
 
     /**
@@ -125,13 +144,52 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
         }
     }
 
+    public void setLocationRequest(LocationRequest locationRequest) {
+        this.locationRequest = locationRequest;
+    }
+
+    public LocationRequest getLocationRequest () {
+        return this.locationRequest;
+    }
+
     /**
      * Initiates regular location updates.
-     * UNFINISHED: Missing parameters
+     * UNFINISHED: Missing parameters (?)
+     * @throws SecurityException If the context supplied in the constructor doesn't have the required permission (ACCESS_FINE_LOCATION)
      */
-    public void startLocationUpdates() {
-        //TODO implement regular updates for fused location
-        //TODO implement regular updates for indoor location
+    public void startLocationUpdates() throws SecurityException {
+        //TODO Params?
+        switch (this.locationSource) {
+            case LOCATION_SOURCE_FUSED:
+                startFusedLocationUpdates();
+                break;
+            case LOCATION_SOURCE_INDOOR:
+                startIndoorLocationUpdates();
+                break;
+            case LOCATION_SOURCE_INDOOR_FUSED:
+            default:
+                startFusedLocationUpdates();
+                startIndoorLocationUpdates();
+                break;
+        }
+    }
+
+    /**
+     * Starts location updates in the fused location provider.
+     * @throws SecurityException If the context supplied in the constructor doesn't have the required permission (ACCESS_FINE_LOCATION)
+     */
+    private void startFusedLocationUpdates() throws SecurityException {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            throw new SecurityException("Permission denied! Cannot get a location fix without 'ACCESS_FINE_LOCATION'-permission!");
+        }
+        //Google Android Developer Documentation states to use deprecated FusedLocationProviderApi class until newer API-version (12.0.0) is available
+        //https://developer.android.com/training/location/retrieve-current.html
+        //noinspection deprecation
+        LocationServices.FusedLocationApi.requestLocationUpdates(this.googleApiClient, this.locationRequest, this);
+    }
+
+    private void startIndoorLocationUpdates() {
+        //TODO start updates for indoor location
     }
 
     /**
@@ -139,8 +197,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      * @param listener The listener to register
      */
     public void registerLocationListener(LocatorLocationListener listener) {
-        //TODO Implement registry
-
+        this.listeners.add(listener);
     }
 
     /**
@@ -148,7 +205,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      * @param listener The listener to unregister
      */
     public void unregisterLocationListener(LocatorLocationListener listener) {
-        //TODO
+        this.listeners.remove(listener);
     }
 
     /**
@@ -199,5 +256,14 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        LocatorLocation loc = new LocatorLocation(location);
+        loc.setProvider("locator-fused");
+        for (LocatorLocationListener l : listeners) {
+            l.onLocationChanged(loc);
+        }
     }
 }
