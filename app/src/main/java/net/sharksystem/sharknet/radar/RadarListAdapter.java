@@ -29,6 +29,7 @@ public class RadarListAdapter extends BaseAdapter {
     private static int mElapsedTime;
     private static Timer mTimer;
     private Context mContext = null;
+
     private ArrayList<NearbyPeer> mNearbyPeers = new ArrayList<>();
 
     public RadarListAdapter(Context context) {
@@ -58,6 +59,10 @@ public class RadarListAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return 0;
+    }
+
+    public ArrayList<NearbyPeer> getmNearbyPeers() {
+        return mNearbyPeers;
     }
 
     @Override

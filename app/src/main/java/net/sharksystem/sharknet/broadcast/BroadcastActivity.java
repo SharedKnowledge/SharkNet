@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.sync.manager.SyncComponent;
@@ -119,9 +120,12 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                         message.setContent(msg_string);
                         broadcast = mApi.getBroadcast();
                         broadcast.addMessage(message);
-                        mApi.updateBroadcast(broadcast);
-                        //mChat.addMessage(message);
-                        //mApi.updateChat(mChat);
+                        List<PeerSemanticTag> nearbyPeers = new ArrayList<>();
+                        for (NearbyPeer peer : radarListAdapter.getmNearbyPeers()) {
+                            nearbyPeers.add(peer.getSender());
+                        }
+                        Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers",Toast.LENGTH_LONG).show();
+                        mApi.updateBroadcast(broadcast, nearbyPeers);
                         editText.getText().clear();
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
@@ -248,7 +252,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                 radarListAdapter.updateList(peers);
             }
         });
-        Toast.makeText(this, "Amount of Peers found: " + peers.size(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Amount of Peers found: " + peers.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
