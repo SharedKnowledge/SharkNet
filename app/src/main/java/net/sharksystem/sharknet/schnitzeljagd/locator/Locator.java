@@ -201,6 +201,43 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
     }
 
     /**
+     * Stops regular location updates.
+     * UNFINISHED: Missing parameters (?)
+     */
+    public void stopLocationUpdates() {
+        //TODO Params?
+        switch (this.locationSource) {
+            case LOCATION_SOURCE_FUSED:
+                stopFusedLocationUpdates();
+                break;
+            case LOCATION_SOURCE_INDOOR:
+                stopIndoorLocationUpdates();
+                break;
+            case LOCATION_SOURCE_INDOOR_FUSED:
+            default:
+                stopFusedLocationUpdates();
+                stopIndoorLocationUpdates();
+                break;
+        }
+    }
+
+    /**
+     * Stops location updates in the fused location provider.
+     */
+    private void stopFusedLocationUpdates() {
+        if (googleApiClient.isConnected()) {
+            //Google Android Developer Documentation states to use deprecated FusedLocationProviderApi class until newer API-version (12.0.0) is available
+            // https://developer.android.com/training/location/retrieve-current.html
+            // noinspection deprecation
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+        }
+    }
+
+    private void stopIndoorLocationUpdates() {
+        //TODO stop updates for indoor location
+    }
+
+    /**
      * Register a LocatorLocationListener for receiving location updates.
      * @param listener The listener to register
      */
