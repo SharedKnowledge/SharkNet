@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,22 +17,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.sharksystem.sharknet.R;
+import com.woxthebox.draglistview.DragListView;
 
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.schnitzeljagd.locator.Locator;
+
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class AddSchnitzeljagdActivity extends AppCompatActivity {
 
     private int addIndex = 0;
     private TextView text;
-    private EditText schnitzelDescription;
-    private Button addButton;
-    private Button finishButton;
+    private EditText schnitzeljagdDescription;
     private Schnitzeljagd schnitzeljagd;
-    private ListView listView;
+    private DragListView dragListView;
     private ArrayAdapter<Schnitzel> arrayAdapter;
     private Locator locator;
 
+
+    private EditText schnitzelDescription;
+    private ListView listview;
+    private ArrayList<Schnitzel> schnitzellist;
+    private Button finishButton;
 
 
     @Override
@@ -39,17 +47,58 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schnitzeljagd);
         text = (TextView) findViewById(R.id.addSchnitzelText);
-        schnitzelDescription = (EditText) findViewById(R.id.addSchnitzelDescription);
-        addButton = (Button) findViewById(R.id.add_btn);
-        listView = (ListView) findViewById(R.id.schnitzellist);
-        finishButton = (Button) findViewById(R.id.finish_btn);
+        schnitzeljagdDescription = (EditText) findViewById(R.id.addSchnitzelJagdDescription);
         schnitzeljagd = new Schnitzeljagd("bla");
         locator = new Locator(this);
         text.setText("Beschreibung des Ziels:");
-        registerForContextMenu(listView);
+        registerForContextMenu(dragListView);
         arrayAdapter = new ArrayAdapter<Schnitzel>(this, android.R.layout.simple_list_item_1, schnitzeljagd.getSchnitzel());
-        listView.setAdapter(arrayAdapter);
-        //listView.setEmptyView(findViewById(R.id.empty));
+        dragListView.setDragListListener(new DragListView.DragListListener() {
+            @Override
+            public void onItemDragStarted(int position) {
+                Toast.makeText(getApplicationContext(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemDragging(int itemPosition, float x, float y) {
+
+            }
+
+            @Override
+            public void onItemDragEnded(int fromPosition, int toPosition) {
+                if (fromPosition != toPosition) {
+                    Toast.makeText(getApplicationContext(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        dragListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        //ItemAdapter listAdapter = new ItemAdapter(mItemArray, R.layout.list_item, R.id.image, false);
+        //dragListView.setAdapter(listAdapter); //TODO implement ItemAdapter
+        dragListView.setCanDragHorizontally(false);
+    }
+
+    public void generateDummySchnitzel(){
+        int size = 10;
+        for(int i = 0; i < size ; i++){
+            schnitzeljagd.addSchnitzel( new Schnitzel(i,"Dummy Schnitzel Nr.: " + i, locator.getLastLocation()));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                Schnitzel schnitzel = (Schnitzel) data.getSerializableExtra("schnitzel");
+                schnitzel.setIdx(addIndex);
+                schnitzeljagd.addSchnitzel(schnitzel);
+                addIndex++;
+                //TODO update listview
+            }
+            else if(requestCode == RESULT_CANCELED){
+                Toast.makeText(getApplicationContext(), "Schnitzeljagderstellung abgebrochen", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -58,27 +107,7 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
         finish();
     }
 
-    public void newSchnitzelOnClick(View view) {
-        if(schnitzelDescription.getText().toString().matches("")){
-            schnitzelDescription.setError("Darf nicht leer sein");
-        }
-        else{
-            if(locator.getLastLocation() == null){
-                Toast.makeText(getApplicationContext(),"location null", Toast.LENGTH_SHORT).show();
-            }
-
-            Schnitzel schnitzel = new Schnitzel(addIndex, schnitzelDescription.getText().toString(), locator.getLastLocation());
-            schnitzeljagd.addSchnitzel(schnitzel);
-            addIndex++;
-            schnitzelDescription.setText("");
-            text.setText("Weg zum nächsten Schnitzel");
-            Collections.sort(schnitzeljagd.getSchnitzel());
-            //Collections.reverse(schnitzeljagd.getSchnitzel());
-            arrayAdapter.notifyDataSetChanged();
-        }
-    }
-
-    public void newSchnitzeljagdOnClick(View view) {
+    public void newSchnitzeljagdOnClick(View view) { //todo remove
         if(addIndex +1 <2){
             finishButton.setError("Mindestens 2 Schnitzel notwendig!");
         }
@@ -105,9 +134,9 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if(v.getId() == R.id.schnitzellist) {
-            getMenuInflater().inflate(R.menu.schnitzel_list_menu, menu);
-        }
+        //if(v.getId() == R.id.schnitzellist) {
+        //    getMenuInflater().inflate(R.menu.schnitzel_list_menu, menu);
+        //}
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 

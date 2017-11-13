@@ -4,21 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.sharksystem.sharknet.schnitzeljagd.AddSchnitzeljagdActivity">
+    tools:context="net.sharksystem.sharknet.schnitzeljagd.AddSchnitzelActivity">
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/addSchnitzelJagdText"
+        android:id="@+id/addSchnitzelText"
         android:textSize="18dp"
         android:textColor="@android:color/black"
-        android:text="@string/addNewSchnitzelJagdText"/>
+        android:text="@string/addNewSchnitzelText"/>
 
     <EditText
-        android:id="@+id/addSchnitzelJagdDescription"
+        android:id="@+id/addSchnitzelDescription"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@id/addSchnitzelJagdText"
+        android:layout_below="@id/addSchnitzelText"
         android:gravity="top"
         android:imeOptions="actionDone"
         android:inputType="textImeMultiLine"
@@ -26,12 +27,22 @@
         android:paddingTop="10dp"
         android:visibility="visible" />
 
-    <com.woxthebox.draglistview.DragListView
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/addSchnitzelDescription"
+        android:onClick="newSchnitzelOnClick"
+        android:paddingEnd="40dp"
+        android:text="@string/add_btn" />
+
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/addSchnitzelJagdDragList"
-        android:layout_below="@id/addSchnitzelJagdDescription"
-            >
-    </com.woxthebox.draglistview.DragListView>
-
+        android:id="@+id/addSchnitzelOrtList"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/add_btn">
+        >
+    </ListView>
 </RelativeLayout>

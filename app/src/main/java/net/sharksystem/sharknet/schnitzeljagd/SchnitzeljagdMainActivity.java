@@ -13,13 +13,16 @@ import android.widget.Toast;
 
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
+import net.sharksystem.sharknet.schnitzeljagd.locator.Locator;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 //TODO sidenav not visible!!
 public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitzeljagd>> {
 
     private ArrayList<Schnitzeljagd> schnitzelJagdList = new ArrayList<>();
+
     //public static DBSchnitzeljagdHelper dbhelper;
     private Locator locator;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;

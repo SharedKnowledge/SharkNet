@@ -17,3 +17,4 @@
 #}
 -keepattributes InnerClasses,EnclosingMethod
 -dontoptimize
+-keep class com.woxthebox.draglistview.** { *; }

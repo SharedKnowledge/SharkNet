@@ -2,11 +2,15 @@ package net.sharksystem.sharknet.schnitzeljagd;
 
 import android.support.annotation.NonNull;
 
+import net.sharksystem.sharknet.schnitzeljagd.locator.LocatorLocation;
+
+import java.io.Serializable;
+
 /**
  * Created by Yannik on 04.11.2017.
  */
 
-class Schnitzel implements Comparable<Schnitzel> {
+class Schnitzel implements Comparable<Schnitzel>, Serializable{
     private String message;
     private LocatorLocation loc;
     private int idx;
