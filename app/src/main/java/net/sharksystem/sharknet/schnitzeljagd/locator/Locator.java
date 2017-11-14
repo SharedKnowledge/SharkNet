@@ -38,7 +38,8 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
 
     private GoogleApiClient googleApiClient;
     private Context context;
-    private ArrayList<LocatorLocationListener> listeners;
+    private ArrayList<LocatorLocationListener> locationListeners;
+    private ArrayList<GoogleApiConnectionStatusListener> googleApiConnectionStatusListeners;
     private LocationRequest locationRequest;
     private boolean startUpdatesIfConnected;
 
@@ -59,7 +60,8 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      */
     public Locator(Context context, int locationSource) {
         this.context = context;
-        this.listeners = new ArrayList<>();
+        this.locationListeners = new ArrayList<>();
+        this.googleApiConnectionStatusListeners = new ArrayList<>();
         this.locationSource = locationSource;
         this.googleApiClient = new GoogleApiClient.Builder(context)
                 .addConnectionCallbacks(this)
@@ -82,7 +84,8 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      */
     public Locator(Context context, int locationSource, LocationRequest locationRequest) {
         this.context = context;
-        this.listeners = new ArrayList<>();
+        this.locationListeners = new ArrayList<>();
+        this.googleApiConnectionStatusListeners = new ArrayList<>();
         this.locationSource = locationSource;
         this.googleApiClient = new GoogleApiClient.Builder(context)
                 .addConnectionCallbacks(this)
@@ -242,7 +245,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      * @param listener The listener to register
      */
     public void registerLocationListener(LocatorLocationListener listener) {
-        this.listeners.add(listener);
+        this.locationListeners.add(listener);
     }
 
     /**
@@ -250,7 +253,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      * @param listener The listener to unregister
      */
     public void unregisterLocationListener(LocatorLocationListener listener) {
-        this.listeners.remove(listener);
+        this.locationListeners.remove(listener);
     }
 
     /**
@@ -293,24 +296,42 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
         if (startUpdatesIfConnected) {
             startLocationUpdates();
         }
+        for (GoogleApiConnectionStatusListener l : googleApiConnectionStatusListeners) {
+            l.locatorReady();
+        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        for (GoogleApiConnectionStatusListener l : googleApiConnectionStatusListeners) {
+            l.locatorNotReady();
+        }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        for (GoogleApiConnectionStatusListener l : googleApiConnectionStatusListeners) {
+            l.locatorNotReady();
+        }
     }
 
     @Override
     public void onLocationChanged(Location location) {
         LocatorLocation loc = new LocatorLocation(location);
         loc.setProvider("locator-fused");
-        for (LocatorLocationListener l : listeners) {
+        for (LocatorLocationListener l : locationListeners) {
             l.onLocationChanged(loc);
         }
+    }
+
+    public void registerGoogleApiConnectionStatusListener(GoogleApiConnectionStatusListener listener) {
+        this.googleApiConnectionStatusListeners.add(listener);
+        if (this.googleApiClient.isConnected()) {
+            listener.locatorReady();
+        }
+    }
+
+    public void unregisterGoogleApiConnectionStatusListener(GoogleApiConnectionStatusListener listener) {
+        this.googleApiConnectionStatusListeners.remove(listener);
     }
 }
