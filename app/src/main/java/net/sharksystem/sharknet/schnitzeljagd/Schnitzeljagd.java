@@ -2,13 +2,14 @@ package net.sharksystem.sharknet.schnitzeljagd;
 
 import net.sharksystem.api.models.Message;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Yannik on 04.11.2017.
  */
 
-class Schnitzeljagd {
+class Schnitzeljagd implements Serializable {
     private ArrayList<Schnitzel> schnitzelList = new ArrayList<>();
     private String description;
 
@@ -36,5 +37,10 @@ class Schnitzeljagd {
 
     protected void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return description;
     }
 }

@@ -26,12 +26,27 @@
         android:paddingTop="10dp"
         android:visibility="visible" />
 
-    <com.woxthebox.draglistview.DragListView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/addSchnitzelJagdDragList"
-        android:layout_below="@id/addSchnitzelJagdDescription"
-            >
-    </com.woxthebox.draglistview.DragListView>
+        android:layout_below="@id/addSchnitzelJagdDescription">
+
+        <com.woxthebox.draglistview.DragListView
+            android:id="@+id/addSchnitzelJagdDragList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addSchnitzeljagdButton"
+        android:onClick="fabClicked"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:tint="@android:color/white" />
+
 
 </RelativeLayout>

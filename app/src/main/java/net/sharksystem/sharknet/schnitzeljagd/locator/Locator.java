@@ -16,6 +16,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -38,7 +39,8 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
 
     private GoogleApiClient googleApiClient;
     private Context context;
-    private ArrayList<LocatorLocationListener> listeners;
+    private ArrayList<LocatorLocationListener> locationListeners;
+    private ArrayList<GoogleApiConnectionStatusListener> googleApiConnectionStatusListeners;
     private LocationRequest locationRequest;
     private boolean startUpdatesIfConnected;
 
@@ -59,7 +61,8 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      */
     public Locator(Context context, int locationSource) {
         this.context = context;
-        this.listeners = new ArrayList<>();
+        this.locationListeners = new ArrayList<>();
+        this.googleApiConnectionStatusListeners = new ArrayList<>();
         this.locationSource = locationSource;
         this.googleApiClient = new GoogleApiClient.Builder(context)
                 .addConnectionCallbacks(this)
@@ -82,7 +85,8 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      */
     public Locator(Context context, int locationSource, LocationRequest locationRequest) {
         this.context = context;
-        this.listeners = new ArrayList<>();
+        this.locationListeners = new ArrayList<>();
+        this.googleApiConnectionStatusListeners = new ArrayList<>();
         this.locationSource = locationSource;
         this.googleApiClient = new GoogleApiClient.Builder(context)
                 .addConnectionCallbacks(this)
@@ -201,11 +205,48 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
     }
 
     /**
+     * Stops regular location updates.
+     * UNFINISHED: Missing parameters (?)
+     */
+    public void stopLocationUpdates() {
+        //TODO Params?
+        switch (this.locationSource) {
+            case LOCATION_SOURCE_FUSED:
+                stopFusedLocationUpdates();
+                break;
+            case LOCATION_SOURCE_INDOOR:
+                stopIndoorLocationUpdates();
+                break;
+            case LOCATION_SOURCE_INDOOR_FUSED:
+            default:
+                stopFusedLocationUpdates();
+                stopIndoorLocationUpdates();
+                break;
+        }
+    }
+
+    /**
+     * Stops location updates in the fused location provider.
+     */
+    private void stopFusedLocationUpdates() {
+        if (googleApiClient.isConnected()) {
+            //Google Android Developer Documentation states to use deprecated FusedLocationProviderApi class until newer API-version (12.0.0) is available
+            // https://developer.android.com/training/location/retrieve-current.html
+            // noinspection deprecation
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+        }
+    }
+
+    private void stopIndoorLocationUpdates() {
+        //TODO stop updates for indoor location
+    }
+
+    /**
      * Register a LocatorLocationListener for receiving location updates.
      * @param listener The listener to register
      */
     public void registerLocationListener(LocatorLocationListener listener) {
-        this.listeners.add(listener);
+        this.locationListeners.add(listener);
     }
 
     /**
@@ -213,7 +254,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
      * @param listener The listener to unregister
      */
     public void unregisterLocationListener(LocatorLocationListener listener) {
-        this.listeners.remove(listener);
+        this.locationListeners.remove(listener);
     }
 
     /**
@@ -256,24 +297,42 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
         if (startUpdatesIfConnected) {
             startLocationUpdates();
         }
+        for (GoogleApiConnectionStatusListener l : googleApiConnectionStatusListeners) {
+            l.locatorReady();
+        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        for (GoogleApiConnectionStatusListener l : googleApiConnectionStatusListeners) {
+            l.locatorNotReady();
+        }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        for (GoogleApiConnectionStatusListener l : googleApiConnectionStatusListeners) {
+            l.locatorNotReady();
+        }
     }
 
     @Override
     public void onLocationChanged(Location location) {
         LocatorLocation loc = new LocatorLocation(location);
         loc.setProvider("locator-fused");
-        for (LocatorLocationListener l : listeners) {
+        for (LocatorLocationListener l : locationListeners) {
             l.onLocationChanged(loc);
         }
+    }
+
+    public void registerGoogleApiConnectionStatusListener(GoogleApiConnectionStatusListener listener) {
+        this.googleApiConnectionStatusListeners.add(listener);
+        if (this.googleApiClient.isConnected()) {
+            listener.locatorReady();
+        }
+    }
+
+    public void unregisterGoogleApiConnectionStatusListener(GoogleApiConnectionStatusListener listener) {
+        this.googleApiConnectionStatusListeners.remove(listener);
     }
 }

@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:label="Schnitzeljagd"
     tools:context="net.sharksystem.sharknet.schnitzeljagd.SchnitzeljagdMainActivity">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/schnitzeljagd_list"
+        >
+    </ListView>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addSchnitzeljagdButton"
         android:onClick="fabClicked"

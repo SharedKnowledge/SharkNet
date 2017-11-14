@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.sharksystem.sharknet.schnitzeljagd.SchnitzeljagdSpielenActivity">
+
+    <TextView
+        android:id="@+id/schnitzeljagd_spielen_text"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:textSize="20dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:paddingBottom="20dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/schnitzeljagd_spielen_button"
+        android:text="Gefunden(dummy)"
+        android:layout_below="@id/schnitzeljagd_spielen_text"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
