@@ -46,13 +46,13 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schnitzeljagd);
-        text = (TextView) findViewById(R.id.addSchnitzelText);
+        text = (TextView) findViewById(R.id.addSchnitzelJagdText);
         schnitzeljagdDescription = (EditText) findViewById(R.id.addSchnitzelJagdDescription);
         schnitzeljagd = new Schnitzeljagd("bla");
         locator = new Locator(this);
-        text.setText("Beschreibung des Ziels:");
+        generateDummySchnitzel();
+        dragListView = (DragListView) findViewById(R.id.addSchnitzelJagdDragList);
         registerForContextMenu(dragListView);
-        arrayAdapter = new ArrayAdapter<Schnitzel>(this, android.R.layout.simple_list_item_1, schnitzeljagd.getSchnitzel());
         dragListView.setDragListListener(new DragListView.DragListListener() {
             @Override
             public void onItemDragStarted(int position) {
@@ -73,15 +73,17 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
         });
 
         dragListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        //ItemAdapter listAdapter = new ItemAdapter(mItemArray, R.layout.list_item, R.id.image, false);
-        //dragListView.setAdapter(listAdapter); //TODO implement ItemAdapter
+        ItemAdapter listAdapter = new ItemAdapter(schnitzellist,android.R.layout.simple_list_item_1, android.R.layout.simple_list_item_1, true);
+        dragListView.setAdapter(listAdapter,false); //TODO implement ItemAdapter
         dragListView.setCanDragHorizontally(false);
+        listAdapter.notifyDataSetChanged(); //TODO not visable yet
     }
 
     public void generateDummySchnitzel(){
         int size = 10;
         for(int i = 0; i < size ; i++){
             schnitzeljagd.addSchnitzel( new Schnitzel(i,"Dummy Schnitzel Nr.: " + i, locator.getLastLocation()));
+            addIndex++;
         }
     }
 
@@ -211,4 +213,8 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
     }
 
 
+    public void fabClicked(View view) {
+        final Intent intent = new Intent(this, AddSchnitzelActivity.class);
+        startActivityForResult(intent, 1);
+    }
 }

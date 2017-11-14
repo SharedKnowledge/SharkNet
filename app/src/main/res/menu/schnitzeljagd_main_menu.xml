@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/opt_admin"
+        android:title="@string/schnitzeljagd_main_menu_admin"
+        />
+    <item
+        android:id="@+id/opt_orte"
+        android:title="@string/schnitzeljagd_main_menu_orte"
+        />
+</menu>
