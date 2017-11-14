@@ -1,5 +1,7 @@
 package net.sharksystem.sharknet.schnitzeljagd.locator;
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 
@@ -9,7 +11,7 @@ import java.io.Serializable;
  * was acquired using the FusedLocationProviderApi or an indoor location service.
  * </p>
  */
-public class LocatorLocation extends Location implements Serializable{
+public class LocatorLocation extends Location implements Parcelable {
 
     private boolean indoor;
 
@@ -96,4 +98,33 @@ public class LocatorLocation extends Location implements Serializable{
     public String toString() {
         return "LocatorLocation: (Location data: (" + super.toString() + "); indoor=" + indoor + ")";
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeByte(this.indoor ? (byte) 1 : (byte) 0);
+    }
+
+    protected LocatorLocation(Parcel in) {
+        super(Location.CREATOR.createFromParcel(in));
+        this.indoor = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<LocatorLocation> CREATOR = new Parcelable.Creator<LocatorLocation>() {
+        @Override
+        public LocatorLocation createFromParcel(Parcel source) {
+            return new LocatorLocation(source);
+        }
+
+        @Override
+        public LocatorLocation[] newArray(int size) {
+            return new LocatorLocation[size];
+        }
+    };
 }
