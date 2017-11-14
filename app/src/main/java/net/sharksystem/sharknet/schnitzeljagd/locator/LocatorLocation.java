@@ -1,13 +1,15 @@
 package net.sharksystem.sharknet.schnitzeljagd.locator;
 import android.location.Location;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * This class extends the default android.location.Location class and additionally provides a boolean to determine whether the location
  * was acquired using the FusedLocationProviderApi or an indoor location service.
  * </p>
  */
-public class LocatorLocation extends Location {
+public class LocatorLocation extends Location implements Serializable{
 
     private boolean indoor;
 

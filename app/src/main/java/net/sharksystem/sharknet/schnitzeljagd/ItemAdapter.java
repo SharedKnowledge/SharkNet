@@ -55,7 +55,7 @@ public class ItemAdapter extends DragItemAdapter<Schnitzel, ItemAdapter.ViewHold
 
         ViewHolder(final View itemView) {
             super(itemView, mGrabHandleId, mDragOnLongPress);
-            mText = (TextView) itemView.findViewById(R.id.text);
+            mText = (TextView) itemView.findViewById(R.id.schnitzel_list_item_text);
         }
 
         @Override

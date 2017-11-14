@@ -2,6 +2,7 @@ package net.sharksystem.sharknet.schnitzeljagd;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.woxthebox.draglistview.DragItem;
 import com.woxthebox.draglistview.DragListView;
 
 import net.sharksystem.sharknet.R;
@@ -46,37 +48,37 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schnitzeljagd);
+
         text = (TextView) findViewById(R.id.addSchnitzelJagdText);
         schnitzeljagdDescription = (EditText) findViewById(R.id.addSchnitzelJagdDescription);
         schnitzeljagd = new Schnitzeljagd("bla");
         locator = new Locator(this);
         generateDummySchnitzel();
+        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.schnitzel_swipe_refresh_layout); //TODO ?
         dragListView = (DragListView) findViewById(R.id.addSchnitzelJagdDragList);
-        registerForContextMenu(dragListView);
-        dragListView.setDragListListener(new DragListView.DragListListener() {
+        dragListView.getRecyclerView().setVerticalScrollBarEnabled(true);
+        dragListView.setDragListListener(new DragListView.DragListListenerAdapter() {
             @Override
             public void onItemDragStarted(int position) {
                 Toast.makeText(getApplicationContext(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemDragging(int itemPosition, float x, float y) {
-
+                //TODO move schnitzel from
             }
 
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
                 if (fromPosition != toPosition) {
                     Toast.makeText(getApplicationContext(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
+                    //TODO move schnitzel from to
                 }
             }
         });
 
-        dragListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        ItemAdapter listAdapter = new ItemAdapter(schnitzellist,android.R.layout.simple_list_item_1, android.R.layout.simple_list_item_1, true);
-        dragListView.setAdapter(listAdapter,false); //TODO implement ItemAdapter
+        dragListView.setLayoutManager(new LinearLayoutManager(this));
+        ItemAdapter listAdapter = new ItemAdapter(schnitzellist, R.layout.schnitzel_list_item, R.id.schnitzel_list_item_text, false);
+        dragListView.setAdapter(listAdapter,true); //TODO implement ItemAdapter
         dragListView.setCanDragHorizontally(false);
-        listAdapter.notifyDataSetChanged(); //TODO not visable yet
+        dragListView.setCustomDragItem(new DragItem(getApplicationContext(), R.layout.schnitzel_list_item));
+        //listAdapter.notifyDataSetChanged(); //TODO not visable yet
     }
 
     public void generateDummySchnitzel(){
@@ -91,10 +93,15 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 1) {
             if(resultCode == RESULT_OK){
-                Schnitzel schnitzel = (Schnitzel) data.getSerializableExtra("schnitzel");
-                schnitzel.setIdx(addIndex);
-                schnitzeljagd.addSchnitzel(schnitzel);
-                addIndex++;
+                try {
+                    Schnitzel schnitzel = (Schnitzel) data.getSerializableExtra("schnitzel");
+                    schnitzel.setIdx(addIndex);
+                    schnitzeljagd.addSchnitzel(schnitzel);
+                    addIndex++;
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
                 //TODO update listview
             }
             else if(requestCode == RESULT_CANCELED){

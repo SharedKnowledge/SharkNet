@@ -14,7 +14,11 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import net.sharksystem.sharknet.R;
@@ -32,16 +36,22 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
     private boolean admin_mode = false;
     private static final String pw = "nimda";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private FloatingActionButton addNewSchnitzeljagd;
+    private ListView listView;
+    private ArrayAdapter<Schnitzeljagd> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schnitzeljagd_main);
+        setLayoutResource(R.layout.activity_schnitzeljagd_main);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Schnitzeljagd");
         setProgressMessage("Loading Schnitzeljagden");
 
-        FloatingActionButton addNewSchnitzeljagd = (FloatingActionButton) findViewById(R.id.addSchnitzeljagdButton);
-        //addNewSchnitzeljagd.setVisibility(View.INVISIBLE);
+        listView = (ListView) findViewById(R.id.schnitzeljagd_list);
+
+        addNewSchnitzeljagd = (FloatingActionButton) findViewById(R.id.addSchnitzeljagdButton);
+        //addNewSchnitzeljagd.setVisibility(View.INVISIBLE); //TODO uncomment
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //Permission granted
             this.locator = new Locator(this);
@@ -49,13 +59,26 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
         else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
+        generateDummySchnitzeljagden();
+        arrayAdapter = new ArrayAdapter<Schnitzeljagd>(this, android.R.layout.simple_list_item_1, schnitzelJagdList);
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), SchnitzeljagdSpielenActivity.class);
+                intent.putExtra("schnitzeljagd", schnitzelJagdList.get(position));
+                startActivityForResult(intent, 2);
+            }
+        });
+        arrayAdapter.notifyDataSetChanged();
     }
+
 
     public void generateDummySchnitzeljagden(){
         int size = 5;
         int size2 = 10;
         for(int i=0;i<size;i++){
-            Schnitzeljagd jagd = new Schnitzeljagd("dummy name nr: " + i);
+            Schnitzeljagd jagd = new Schnitzeljagd("dummy Schnitzeljagd Nr: " + i);
             for(int j=0;j<size2;j++){
                 Schnitzel schnitzel = new Schnitzel(j,"dummy schnitzel: " + j, locator.getLastLocation());
                 jagd.addSchnitzel(schnitzel);
@@ -98,7 +121,8 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
                     public void onClick(View v) {
                         if(input.getText().toString().length() > 0){
                             if(input.getText().toString().equals(pw)){
-                                activateFloatingActionButton();
+                                addNewSchnitzeljagd.setVisibility(View.VISIBLE);
+
                                 admin_mode = true;
                             }
                             dialog.dismiss();
@@ -112,6 +136,11 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
 
                 return true;
             case R.id.opt_orte:
+                final Intent intent = new Intent(this, Schnitzelorte.class);
+                startActivityForResult(intent, 1);
+                return true;
+            case android.R.id.home:
+                finish();
                 return true;
 
             default: return super.onOptionsItemSelected(item);

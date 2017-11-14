@@ -6,7 +6,7 @@ import net.sharksystem.sharknet.schnitzeljagd.locator.LocatorLocation;
  * Created by Yannik on 12.11.2017.
  */
 
-public class Ort {
+public class Ort implements OrtInterface{
     private String name;
     private LocatorLocation location;
 
@@ -21,6 +21,16 @@ public class Ort {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getDescription() {
+        return "keine description";
+    }
+
+    @Override
+    public String getImagePath() {
+        return "kein pfad";
     }
 
     public LocatorLocation getLocation() {

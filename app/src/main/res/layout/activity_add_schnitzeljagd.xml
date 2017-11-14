@@ -30,12 +30,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/addSchnitzelJagdDescription">
+
         <com.woxthebox.draglistview.DragListView
             android:id="@+id/addSchnitzelJagdDragList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/addSchnitzelJagdDescription"
-            android:visibility="visible"></com.woxthebox.draglistview.DragListView>
+            android:layout_height="match_parent" />
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton

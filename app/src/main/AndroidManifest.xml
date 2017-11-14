@@ -179,13 +179,15 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".schnitzeljagd.SchnitzeljagdMainActivity"
-            android:label="Schnitzeljagd"
-             />
+            android:label="Schnitzeljagd" />
         <activity
             android:name=".schnitzeljagd.AddSchnitzeljagdActivity"
-            android:label="Add Schnitzeljagd"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".schnitzeljagd.AddSchnitzelActivity"></activity>
+            android:label="Add Schnitzeljagd" />
+        <activity android:name=".schnitzeljagd.AddSchnitzelActivity" />
+        <activity
+            android:name=".schnitzeljagd.Schnitzelorte"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
+        <activity android:name=".schnitzeljagd.SchnitzeljagdSpielenActivity"></activity>
     </application>
 
 </manifest>
