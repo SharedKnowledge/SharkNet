@@ -26,16 +26,16 @@ public class SchnitzeljagdSpielenActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(schnitzelIndex-1 == schnitzeljagd.getSchnitzel().size()){
+                if(schnitzelIndex == schnitzeljagd.getSchnitzel().size() -1 ){
                     textView.setText("Alle schnitzel gefunden JUHU");
                     schnitzelIndex++;
                     button.setText("Fertig");
                 }
-                else if(schnitzelIndex >= schnitzeljagd.getSchnitzel().size()){
+                else if(schnitzelIndex == schnitzeljagd.getSchnitzel().size()){
                     setResult(RESULT_OK);
                     finish();
                 }
-                else {
+                else if(schnitzelIndex < schnitzeljagd.getSchnitzel().size() -1){
                     schnitzelIndex++;
                     textView.setText(schnitzeljagd.getSchnitzel().get(schnitzelIndex).getMessage());
                 }
