@@ -13,17 +13,18 @@
         android:id="@+id/schnitzeljagd_list"
         >
     </ListView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addSchnitzeljagdButton"
-        android:onClick="fabClicked"
-        android:src="@android:drawable/ic_input_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="16dp"
+        android:onClick="fabClicked"
+        android:src="@android:drawable/ic_input_add"
         android:tint="@android:color/white"
 
-        >
-    </android.support.design.widget.FloatingActionButton>
+
+        app:backgroundTint="@color/teal_400"></android.support.design.widget.FloatingActionButton>
 </RelativeLayout>

@@ -6,21 +6,35 @@
     android:layout_height="match_parent"
     tools:context="net.sharksystem.sharknet.schnitzeljagd.SchnitzeljagdSpielenActivity">
 
+
     <TextView
         android:id="@+id/schnitzeljagd_spielen_text"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:textSize="20dp"
-        android:textColor="@android:color/holo_green_dark"
-        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:gravity="center"
-        android:paddingBottom="20dp"/>
+        android:paddingBottom="20dp"
+        android:paddingTop="80dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="20dp" />
 
     <Button
+        android:id="@+id/schnitzeljagd_spielen_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:id="@+id/schnitzeljagd_spielen_button"
-        android:text="Gefunden(dummy)"
-        android:layout_below="@id/schnitzeljagd_spielen_text"
-        android:layout_centerVertical="true"/>
+        android:layout_above="@+id/schnitzeljagd_spielen_index"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="160dp"
+        android:text="Gefunden(dummy)" />
+
+    <TextView
+        android:id="@+id/schnitzeljagd_spielen_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:textSize="25dp" />
 </RelativeLayout>

@@ -2,6 +2,8 @@ package net.sharksystem.sharknet.schnitzeljagd;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,12 +16,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.woxthebox.draglistview.DragItem;
 import com.woxthebox.draglistview.DragListView;
+import com.woxthebox.draglistview.swipe.ListSwipeHelper;
+import com.woxthebox.draglistview.swipe.ListSwipeItem;
 
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.schnitzeljagd.locator.Locator;
@@ -30,18 +36,15 @@ import java.util.Collections;
 public class AddSchnitzeljagdActivity extends AppCompatActivity {
 
     private int addIndex = 0;
-    private TextView text;
     private EditText schnitzeljagdDescription;
     private Schnitzeljagd schnitzeljagd;
     private DragListView dragListView;
-    private ArrayAdapter<Schnitzel> arrayAdapter;
     private Locator locator;
+    private MySwipeRefreshLayout refreshLayout;
+    private ItemAdapter listAdapter;
+    private FloatingActionButton fab;
 
-
-    private EditText schnitzelDescription;
-    private ListView listview;
-    private ArrayList<Schnitzel> schnitzellist;
-    private Button finishButton;
+    private ImageButton finishButton;
 
 
     @Override
@@ -49,36 +52,91 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schnitzeljagd);
 
-        text = (TextView) findViewById(R.id.addSchnitzelJagdText);
         schnitzeljagdDescription = (EditText) findViewById(R.id.addSchnitzelJagdDescription);
         schnitzeljagd = new Schnitzeljagd("bla");
         locator = new Locator(this);
+        fab = (FloatingActionButton)findViewById(R.id.addSchnitzeljagdButton) ;
+        finishButton = (ImageButton) findViewById(R.id.schnitzeljagd_add_header);
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(schnitzeljagdDescription.getText().toString().equals("") || schnitzeljagdDescription.getText().toString().equals("Beschreibung der Schnitzeljagd")){
+                    schnitzeljagdDescription.setError("Bitte Namen der Schnitzeljagd eingeben");
+                }
+                else if(schnitzeljagd.getSchnitzel().size()<=2){
+                    Toast.makeText(getApplicationContext(),"Zu wenig Schnitzel erstellt. Mindestens 2 erstellen und erneut versuchen!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent();
+                    schnitzeljagd.setDescription(schnitzeljagdDescription.getText().toString());
+                    intent.putExtra("schnitzeljagd", schnitzeljagd);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+        });
         generateDummySchnitzel();
-        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.schnitzel_swipe_refresh_layout); //TODO ?
+        refreshLayout = (MySwipeRefreshLayout) findViewById(R.id.schnitzel_swipe_refresh_layout);
         dragListView = (DragListView) findViewById(R.id.addSchnitzelJagdDragList);
         dragListView.getRecyclerView().setVerticalScrollBarEnabled(true);
         dragListView.setDragListListener(new DragListView.DragListListenerAdapter() {
             @Override
             public void onItemDragStarted(int position) {
-                Toast.makeText(getApplicationContext(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
+                //refreshLayout.setEnabled(true);
+                //Toast.makeText(getApplicationContext(), "Start - position: " + position + " & Start-Idx: " + schnitzeljagd.getSchnitzel().get(position), Toast.LENGTH_SHORT).show();
                 //TODO move schnitzel from
             }
 
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
                 if (fromPosition != toPosition) {
-                    Toast.makeText(getApplicationContext(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
+                    //refreshLayout.setEnabled(true);
+                    //Toast.makeText(getApplicationContext(), "End - position: " + toPosition + " & End-Idx: " + schnitzeljagd.getSchnitzel().get(toPosition), Toast.LENGTH_SHORT).show();
                     //TODO move schnitzel from to
+
                 }
             }
         });
+        //refreshLayout.setScrollingView(dragListView);
+        //refreshLayout.setColorSchemeColors(ContextCompat.getColor(getApplicationContext(), R.color.cardview_light_background));
+//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                refreshLayout.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        refreshLayout.setRefreshing(false);
+//                    }
+//                }, 2000);
+//            }
+//        });
+        dragListView.setSwipeListener(new ListSwipeHelper.OnSwipeListenerAdapter() {
+            @Override
+            public void onItemSwipeStarted(ListSwipeItem item) {
+                //refreshLayout.setEnabled(true);
+            }
 
+            @Override
+            public void onItemSwipeEnded(ListSwipeItem item, ListSwipeItem.SwipeDirection swipedDirection) {
+                //refreshLayout.setEnabled(true);
+                if (swipedDirection == ListSwipeItem.SwipeDirection.LEFT){
+                    Schnitzel schnitzel = (Schnitzel)item.getTag();
+                    int pos = dragListView.getAdapter().getPositionForItem(schnitzel);
+                    dragListView.getAdapter().removeItem(pos);
+                }
+            }
+
+            @Override
+            public void onItemSwiping(ListSwipeItem item, float swipedDistanceX) {
+                super.onItemSwiping(item, swipedDistanceX);
+            }
+        });
         dragListView.setLayoutManager(new LinearLayoutManager(this));
-        ItemAdapter listAdapter = new ItemAdapter(schnitzellist, R.layout.schnitzel_list_item, R.id.schnitzel_list_item_text, false);
-        dragListView.setAdapter(listAdapter,true); //TODO implement ItemAdapter
+        listAdapter = new ItemAdapter(schnitzeljagd.getSchnitzel(), R.layout.schnitzel_list_item, R.id.schnitzel_list_item_text, false);
+        dragListView.setAdapter(listAdapter,false);
         dragListView.setCanDragHorizontally(false);
         dragListView.setCustomDragItem(new DragItem(getApplicationContext(), R.layout.schnitzel_list_item));
-        //listAdapter.notifyDataSetChanged(); //TODO not visable yet
+        //listAdapter.notifyDataSetChanged();
     }
 
     public void generateDummySchnitzel(){
@@ -94,10 +152,12 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
         if(requestCode == 1) {
             if(resultCode == RESULT_OK){
                 try {
-                    Schnitzel schnitzel = (Schnitzel) data.getSerializableExtra("schnitzel");
+                    Schnitzel schnitzel = (Schnitzel) data.getParcelableExtra("schnitzel");
                     schnitzel.setIdx(addIndex);
                     schnitzeljagd.addSchnitzel(schnitzel);
                     addIndex++;
+                    listAdapter.notifyDataSetChanged();
+
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -118,9 +178,9 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
 
     public void newSchnitzeljagdOnClick(View view) { //todo remove
         if(addIndex +1 <2){
-            finishButton.setError("Mindestens 2 Schnitzel notwendig!");
+            //finishButton.setError("Mindestens 2 Schnitzel notwendig!");
         }
-        else if(schnitzelDescription.getText().toString().matches("")){
+        else if(schnitzeljagdDescription.getText().toString().matches("")){
             resortSchnitzel();
             //TODO schnitzeljagd in DB
             Intent intent = new Intent();
@@ -129,7 +189,7 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
         }
         else{
             addIndex++;
-            Schnitzel schnitzel = new Schnitzel(addIndex, schnitzelDescription.getText().toString(), locator.getLastLocation());
+            Schnitzel schnitzel = new Schnitzel(addIndex, schnitzeljagdDescription.getText().toString(), locator.getLastLocation());
             schnitzeljagd.addSchnitzel(schnitzel);
 
             resortSchnitzel();
@@ -142,14 +202,6 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        //if(v.getId() == R.id.schnitzellist) {
-        //    getMenuInflater().inflate(R.menu.schnitzel_list_menu, menu);
-        //}
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
-
-    @Override
     public boolean onContextItemSelected(MenuItem item) {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         if(item.getItemId() == R.id.schnitzel_loeschen_menu){
@@ -157,10 +209,6 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
             reIndexSchnitzel(info.position);
             schnitzeljagd.getSchnitzel().remove(info.position);
             addIndex--;
-            if(addIndex == 0){
-                text.setText("Beschreibung des Ziels:" );
-            }
-            arrayAdapter.notifyDataSetChanged();
         }
         else if(item.getItemId() == R.id.schnitzel_bearbeiten_menu){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -188,7 +236,6 @@ public class AddSchnitzeljagdActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if(input.getText().toString().length() > 0){
                         schnitzeljagd.getSchnitzel().get(info.position).setMessage(input.getText().toString());
-                        arrayAdapter.notifyDataSetChanged();
                         dialog.dismiss();
                     }
                     else{

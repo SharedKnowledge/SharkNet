@@ -1,5 +1,7 @@
 package net.sharksystem.sharknet.schnitzeljagd;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import net.sharksystem.sharknet.schnitzeljagd.locator.LocatorLocation;
@@ -10,7 +12,7 @@ import java.io.Serializable;
  * Created by Yannik on 04.11.2017.
  */
 
-class Schnitzel implements Comparable<Schnitzel>, Serializable{
+class Schnitzel implements Comparable<Schnitzel>, Parcelable {
     private String message;
     private LocatorLocation loc;
     private int idx;
@@ -63,4 +65,34 @@ class Schnitzel implements Comparable<Schnitzel>, Serializable{
         }
         return idx + "  " + message.substring(0,30);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.message);
+        dest.writeParcelable(this.loc, flags);
+        dest.writeInt(this.idx);
+    }
+
+    protected Schnitzel(Parcel in) {
+        this.message = in.readString();
+        this.loc = in.readParcelable(LocatorLocation.class.getClassLoader());
+        this.idx = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Schnitzel> CREATOR = new Parcelable.Creator<Schnitzel>() {
+        @Override
+        public Schnitzel createFromParcel(Parcel source) {
+            return new Schnitzel(source);
+        }
+
+        @Override
+        public Schnitzel[] newArray(int size) {
+            return new Schnitzel[size];
+        }
+    };
 }

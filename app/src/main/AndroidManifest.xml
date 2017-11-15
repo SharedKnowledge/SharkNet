@@ -182,12 +182,24 @@
             android:label="Schnitzeljagd" />
         <activity
             android:name=".schnitzeljagd.AddSchnitzeljagdActivity"
-            android:label="Add Schnitzeljagd" />
-        <activity android:name=".schnitzeljagd.AddSchnitzelActivity" />
+            android:theme="@style/Sharknet"
+            android:parentActivityName=".schnitzeljagd.SchnitzeljagdMainActivity"
+            android:label="Schnitzeljagd hinzufügen" />
         <activity
-            android:name=".schnitzeljagd.Schnitzelorte"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
-        <activity android:name=".schnitzeljagd.SchnitzeljagdSpielenActivity"></activity>
+            android:name=".schnitzeljagd.AddSchnitzelActivity"
+            android:theme="@style/Sharknet"
+            android:parentActivityName=".schnitzeljagd.AddSchnitzeljagdActivity"/>
+        <activity
+            android:name=".schnitzeljagd.SchnitzelorteActivity"
+            android:theme="@style/Sharknet"
+            android:parentActivityName=".schnitzeljagd.SchnitzeljagdMainActivity"
+            />
+        <activity
+            android:name=".schnitzeljagd.SchnitzeljagdSpielenActivity"
+            android:theme="@style/Sharknet"
+            android:parentActivityName=".schnitzeljagd.SchnitzeljagdMainActivity">
+        </activity>
+
     </application>
 
 </manifest>
