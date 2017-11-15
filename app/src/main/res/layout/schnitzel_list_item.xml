@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_alignBottom="@+id/item_layout"
         android:layout_alignTop="@+id/item_layout"
-        android:background="#ff0000"
+        android:background="#FFFFFF"
         android:gravity="start|center_vertical"
         android:padding="16dp"
         android:text="Red"
@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:layout_alignBottom="@+id/item_layout"
         android:layout_alignTop="@+id/item_layout"
-        android:background="#0000ff"
+        android:background="#FFFFFF"
         android:gravity="end|center_vertical"
         android:padding="16dp"
         android:text="Blue"
@@ -46,7 +46,8 @@
         <TextView
             android:id="@+id/schnitzel_list_item_text"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:textSize="20dp"/>
 
 
     />

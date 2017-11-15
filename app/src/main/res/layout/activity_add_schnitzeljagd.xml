@@ -4,27 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.sharksystem.sharknet.schnitzeljagd.AddSchnitzeljagdActivity">
+    tools:context="net.sharksystem.sharknet.schnitzeljagd.AddSchnitzeljagdActivity"
+    android:id="@+id/schnitzeljagd_add_title"
+    >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/addSchnitzelJagdText"
-        android:textSize="18dp"
-        android:textColor="@android:color/black"
-        android:text="@string/addNewSchnitzelJagdText"/>
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
+
 
     <EditText
         android:id="@+id/addSchnitzelJagdDescription"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/addSchnitzelJagdText"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:paddingRight="40dp"
         android:gravity="top"
-        android:imeOptions="actionDone"
+        android:textSize="20dp"
+        android:hint="Beschreibung der Schnitzeljagd"
         android:inputType="textImeMultiLine"
-        android:maxLength="500"
+        android:imeOptions="actionDone"
+        android:maxLength="280"
         android:paddingTop="10dp"
         android:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/schnitzeljagd_add_header"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/schnitzeljagd_green_tick"
+        android:layout_alignParentRight="true"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -34,19 +46,20 @@
         <com.woxthebox.draglistview.DragListView
             android:id="@+id/addSchnitzelJagdDragList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addSchnitzeljagdButton"
-        android:onClick="fabClicked"
-        android:src="@android:drawable/ic_input_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="16dp"
-        android:tint="@android:color/white" />
+        android:onClick="fabClicked"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/teal_400" />
 
 
 </RelativeLayout>

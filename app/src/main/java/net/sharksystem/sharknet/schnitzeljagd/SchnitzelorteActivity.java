@@ -9,7 +9,7 @@ import net.sharksystem.sharknet.R;
 
 import java.util.ArrayList;
 
-public class Schnitzelorte extends AppCompatActivity {
+public class SchnitzelorteActivity extends AppCompatActivity {
 
     private ArrayList<OrtInterface> orte = new ArrayList<>();
     private ListView ortList;
@@ -24,6 +24,7 @@ public class Schnitzelorte extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<OrtInterface>(this, android.R.layout.simple_list_item_1, orte);
         ortList.setAdapter(arrayAdapter);
         arrayAdapter.notifyDataSetChanged();
+
     }
 
     @Override

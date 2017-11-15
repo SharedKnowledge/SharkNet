@@ -14,7 +14,6 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,7 +24,6 @@ import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 import net.sharksystem.sharknet.schnitzeljagd.locator.Locator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 //TODO sidenav not visible!!
@@ -51,7 +49,7 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
         listView = (ListView) findViewById(R.id.schnitzeljagd_list);
 
         addNewSchnitzeljagd = (FloatingActionButton) findViewById(R.id.addSchnitzeljagdButton);
-        //addNewSchnitzeljagd.setVisibility(View.INVISIBLE); //TODO uncomment
+        addNewSchnitzeljagd.setVisibility(View.INVISIBLE); //TODO uncomment
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //Permission granted
             this.locator = new Locator(this);
@@ -78,9 +76,23 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
         int size = 5;
         int size2 = 10;
         for(int i=0;i<size;i++){
-            Schnitzeljagd jagd = new Schnitzeljagd("dummy Schnitzeljagd Nr: " + i);
+            Schnitzeljagd jagd;
+            if(i==0){
+                jagd = new Schnitzeljagd("Dies ist eine Dummy Schnitzeljagd... Viel Spaß!");
+            }
+            else{
+                jagd = new Schnitzeljagd("dummy Schnitzeljagd Nr: " + i);
+            }
+            Schnitzel schnitzel;
             for(int j=0;j<size2;j++){
-                Schnitzel schnitzel = new Schnitzel(j,"dummy schnitzel: " + j, locator.getLastLocation());
+                if(j==0){
+                    schnitzel = new Schnitzel(j,"Dies ist der erste generierte Hinweis der Schnitzeljagd. " +
+                            "Hier ist eine Menge Platz für interessante Nachrichten vom Schnitzeljagdersteller. " +
+                            "Diese Nachricht könnte auch über mehrere \n Zeilen \ngehen", locator.getLastLocation());
+                }
+                else{
+                    schnitzel = new Schnitzel(j,"Hier wäre ein Hinweis... (Nr. " + j + ")", locator.getLastLocation());
+                }
                 jagd.addSchnitzel(schnitzel);
             }
             schnitzelJagdList.add(jagd);
@@ -136,7 +148,7 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
 
                 return true;
             case R.id.opt_orte:
-                final Intent intent = new Intent(this, Schnitzelorte.class);
+                final Intent intent = new Intent(this, SchnitzelorteActivity.class);
                 startActivityForResult(intent, 1);
                 return true;
             case android.R.id.home:
@@ -176,7 +188,8 @@ public class SchnitzeljagdMainActivity extends RxSingleBaseActivity<List<Schnitz
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 1) {
             if(resultCode == RESULT_OK){
-                //TODO
+                schnitzelJagdList.add((Schnitzeljagd) data.getParcelableExtra("schnitzeljagd"));
+                arrayAdapter.notifyDataSetChanged();
             }
             else if(requestCode == RESULT_CANCELED){
                 Toast.makeText(getApplicationContext(), "Schnitzeljagderstellung abgebrochen", Toast.LENGTH_SHORT).show();
