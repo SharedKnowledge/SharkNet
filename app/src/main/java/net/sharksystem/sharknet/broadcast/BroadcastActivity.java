@@ -3,9 +3,12 @@ package net.sharksystem.sharknet.broadcast;
 import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +42,7 @@ import net.sharksystem.sharknet.chat.ChatAnnotationTimeActivity;
 import net.sharksystem.sharknet.chat.ChatDetailMsgListAdapter;
 import net.sharksystem.sharknet.chat.ChatSettingsActivity;
 import net.sharksystem.sharknet.radar.RadarListAdapter;
+import net.sharksystem.sharknet.schnitzeljagd.locator.Locator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +61,6 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
     private Broadcast broadcast;
     private RadarListAdapter radarListAdapter;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
 
 
     @Override
@@ -70,6 +70,13 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
             broadcast = getSharkApp().getBroadcast();
         }
         configureLayout();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        }
+        else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_EXTERNAL_STORAGE);
+        }
         setTitle("Semantic Broadcast");
         setProgressMessage(R.string.chat_progress_load_messages);
         radarListAdapter = new RadarListAdapter(this);
