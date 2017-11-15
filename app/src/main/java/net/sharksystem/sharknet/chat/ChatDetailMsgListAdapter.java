@@ -157,7 +157,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
             // authorName
             holder.authorTextView.setText(message.getSender().getName());
             //encrypted
-            if (message.isEncrypted()) {
+            /*if (message.isEncrypted()) {
                 holder.encryptionView.setImageResource(R.drawable.ic_vpn_key_dark_grey_24dp);
             }
             //state
@@ -167,7 +167,7 @@ public class ChatDetailMsgListAdapter extends RecyclerView.Adapter<ChatDetailMsg
                 holder.stateView.setImageResource(R.drawable.ic_warning_dark_grey_24dp);
             } else {
                 holder.stateView.setImageResource(R.drawable.ic_warning_red_24dp);
-            }
+            }*/
         }
     }
 
