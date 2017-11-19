@@ -22,6 +22,7 @@ import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.protocols.Protocols;
 import net.sharkfw.system.L;
 import net.sharksystem.api.models.Contact;
+import net.sharksystem.api.models.Profile;
 import net.sharksystem.api.models.Settings;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.sharknet.R;
@@ -96,6 +97,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         entryProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getSharkApp().setProfile(mApi.getProfile(null));
                 Intent intent = new Intent(getApplicationContext(), EntryProfileActivity.class);
                 startActivity(intent);
             }

@@ -45,12 +45,15 @@ public class EntryProfileActivity extends BaseActivity {
     private EditText lattitudeEditText;
     private long selectedStartTime = 0;
     private long selectedEndTime = 0;
+    private Profile profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_profile);
-
+        if (profile == null) {
+            profile = getSharkApp().getProfile();
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -125,7 +128,7 @@ public class EntryProfileActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AccountDetailActivity.class);
-                Profile profile = new Profile(mApi.getAccount());
+                Profile profile = new Profile(mApi.getAccount().getTag());
                 ASIPInterest interest = null;
                 STSet topics = new InMemoSTSet();
                 try {
@@ -137,7 +140,7 @@ public class EntryProfileActivity extends BaseActivity {
                 }
                 if (interest != null) {
                     profile.setActiveEntryInterest(interest);
-                    mApi.addProfile(profile);
+                    mApi.updateProfile(profile);
                     Toast.makeText(getApplicationContext(), "Added the entry profile!", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 }

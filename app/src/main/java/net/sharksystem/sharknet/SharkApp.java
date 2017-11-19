@@ -8,6 +8,7 @@ import net.sharksystem.api.models.Broadcast;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
+import net.sharksystem.api.models.Profile;
 
 
 /**
@@ -19,6 +20,7 @@ public class SharkApp extends MultiDexApplication {
     private static SharkApp instance;
     private Chat chat = null;
     private Broadcast broadcast = null;
+    private Profile profile = null;
     private Contact contact = null;
     private Message message = null;
     private Contact account = null;
@@ -87,6 +89,14 @@ public class SharkApp extends MultiDexApplication {
 
     public Broadcast getBroadcast() {
         return broadcast;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public void setBroadcast(Broadcast broadcast) {
