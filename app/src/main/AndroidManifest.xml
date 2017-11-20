@@ -20,6 +20,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:name=".SharkApp"
@@ -164,10 +166,6 @@
         <activity
             android:name=".chat.ChatAnnotationLocationActivity"
             android:label="@string/title_activity_chat_annotation_location"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".chat.SemanticBroadcastActivity"
-            android:label="@string/title_activity_semantic_broadcast"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".profile.EntryProfileActivity"

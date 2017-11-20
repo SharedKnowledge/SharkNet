@@ -17,7 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.sharkfw.asip.ASIPInterest;
+import net.sharkfw.asip.ASIPSpace;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.STSet;
+import net.sharkfw.knowledgeBase.SemanticTag;
+import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.protocols.Protocols;
 import net.sharkfw.system.L;
@@ -97,7 +102,13 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         entryProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSharkApp().setProfile(mApi.getProfile(null));
+                Profile profile = mApi.getProfile(null);
+                if (profile.getActiveEntryInterest() == null) try {
+                    profile.setActiveEntryInterest((ASIPInterest) generateInterest(ASIPSpace.DIRECTION_IN));
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+                getSharkApp().setProfile(profile);
                 Intent intent = new Intent(getApplicationContext(), EntryProfileActivity.class);
                 startActivity(intent);
             }
@@ -252,6 +263,18 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         }
 
 
+    }
+
+    private ASIPSpace generateInterest(int direction) throws SharkKBException {
+        STSet topicSet = InMemoSharkKB.createInMemoSTSet();
+        SemanticTag tag = InMemoSharkKB.createInMemoSemanticTag("", "");
+        topicSet.merge(tag);
+        try {
+            return InMemoSharkKB.createInMemoASIPInterest(topicSet, null, null, null, null, null, null, direction);
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

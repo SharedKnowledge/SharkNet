@@ -61,6 +61,13 @@ public class EntryProfileActivity extends BaseActivity {
         final AlertDialog alertDialog = new AlertDialog.Builder(EntryProfileActivity.this).create();
 
         topicEditText = (EditText) findViewById(R.id.topic);
+        try {
+        //if (profile != null && profile.getActiveEntryInterest() != null && profile.getActiveEntryInterest().getTopics() !=null && profile.getActiveEntryInterest().getTopics() != null && profile.getActiveEntryInterest().getTopics().tags().hasMoreElements()) {
+            topicEditText.setText(profile.getActiveEntryInterest().getTopics().tags().nextElement().getSI()[0]);
+        //}
+        } catch (SharkKBException e) {
+            e.printStackTrace();
+        }
         peerEditText = (EditText) findViewById(R.id.peer);
         typeEditText = (EditText) findViewById(R.id.type);
         longitudeEditText = (EditText) findViewById(R.id.longitude);
