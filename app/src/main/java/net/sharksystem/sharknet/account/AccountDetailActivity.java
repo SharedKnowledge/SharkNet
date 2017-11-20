@@ -30,6 +30,7 @@ import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Profile;
 import net.sharksystem.api.models.Settings;
 import net.sharksystem.api.shark.peer.AndroidSharkEngine;
+import net.sharksystem.api.utils.SharkNetUtils;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
@@ -104,7 +105,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
             public void onClick(View v) {
                 Profile profile = mApi.getProfile(null);
                 if (profile.getActiveEntryInterest() == null) try {
-                    profile.setActiveEntryInterest((ASIPInterest) generateInterest(ASIPSpace.DIRECTION_IN));
+                    profile.setActiveEntryInterest((ASIPInterest) SharkNetUtils.generateGeneralInterest(ASIPSpace.DIRECTION_IN, InMemoSharkKB.createInMemoSemanticTag("", "")));
                 } catch (SharkKBException e) {
                     e.printStackTrace();
                 }
@@ -264,18 +265,5 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
 
 
     }
-
-    private ASIPSpace generateInterest(int direction) throws SharkKBException {
-        STSet topicSet = InMemoSharkKB.createInMemoSTSet();
-        SemanticTag tag = InMemoSharkKB.createInMemoSemanticTag("", "");
-        topicSet.merge(tag);
-        try {
-            return InMemoSharkKB.createInMemoASIPInterest(topicSet, null, null, null, null, null, null, direction);
-        } catch (SharkKBException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
 }

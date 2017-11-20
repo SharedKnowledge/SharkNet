@@ -15,9 +15,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.sharkfw.asip.ASIPInterest;
+import net.sharkfw.asip.ASIPSpace;
+import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharksystem.api.dao_impl.SharkNetApiImpl;
 import net.sharksystem.api.models.Broadcast;
 import net.sharksystem.api.models.Chat;
+import net.sharksystem.api.models.Profile;
+import net.sharksystem.api.utils.SharkNetUtils;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
 import net.sharksystem.sharknet.broadcast.BroadcastActivity;
 import net.sharksystem.sharknet.chat.ChatActivity;
@@ -114,7 +120,15 @@ public abstract class NavigationDrawerActivity extends BaseActivity implements N
                 intent = new Intent(this, PKIActivity.class);
                 break;
             case R.id.sidenav_semantic_broadcast:
-                //if(this instanceof BroadcastActivity) closeDrawer();
+                if(this instanceof BroadcastActivity) closeDrawer();
+                Profile profile = mApi.getProfile(null);
+                if (profile.getActiveEntryInterest() != null) {
+                    System.out.println("________________Entry Profile in Manager_____________");
+                    mApi.getSharkEngine().getBroadcastManager().setActiveEntryProfile(profile.getActiveEntryInterest());
+                }
+                if (profile.getActiveOutInterest() != null) {
+                    mApi.getSharkEngine().getBroadcastManager().setActiveOutProfile(profile.getActiveOutInterest());
+                }
                 getSharkApp().setBroadcast(mApi.getBroadcast());
                 intent = new Intent(this, BroadcastActivity.class);
                 break;

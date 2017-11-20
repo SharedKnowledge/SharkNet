@@ -30,6 +30,7 @@ import net.sharksystem.api.models.Broadcast;
 import net.sharksystem.api.models.Chat;
 import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Message;
+import net.sharksystem.api.models.Profile;
 import net.sharksystem.api.shark.peer.NearbyPeer;
 import net.sharksystem.api.shark.peer.NearbyPeerManager;
 import net.sharksystem.sharknet.R;
