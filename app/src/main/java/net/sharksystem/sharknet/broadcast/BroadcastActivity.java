@@ -263,10 +263,11 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
     }
 
     @Override
-    public void onNewMerge(SyncComponent component, SharkKB changes) {
+    public void onNewMerge(SyncComponent component, SharkKB changes, boolean accepted) {
         L.d("Received a new message for the Broadcast channel", this);
-        broadcast = mApi.getBroadcast();
-        runOnUiThread(new Runnable() {
+        if (accepted) {
+            broadcast = mApi.getBroadcast();
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     if(broadcast!=null){
@@ -275,7 +276,10 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                     }
                 }
             });
-
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Incoming Message rejected!",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
