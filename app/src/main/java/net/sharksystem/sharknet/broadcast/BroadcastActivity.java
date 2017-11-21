@@ -1,6 +1,7 @@
 package net.sharksystem.sharknet.broadcast;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.knowledgeBase.sync.manager.SyncComponent;
 import net.sharkfw.knowledgeBase.sync.manager.port.SyncMergeKP;
 import net.sharkfw.routing.SemanticRoutingKP;
@@ -56,12 +59,13 @@ import java.util.List;
  */
 
 public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Message>> implements SemanticRoutingKP.SemanticRoutingListener, NearbyPeerManager.NearbyPeerListener {
-    public static final String EXTRA_MESSAGE = "";
+    public static final String EXTRA_MESSAGE = "extra_message";
     private ChatDetailMsgListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private Broadcast broadcast;
     private RadarListAdapter radarListAdapter;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private String topicSI = "";
 
 
     @Override
@@ -128,6 +132,10 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                     } else {
                         Message message = new Message(mApi.getAccount());
                         message.setContent(msg_string);
+                        if (!TextUtils.isEmpty(topicSI)) {
+                            message.setTopic(InMemoSharkKB.createInMemoSemanticTag("", topicSI));
+                            topicSI = "";
+                        }
                         broadcast = mApi.getBroadcast();
                         broadcast.addMessage(message);
                         List<PeerSemanticTag> nearbyPeers = new ArrayList<>();
@@ -164,8 +172,10 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, "Topic");
-                startActivity(intent);
+                if (!TextUtils.isEmpty(topicSI)) {
+                    intent.putExtra(EXTRA_MESSAGE, topicSI);
+                }
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -203,6 +213,20 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                topicSI = data.getStringExtra("result");
+                System.out.println("_________ " + topicSI + " ___________AAAA");
+            }
+            else {
+                topicSI = null;
+            }
+        }
     }
 
     @Override
