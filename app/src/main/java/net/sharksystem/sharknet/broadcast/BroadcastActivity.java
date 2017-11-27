@@ -143,7 +143,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                             nearbyPeers.add(peer.getSender());
                         }
                         Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers",Toast.LENGTH_LONG).show();
-                        mApi.updateBroadcast(broadcast, nearbyPeers);
+                        mApi.updateBroadcast(broadcast, message, nearbyPeers);
                         editText.getText().clear();
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
