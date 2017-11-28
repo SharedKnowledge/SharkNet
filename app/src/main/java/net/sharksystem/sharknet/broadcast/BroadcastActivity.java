@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
@@ -136,6 +137,11 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                             message.setTopic(InMemoSharkKB.createInMemoSemanticTag("", topicSI));
                             topicSI = "";
                         }
+                        else {
+                            message.setTopic(InMemoSharkKB.createInMemoSemanticTag(Message.MESSAGE_ID, message.getSender().getTag().getName() + message.getDate().getTime()));
+                            topicSI = "";
+                        }
+                        mApi.getSharkEngine().getBroadcastManager().getSentMessages().put(message.getTopic().getSI()[0], "message");
                         broadcast = mApi.getBroadcast();
                         broadcast.addMessage(message);
                         List<PeerSemanticTag> nearbyPeers = new ArrayList<>();
@@ -143,8 +149,8 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                             nearbyPeers.add(peer.getSender());
                         }
                         Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers",Toast.LENGTH_LONG).show();
-                        mApi.getSharkEngine().getBroadcastManager().getSentMessages().put(message.getDate().getTime(), "message");
                         mApi.updateBroadcast(broadcast, message, nearbyPeers);
+                        broadcast = mApi.getBroadcast();
                         editText.getText().clear();
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
