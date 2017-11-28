@@ -141,7 +141,6 @@ public class EntryProfileActivity extends BaseActivity {
                 try {
                     topics.createSemanticTag("Topic", topicEditText.getText().toString());
                     interest = new InMemoInterest(topics, null, null, null, null, null, null, ASIPSpace.DIRECTION_IN);
-                    //TODO: Add the other dimensions
                 } catch (SharkKBException e) {
                     e.printStackTrace();
                 }
@@ -159,5 +158,11 @@ public class EntryProfileActivity extends BaseActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
 
 }

@@ -33,7 +33,9 @@ import net.sharksystem.api.shark.peer.AndroidSharkEngine;
 import net.sharksystem.api.utils.SharkNetUtils;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
+import net.sharksystem.sharknet.broadcast.BroadcastActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
+import net.sharksystem.sharknet.chat.ChatAnnotationLocationActivity;
 import net.sharksystem.sharknet.main.MailServerPingPort;
 import net.sharksystem.sharknet.profile.EntryProfileActivity;
 
@@ -51,7 +53,6 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
     private EditText mPassword;
     private EditText mPopServer;
     private EditText mSmtpServer;
-    private Button mTestMail;
     private Button entryProfileBtn;
     private TextView mServerTestStatus;
     private ImageView mImage;
@@ -81,11 +82,8 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         mPopServer = (EditText) findViewById(R.id.editText_account_pop_server);
         mSmtpServer = (EditText) findViewById(R.id.editText_account_smtp_server);
 
-        mTestMail = (Button) findViewById(R.id.button_account_test_mail);
         entryProfileBtn = (Button) findViewById(R.id.entry_profile);
         mServerTestStatus = (TextView) findViewById(R.id.textView_server_test_status);
-
-        mTestMail.setOnClickListener(this);
 
         mImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,7 +208,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        /*switch (v.getId()) {
             case R.id.button_account_test_mail:
 
                 String mailAddress = mMail.getText().toString();
@@ -242,7 +240,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 };
                 mHandler.postDelayed(runnable, 10000);
                 break;
-        }
+        }*/
     }
 
     @Override
@@ -264,6 +262,12 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), BroadcastActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -32,7 +32,7 @@
         <ImageView
             android:padding="5dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_person_white_48dp"
+            android:srcCompat="@drawable/ic_person_white_48dp"
             android:id="@+id/round_image"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_height="match_parent"
@@ -247,26 +247,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="@dimen/account_margin_outside"
         app:layout_constraintHorizontal_bias="0.0"/>
-
-    <Button
-        android:id="@+id/button_account_test_mail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/account_button_test_mail"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:id="@+id/textView_server_test_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="27dp"
-        android:text="@string/account_status_mail_settings_untested"
-        app:layout_constraintLeft_toRightOf="@+id/button_account_test_mail"
-        android:layout_marginStart="26dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button_account_test_mail"/>
 
     <Button
         android:id="@+id/entry_profile"

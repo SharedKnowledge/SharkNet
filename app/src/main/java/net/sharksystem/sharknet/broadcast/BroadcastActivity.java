@@ -270,7 +270,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
     }
 
     @Override
-    public void onNewMerge(SyncComponent component, SharkKB changes, boolean accepted) {
+    public void onNewMerge(SyncComponent component, SharkKB changes, boolean accepted, boolean forwarded) {
         L.d("Received a new message for the Broadcast channel", this);
         if (accepted) {
             broadcast = mApi.getBroadcast();
@@ -283,6 +283,14 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                     }
                 }
             });
+            if (forwarded) {
+                List<PeerSemanticTag> nearbyPeers = new ArrayList<>();
+                for (NearbyPeer peer : radarListAdapter.getmNearbyPeers()) {
+                    nearbyPeers.add(peer.getSender());
+                }
+                Toast.makeText(getApplicationContext(), "Forwarded to " + nearbyPeers.size() + " Peers",Toast.LENGTH_LONG).show();
+                mApi.getSharkEngine().getBroadcastManager().sendBroadcastMessage(component, nearbyPeers);
+            }
         }
         else {
             Toast.makeText(getApplicationContext(), "Incoming Message rejected!",Toast.LENGTH_LONG).show();
