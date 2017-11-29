@@ -32,7 +32,7 @@
         <ImageView
             android:padding="5dp"
             android:scaleType="centerCrop"
-            android:srcCompat="@drawable/ic_person_white_48dp"
+            android:src="@drawable/ic_person_white_48dp"
             android:id="@+id/round_image"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_height="match_parent"
