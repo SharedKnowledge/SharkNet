@@ -22,7 +22,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
         android:name=".SharkApp"
         android:allowBackup="true"
@@ -180,23 +179,33 @@
             android:label="Schnitzeljagd" />
         <activity
             android:name=".schnitzeljagd.AddSchnitzeljagdActivity"
-            android:theme="@style/Sharknet"
+            android:label="Schnitzeljagd hinzufügen"
             android:parentActivityName=".schnitzeljagd.SchnitzeljagdMainActivity"
-            android:label="Schnitzeljagd hinzufügen" />
+            android:theme="@style/Sharknet" />
         <activity
             android:name=".schnitzeljagd.AddSchnitzelActivity"
-            android:theme="@style/Sharknet"
-            android:parentActivityName=".schnitzeljagd.AddSchnitzeljagdActivity"/>
+            android:parentActivityName=".schnitzeljagd.AddSchnitzeljagdActivity"
+            android:theme="@style/Sharknet" />
         <activity
             android:name=".schnitzeljagd.SchnitzelorteActivity"
-            android:theme="@style/Sharknet"
             android:parentActivityName=".schnitzeljagd.SchnitzeljagdMainActivity"
-            />
+            android:theme="@style/Sharknet" />
         <activity
             android:name=".schnitzeljagd.SchnitzeljagdSpielenActivity"
-            android:theme="@style/Sharknet"
-            android:parentActivityName=".schnitzeljagd.SchnitzeljagdMainActivity">
-        </activity>
+            android:parentActivityName=".schnitzeljagd.SchnitzeljagdMainActivity"
+            android:theme="@style/Sharknet"></activity>
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
     </application>
 
