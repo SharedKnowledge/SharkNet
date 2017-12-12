@@ -80,6 +80,8 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.CHANGE_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
         }
         else {
@@ -148,12 +150,12 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                         for (NearbyPeer peer : radarListAdapter.getmNearbyPeers()) {
                             nearbyPeers.add(peer.getSender());
                         }
-                        Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers",Toast.LENGTH_LONG).show();
                         mApi.updateBroadcast(broadcast, message, nearbyPeers);
                         broadcast = mApi.getBroadcast();
                         editText.getText().clear();
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+                        Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers",Toast.LENGTH_LONG).show();
                     }
                 }
             }
