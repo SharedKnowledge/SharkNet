@@ -32,7 +32,7 @@
         <ImageView
             android:padding="5dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_person_white_48dp"
+            app:srcCompat="@drawable/ic_person_white_48dp"
             android:id="@+id/round_image"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_height="match_parent"
@@ -53,7 +53,7 @@
         <!--android:minWidth="40dp"-->
         <!--android:nestedScrollingEnabled="false"-->
         <!--android:scaleType="fitCenter"-->
-        <!--android:src="@drawable/ic_person_accent_48dp"-->
+        <!--app:srcCompat="@drawable/ic_person_accent_48dp"-->
         <!--app:layout_constraintTop_toTopOf="parent"-->
         <!--android:layout_marginTop="8dp"-->
         <!--android:layout_marginRight="8dp"-->
