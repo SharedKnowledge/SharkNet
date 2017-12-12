@@ -33,7 +33,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_person_accent_24dp"></ImageView>
+                mApp:srcCompat="@drawable/ic_person_accent_24dp"></ImageView>
         </android.support.v7.widget.CardView>
 
 
