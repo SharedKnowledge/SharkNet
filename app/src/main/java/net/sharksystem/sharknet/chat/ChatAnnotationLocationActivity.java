@@ -1,72 +1,76 @@
 package net.sharksystem.sharknet.chat;
 
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Intent;
+
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
-import net.sharksystem.api.service.GeoTrackingService;
+import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.locationprofile.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatAnnotationLocationActivity  extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnCameraMoveListener {
+/**
+ * @author Max Oehme (546545)
+ */
+public class ChatAnnotationLocationActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnCameraMoveListener {
+    private static final String TAG = "ChatAnnotation";
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
-
     private static boolean mLocationPermissionGranted = false;
 
     private GoogleMap mMap;
-    private Marker mCenterMarker;
-    private LatLng mLastKnownLocation;
 
     private TextView longitureText, latitudeText;
     private ImageButton imageButtonSave;
 
-    private Polyline myLine;
-    private List<LatLng> myLineList = new ArrayList<>();
+    private List<LatLng> pointList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_annotation_location);
+        setLayoutResource(R.layout.activity_chat_annotation_location);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(R.string.chat_location_title);
 
         longitureText = (TextView) findViewById(R.id.longitudeText);
         latitudeText = (TextView) findViewById(R.id.lattitudeText);
         imageButtonSave = (ImageButton) findViewById(R.id.imageButtonSave);
-        imageButtonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myLineList.add(mMap.getCameraPosition().target);
-                myLine.setPoints(myLineList);
-            }
-        });
+        imageButtonSave.setOnClickListener(new OnClickSaveButton());
 
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Intent service = new Intent(this, GeoTrackingService.class);
-        startService(service);
+        //Intent service = new Intent(this, GeoTrackingService.class);
+        //startService(service);
+
+        double longMod = 13.424905;
+        double latMod = 52.490181;
+
+        pointList.add(new LatLng(latMod + 0.02, longMod + 0.01));
+        pointList.add(new LatLng(latMod + 0.05, longMod + 0.03));
+        pointList.add(new LatLng(latMod + 0.02, longMod + 0.03));
+        pointList.add(new LatLng(latMod + 0.01, longMod + 0.05));
+        pointList.add(new LatLng(latMod + 0.08, longMod + 0.04));
+        pointList.add(new LatLng(latMod + 0.03, longMod + 0.06));
+
     }
 
     @Override
@@ -76,10 +80,13 @@ public class ChatAnnotationLocationActivity  extends FragmentActivity implements
         mMap.setOnCameraMoveListener(this);
         mMap.getUiSettings().setCompassEnabled(false);
 
-        LatLng pos = mMap.getCameraPosition().target;
-        //mCenterMarker = mMap.addMarker(new MarkerOptions().position(pos).title("Position"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.529820, 13.465224), 11));
 
-        myLine = mMap.addPolyline(new PolylineOptions());
+        requestLocationPermission();
+        updateLocationUI();
+
+        drawLocationProfileGraph(mMap);
+
 
     }
 
@@ -91,14 +98,18 @@ public class ChatAnnotationLocationActivity  extends FragmentActivity implements
         longitureText.setText(getString(R.string.chat_location_longitude, pos.longitude));
         latitudeText.setText(getString(R.string.chat_location_latitude, pos.latitude));
 
-        //mCenterMarker.setPosition(pos);
+    }
 
-        getDeviceLocation();
-        updateLocationUI();
+    private void drawLocationProfileGraph(GoogleMap googleMap) {
+
+        for (LatLng pos : pointList) {
+            googleMap.addCircle(new CircleOptions().center(pos).radius(200));
+
+        }
 
     }
 
-    private void getDeviceLocation() {
+    private void requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -135,10 +146,26 @@ public class ChatAnnotationLocationActivity  extends FragmentActivity implements
             } else {
                 mMap.setMyLocationEnabled(false);
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                mLastKnownLocation = null;
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    class OnClickSaveButton implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+//            myLineList.add(mMap.getCameraPosition().target);
+//            myLine.setPoints(myLineList);
+
+            LatLng myPos = mMap.getCameraPosition().target;
+
+            Log.e(TAG, String.valueOf(Utils.calculateRadius(pointList.get(0), pointList.get(1), pointList.get(2))));
+
+            for (LatLng pos : pointList) {
+                //Log.e(TAG, String.valueOf(Utils.calculateDistance(myPos, pos)));
+
+            }
         }
     }
 }
