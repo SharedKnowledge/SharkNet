@@ -37,6 +37,7 @@ import net.sharksystem.api.models.Message;
 import net.sharksystem.api.models.Profile;
 import net.sharksystem.api.shark.peer.NearbyPeer;
 import net.sharksystem.api.shark.peer.NearbyPeerManager;
+import net.sharksystem.api.shark.protocols.bluetooth.BluetoothStreamStub;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.RxSingleBaseActivity;
 import net.sharksystem.sharknet.RxSingleNavigationDrawerActivity;
@@ -106,7 +107,12 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
     }
 
     private void configureLayout() {
-        setLayoutResource(R.layout.chat_detail_activity);
+        if (android.os.Build.VERSION.SDK_INT > 20) {
+            setLayoutResource(R.layout.chat_detail_activity);
+        }
+        else {
+            setLayoutResource(R.layout.chat_detail_activity_compat);
+        }
         setOptionsMenu(R.menu.chat_detail_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mRecyclerView = (RecyclerView) findViewById(R.id.chat_msg_recycler_view);
@@ -155,7 +161,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                         editText.getText().clear();
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
-                        Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers from "+ BluetoothStreamStub.staticLocalAddress,Toast.LENGTH_LONG).show();
                     }
                 }
             }
