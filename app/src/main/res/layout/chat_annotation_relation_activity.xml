@@ -14,18 +14,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
-        android:text="List of Annotations"
+        android:text="List of semantic Relations"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/chat_annotation_specific_title"
+        android:layout_below="@id/chat_annotation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Specific Title" />
 
     <LinearLayout
         android:id="@+id/chat_annotation_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/chat_annotation_title"
+        android:layout_below="@id/chat_annotation_specific_title"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="3">
 
         <TextView
             android:layout_width="0dp"
@@ -41,10 +49,19 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="SubjectIdentifier" />
+
+        <TextView
+            android:id="@+id/SingleChatAnnotationConnection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Relation"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <ListView
-        android:id="@+id/annotation_list"
+        android:id="@+id/annotation_connection_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/chat_annotation_header2"
@@ -55,34 +72,40 @@
         android:id="@+id/chat_annotation_header2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/annotation_si"
+        android:layout_above="@id/object_title_label"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:text="Add new Annotation"
+        android:text="Add new Relation"
         android:textSize="18sp"
         android:textStyle="bold" />
 
-
-    <EditText
-        android:id="@+id/annotation_si"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/object_title_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/annotation_name"
+        android:layout_above="@id/relation_name"
+        android:layout_margin="10dp"
+        android:text="Chosen Object:" />
+
+    <TextView
+        android:id="@+id/object_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/object_title_label"
+        android:layout_above="@id/relation_name"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:gravity="center"
-        android:hint="Subject Identifier"
-        android:inputType="text" />
+        android:layout_margin="10dp"
+        android:text="" />
 
     <EditText
-        android:id="@+id/annotation_name"
+        android:id="@+id/relation_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/imageButtonSave"
+        android:layout_above="@+id/imageButtonSave"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:hint="Name"
+        android:hint="Name of Relation"
         android:inputType="text" />
 
     <android.support.design.widget.FloatingActionButton
