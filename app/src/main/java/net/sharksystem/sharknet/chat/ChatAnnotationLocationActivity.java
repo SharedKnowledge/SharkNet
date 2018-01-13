@@ -1,7 +1,9 @@
 package net.sharksystem.sharknet.chat;
 
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -15,12 +17,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.locationprofile.util.Utils;
+import net.sharksystem.sharknet.locationprofile.LocationUpdateListener;
+import net.sharksystem.sharknet.locationprofile.RadialSpotLocationProfile;
+import net.sharksystem.sharknet.locationprofile.geometry.RadialLocation;
+import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +45,9 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
     private TextView longitureText, latitudeText;
     private ImageButton imageButtonSave;
 
-    private List<LatLng> pointList = new ArrayList<>();
+    private List<Circle> circleList = new ArrayList<>();
+
+    private RadialSpotLocationProfile profile = RadialSpotLocationProfile.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +66,32 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //Intent service = new Intent(this, GeoTrackingService.class);
-        //startService(service);
+        Intent service = new Intent(this, LocationProfilingService.class);
+        startService(service);
+        profile.setLocationUpdateListener(new LocationUpdateListener() {
+            @Override
+            public void onLocationUpdate(Location location) {
+                profile.addLocation(new RadialLocation(location));
 
-        double longMod = 13.424905;
-        double latMod = 52.490181;
+                for (Circle c : circleList) {
+                    c.remove();
+                }
+                drawLocationProfileGraph(mMap);
+                //mMap.addCircle(new CircleOptions().radius(200).center(new LatLng(location.getLatitude(), location.getLongitude())));
+            }
+        });
 
-        pointList.add(new LatLng(latMod + 0.02, longMod + 0.01));
-        pointList.add(new LatLng(latMod + 0.05, longMod + 0.03));
-        pointList.add(new LatLng(latMod + 0.02, longMod + 0.03));
-        pointList.add(new LatLng(latMod + 0.01, longMod + 0.05));
-        pointList.add(new LatLng(latMod + 0.08, longMod + 0.04));
-        pointList.add(new LatLng(latMod + 0.03, longMod + 0.06));
-
+//        double longMod = 13.424905;
+//        double latMod = 52.490181;
+//
+//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.02, longMod + 0.01))));
+//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.05, longMod + 0.03))));
+//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.02, longMod + 0.03))));
+//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.017, longMod + 0.027))));
+//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.023, longMod + 0.037))));
+//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.01, longMod + 0.05))));
+//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.08, longMod + 0.04))));
+//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.03, longMod + 0.06))));
     }
 
     @Override
@@ -102,8 +123,8 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
 
     private void drawLocationProfileGraph(GoogleMap googleMap) {
 
-        for (LatLng pos : pointList) {
-            googleMap.addCircle(new CircleOptions().center(pos).radius(200));
+        for (RadialLocation pos : profile.getLocationsList()) {
+            circleList.add(googleMap.addCircle(new CircleOptions().center(new LatLng(pos.getLocation().getLatitude(), pos.getLocation().getLongitude())).radius(pos.getRadius() + pos.getRadius()>0?0:10)));
 
         }
 
@@ -160,12 +181,12 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
 
             LatLng myPos = mMap.getCameraPosition().target;
 
-            Log.e(TAG, String.valueOf(Utils.calculateRadius(pointList.get(0), pointList.get(1), pointList.get(2))));
+            Location l = new Location("self");
+            l.setLongitude(myPos.longitude);
+            l.setLatitude(myPos.latitude);
 
-            for (LatLng pos : pointList) {
-                //Log.e(TAG, String.valueOf(Utils.calculateDistance(myPos, pos)));
+            profile.getPosibilityToReachLocation(l);
 
-            }
         }
     }
 }

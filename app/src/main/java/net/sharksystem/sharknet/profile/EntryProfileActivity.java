@@ -151,7 +151,7 @@ public class EntryProfileActivity extends BaseActivity {
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Could not save the Entry Profile!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Could not save the Entry RadialSpotLocationProfile!", Toast.LENGTH_LONG).show();
                 }
 
             }
