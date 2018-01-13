@@ -57,7 +57,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="-10dp"
-                android:src="@drawable/shape_bg_incoming_bubble"/>
+                mApp:srcCompat="@drawable/shape_bg_incoming_bubble"/>
 
             <TextView
                 android:id="@+id/msg_item_content"

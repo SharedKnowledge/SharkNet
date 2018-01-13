@@ -108,7 +108,7 @@
         style="@android:style/Widget.DeviceDefault.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/ic_chevron_right_grey_200_24dp"
+
         android:text="@string/main_new_profile_finish"
         android:textColor="@color/grey_200"
         mApp:layout_constraintBottom_toBottomOf="parent"
@@ -122,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
-        android:drawableStart="@drawable/ic_chevron_left_grey_200_24dp"
+
         android:text="@string/main_previous_fragment"
         android:textColor="@color/grey_200"
         mApp:layout_constraintBottom_toBottomOf="parent"
