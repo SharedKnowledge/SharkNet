@@ -2,7 +2,13 @@ package net.sharksystem.sharknet.locationprofile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import net.sharkfw.knowledgeBase.geom.PointGeometry;
 import net.sharkfw.knowledgeBase.spatial.LocationProfile;
@@ -12,6 +18,7 @@ import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
 import net.sharksystem.sharknet.locationprofile.data.SpatialInformationImpl;
 import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
 import net.sharksystem.sharknet.locationprofile.util.GeoUtils;
+import net.sharksystem.sharknet.locationprofile.util.LocationUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -50,13 +57,48 @@ public class PolygonLocationProfile implements LocationProfile {
 
     @Override
     public SpatialInformation calculateSpatialInformationFromProfile(PointGeometry pointGeometry) {
-        SpatialInformation spatialInformation = new SpatialInformationImpl();
         loadLocationsFromDatabase();
+
+        final PointGeometry[] lastLocation = {null};
+        LocationUtil.getInstance().getLastLocation(mContext, new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                Location location = task.getResult();
+                lastLocation[0] = new PointGeometry(location.getLatitude(),location.getLongitude());
+            }
+        });
+
+        while(lastLocation[0] == null) {
+            SystemClock.sleep(100);
+        }
+
+        List<PolygonLocation> polygonListProfile = new ArrayList<>();
+
 
 
         // TODO Remove Points within too!!
 
-        return spatialInformation;
+        double sourceToProfile = -1;
+        double destinationToProfile = -1;
+        PolygonLocation entrance = null;
+        PolygonLocation exit = null;
+        for (PolygonLocation polygon : polygonListProfile) {
+            double d_p = polygon.distanceTo(pointGeometry);
+            double d_s = polygon.distanceTo(lastLocation[0]);
+
+            if (destinationToProfile == -1 || d_p < destinationToProfile) {
+                destinationToProfile = d_p;
+                exit = polygon;
+            }
+
+            if (sourceToProfile == -1 || d_s < sourceToProfile) {
+                sourceToProfile = d_s;
+                entrance = polygon;
+            }
+        }
+        double entrenceToExit = entrance != null && exit != null ? entrance.distanceTo(exit) : -1;
+
+        return new SpatialInformationImpl(sourceToProfile, entrenceToExit, destinationToProfile, entrance!=null?entrance.getWeight():1, exit!=null?exit.getWeight():1);
     }
 
     private void loadLocationsFromDatabase(){

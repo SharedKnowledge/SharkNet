@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 
 import net.sharkfw.knowledgeBase.geom.PointGeometry;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
+import net.sharksystem.sharknet.locationprofile.util.LocationUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ import java.util.List;
 public class LocationProfilingService extends Service {
     private static final String TAG = "LOCATIONSERVICE";
 
-    int count = 0;
     private List<PointGeometry> pointGeometryList = new ArrayList<>();
 
     private Handler mHandler = new Handler();
@@ -81,27 +81,14 @@ public class LocationProfilingService extends Service {
 
         @Override
         public void run() {
-            count++;
 
-            FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(LocationProfilingService.this);
-            if (ActivityCompat.checkSelfPermission(LocationProfilingService.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationProfilingService.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            Task<Location> pos = client.getLastLocation();
-            pos.addOnCompleteListener(new OnCompleteListener<Location>() {
+            LocationUtil.getInstance().getLastLocation(LocationProfilingService.this, new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
-                    pointGeometryList.add(new PointGeometry(location.getLatitude(),location.getLongitude()));
+                    PointGeometry lastpoint = new PointGeometry(location.getLatitude(),location.getLongitude());
+                    pointGeometryList.add(lastpoint);
 
-                    PointGeometry p = pointGeometryList.get(pointGeometryList.size() - 1);
 
                     if (pointGeometryList.size() > 50) {
                         final List<PointGeometry> tmpList = new ArrayList<>(pointGeometryList);

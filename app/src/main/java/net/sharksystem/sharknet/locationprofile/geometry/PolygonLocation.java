@@ -65,6 +65,17 @@ public class PolygonLocation implements ProfileGeometry{
         return distance;
     }
 
+    public double distanceTo(PolygonLocation polygon) {
+        double distance = -1;
+        for (PointGeometry point : polygon.getCorners()) {
+            double d = this.distanceTo(point);
+            if (distance == -1 || d < distance) {
+                distance = d;
+            }
+        }
+        return distance;
+    }
+
     public boolean isPointInside(PointGeometry pQ) {
         boolean isInside = true;
 
