@@ -1,8 +1,11 @@
 package net.sharksystem.sharknet.profile;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -165,33 +169,21 @@ public class EntryProfileActivity extends BaseActivity {
                     Toast.makeText(getApplicationContext(), "Could not save the Entry RadialSpotLocationProfile!", Toast.LENGTH_LONG).show();
                 }
 
+                if (isNotDelete) {
+                    if (spatialFilter == null) {
+                        spatialFilter = new SpatialFilter(Dimension.SPATIAL, new PolygonLocationProfile(EntryProfileActivity.this, LocationProfilingService.class), ((double) seekbarProfileThreshold.getProgress()) / 100);
+                        mApi.addSemanticFilter(spatialFilter);
+                    }
+                } else {
+                    if (spatialFilter != null) mApi.removeSemanticFilter(spatialFilter);
+                }
             }
         });
 
         activateLocationProfiling = findViewById(R.id.activateLocationProfiling);
         seekbarProfileThreshold = findViewById(R.id.seekbarProfileThreshold);
         seekbarProfileThreshold.setProgress(50);
-
-        SpatialFilter spatialFilter = null;
-        for (SemanticFilter filter : mApi.getAllSemanticFilters()) {
-            if (filter instanceof SpatialFilter) {
-                spatialFilter = (SpatialFilter) filter;
-                activateLocationProfiling.setChecked(true);
-                seekbarProfileThreshold.setProgress((int) (100 * spatialFilter.getDecisionThreshold()));
-            }
-        }
-
-        final SpatialFilter finalSpatialFilter = spatialFilter;
-        activateLocationProfiling.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    mApi.addSemanticFilter(new SpatialFilter(Dimension.SPATIAL, new PolygonLocationProfile(EntryProfileActivity.this, LocationProfilingService.class), seekbarProfileThreshold.getProgress()));
-                } else {
-                    if (finalSpatialFilter != null) mApi.removeSemanticFilter(finalSpatialFilter);
-                }
-            }
-        });
+        seekbarProfileThreshold.setEnabled(false);
 
     }
 
@@ -200,5 +192,53 @@ public class EntryProfileActivity extends BaseActivity {
 
     }
 
+    private SpatialFilter spatialFilter;
+    private boolean isNotDelete = true;
 
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+
+        for (SemanticFilter filter : mApi.getAllSemanticFilters()) {
+            if (filter instanceof SpatialFilter) {
+                spatialFilter = (SpatialFilter) filter;
+                activateLocationProfiling.setChecked(true);
+                seekbarProfileThreshold.setEnabled(true);
+                int threshold = (int) (100 * spatialFilter.getDecisionThreshold());
+                ((TextView)findViewById(R.id.profileThresholdFull)).setText(threshold +"%");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    seekbarProfileThreshold.setProgress(threshold, true);
+                } else {
+                    seekbarProfileThreshold.setProgress(threshold);
+                }
+            }
+        }
+
+        activateLocationProfiling.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isNotDelete = b;
+                seekbarProfileThreshold.setEnabled(b);
+            }
+        });
+
+        seekbarProfileThreshold.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                ((TextView)findViewById(R.id.profileThresholdFull)).setText(i +"%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (spatialFilter != null) {
+                    spatialFilter.setDecisionThreshold(((double) seekBar.getProgress()) / 100);
+                }
+            }
+        });
+    }
 }

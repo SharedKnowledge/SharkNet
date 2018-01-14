@@ -73,7 +73,7 @@
                 android:id="@+id/profileThresholdZero"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0%"
+                android:text="0 - 100%"
                 android:layout_alignParentLeft="true"/>
 
             <android.support.v7.widget.AppCompatSeekBar
@@ -87,9 +87,9 @@
 
             <TextView
                 android:id="@+id/profileThresholdFull"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
-                android:text="100%"
+                android:text="50%"
                 android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
