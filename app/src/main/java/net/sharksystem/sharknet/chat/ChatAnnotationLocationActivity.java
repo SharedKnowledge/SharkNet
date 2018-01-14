@@ -3,7 +3,6 @@ package net.sharksystem.sharknet.chat;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -27,9 +26,7 @@ import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
 import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
-import net.sharksystem.sharknet.locationprofile.RadialSpotLocationProfile;
 import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
-import net.sharksystem.sharknet.locationprofile.geometry.RadialLocation;
 import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
 
 import java.util.ArrayList;
@@ -48,10 +45,6 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
 
     private TextView longitureText, latitudeText;
     private ImageButton imageButtonSave;
-
-    private List<Circle> circleList = new ArrayList<>();
-
-    private RadialSpotLocationProfile profile = RadialSpotLocationProfile.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
