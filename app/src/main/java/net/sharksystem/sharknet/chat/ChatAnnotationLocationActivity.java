@@ -62,9 +62,6 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        Intent service = new Intent(this, LocationProfilingService.class);
-        startService(service);
     }
 
     @Override

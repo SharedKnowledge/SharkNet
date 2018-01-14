@@ -57,6 +57,43 @@
         android:gravity="center"
         android:inputType="text" />
 
+        <Switch
+            android:id="@+id/activateLocationProfiling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/entryprof_enablelocationprof"
+            android:layout_margin="5dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/profileThresholdZero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:layout_alignParentLeft="true"/>
+
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/seekbarProfileThreshold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:min="0"
+                android:max="100"
+                android:layout_toLeftOf="@+id/profileThresholdFull"
+                android:layout_toRightOf="@+id/profileThresholdZero"/>
+
+            <TextView
+                android:id="@+id/profileThresholdFull"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100%"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
     <Button
         android:id="@+id/buttonStart"
         android:text="@string/start_time"

@@ -144,4 +144,7 @@
     <string name="schnitzeljagd_main_menu_admin">Admin mode</string>
     <string name="schnitzeljagd_main_menu_orte">Liste der Orte</string>
 
+    <!-- Entry Profile -->
+    <string name="entryprof_enablelocationprof">Enable Location Profiling</string>
+
 </resources>

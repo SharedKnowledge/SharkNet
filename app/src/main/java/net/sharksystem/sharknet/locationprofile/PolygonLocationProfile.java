@@ -1,6 +1,7 @@
 package net.sharksystem.sharknet.locationprofile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import net.sharkfw.knowledgeBase.geom.PointGeometry;
@@ -9,6 +10,7 @@ import net.sharkfw.knowledgeBase.spatial.SpatialInformation;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
 import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
 import net.sharksystem.sharknet.locationprofile.data.SpatialInformationImpl;
+import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
 import net.sharksystem.sharknet.locationprofile.util.GeoUtils;
 
 import java.util.ArrayList;
@@ -25,9 +27,25 @@ public class PolygonLocationProfile implements LocationProfile {
     private static final double POLYGONSIZE = 100;
     private Context mContext;
     private List<PointGeometry> pointGeometries;
+    private Intent profilingService;
 
     public PolygonLocationProfile(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public PolygonLocationProfile(Context mContext, Class<?> profilingServiceClass) {
+        this.mContext = mContext;
+        startProfilingService(profilingServiceClass);
+    }
+
+    public void startProfilingService(Class<?> profilingServiceClass) {
+        profilingService = new Intent(mContext, profilingServiceClass);
+        mContext.startService(profilingService);
+    }
+
+    public void stopProfilingService() {
+        mContext.stopService(profilingService);
+        profilingService = null;
     }
 
     @Override
