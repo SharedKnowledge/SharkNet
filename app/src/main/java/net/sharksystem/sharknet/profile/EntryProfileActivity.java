@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -19,6 +23,9 @@ import net.sharkfw.asip.ASIPInterest;
 import net.sharkfw.asip.ASIPSpace;
 import net.sharkfw.knowledgeBase.STSet;
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.broadcast.Dimension;
+import net.sharkfw.knowledgeBase.broadcast.SemanticFilter;
+import net.sharkfw.knowledgeBase.broadcast.SpatialFilter;
 import net.sharkfw.knowledgeBase.inmemory.InMemoInterest;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSTSet;
 import net.sharksystem.api.models.Contact;
@@ -28,6 +35,8 @@ import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationTimeActivity;
 import net.sharksystem.sharknet.chat.ChatDetailActivity;
+import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
+import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,6 +52,8 @@ public class EntryProfileActivity extends BaseActivity {
     private EditText typeEditText;
     private EditText longitudeEditText;
     private EditText lattitudeEditText;
+    private Switch activateLocationProfiling;
+    private AppCompatSeekBar seekbarProfileThreshold;
     private long selectedStartTime = 0;
     private long selectedEndTime = 0;
     private Profile profile;
@@ -154,6 +165,31 @@ public class EntryProfileActivity extends BaseActivity {
                     Toast.makeText(getApplicationContext(), "Could not save the Entry RadialSpotLocationProfile!", Toast.LENGTH_LONG).show();
                 }
 
+            }
+        });
+
+        activateLocationProfiling = findViewById(R.id.activateLocationProfiling);
+        seekbarProfileThreshold = findViewById(R.id.seekbarProfileThreshold);
+        seekbarProfileThreshold.setProgress(50);
+
+        SpatialFilter spatialFilter = null;
+        for (SemanticFilter filter : mApi.getAllSemanticFilters()) {
+            if (filter instanceof SpatialFilter) {
+                spatialFilter = (SpatialFilter) filter;
+                activateLocationProfiling.setChecked(true);
+                seekbarProfileThreshold.setProgress((int) (100 * spatialFilter.getDecisionThreshold()));
+            }
+        }
+
+        final SpatialFilter finalSpatialFilter = spatialFilter;
+        activateLocationProfiling.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    mApi.addSemanticFilter(new SpatialFilter(Dimension.SPATIAL, new PolygonLocationProfile(EntryProfileActivity.this, LocationProfilingService.class), seekbarProfileThreshold.getProgress()));
+                } else {
+                    if (finalSpatialFilter != null) mApi.removeSemanticFilter(finalSpatialFilter);
+                }
             }
         });
 
