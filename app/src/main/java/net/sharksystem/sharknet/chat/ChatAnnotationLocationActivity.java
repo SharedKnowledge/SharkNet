@@ -20,11 +20,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolygonOptions;
 
+import net.sharkfw.knowledgeBase.geom.PointGeometry;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
-import net.sharksystem.sharknet.locationprofile.LocationUpdateListener;
+import net.sharksystem.sharknet.data.SharkNetDbHelper;
+import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
 import net.sharksystem.sharknet.locationprofile.RadialSpotLocationProfile;
+import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
 import net.sharksystem.sharknet.locationprofile.geometry.RadialLocation;
 import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
 
@@ -68,30 +72,6 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
 
         Intent service = new Intent(this, LocationProfilingService.class);
         startService(service);
-        profile.setLocationUpdateListener(new LocationUpdateListener() {
-            @Override
-            public void onLocationUpdate(Location location) {
-                profile.addLocation(new RadialLocation(location));
-
-                for (Circle c : circleList) {
-                    c.remove();
-                }
-                drawLocationProfileGraph(mMap);
-                //mMap.addCircle(new CircleOptions().radius(200).center(new LatLng(location.getLatitude(), location.getLongitude())));
-            }
-        });
-
-//        double longMod = 13.424905;
-//        double latMod = 52.490181;
-//
-//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.02, longMod + 0.01))));
-//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.05, longMod + 0.03))));
-//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.02, longMod + 0.03))));
-//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.017, longMod + 0.027))));
-//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.023, longMod + 0.037))));
-//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.01, longMod + 0.05))));
-//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.08, longMod + 0.04))));
-//        profile.getLocationsList().add(new RadialLocation(Utils.convertToLocation(new LatLng(latMod + 0.03, longMod + 0.06))));
     }
 
     @Override
@@ -122,12 +102,20 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
     }
 
     private void drawLocationProfileGraph(GoogleMap googleMap) {
+        List<PointGeometry> points = SharkNetDbHelper.getInstance().readPointGeometryFromDB(this);
 
-        for (RadialLocation pos : profile.getLocationsList()) {
-            circleList.add(googleMap.addCircle(new CircleOptions().center(new LatLng(pos.getLocation().getLatitude(), pos.getLocation().getLongitude())).radius(pos.getRadius() + pos.getRadius()>0?0:10)));
+        PolygonLocation poly = PolygonLocationProfile.createPolygonWithJarvisMarchAlgorithm(points);
 
+        List<LatLng> polygon = new ArrayList<>();
+        for (PointGeometry point : poly.getCorners()){
+            polygon.add(new LatLng(point.getX(),point.getY()));
         }
 
+        googleMap.addPolygon(new PolygonOptions().addAll(polygon));
+
+        for (PointGeometry point : points) {
+            googleMap.addCircle(new CircleOptions().center(new LatLng(point.getX(),point.getY())).radius(2));
+        }
     }
 
     private void requestLocationPermission() {
@@ -180,13 +168,14 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
 //            myLine.setPoints(myLineList);
 
             LatLng myPos = mMap.getCameraPosition().target;
-
-            Location l = new Location("self");
-            l.setLongitude(myPos.longitude);
-            l.setLatitude(myPos.latitude);
-
-            profile.getPosibilityToReachLocation(l);
-
+//
+//            Location l = new Location("self");
+//            l.setLongitude(myPos.longitude);
+//            l.setLatitude(myPos.latitude);
+//
+//            profile.getPosibilityToReachLocation(l);
+            PolygonLocationProfile prof = new PolygonLocationProfile(ChatAnnotationLocationActivity.this);
+            prof.calculateSpatialInformationFromProfile(new PointGeometry(myPos.longitude, myPos.latitude));
         }
     }
 }

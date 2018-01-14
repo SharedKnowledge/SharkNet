@@ -28,19 +28,10 @@ public class RadialSpotLocationProfile implements LocationProfile<RadialLocation
 
 
     private List<RadialLocation> locationsList;
-    private LocationUpdateListener locationUpdateListener;
 
 
     public List<RadialLocation> getLocationsList() {
         return locationsList;
-    }
-
-    public void setLocationUpdateListener(LocationUpdateListener listener) {
-        this.locationUpdateListener = listener;
-    }
-
-    public LocationUpdateListener getLocationUpdateListener() {
-        return locationUpdateListener;
     }
 
     @Override
@@ -62,10 +53,6 @@ public class RadialSpotLocationProfile implements LocationProfile<RadialLocation
             }
         }
         locationsList.add(location);
-    }
-
-    public boolean checkIsLocationInRange() {
-        return false;
     }
 
     public double getPosibilityToReachLocation(Location location) {
