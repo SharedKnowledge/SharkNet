@@ -97,7 +97,7 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
     private void drawLocationProfileGraph(GoogleMap googleMap) {
         List<PointGeometry> points = SharkNetDbHelper.getInstance().readPointGeometryFromDB(this);
 
-        PolygonLocation poly = PolygonLocationProfile.createPolygonWithJarvisMarchAlgorithm(points);
+        PolygonLocation poly = PolygonLocationProfile.createPolygonProfile(points);
 
         List<LatLng> polygon = new ArrayList<>();
         for (PointGeometry point : poly.getCorners()){
