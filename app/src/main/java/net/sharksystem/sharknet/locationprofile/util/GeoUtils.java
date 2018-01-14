@@ -19,4 +19,15 @@ public class GeoUtils {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         return r * c * 1000;
     }
+
+
+    /**
+     * @param a Gegenueberliegende Seite zum Winkel
+     * @param b Links Anliegende Seite zum Winkel
+     * @param c Rechts Anliegende Seite zum Winkel
+     * @return Winkel in Grad
+     */
+    public static double calcAngleFromEdges(double a, double b, double c){
+        return Math.toDegrees(Math.acos((Math.cos(a) - (Math.cos(b) * Math.cos(c))) / (Math.sin(b) * Math.sin(c))));
+    }
 }

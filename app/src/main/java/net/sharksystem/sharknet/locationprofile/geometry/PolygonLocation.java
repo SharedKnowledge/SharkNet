@@ -1,5 +1,7 @@
 package net.sharksystem.sharknet.locationprofile.geometry;
 
+import android.util.Log;
+
 import net.sharkfw.knowledgeBase.geom.PointGeometry;
 import net.sharksystem.sharknet.locationprofile.util.GeoUtils;
 
@@ -63,15 +65,18 @@ public class PolygonLocation implements ProfileGeometry{
         return distance;
     }
 
-    public boolean isPointInside(PointGeometry point) {
-        int t = -1;
+    public boolean isPointInside(PointGeometry pQ) {
+        boolean isInside = true;
+
+        return false;
+        /*int t = -1;
         for (int i=0; i<corners.size();i++) {
             t = t * kreuzProdukt(point, corners.get(i), corners.get(i % (corners.size() - 1)));
             if (t == 0) {
                 i = corners.size();
             }
         }
-        return t == 1;
+        return t == 1;*/
     }
 
     // TODO Eventuell fehlerhaft

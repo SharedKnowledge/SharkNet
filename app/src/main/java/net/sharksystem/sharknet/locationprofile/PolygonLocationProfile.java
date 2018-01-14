@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 public class PolygonLocationProfile implements LocationProfile {
-    private static final double POLYGONSIZE = 1000;
+    private static final double POLYGONSIZE = 100;
     private Context mContext;
     private List<PointGeometry> pointGeometries;
 
@@ -35,10 +35,8 @@ public class PolygonLocationProfile implements LocationProfile {
         SpatialInformation spatialInformation = new SpatialInformationImpl();
         loadLocationsFromDatabase();
 
-        PolygonLocation poly = createPolygonWithJarvisMarchAlgorithm(pointGeometries);
 
-        Log.e("Test", "" + poly.distanceTo(pointGeometry));
-        // TODO
+        // TODO Remove Points within too!!
 
         return spatialInformation;
     }
@@ -47,15 +45,41 @@ public class PolygonLocationProfile implements LocationProfile {
         pointGeometries = SharkNetDbHelper.getInstance().readPointGeometryFromDB(mContext);
     }
 
+    public static PolygonLocation createPolygonProfile(List<PointGeometry> pointList) {
+        List<PointGeometry> polyPoints = createPolygonWithJarvisMarchAlgorithm(pointList);
+
+        pointList.removeAll(polyPoints);
+        PolygonLocation polygon = new PolygonLocation(polyPoints);
+
+        if (polygon.getCorners().size() > 2) {
+            Iterator<PointGeometry> iter = pointList.iterator();
+            while (iter.hasNext()) {
+                if (polygon.isPointInside(iter.next())) {
+                    //iter.remove();
+                    polygon.setWeight(polygon.getWeight()+1);
+                }
+            }
+        }
+
+        return polygon;
+    }
+
     /**
      * Creating a Polygon from a list of points using the Jarvis-March algorithm
      *
      * @param pointList
      * @return
      */
-    public static PolygonLocation createPolygonWithJarvisMarchAlgorithm(List<PointGeometry> pointList){
+    public static List<PointGeometry> createPolygonWithJarvisMarchAlgorithm(List<PointGeometry> pointList){
         List<PointGeometry> polygonPointList = new ArrayList<>();
         PointGeometry startPoint = pointList.get(0);
+        for (PointGeometry nextPoint : pointList) {
+            if (nextPoint != startPoint) {
+                if (nextPoint.getY() < startPoint.getY()) {
+                    startPoint = nextPoint;
+                }
+            }
+        }
         polygonPointList.add(startPoint);
 
         PointGeometry currentPoint = startPoint;
@@ -71,15 +95,6 @@ public class PolygonLocationProfile implements LocationProfile {
         }
 
         if (selectedNext != null && pointList.size() > 2) {
-            PointGeometry compareToPoint = selectedNext;
-            for (PointGeometry nextPoint : pointList) {
-                if (nextPoint != startPoint && nextPoint != compareToPoint) {
-
-                    if (nextPoint.getX() - currentPoint.getX() > selectedNext.getX() - currentPoint.getX() && nextPoint.getY() - currentPoint.getY() > selectedNext.getY() - currentPoint.getY()) {
-                        selectedNext = nextPoint;
-                    }
-                }
-            }
             polygonPointList.add(selectedNext);
             boolean check = true;
             do {
@@ -98,15 +113,12 @@ public class PolygonLocationProfile implements LocationProfile {
                         if (gamma > currentGamma && gamma < 180 && distanceToStart < POLYGONSIZE) {
                             currentGamma = gamma;
                             addToPoint = nextPoint;
-                        } else if (a == 0 || b == 0 || c == 0) {
-                            addToPoint = nextPoint;
                         }
                     }
                 }
-                for (PointGeometry edge : polygonPointList) {
-                    if (edge == addToPoint) {
-                        check = false;
-                    }
+
+                if (startPoint == addToPoint) {
+                    check = false;
                 }
 
                 if (check) {
@@ -118,21 +130,7 @@ public class PolygonLocationProfile implements LocationProfile {
             } while (check);
 
         }
-
-        // TODO Remove Points within too!!
-        pointList.removeAll(polygonPointList);
-        PolygonLocation polygon = new PolygonLocation(polygonPointList);
-
-        if (polygon.getCorners().size() > 2) {
-            Iterator<PointGeometry> iter = pointList.iterator();
-            while (iter.hasNext()) {
-                if (polygon.isPointInside(iter.next())) {
-                    iter.remove();
-                    polygon.setWeight(polygon.getWeight()+1);
-                }
-            }
-        }
-        return polygon;
+        return polygonPointList;
     }
 
     private static double calcCosinusGamma(double a, double b, double c){
