@@ -1,9 +1,8 @@
-package net.sharksystem.sharknet.locationprofile.service;
+package net.sharksystem.sharknet.service;
 
 import android.Manifest;
 import android.app.Notification;
 import android.app.Service;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,9 +18,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import net.sharkfw.knowledgeBase.geom.PointGeometry;
+import net.sharkfw.knowledgeBase.geom.SharkPoint;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
-import net.sharksystem.sharknet.locationprofile.util.LocationUtil;
+import net.sharksystem.sharknet.location.LastLocationImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ import java.util.List;
 public class LocationProfilingService extends Service {
     private static final String TAG = "LOCATIONSERVICE";
 
-    private List<PointGeometry> pointGeometryList = new ArrayList<>();
+    private List<SharkPoint> sharkPointList = new ArrayList<>();
 
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
@@ -81,23 +80,34 @@ public class LocationProfilingService extends Service {
 
         @Override
         public void run() {
-
-            LocationUtil.getInstance().getLastLocation(LocationProfilingService.this, new OnCompleteListener<Location>() {
+            FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(mmContext);
+            if (ActivityCompat.checkSelfPermission(mmContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mmContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            Task<Location> pos = client.getLastLocation();
+            pos.addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
-                    PointGeometry lastpoint = new PointGeometry(location.getLatitude(),location.getLongitude());
-                    pointGeometryList.add(lastpoint);
+                    SharkPoint lastpoint = new SharkPoint(location.getLatitude(),location.getLongitude());
+                    sharkPointList.add(lastpoint);
 
 
-                    if (pointGeometryList.size() > 50) {
-                        final List<PointGeometry> tmpList = new ArrayList<>(pointGeometryList);
-                        pointGeometryList.clear();
+                    if (sharkPointList.size() > 50) {
+                        final List<SharkPoint> tmpList = new ArrayList<>(sharkPointList);
+                        sharkPointList.clear();
 
                         mmHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                SharkNetDbHelper.getInstance().saveAllPointGeometryToDB(mmContext, tmpList);
+                                SharkNetDbHelper.getInstance().saveAllSharkPointToDB(mmContext, tmpList);
                             }
                         });
                     }

@@ -1,7 +1,6 @@
 package net.sharksystem.sharknet.chat;
 
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +15,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -27,7 +25,6 @@ import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
 import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
 import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
-import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +91,7 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
     private void drawLocationProfileGraph(GoogleMap googleMap) {
         List<PointGeometry> points = SharkNetDbHelper.getInstance().readPointGeometryFromDB(this);
 
-        PolygonLocation poly = PolygonLocationProfile.createPolygonProfile(points);
+        PolygonLocation poly = PolygonLocationProfile.createConvexPolygon(points);
 
         List<LatLng> polygon = new ArrayList<>();
         for (PointGeometry point : poly.getCorners()){

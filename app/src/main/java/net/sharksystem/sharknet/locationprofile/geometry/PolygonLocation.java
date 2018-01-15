@@ -1,8 +1,6 @@
 package net.sharksystem.sharknet.locationprofile.geometry;
 
-import android.util.Log;
-
-import net.sharkfw.knowledgeBase.geom.PointGeometry;
+import net.sharkfw.knowledgeBase.geom.SharkPoint;
 import net.sharksystem.sharknet.locationprofile.util.GeoUtils;
 
 import java.util.ArrayList;
@@ -15,15 +13,15 @@ import java.util.List;
  */
 
 public class PolygonLocation implements ProfileGeometry{
-    private List<PointGeometry> corners = new ArrayList<>();
+    private List<SharkPoint> corners = new ArrayList<>();
     private int weight = 0;
 
-    public PolygonLocation(List<PointGeometry> corners) {
+    public PolygonLocation(List<SharkPoint> corners) {
         this.corners = corners;
         this.weight = corners.size();
     }
 
-    public List<PointGeometry> getCorners() {
+    public List<SharkPoint> getCorners() {
         return corners;
     }
 
@@ -36,12 +34,12 @@ public class PolygonLocation implements ProfileGeometry{
     }
 
     @Override
-    public double distanceTo(PointGeometry location) {
+    public double distanceTo(SharkPoint location) {
         double distance = -1;
 
         for(int i=0; i<corners.size();i++) {
-            PointGeometry pointA = corners.get(i);
-            PointGeometry pointB = corners.get(i % (corners.size()-1));
+            SharkPoint pointA = corners.get(i);
+            SharkPoint pointB = corners.get(i % (corners.size()-1));
 
             double a = Math.toRadians(GeoUtils.distanceBetween(pointB.getY(), pointB.getX(), location.getY(), location.getX()));
             double b = Math.toRadians(GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), location.getY(), location.getX()));
@@ -67,7 +65,7 @@ public class PolygonLocation implements ProfileGeometry{
 
     public double distanceTo(PolygonLocation polygon) {
         double distance = -1;
-        for (PointGeometry point : polygon.getCorners()) {
+        for (SharkPoint point : polygon.getCorners()) {
             double d = this.distanceTo(point);
             if (distance == -1 || d < distance) {
                 distance = d;
@@ -76,7 +74,7 @@ public class PolygonLocation implements ProfileGeometry{
         return distance;
     }
 
-    public boolean isPointInside(PointGeometry pQ) {
+    public boolean isPointInside(SharkPoint pQ) {
         boolean isInside = true;
 
         return false;
@@ -91,8 +89,8 @@ public class PolygonLocation implements ProfileGeometry{
     }
 
     // TODO Eventuell fehlerhaft
-    private int kreuzProdukt(PointGeometry point, PointGeometry cornerA, PointGeometry cornerB) {
-        PointGeometry a = point, b = cornerA, c = cornerB;
+    private int kreuzProdukt(SharkPoint point, SharkPoint cornerA, SharkPoint cornerB) {
+        SharkPoint a = point, b = cornerA, c = cornerB;
         if (a.getY() == b.getY() && b.getY() == c.getY()) {
             if ((b.getX() <= a.getX() && a.getX() <= c.getX()) || (c.getX() <= a.getX() && a.getX() <= b.getX())) {
                 return 0;
@@ -104,7 +102,7 @@ public class PolygonLocation implements ProfileGeometry{
             return 0;
         }
         if (b.getY() > c.getY()) {
-            PointGeometry tmp = b;
+            SharkPoint tmp = b;
             b = c;
             c = tmp;
         }

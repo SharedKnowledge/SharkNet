@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -33,15 +30,16 @@ import net.sharkfw.knowledgeBase.broadcast.SpatialFilter;
 import net.sharkfw.knowledgeBase.inmemory.InMemoInterest;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSTSet;
 import net.sharkfw.knowledgeBase.spatial.LocationProfile;
-import net.sharksystem.api.models.Contact;
 import net.sharksystem.api.models.Profile;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
-import net.sharksystem.sharknet.chat.ChatAnnotationTimeActivity;
-import net.sharksystem.sharknet.chat.ChatDetailActivity;
+import net.sharksystem.sharknet.data.dataprovider.SharkNetDbPolygonDataProvider;
+import net.sharksystem.sharknet.location.LastLocationImpl;
 import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
-import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
+import net.sharksystem.sharknet.locationprofile.SharkBasicExecutor;
+import net.sharksystem.sharknet.service.LocationProfilingService;
+import net.sharksystem.sharknet.service.ServiceController;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -172,14 +170,16 @@ public class EntryProfileActivity extends BaseActivity {
 
                 if (isNotDelete) {
                     if (spatialFilter == null) {
-                        spatialFilter = new SpatialFilter(Dimension.SPATIAL, new PolygonLocationProfile(EntryProfileActivity.this, LocationProfilingService.class), ((double) seekbarProfileThreshold.getProgress()) / 100);
+                        SharkBasicExecutor exec = new ServiceController(EntryProfileActivity.this, LocationProfilingService.class);
+                        spatialFilter = new SpatialFilter(Dimension.SPATIAL, new PolygonLocationProfile(new SharkNetDbPolygonDataProvider(EntryProfileActivity.this), new LastLocationImpl(EntryProfileActivity.this), exec), ((double) seekbarProfileThreshold.getProgress()) / 100);
+                        exec.start();
                         mApi.addSemanticFilter(spatialFilter);
                     }
                 } else {
                     if (spatialFilter != null) {
                         LocationProfile locProfile = spatialFilter.getLocationProfile();
                         if (locProfile instanceof PolygonLocationProfile) {
-                            ((PolygonLocationProfile) locProfile).stopProfilingService();
+                            ((PolygonLocationProfile) locProfile).getSharkBasicExecutor().stop();
                         }
                         mApi.removeSemanticFilter(spatialFilter);
                     }

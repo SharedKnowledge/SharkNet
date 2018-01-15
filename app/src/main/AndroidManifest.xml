@@ -159,7 +159,7 @@
         </activity>
 
         <service android:name="net.sharksystem.api.service.SharkService" />
-        <service android:name=".locationprofile.service.LocationProfilingService" />
+        <service android:name=".service.LocationProfilingService" />
 
         <activity
             android:name=".chat.ChatAnnotationTimeActivity"

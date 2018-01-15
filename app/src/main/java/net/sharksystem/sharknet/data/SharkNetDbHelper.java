@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.knowledgeBase.geom.PointGeometry;
+import net.sharkfw.knowledgeBase.geom.SharkPoint;
 import net.sharkfw.knowledgeBase.geom.inmemory.InMemoSharkGeometry;
 import net.sharksystem.sharknet.data.dao.LocationProfileSchema;
 
@@ -31,20 +31,20 @@ public class SharkNetDbHelper {
     private SharkNetDbHelper() {
     }
 
-    public long savePointGeometryToDB(Context context, PointGeometry pointGeometry) {
+    public long saveSharkPointToDB(Context context, SharkPoint sharkPoint) {
         SQLiteDatabase database = new SharkNetSQLiteOpenHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(LocationProfileSchema.COLUMN_WKT, pointGeometry.getWKT());
+        values.put(LocationProfileSchema.COLUMN_WKT, sharkPoint.getWKT());
 
         return database.insert(LocationProfileSchema.TABLE_NAME, null, values);
     }
 
-    public long saveAllPointGeometryToDB(Context context, List<PointGeometry> pointGeometryList) {
+    public long saveAllSharkPointToDB(Context context, List<SharkPoint> sharkPointList) {
         SQLiteDatabase database = new SharkNetSQLiteOpenHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        for (PointGeometry pointGeometry : pointGeometryList) {
+        for (SharkPoint pointGeometry : sharkPointList) {
             values.put(LocationProfileSchema.COLUMN_WKT, pointGeometry.getWKT());
         }
 
@@ -52,8 +52,8 @@ public class SharkNetDbHelper {
         return database.insert(LocationProfileSchema.TABLE_NAME, null, values);
     }
 
-    public List<PointGeometry> readPointGeometryFromDB(Context context) {
-        List<PointGeometry> pointGeometryList = new ArrayList<>();
+    public List<SharkPoint> readSharkPointFromDB(Context context) {
+        List<SharkPoint> pointGeometryList = new ArrayList<>();
         SQLiteDatabase database = new SharkNetSQLiteOpenHelper(context).getReadableDatabase();
 
         String[] projection = {
@@ -73,7 +73,7 @@ public class SharkNetDbHelper {
 
         while(cursor.moveToNext()) {
             try {
-                pointGeometryList.add(new PointGeometry(InMemoSharkGeometry.createGeomByWKT(cursor.getString(0))));
+                pointGeometryList.add(new SharkPoint(InMemoSharkGeometry.createGeomByWKT(cursor.getString(0))));
             } catch (SharkKBException e) {
                 e.printStackTrace();
             }

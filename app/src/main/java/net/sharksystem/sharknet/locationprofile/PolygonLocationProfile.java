@@ -1,27 +1,16 @@
 package net.sharksystem.sharknet.locationprofile;
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.util.Log;
+import android.util.Pair;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
-import net.sharkfw.knowledgeBase.geom.PointGeometry;
+import net.sharkfw.knowledgeBase.geom.SharkPoint;
 import net.sharkfw.knowledgeBase.spatial.LocationProfile;
 import net.sharkfw.knowledgeBase.spatial.SpatialInformation;
-import net.sharksystem.sharknet.data.SharkNetDbHelper;
-import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
 import net.sharksystem.sharknet.locationprofile.data.SpatialInformationImpl;
-import net.sharksystem.sharknet.locationprofile.service.LocationProfilingService;
+import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
 import net.sharksystem.sharknet.locationprofile.util.GeoUtils;
-import net.sharksystem.sharknet.locationprofile.util.LocationUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -32,45 +21,25 @@ import java.util.List;
 
 public class PolygonLocationProfile implements LocationProfile {
     private static final double POLYGONSIZE = 100;
-    private Context mContext;
-    private List<PointGeometry> pointGeometries;
-    private Intent profilingService;
+    private LastLocation lastLocation;
+    private PolygonDataProvider polygonDataProvider;
+    private SharkBasicExecutor sharkBasicExecutor;
 
-    public PolygonLocationProfile(Context mContext) {
-        this.mContext = mContext;
+    public PolygonLocationProfile(PolygonDataProvider polygonDataProvider, LastLocation lastLocation) {
+        this.lastLocation = lastLocation;
+        this.polygonDataProvider = polygonDataProvider;
     }
 
-    public PolygonLocationProfile(Context mContext, Class<?> profilingServiceClass) {
-        this.mContext = mContext;
-        startProfilingService(profilingServiceClass);
-    }
-
-    public void startProfilingService(Class<?> profilingServiceClass) {
-        profilingService = new Intent(mContext, profilingServiceClass);
-        mContext.startService(profilingService);
-    }
-
-    public void stopProfilingService() {
-        mContext.stopService(profilingService);
-        profilingService = null;
+    public PolygonLocationProfile(PolygonDataProvider polygonDataProvider, LastLocation lastLocation, SharkBasicExecutor sharkBasicExecutor) {
+        this.lastLocation = lastLocation;
+        this.polygonDataProvider = polygonDataProvider;
+        this.sharkBasicExecutor = sharkBasicExecutor;
     }
 
     @Override
-    public SpatialInformation calculateSpatialInformationFromProfile(PointGeometry pointGeometry) {
-        loadLocationsFromDatabase();
-
-        final PointGeometry[] lastLocation = {null};
-        LocationUtil.getInstance().getLastLocation(mContext, new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                Location location = task.getResult();
-                lastLocation[0] = new PointGeometry(location.getLatitude(),location.getLongitude());
-            }
-        });
-
-        while(lastLocation[0] == null) {
-            SystemClock.sleep(100);
-        }
+    public SpatialInformation createSpatialInformationFromProfile(SharkPoint sharkPoint) {
+        List<SharkPoint> sharkPoints = polygonDataProvider.getPolygonData();
+        SharkPoint lastLocationPoint = lastLocation.getLastLocation();
 
         List<PolygonLocation> polygonListProfile = new ArrayList<>();
 
@@ -83,8 +52,8 @@ public class PolygonLocationProfile implements LocationProfile {
         PolygonLocation entrance = null;
         PolygonLocation exit = null;
         for (PolygonLocation polygon : polygonListProfile) {
-            double d_p = polygon.distanceTo(pointGeometry);
-            double d_s = polygon.distanceTo(lastLocation[0]);
+            double d_p = polygon.distanceTo(sharkPoint);
+            double d_s = polygon.distanceTo(lastLocationPoint);
 
             if (destinationToProfile == -1 || d_p < destinationToProfile) {
                 destinationToProfile = d_p;
@@ -101,25 +70,13 @@ public class PolygonLocationProfile implements LocationProfile {
         return new SpatialInformationImpl(sourceToProfile, entrenceToExit, destinationToProfile, entrance!=null?entrance.getWeight():1, exit!=null?exit.getWeight():1);
     }
 
-    private void loadLocationsFromDatabase(){
-        pointGeometries = SharkNetDbHelper.getInstance().readPointGeometryFromDB(mContext);
-    }
+    public static PolygonLocation createConvexPolygon(List<SharkPoint> pointList) {
+        Pair<List<SharkPoint>, List<SharkPoint>> polyPoints = createPolygonWithJarvisMarchAlgorithm(pointList);
 
-    public static PolygonLocation createPolygonProfile(List<PointGeometry> pointList) {
-        List<PointGeometry> polyPoints = createPolygonWithJarvisMarchAlgorithm(pointList);
-
-        pointList.removeAll(polyPoints);
-        PolygonLocation polygon = new PolygonLocation(polyPoints);
-
-        if (polygon.getCorners().size() > 2) {
-            Iterator<PointGeometry> iter = pointList.iterator();
-            while (iter.hasNext()) {
-                if (polygon.isPointInside(iter.next())) {
-                    //iter.remove();
-                    polygon.setWeight(polygon.getWeight()+1);
-                }
-            }
-        }
+        pointList.removeAll(polyPoints.first);
+        pointList.removeAll(polyPoints.second);
+        PolygonLocation polygon = new PolygonLocation(polyPoints.first);
+        polygon.setWeight(polyPoints.first.size() + polyPoints.second.size());
 
         return polygon;
     }
@@ -130,10 +87,12 @@ public class PolygonLocationProfile implements LocationProfile {
      * @param pointList
      * @return
      */
-    public static List<PointGeometry> createPolygonWithJarvisMarchAlgorithm(List<PointGeometry> pointList){
-        List<PointGeometry> polygonPointList = new ArrayList<>();
-        PointGeometry startPoint = pointList.get(0);
-        for (PointGeometry nextPoint : pointList) {
+    private static Pair<List<SharkPoint>, List<SharkPoint>> createPolygonWithJarvisMarchAlgorithm(List<SharkPoint> pointList){
+        List<SharkPoint> polygonPointList = new ArrayList<>();
+        List<SharkPoint> insidePoints = new ArrayList<>();
+
+        SharkPoint startPoint = pointList.get(0);
+        for (SharkPoint nextPoint : pointList) {
             if (nextPoint != startPoint) {
                 if (nextPoint.getY() < startPoint.getY()) {
                     startPoint = nextPoint;
@@ -142,9 +101,9 @@ public class PolygonLocationProfile implements LocationProfile {
         }
         polygonPointList.add(startPoint);
 
-        PointGeometry currentPoint = startPoint;
-        PointGeometry selectedNext = null;
-        for (PointGeometry nextPoint : pointList) {
+        SharkPoint currentPoint = startPoint;
+        SharkPoint selectedNext = null;
+        for (SharkPoint nextPoint : pointList) {
             if (nextPoint != startPoint) {
                 double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
 
@@ -159,8 +118,8 @@ public class PolygonLocationProfile implements LocationProfile {
             boolean check = true;
             do {
                 double currentGamma = 0;
-                PointGeometry addToPoint = null;
-                for (PointGeometry nextPoint : pointList) {
+                SharkPoint addToPoint = null;
+                for (SharkPoint nextPoint : pointList) {
                     if (nextPoint != currentPoint && nextPoint != selectedNext) {
                         // Seitenkosinussatz
                         double a = Math.toRadians(GeoUtils.distanceBetween(currentPoint.getY(), currentPoint.getX(), selectedNext.getY(), selectedNext.getX()));
@@ -173,6 +132,8 @@ public class PolygonLocationProfile implements LocationProfile {
                         if (gamma > currentGamma && gamma < 180 && distanceToStart < POLYGONSIZE) {
                             currentGamma = gamma;
                             addToPoint = nextPoint;
+                        } else if(distanceToStart < POLYGONSIZE) {
+                            insidePoints.add(nextPoint);
                         }
                     }
                 }
@@ -190,10 +151,18 @@ public class PolygonLocationProfile implements LocationProfile {
             } while (check);
 
         }
-        return polygonPointList;
+        return new Pair<>(polygonPointList,insidePoints);
     }
 
     private static double calcCosinusGamma(double a, double b, double c){
         return Math.toDegrees(Math.acos((Math.cos(c) - (Math.cos(a) * Math.cos(b))) / (Math.sin(a) * Math.sin(b))));
+    }
+
+    public SharkBasicExecutor getSharkBasicExecutor() {
+        return sharkBasicExecutor;
+    }
+
+    public void setSharkBasicExecutor(SharkBasicExecutor sharkBasicExecutor) {
+        this.sharkBasicExecutor = sharkBasicExecutor;
     }
 }
