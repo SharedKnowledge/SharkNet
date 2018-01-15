@@ -1,6 +1,6 @@
 package net.sharksystem.sharknet.locationprofile.geometry;
 
-import net.sharkfw.knowledgeBase.geom.PointGeometry;
+import net.sharkfw.knowledgeBase.geom.SharkPoint;
 
 /**
  * Created by Max on 13.01.18.
@@ -9,5 +9,5 @@ import net.sharkfw.knowledgeBase.geom.PointGeometry;
  */
 
 public interface ProfileGeometry {
-    double distanceTo(PointGeometry location);
+    double distanceTo(SharkPoint location);
 }
