@@ -2,6 +2,7 @@ package net.sharksystem.sharknet.chat;
 
 
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -19,7 +20,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
 
-import net.sharkfw.knowledgeBase.geom.PointGeometry;
+import net.sharkfw.knowledgeBase.geom.SharkPoint;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
@@ -89,19 +90,25 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
     }
 
     private void drawLocationProfileGraph(GoogleMap googleMap) {
-        List<PointGeometry> points = SharkNetDbHelper.getInstance().readPointGeometryFromDB(this);
+        List<SharkPoint> points = SharkNetDbHelper.getInstance().readSharkPointFromDB(this);
 
-        PolygonLocation poly = PolygonLocationProfile.createConvexPolygon(points);
-
-        List<LatLng> polygon = new ArrayList<>();
-        for (PointGeometry point : poly.getCorners()){
-            polygon.add(new LatLng(point.getX(),point.getY()));
+        List<PolygonLocation> profile = new ArrayList<>();
+        while (points.size() > 0) {
+            profile.add(PolygonLocationProfile.createConvexPolygon(points));
         }
 
-        googleMap.addPolygon(new PolygonOptions().addAll(polygon));
-
-        for (PointGeometry point : points) {
-            googleMap.addCircle(new CircleOptions().center(new LatLng(point.getX(),point.getY())).radius(2));
+        for (PolygonLocation poly : profile) {
+            if (poly.getCorners().size() > 1) {
+                List<LatLng> polygon = new ArrayList<>();
+                for (SharkPoint point : poly.getCorners()) {
+                    polygon.add(new LatLng(point.getX(), point.getY()));
+                }
+                googleMap.addPolygon(new PolygonOptions().addAll(polygon).fillColor(ContextCompat.getColor(this,R.color.black_50p)));
+            } else {
+                for (SharkPoint point : poly.getCorners()) {
+                    googleMap.addCircle(new CircleOptions().center(new LatLng(point.getX(),point.getY())).radius(2));
+                }
+            }
         }
     }
 
@@ -161,8 +168,8 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
 //            l.setLatitude(myPos.latitude);
 //
 //            profile.getPosibilityToReachLocation(l);
-            PolygonLocationProfile prof = new PolygonLocationProfile(ChatAnnotationLocationActivity.this);
-            prof.calculateSpatialInformationFromProfile(new PointGeometry(myPos.longitude, myPos.latitude));
+            //PolygonLocationProfile prof = new PolygonLocationProfile();
+            //prof.createSpatialInformationFromProfile(new SharkPoint(myPos.longitude, myPos.latitude));
         }
     }
 }

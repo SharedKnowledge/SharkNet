@@ -1,10 +1,10 @@
 package net.sharksystem.sharknet.locationprofile;
 
-import android.content.Intent;
+import android.util.Log;
 import android.util.Pair;
 
 import net.sharkfw.knowledgeBase.geom.SharkPoint;
-import net.sharkfw.knowledgeBase.spatial.LocationProfile;
+import net.sharkfw.knowledgeBase.spatial.SharkLocationProfile;
 import net.sharkfw.knowledgeBase.spatial.SpatialInformation;
 import net.sharksystem.sharknet.locationprofile.data.SpatialInformationImpl;
 import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author Max Oehme (546545)
  */
 
-public class PolygonLocationProfile implements LocationProfile {
+public class PolygonLocationProfile implements SharkLocationProfile {
     private static final double POLYGONSIZE = 100;
     private LastLocation lastLocation;
     private PolygonDataProvider polygonDataProvider;
@@ -43,9 +43,9 @@ public class PolygonLocationProfile implements LocationProfile {
 
         List<PolygonLocation> polygonListProfile = new ArrayList<>();
 
-
-
-        // TODO Remove Points within too!!
+        while (sharkPoints.size() > 0) {
+            polygonListProfile.add(createConvexPolygon(sharkPoints));
+        }
 
         double sourceToProfile = -1;
         double destinationToProfile = -1;
@@ -103,12 +103,15 @@ public class PolygonLocationProfile implements LocationProfile {
 
         SharkPoint currentPoint = startPoint;
         SharkPoint selectedNext = null;
-        for (SharkPoint nextPoint : pointList) {
-            if (nextPoint != startPoint) {
-                double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
+        if (pointList.size() > 1) {
+            selectedNext = pointList.get(1);
+            for (SharkPoint nextPoint : pointList) {
+                if (nextPoint != startPoint) {
+                    double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
 
-                if (distanceToStart < POLYGONSIZE) {
-                    selectedNext = nextPoint;
+                    if (distanceToStart < POLYGONSIZE && nextPoint.getY() < selectedNext.getY() && nextPoint.getX() > selectedNext.getX()) {
+                        selectedNext = nextPoint;
+                    }
                 }
             }
         }
@@ -117,7 +120,7 @@ public class PolygonLocationProfile implements LocationProfile {
             polygonPointList.add(selectedNext);
             boolean check = true;
             do {
-                double currentGamma = 0;
+                double currentGamma = -1;
                 SharkPoint addToPoint = null;
                 for (SharkPoint nextPoint : pointList) {
                     if (nextPoint != currentPoint && nextPoint != selectedNext) {
@@ -128,28 +131,45 @@ public class PolygonLocationProfile implements LocationProfile {
 
                         double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
 
-                        double gamma = calcCosinusGamma(a, b, c);
+                        double gamma = a == 0 || b == 0 ? 0 : calcCosinusGamma(a, b, c);
                         if (gamma > currentGamma && gamma < 180 && distanceToStart < POLYGONSIZE) {
                             currentGamma = gamma;
                             addToPoint = nextPoint;
-                        } else if(distanceToStart < POLYGONSIZE) {
-                            insidePoints.add(nextPoint);
+                        } else if (distanceToStart < POLYGONSIZE) {
+                            if (!insidePoints.contains(nextPoint)) {
+                                insidePoints.add(nextPoint);
+                            }
                         }
                     }
                 }
 
-                if (startPoint == addToPoint) {
+                if (startPoint == addToPoint || addToPoint == null) {
                     check = false;
                 }
 
                 if (check) {
-                    polygonPointList.add(addToPoint);
+                    boolean addTo = true;
+                    for (int i=0;i<polygonPointList.size() && addTo;i++) {
+                        if (addToPoint.getX() == polygonPointList.get(i).getX() && addToPoint.getY() == polygonPointList.get(i).getY()){
+                            insidePoints.add(addToPoint);
+                            addTo = false;
+                        }
+                    }
+                    if (addTo) polygonPointList.add(addToPoint);
 
                     currentPoint = selectedNext;
                     selectedNext = addToPoint;
+                    if (insidePoints.contains(addToPoint)) {
+                        insidePoints.remove(addToPoint);
+                    }
                 }
             } while (check);
-
+        }
+        if (polygonPointList.size() == 2) {
+            if (polygonPointList.get(0).getX() == polygonPointList.get(1).getX() && polygonPointList.get(0).getY() == polygonPointList.get(1).getY()){
+                insidePoints.add(polygonPointList.get(1));
+            }
+            polygonPointList.remove(1);
         }
         return new Pair<>(polygonPointList,insidePoints);
     }

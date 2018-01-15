@@ -73,49 +73,4 @@ public class PolygonLocation implements ProfileGeometry{
         }
         return distance;
     }
-
-    public boolean isPointInside(SharkPoint pQ) {
-        boolean isInside = true;
-
-        return false;
-        /*int t = -1;
-        for (int i=0; i<corners.size();i++) {
-            t = t * kreuzProdukt(point, corners.get(i), corners.get(i % (corners.size() - 1)));
-            if (t == 0) {
-                i = corners.size();
-            }
-        }
-        return t == 1;*/
-    }
-
-    // TODO Eventuell fehlerhaft
-    private int kreuzProdukt(SharkPoint point, SharkPoint cornerA, SharkPoint cornerB) {
-        SharkPoint a = point, b = cornerA, c = cornerB;
-        if (a.getY() == b.getY() && b.getY() == c.getY()) {
-            if ((b.getX() <= a.getX() && a.getX() <= c.getX()) || (c.getX() <= a.getX() && a.getX() <= b.getX())) {
-                return 0;
-            } else {
-                return 1;
-            }
-        }
-        if (a.getY() == b.getY() && a.getX() == b.getX()) {
-            return 0;
-        }
-        if (b.getY() > c.getY()) {
-            SharkPoint tmp = b;
-            b = c;
-            c = tmp;
-        }
-        if (a.getY() <= b.getY() || a.getY() > c.getY()) {
-            return 1;
-        }
-        double delta = (b.getX()-a.getX()) * (c.getY()-a.getY()) - (b.getY()-a.getY()) * (c.getX()-a.getX());
-        if (delta > 0) {
-            return -1;
-        } else if (delta < 0) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
 }

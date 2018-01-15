@@ -29,7 +29,7 @@ import net.sharkfw.knowledgeBase.broadcast.SemanticFilter;
 import net.sharkfw.knowledgeBase.broadcast.SpatialFilter;
 import net.sharkfw.knowledgeBase.inmemory.InMemoInterest;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSTSet;
-import net.sharkfw.knowledgeBase.spatial.LocationProfile;
+import net.sharkfw.knowledgeBase.spatial.SharkLocationProfile;
 import net.sharksystem.api.models.Profile;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
@@ -177,7 +177,7 @@ public class EntryProfileActivity extends BaseActivity {
                     }
                 } else {
                     if (spatialFilter != null) {
-                        LocationProfile locProfile = spatialFilter.getLocationProfile();
+                        SharkLocationProfile locProfile = spatialFilter.getSharkLocationProfile();
                         if (locProfile instanceof PolygonLocationProfile) {
                             ((PolygonLocationProfile) locProfile).getSharkBasicExecutor().stop();
                         }
