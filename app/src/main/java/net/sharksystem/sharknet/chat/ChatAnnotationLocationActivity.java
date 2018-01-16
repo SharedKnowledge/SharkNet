@@ -69,7 +69,7 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
         mMap.setOnCameraMoveListener(this);
         mMap.getUiSettings().setCompassEnabled(false);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.529820, 13.465224), 11));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.586317, 13.410414), 17));
 
         requestLocationPermission();
         updateLocationUI();
@@ -112,6 +112,12 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
                 }
             }
         }
+
+
+        /*List<SharkPoint> points2 = SharkNetDbHelper.getInstance().readSharkPointFromDB(this);
+        for (SharkPoint point : points2) {
+            googleMap.addCircle(new CircleOptions().center(new LatLng(point.getX(),point.getY())).radius(1));
+        }*/
     }
 
     private void requestLocationPermission() {

@@ -1,6 +1,5 @@
 package net.sharksystem.sharknet.locationprofile;
 
-import android.location.Location;
 import android.util.Pair;
 
 import net.sharkfw.knowledgeBase.geom.SharkPoint;
@@ -21,7 +20,7 @@ import java.util.List;
  */
 
 public class PolygonLocationProfile implements SharkLocationProfile {
-    private static final double POLYGONSIZE = 100;
+    private static final double POLYGONSIZE = 300;
     private LastLocation lastLocation;
     private PolygonDataProvider polygonDataProvider;
     private SharkBasicExecutor sharkBasicExecutor;
@@ -106,15 +105,21 @@ public class PolygonLocationProfile implements SharkLocationProfile {
         SharkPoint selectedNext = null;
         if (pointList.size() > 1) {
             selectedNext = pointList.get(1);
+            double currentAlpha = 0;
             Iterator<SharkPoint> iter = pointList.iterator();
             while (iter.hasNext()) {
                 SharkPoint nextPoint = iter.next();
                 if (nextPoint != startPoint) {
                     double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
+                    double a = GeoUtils.distanceBetween(startPoint.getY(), (startPoint.getX()-0.001), nextPoint.getY(), nextPoint.getX());
+                    double c = GeoUtils.distanceBetween(startPoint.getY(), (startPoint.getX()-0.001), startPoint.getY(), startPoint.getX());
+
+                    double alpha = GeoUtils.calcAngleFromEdgesSphere(a, distanceToStart, c);
 
                     if (distanceToStart != 0) {
-                        if (distanceToStart < POLYGONSIZE && nextPoint.getY() < selectedNext.getY() && nextPoint.getX() > selectedNext.getX()) {
+                        if (distanceToStart < POLYGONSIZE && alpha > currentAlpha && alpha < 180.0) {
                             selectedNext = nextPoint;
+                            currentAlpha = alpha;
                         }
                     } else {
                         insidePoints.add(nextPoint);
@@ -140,14 +145,17 @@ public class PolygonLocationProfile implements SharkLocationProfile {
                             double b = GeoUtils.distanceBetween(selectedNext.getY(), selectedNext.getX(), nextPoint.getY(), nextPoint.getX());
                             double c = GeoUtils.distanceBetween(nextPoint.getY(), nextPoint.getX(), currentPoint.getY(), currentPoint.getX());
 
-                            double gamma = GeoUtils.calcAngleFromEdgesSphere(c, a, b, 6371000);
+                            double gamma = GeoUtils.calcAngleFromEdgesSphere(c, a, b);
+                            if (startPoint == nextPoint) {
+                                startPoint = nextPoint;
+                            }
                             if (gamma > currentGamma && gamma < 180.0) {
-                                if (addToPoint != null && !insidePoints.contains(nextPoint)) {
-                                    insidePoints.add(nextPoint);
+                                if (addToPoint != null && !insidePoints.contains(addToPoint)) {
+                                    insidePoints.add(addToPoint);
                                 }
                                 currentGamma = gamma;
                                 addToPoint = nextPoint;
-                            } else if (gamma <= currentGamma && gamma < 180) {
+                            } else if (gamma <= currentGamma && gamma < 180 && nextPoint != startPoint) {
                                 if (!insidePoints.contains(nextPoint)) {
                                     insidePoints.add(nextPoint);
                                 }
@@ -156,30 +164,20 @@ public class PolygonLocationProfile implements SharkLocationProfile {
                     }
                 }
 
-                if (startPoint == addToPoint || addToPoint == null) {
+                if (startPoint == addToPoint || addToPoint == null || polygonPointList.contains(addToPoint)) {
                     check = false;
                 }
 
                 if (check) {
-                    boolean addTo = true;
-                    for (int i=0;i<polygonPointList.size() && addTo;i++) {
-                        if (addToPoint.getX() == polygonPointList.get(i).getX() && addToPoint.getY() == polygonPointList.get(i).getY()){
-                            insidePoints.add(addToPoint);
-                            addTo = false;
-                        }
-                    }
-                    if (addTo) polygonPointList.add(addToPoint);
+                    polygonPointList.add(addToPoint);
 
                     currentPoint = selectedNext;
                     selectedNext = addToPoint;
-                    if (insidePoints.contains(addToPoint)) {
-                        insidePoints.remove(addToPoint);
-                    }
                 }
             } while (check);
         }
         if (polygonPointList.size() == 2) {
-            if (polygonPointList.get(0).getX() == polygonPointList.get(1).getX() && polygonPointList.get(0).getY() == polygonPointList.get(1).getY()){
+            if (polygonPointList.get(0).equals(polygonPointList.get(1))){
                 insidePoints.add(polygonPointList.get(1));
             }
             polygonPointList.remove(1);
