@@ -7,8 +7,10 @@ package net.sharksystem.sharknet.locationprofile.util;
  */
 
 public class GeoUtils {
+    public static final double EARTHRADIUS = 6371000;
+
     public static double distanceBetween(double lng1, double lat1, double lng2, double lat2) {
-        double r = 6371; // Earth radius in meters
+        //double r = 6371; // Earth radius in meters
         double dLong = Math.toRadians(lng2 - lng1);
         double dLat = Math.toRadians(lat2 - lat1);
 
@@ -17,7 +19,7 @@ public class GeoUtils {
                         Math.sin(dLong/2) * Math.sin(dLong/2);
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        return r * c * 1000;
+        return c * EARTHRADIUS;
     }
 
 
@@ -27,10 +29,10 @@ public class GeoUtils {
      * @param c Rechts Anliegende Seite zum Winkel
      * @return Winkel in Grad
      */
-    public static double calcAngleFromEdgesSphere(double a, double b, double c, double sphereRadius){
-        double a2 = Math.toRadians(a/sphereRadius);
-        double b2 = Math.toRadians(b/sphereRadius);
-        double c2 = Math.toRadians(c/sphereRadius);
+    public static double calcAngleFromEdgesSphere(double a, double b, double c){
+        double a2 = Math.toRadians(a/EARTHRADIUS);
+        double b2 = Math.toRadians(b/EARTHRADIUS);
+        double c2 = Math.toRadians(c/EARTHRADIUS);
         return Math.toDegrees(Math.acos((Math.cos(a2) - (Math.cos(b2) * Math.cos(c2))) / (Math.sin(b2) * Math.sin(c2))));
     }
 
@@ -53,5 +55,11 @@ public class GeoUtils {
      */
     public static double calcAngleFromEdgesPlane(double a, double b, double c){
         return Math.toDegrees(Math.acos((Math.pow(b,2) + Math.pow(c,2) - Math.pow(a,2))/(2*b*c)));
+    }
+
+    public static double calcAngleInRightAngled(double a, double c) {
+        double a2 = Math.toRadians(a/EARTHRADIUS);
+        double c2 = Math.toRadians(c/EARTHRADIUS);
+        return Math.toDegrees(Math.asin(Math.sin(a2) / Math.sin(c2)));
     }
 }

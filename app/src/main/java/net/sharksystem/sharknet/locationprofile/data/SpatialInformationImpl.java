@@ -68,4 +68,15 @@ public class SpatialInformationImpl implements SpatialInformation {
     public void setProfileExitPointWeight(int weightExit) {
         this.weightExit = weightExit;
     }
+
+    @Override
+    public String toString() {
+        return "SpatialInformationImpl{" +
+                "sourceToProfile=" + sourceToProfile +
+                ", entrenceToExit=" + entrenceToExit +
+                ", destinationToProfile=" + destinationToProfile +
+                ", weightEntrance=" + weightEntrance +
+                ", weightExit=" + weightExit +
+                '}';
+    }
 }
