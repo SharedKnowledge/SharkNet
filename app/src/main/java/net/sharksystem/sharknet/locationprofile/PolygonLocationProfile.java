@@ -1,6 +1,6 @@
 package net.sharksystem.sharknet.locationprofile;
 
-import android.util.Log;
+import android.location.Location;
 import android.util.Pair;
 
 import net.sharkfw.knowledgeBase.geom.SharkPoint;
@@ -11,6 +11,7 @@ import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
 import net.sharksystem.sharknet.locationprofile.util.GeoUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -105,12 +106,19 @@ public class PolygonLocationProfile implements SharkLocationProfile {
         SharkPoint selectedNext = null;
         if (pointList.size() > 1) {
             selectedNext = pointList.get(1);
-            for (SharkPoint nextPoint : pointList) {
+            Iterator<SharkPoint> iter = pointList.iterator();
+            while (iter.hasNext()) {
+                SharkPoint nextPoint = iter.next();
                 if (nextPoint != startPoint) {
                     double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
 
-                    if (distanceToStart < POLYGONSIZE && nextPoint.getY() < selectedNext.getY() && nextPoint.getX() > selectedNext.getX()) {
-                        selectedNext = nextPoint;
+                    if (distanceToStart != 0) {
+                        if (distanceToStart < POLYGONSIZE && nextPoint.getY() < selectedNext.getY() && nextPoint.getX() > selectedNext.getX()) {
+                            selectedNext = nextPoint;
+                        }
+                    } else {
+                        insidePoints.add(nextPoint);
+                        iter.remove();
                     }
                 }
             }
@@ -124,20 +132,25 @@ public class PolygonLocationProfile implements SharkLocationProfile {
                 SharkPoint addToPoint = null;
                 for (SharkPoint nextPoint : pointList) {
                     if (nextPoint != currentPoint && nextPoint != selectedNext) {
-                        // Seitenkosinussatz
-                        double a = Math.toRadians(GeoUtils.distanceBetween(currentPoint.getY(), currentPoint.getX(), selectedNext.getY(), selectedNext.getX()));
-                        double b = Math.toRadians(GeoUtils.distanceBetween(selectedNext.getY(), selectedNext.getX(), nextPoint.getY(), nextPoint.getX()));
-                        double c = Math.toRadians(GeoUtils.distanceBetween(nextPoint.getY(), nextPoint.getX(), currentPoint.getY(), currentPoint.getX()));
-
                         double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
 
-                        double gamma = a == 0 || b == 0 ? 0 : calcCosinusGamma(a, b, c);
-                        if (gamma > currentGamma && gamma < 180 && distanceToStart < POLYGONSIZE) {
-                            currentGamma = gamma;
-                            addToPoint = nextPoint;
-                        } else if (distanceToStart < POLYGONSIZE) {
-                            if (!insidePoints.contains(nextPoint)) {
-                                insidePoints.add(nextPoint);
+                        if (distanceToStart < POLYGONSIZE) {
+                            // Seitenkosinussatz
+                            double a = GeoUtils.distanceBetween(currentPoint.getY(), currentPoint.getX(), selectedNext.getY(), selectedNext.getX());
+                            double b = GeoUtils.distanceBetween(selectedNext.getY(), selectedNext.getX(), nextPoint.getY(), nextPoint.getX());
+                            double c = GeoUtils.distanceBetween(nextPoint.getY(), nextPoint.getX(), currentPoint.getY(), currentPoint.getX());
+
+                            double gamma = GeoUtils.calcAngleFromEdgesSphere(c, a, b, 6371000);
+                            if (gamma > currentGamma && gamma < 180.0) {
+                                if (addToPoint != null && !insidePoints.contains(nextPoint)) {
+                                    insidePoints.add(nextPoint);
+                                }
+                                currentGamma = gamma;
+                                addToPoint = nextPoint;
+                            } else if (gamma <= currentGamma && gamma < 180) {
+                                if (!insidePoints.contains(nextPoint)) {
+                                    insidePoints.add(nextPoint);
+                                }
                             }
                         }
                     }
@@ -172,10 +185,6 @@ public class PolygonLocationProfile implements SharkLocationProfile {
             polygonPointList.remove(1);
         }
         return new Pair<>(polygonPointList,insidePoints);
-    }
-
-    private static double calcCosinusGamma(double a, double b, double c){
-        return Math.toDegrees(Math.acos((Math.cos(c) - (Math.cos(a) * Math.cos(b))) / (Math.sin(a) * Math.sin(b))));
     }
 
     public SharkBasicExecutor getSharkBasicExecutor() {

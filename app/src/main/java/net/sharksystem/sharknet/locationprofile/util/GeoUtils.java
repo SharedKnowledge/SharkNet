@@ -27,7 +27,31 @@ public class GeoUtils {
      * @param c Rechts Anliegende Seite zum Winkel
      * @return Winkel in Grad
      */
-    public static double calcAngleFromEdges(double a, double b, double c){
-        return Math.toDegrees(Math.acos((Math.cos(a) - (Math.cos(b) * Math.cos(c))) / (Math.sin(b) * Math.sin(c))));
+    public static double calcAngleFromEdgesSphere(double a, double b, double c, double sphereRadius){
+        double a2 = Math.toRadians(a/sphereRadius);
+        double b2 = Math.toRadians(b/sphereRadius);
+        double c2 = Math.toRadians(c/sphereRadius);
+        return Math.toDegrees(Math.acos((Math.cos(a2) - (Math.cos(b2) * Math.cos(c2))) / (Math.sin(b2) * Math.sin(c2))));
+    }
+
+    /**
+     * @param a Gegenueberliegende Seite zum Winkel
+     * @param b Links Anliegende Seite zum Winkel
+     * @param c Rechts Anliegende Seite zum Winkel
+     * @return Winkel in Grad
+     */
+    public static double calcAngleFromEdgesSphereHalfAngle(double a, double b, double c, double sphereRadius){
+        double s = (a + b + c) / 2.0;
+        return Math.toDegrees(Math.asin(Math.sqrt((Math.sin(s - b) * Math.sin(s-c))/(Math.sin(b) * Math.sin(c)))) * 2.0);
+    }
+
+    /**
+     * @param a Gegenueberliegende Seite zum Winkel
+     * @param b Links Anliegende Seite zum Winkel
+     * @param c Rechts Anliegende Seite zum Winkel
+     * @return Winkel in Grad
+     */
+    public static double calcAngleFromEdgesPlane(double a, double b, double c){
+        return Math.toDegrees(Math.acos((Math.pow(b,2) + Math.pow(c,2) - Math.pow(a,2))/(2*b*c)));
     }
 }
