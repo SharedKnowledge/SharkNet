@@ -104,6 +104,8 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
                     polygon.add(new LatLng(point.getX(), point.getY()));
                 }
                 googleMap.addPolygon(new PolygonOptions().addAll(polygon).fillColor(ContextCompat.getColor(this,R.color.black_50p)));
+                googleMap.addCircle(new CircleOptions().center(new LatLng(poly.getCorners().get(0).getX(),poly.getCorners().get(0).getY())).radius(2).strokeColor(Color.RED));
+                googleMap.addCircle(new CircleOptions().center(new LatLng(poly.getCorners().get(1).getX(),poly.getCorners().get(1).getY())).radius(3).strokeColor(Color.BLUE));
             } else {
                 for (SharkPoint point : poly.getCorners()) {
                     googleMap.addCircle(new CircleOptions().center(new LatLng(point.getX(),point.getY())).radius(2));
@@ -158,16 +160,8 @@ public class ChatAnnotationLocationActivity extends BaseActivity implements OnMa
     class OnClickSaveButton implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-//            myLineList.add(mMap.getCameraPosition().target);
-//            myLine.setPoints(myLineList);
 
             LatLng myPos = mMap.getCameraPosition().target;
-//
-//            Location l = new Location("self");
-//            l.setLongitude(myPos.longitude);
-//            l.setLatitude(myPos.latitude);
-//
-//            profile.getPosibilityToReachLocation(l);
             //PolygonLocationProfile prof = new PolygonLocationProfile();
             //prof.createSpatialInformationFromProfile(new SharkPoint(myPos.longitude, myPos.latitude));
         }
