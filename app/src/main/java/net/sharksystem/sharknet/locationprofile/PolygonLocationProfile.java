@@ -101,10 +101,10 @@ public class PolygonLocationProfile implements SharkLocationProfile {
         }
         polygonPointList.add(startPoint);
 
-        SharkPoint currentPoint = startPoint;
-        SharkPoint selectedNext = null;
+        SharkPoint previousPoint = startPoint;
+        SharkPoint currentPoint = null;
         if (pointList.size() > 1) {
-            selectedNext = pointList.get(1);
+            currentPoint = pointList.get(1);
             double currentAlpha = 0;
             Iterator<SharkPoint> iter = pointList.iterator();
             while (iter.hasNext()) {
@@ -118,7 +118,7 @@ public class PolygonLocationProfile implements SharkLocationProfile {
 
                     if (distanceToStart != 0) {
                         if (distanceToStart < POLYGONSIZE && alpha > currentAlpha && alpha < 180.0) {
-                            selectedNext = nextPoint;
+                            currentPoint = nextPoint;
                             currentAlpha = alpha;
                         }
                     } else {
@@ -129,21 +129,21 @@ public class PolygonLocationProfile implements SharkLocationProfile {
             }
         }
 
-        if (selectedNext != null && pointList.size() > 2) {
-            polygonPointList.add(selectedNext);
+        if (currentPoint != null && pointList.size() > 2) {
+            polygonPointList.add(currentPoint);
             boolean check = true;
             do {
                 double currentGamma = -1;
                 SharkPoint addToPoint = null;
                 for (SharkPoint nextPoint : pointList) {
-                    if (nextPoint != currentPoint && nextPoint != selectedNext) {
+                    if (nextPoint != previousPoint && nextPoint != currentPoint) {
                         double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
 
                         if (distanceToStart < POLYGONSIZE) {
                             // Seitenkosinussatz
-                            double a = GeoUtils.distanceBetween(currentPoint.getY(), currentPoint.getX(), selectedNext.getY(), selectedNext.getX());
-                            double b = GeoUtils.distanceBetween(selectedNext.getY(), selectedNext.getX(), nextPoint.getY(), nextPoint.getX());
-                            double c = GeoUtils.distanceBetween(nextPoint.getY(), nextPoint.getX(), currentPoint.getY(), currentPoint.getX());
+                            double a = GeoUtils.distanceBetween(previousPoint.getY(), previousPoint.getX(), currentPoint.getY(), currentPoint.getX());
+                            double b = GeoUtils.distanceBetween(currentPoint.getY(), currentPoint.getX(), nextPoint.getY(), nextPoint.getX());
+                            double c = GeoUtils.distanceBetween(nextPoint.getY(), nextPoint.getX(), previousPoint.getY(), previousPoint.getX());
 
                             double gamma = GeoUtils.calcAngleFromEdgesSphere(c, a, b);
                             if (startPoint == nextPoint) {
@@ -171,8 +171,8 @@ public class PolygonLocationProfile implements SharkLocationProfile {
                 if (check) {
                     polygonPointList.add(addToPoint);
 
-                    currentPoint = selectedNext;
-                    selectedNext = addToPoint;
+                    previousPoint = currentPoint;
+                    currentPoint = addToPoint;
                 }
             } while (check);
         }
