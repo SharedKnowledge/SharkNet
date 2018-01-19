@@ -3,7 +3,7 @@ package net.sharksystem.sharknet.service;
 import android.content.Context;
 import android.content.Intent;
 
-import net.sharksystem.sharknet.locationprofile.SharkBasicExecutor;
+import net.sharksystem.sharknet.locationprofile.SharkServiceBinder;
 
 /**
  * Created by Max on 15.01.18.
@@ -11,7 +11,7 @@ import net.sharksystem.sharknet.locationprofile.SharkBasicExecutor;
  * @author Max Oehme (546545)
  */
 
-public class ServiceController implements SharkBasicExecutor {
+public class ServiceController implements SharkServiceBinder {
     private Intent service;
     private Context mContext;
 

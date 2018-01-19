@@ -37,7 +37,9 @@ public class SharkNetDbHelper {
         ContentValues values = new ContentValues();
         values.put(LocationProfileSchema.COLUMN_WKT, sharkPoint.getWKT());
 
-        return database.insert(LocationProfileSchema.TABLE_NAME, null, values);
+        long re = database.insert(LocationProfileSchema.TABLE_NAME, null, values);
+        database.close();
+        return re;
     }
 
     public long saveAllSharkPointToDB(Context context, List<SharkPoint> sharkPointList) {
@@ -49,7 +51,9 @@ public class SharkNetDbHelper {
         }
 
         Log.i(TAG, "Writing PointGeometries to DB");
-        return database.insert(LocationProfileSchema.TABLE_NAME, null, values);
+        long re = database.insert(LocationProfileSchema.TABLE_NAME, null, values);
+        database.close();
+        return re;
     }
 
     public List<SharkPoint> readSharkPointFromDB(Context context) {
@@ -79,6 +83,7 @@ public class SharkNetDbHelper {
             }
         }
 
+        database.close();
         return pointGeometryList;
     }
 }

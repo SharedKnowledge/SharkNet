@@ -14,10 +14,10 @@ import java.util.List;
  * @author Max Oehme (546545)
  */
 
-public class SharkNetDbPolygonDataProvider implements PolygonDataProvider {
+public class SQLPolygonDataProvider implements PolygonDataProvider {
     private Context mContext;
 
-    public SharkNetDbPolygonDataProvider(Context context) {
+    public SQLPolygonDataProvider(Context context) {
         this.mContext = context;
     }
 
