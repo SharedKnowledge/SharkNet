@@ -29,15 +29,15 @@ import net.sharkfw.knowledgeBase.broadcast.SemanticFilter;
 import net.sharkfw.knowledgeBase.broadcast.SpatialFilter;
 import net.sharkfw.knowledgeBase.inmemory.InMemoInterest;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSTSet;
-import net.sharkfw.knowledgeBase.spatial.SharkLocationProfile;
+import net.sharkfw.knowledgeBase.spatial.ISharkLocationProfile;
 import net.sharksystem.api.models.Profile;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
-import net.sharksystem.sharknet.data.dataprovider.SharkNetDbPolygonDataProvider;
+import net.sharksystem.sharknet.data.dataprovider.SQLPolygonDataProvider;
 import net.sharksystem.sharknet.location.LastLocationImpl;
 import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
-import net.sharksystem.sharknet.locationprofile.SharkBasicExecutor;
+import net.sharksystem.sharknet.locationprofile.SharkServiceBinder;
 import net.sharksystem.sharknet.service.LocationProfilingService;
 import net.sharksystem.sharknet.service.ServiceController;
 
@@ -170,16 +170,16 @@ public class EntryProfileActivity extends BaseActivity {
 
                 if (isNotDelete) {
                     if (spatialFilter == null) {
-                        SharkBasicExecutor exec = new ServiceController(EntryProfileActivity.this, LocationProfilingService.class);
-                        spatialFilter = new SpatialFilter(Dimension.SPATIAL, new PolygonLocationProfile(new SharkNetDbPolygonDataProvider(EntryProfileActivity.this), new LastLocationImpl(EntryProfileActivity.this), exec), ((double) seekbarProfileThreshold.getProgress()) / 100);
+                        SharkServiceBinder exec = new ServiceController(EntryProfileActivity.this, LocationProfilingService.class);
+                        spatialFilter = new SpatialFilter(Dimension.SPATIAL, new PolygonLocationProfile(new SQLPolygonDataProvider(EntryProfileActivity.this), new LastLocationImpl(EntryProfileActivity.this), exec), ((double) seekbarProfileThreshold.getProgress()) / 100);
                         exec.start();
                         mApi.addSemanticFilter(spatialFilter);
                     }
                 } else {
                     if (spatialFilter != null) {
-                        SharkLocationProfile locProfile = spatialFilter.getSharkLocationProfile();
+                        ISharkLocationProfile locProfile = spatialFilter.getSharkLocationProfile();
                         if (locProfile instanceof PolygonLocationProfile) {
-                            ((PolygonLocationProfile) locProfile).getSharkBasicExecutor().stop();
+                            ((PolygonLocationProfile) locProfile).getSharkServiceBinder().stop();
                         }
                         mApi.removeSemanticFilter(spatialFilter);
                     }

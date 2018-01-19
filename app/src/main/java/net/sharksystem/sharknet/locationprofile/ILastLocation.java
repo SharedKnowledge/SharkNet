@@ -8,6 +8,6 @@ import net.sharkfw.knowledgeBase.geom.SharkPoint;
  * @author Max Oehme (546545)
  */
 
-public interface LastLocation {
+public interface ILastLocation {
     SharkPoint getLastLocation();
 }

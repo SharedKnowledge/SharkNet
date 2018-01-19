@@ -3,8 +3,8 @@ package net.sharksystem.sharknet.locationprofile;
 import android.util.Pair;
 
 import net.sharkfw.knowledgeBase.geom.SharkPoint;
-import net.sharkfw.knowledgeBase.spatial.SharkLocationProfile;
-import net.sharkfw.knowledgeBase.spatial.SpatialInformation;
+import net.sharkfw.knowledgeBase.spatial.ISharkLocationProfile;
+import net.sharkfw.knowledgeBase.spatial.ISpatialInformation;
 import net.sharksystem.sharknet.locationprofile.data.SpatialInformationImpl;
 import net.sharksystem.sharknet.locationprofile.geometry.PolygonLocation;
 import net.sharksystem.sharknet.locationprofile.util.GeoUtils;
@@ -19,25 +19,25 @@ import java.util.List;
  * @author Max Oehme (546545)
  */
 
-public class PolygonLocationProfile implements SharkLocationProfile {
+public class PolygonLocationProfile implements ISharkLocationProfile {
     private static final double POLYGONSIZE = 300;
-    private LastLocation lastLocation;
+    private ILastLocation lastLocation;
     private PolygonDataProvider polygonDataProvider;
-    private SharkBasicExecutor sharkBasicExecutor;
+    private SharkServiceBinder sharkServiceBinder;
 
-    public PolygonLocationProfile(PolygonDataProvider polygonDataProvider, LastLocation lastLocation) {
+    public PolygonLocationProfile(PolygonDataProvider polygonDataProvider, ILastLocation lastLocation) {
         this.lastLocation = lastLocation;
         this.polygonDataProvider = polygonDataProvider;
     }
 
-    public PolygonLocationProfile(PolygonDataProvider polygonDataProvider, LastLocation lastLocation, SharkBasicExecutor sharkBasicExecutor) {
+    public PolygonLocationProfile(PolygonDataProvider polygonDataProvider, ILastLocation lastLocation, SharkServiceBinder sharkServiceBinder) {
         this.lastLocation = lastLocation;
         this.polygonDataProvider = polygonDataProvider;
-        this.sharkBasicExecutor = sharkBasicExecutor;
+        this.sharkServiceBinder = sharkServiceBinder;
     }
 
     @Override
-    public SpatialInformation createSpatialInformationFromProfile(SharkPoint sharkPoint) {
+    public ISpatialInformation createSpatialInformationFromProfile(SharkPoint sharkPoint) {
         List<SharkPoint> sharkPoints = polygonDataProvider.getPolygonData();
         SharkPoint lastLocationPoint = lastLocation.getLastLocation();
 
@@ -185,11 +185,11 @@ public class PolygonLocationProfile implements SharkLocationProfile {
         return new Pair<>(polygonPointList,insidePoints);
     }
 
-    public SharkBasicExecutor getSharkBasicExecutor() {
-        return sharkBasicExecutor;
+    public SharkServiceBinder getSharkServiceBinder() {
+        return sharkServiceBinder;
     }
 
-    public void setSharkBasicExecutor(SharkBasicExecutor sharkBasicExecutor) {
-        this.sharkBasicExecutor = sharkBasicExecutor;
+    public void setSharkServiceBinder(SharkServiceBinder sharkServiceBinder) {
+        this.sharkServiceBinder = sharkServiceBinder;
     }
 }

@@ -6,7 +6,7 @@ package net.sharksystem.sharknet.locationprofile;
  * @author Max Oehme (546545)
  */
 
-public interface SharkBasicExecutor {
+public interface SharkServiceBinder {
     void start();
     void stop();
 }

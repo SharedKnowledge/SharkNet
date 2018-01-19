@@ -14,7 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import net.sharkfw.knowledgeBase.geom.SharkPoint;
-import net.sharksystem.sharknet.locationprofile.LastLocation;
+import net.sharksystem.sharknet.locationprofile.ILastLocation;
 
 /**
  * Created by Max on 15.01.18.
@@ -22,7 +22,7 @@ import net.sharksystem.sharknet.locationprofile.LastLocation;
  * @author Max Oehme (546545)
  */
 
-public class LastLocationImpl implements LastLocation {
+public class LastLocationImpl implements ILastLocation {
     private Context mContext;
     private SharkPoint location = null;
 

@@ -1,6 +1,6 @@
 package net.sharksystem.sharknet.locationprofile.data;
 
-import net.sharkfw.knowledgeBase.spatial.SpatialInformation;
+import net.sharkfw.knowledgeBase.spatial.ISpatialInformation;
 
 /**
  * Created by Max on 13.01.18.
@@ -8,7 +8,7 @@ import net.sharkfw.knowledgeBase.spatial.SpatialInformation;
  * @author Max Oehme (546545)
  */
 
-public class SpatialInformationImpl implements SpatialInformation {
+public class SpatialInformationImpl implements ISpatialInformation {
 
     private double sourceToProfile;
     private double entrenceToExit;
