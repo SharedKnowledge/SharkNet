@@ -33,6 +33,7 @@ android {
 //        jackOptions {
 //            enabled true
 //        }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
@@ -68,4 +69,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:11.8.0'
     compile 'com.github.woxthebox:draglistview:1.5.1'
     compile 'com.google.android.gms:play-services-maps:11.8.0'
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support:support-annotations:27.0.2'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    androidTestCompile 'com.android.support.test:rules:1.0.1'
 }

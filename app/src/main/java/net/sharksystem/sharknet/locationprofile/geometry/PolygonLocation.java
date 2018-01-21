@@ -41,16 +41,16 @@ public class PolygonLocation implements ProfileGeometry{
             SharkPoint pointA = corners.get(i);
             SharkPoint pointB = corners.get(i % (corners.size()-1));
 
-            double a = Math.toRadians(GeoUtils.distanceBetween(pointB.getY(), pointB.getX(), location.getY(), location.getX()));
-            double b = Math.toRadians(GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), location.getY(), location.getX()));
-            double c = Math.toRadians(GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), pointB.getY(), pointB.getX()));
+            double a = GeoUtils.distanceBetween(pointB.getY(), pointB.getX(), location.getY(), location.getX());
+            double b = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), location.getY(), location.getX());
+            double c = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), pointB.getY(), pointB.getX());
 
-            double beta = Math.toDegrees(Math.acos((Math.cos(b) - Math.cos(a) * Math.cos(c)) /(Math.sin(a) * Math.sin(c))));
-            double alpha = Math.toDegrees(Math.acos((Math.cos(a) - Math.cos(b) * Math.cos(c)) /(Math.sin(b) * Math.sin(c))));
+            double beta = GeoUtils.calcAngleFromEdgesSphere(b, a, c);
+            double alpha = GeoUtils.calcAngleFromEdgesSphere(a,b,c);
 
             double currentDistance;
             if (alpha < 90 && beta < 90){
-                currentDistance = Math.asin(Math.sin(a) * Math.sin(Math.toRadians(beta)));
+                currentDistance = Math.asin(Math.sin(a / GeoUtils.EARTHRADIUS) * Math.sin(Math.toRadians(beta)));
             } else {
                 currentDistance = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), location.getY(), location.getX());
             }

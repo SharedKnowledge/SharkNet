@@ -22,23 +22,23 @@ import java.util.List;
 public class PolygonLocationProfile implements ISharkLocationProfile {
     private static final double POLYGONSIZE = 300;
     private ILastLocation lastLocation;
-    private PolygonDataProvider polygonDataProvider;
+    private IDataProvider dataProvider;
     private SharkServiceBinder sharkServiceBinder;
 
-    public PolygonLocationProfile(PolygonDataProvider polygonDataProvider, ILastLocation lastLocation) {
+    public PolygonLocationProfile(IDataProvider dataProvider, ILastLocation lastLocation) {
         this.lastLocation = lastLocation;
-        this.polygonDataProvider = polygonDataProvider;
+        this.dataProvider = dataProvider;
     }
 
-    public PolygonLocationProfile(PolygonDataProvider polygonDataProvider, ILastLocation lastLocation, SharkServiceBinder sharkServiceBinder) {
+    public PolygonLocationProfile(IDataProvider dataProvider, ILastLocation lastLocation, SharkServiceBinder sharkServiceBinder) {
         this.lastLocation = lastLocation;
-        this.polygonDataProvider = polygonDataProvider;
+        this.dataProvider = dataProvider;
         this.sharkServiceBinder = sharkServiceBinder;
     }
 
     @Override
     public ISpatialInformation createSpatialInformationFromProfile(SharkPoint sharkPoint) {
-        List<SharkPoint> sharkPoints = polygonDataProvider.getPolygonData();
+        List<SharkPoint> sharkPoints = dataProvider.getAllPointData();
         SharkPoint lastLocationPoint = lastLocation.getLastLocation();
 
         List<PolygonLocation> polygonListProfile = new ArrayList<>();
@@ -73,8 +73,8 @@ public class PolygonLocationProfile implements ISharkLocationProfile {
     public static PolygonLocation createConvexPolygon(List<SharkPoint> pointList) {
         Pair<List<SharkPoint>, List<SharkPoint>> polyPoints = createPolygonWithJarvisMarchAlgorithm(pointList);
 
-        pointList.removeAll(polyPoints.first);
-        pointList.removeAll(polyPoints.second);
+        pointList.removeAll(polyPoints.first); // Remove polygon corner points from original list
+        pointList.removeAll(polyPoints.second); // Remove points inside polygon from original list
         PolygonLocation polygon = new PolygonLocation(polyPoints.first);
         polygon.setWeight(polyPoints.first.size() + polyPoints.second.size());
 
@@ -139,12 +139,14 @@ public class PolygonLocationProfile implements ISharkLocationProfile {
                     if (nextPoint != previousPoint && nextPoint != currentPoint) {
                         double distanceToStart = GeoUtils.distanceBetween(startPoint.getY(), startPoint.getX(), nextPoint.getY(), nextPoint.getX());
 
+                        // Nur Berechnen wenn Punkt innerhalb der Reichweite
                         if (distanceToStart < POLYGONSIZE) {
-                            // Seitenkosinussatz
+                            // Seitenkosinussatz fuer Kugeldreiecke
                             double a = GeoUtils.distanceBetween(previousPoint.getY(), previousPoint.getX(), currentPoint.getY(), currentPoint.getX());
                             double b = GeoUtils.distanceBetween(currentPoint.getY(), currentPoint.getX(), nextPoint.getY(), nextPoint.getX());
                             double c = GeoUtils.distanceBetween(nextPoint.getY(), nextPoint.getX(), previousPoint.getY(), previousPoint.getX());
 
+                            // Mit Seitenkosinussatz den Winkel gegenueber der Seite C berechnen
                             double gamma = GeoUtils.calcAngleFromEdgesSphere(c, a, b);
                             if (startPoint == nextPoint) {
                                 startPoint = nextPoint;

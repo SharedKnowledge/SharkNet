@@ -1,5 +1,6 @@
 package net.sharksystem.sharknet.service;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 
@@ -15,7 +16,7 @@ public class ServiceController implements SharkServiceBinder {
     private Intent service;
     private Context mContext;
 
-    public ServiceController(Context context, Class<?> serviceClass) {
+    public ServiceController(Context context, Class<? extends Service> serviceClass) {
         this.mContext = context;
         this.service = new Intent(mContext, serviceClass);
     }

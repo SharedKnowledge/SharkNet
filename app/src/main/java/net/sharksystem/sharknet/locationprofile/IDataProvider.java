@@ -10,6 +10,8 @@ import java.util.List;
  * @author Max Oehme (546545)
  */
 
-public interface PolygonDataProvider {
-    List<SharkPoint> getPolygonData();
+public interface IDataProvider {
+    List<SharkPoint> getAllPointData();
+
+    void putAllData(List<SharkPoint> points);
 }

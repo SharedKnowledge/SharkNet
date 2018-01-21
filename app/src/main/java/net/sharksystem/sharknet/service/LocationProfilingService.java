@@ -20,7 +20,9 @@ import com.google.android.gms.tasks.Task;
 
 import net.sharkfw.knowledgeBase.geom.SharkPoint;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
+import net.sharksystem.sharknet.data.dataprovider.SQLPolygonDataProvider;
 import net.sharksystem.sharknet.location.LastLocationImpl;
+import net.sharksystem.sharknet.locationprofile.IDataProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class LocationProfilingService extends Service {
     private static final String TAG = "LOCATIONSERVICE";
 
     private List<SharkPoint> sharkPointList = new ArrayList<>();
+    private IDataProvider dataProvider = new SQLPolygonDataProvider(this);
 
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
@@ -40,7 +43,7 @@ public class LocationProfilingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e(TAG, "Create");
+        Log.d(TAG, "Create");
 
         mRunnable = new RecordLocationThread(this);
         mHandler.post(mRunnable);
@@ -48,7 +51,7 @@ public class LocationProfilingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e(TAG, "Start");
+        Log.d(TAG, "Start");
 
         Notification notification = new Notification.Builder(this)
                 .setContentTitle("SharkNet")
@@ -61,7 +64,7 @@ public class LocationProfilingService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e(TAG, "END");
+        Log.d(TAG, "END");
     }
 
     @Override
@@ -107,7 +110,7 @@ public class LocationProfilingService extends Service {
                         mmHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                SharkNetDbHelper.getInstance().saveAllSharkPointToDB(mmContext, tmpList);
+                                dataProvider.putAllData(tmpList);
                             }
                         });
                     }

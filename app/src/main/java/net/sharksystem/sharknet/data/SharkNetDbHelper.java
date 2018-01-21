@@ -66,13 +66,13 @@ public class SharkNetDbHelper {
         Log.i(TAG, "Reading PointGeometries from DB");
 
         Cursor cursor = database.query(
-                LocationProfileSchema.TABLE_NAME,     // The table to query
-                projection,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                LocationProfileSchema.COLUMN_TIMESTAMP + " desc"                                      // don't sort
+                LocationProfileSchema.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                LocationProfileSchema.COLUMN_TIMESTAMP + " desc"
         );
 
         while(cursor.moveToNext()) {

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import net.sharkfw.knowledgeBase.geom.SharkPoint;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
-import net.sharksystem.sharknet.locationprofile.PolygonDataProvider;
+import net.sharksystem.sharknet.locationprofile.IDataProvider;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Max Oehme (546545)
  */
 
-public class SQLPolygonDataProvider implements PolygonDataProvider {
+public class SQLPolygonDataProvider implements IDataProvider {
     private Context mContext;
 
     public SQLPolygonDataProvider(Context context) {
@@ -22,7 +22,12 @@ public class SQLPolygonDataProvider implements PolygonDataProvider {
     }
 
     @Override
-    public List<SharkPoint> getPolygonData() {
+    public List<SharkPoint> getAllPointData() {
         return SharkNetDbHelper.getInstance().readSharkPointFromDB(mContext);
+    }
+
+    @Override
+    public void putAllData(List<SharkPoint> points) {
+        SharkNetDbHelper.getInstance().saveAllSharkPointToDB(mContext, points);
     }
 }
