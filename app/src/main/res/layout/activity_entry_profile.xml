@@ -27,7 +27,29 @@
         android:layout_height="wrap_content"
         android:hint="Topic SI"
         android:gravity="center"
-        android:inputType="text" />
+        android:inputType="text"
+        android:visibility="gone"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/imageButtonTopic"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_perm_media_white_48dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
+                android:text="Topic" />
+        </LinearLayout>
     <EditText
         android:id="@+id/peer"
         android:layout_width="match_parent"

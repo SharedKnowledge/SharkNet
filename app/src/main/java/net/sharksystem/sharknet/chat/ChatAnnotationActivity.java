@@ -94,7 +94,9 @@ public class ChatAnnotationActivity extends BaseActivity {
         vf = (ViewFlipper) findViewById(R.id.chat_annotation_viewflipper);
         textSI = (EditText) findViewById(R.id.annotation_si);
         textName = (EditText) findViewById(R.id.annotation_name);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().hide();
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             textSI.setText(extra.getString(BroadcastActivity.EXTRA_MESSAGE));

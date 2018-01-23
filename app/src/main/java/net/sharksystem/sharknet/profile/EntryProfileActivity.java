@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -34,6 +35,7 @@ import net.sharksystem.api.models.Profile;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
+import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
 import net.sharksystem.sharknet.data.dataprovider.SQLPolygonDataProvider;
 import net.sharksystem.sharknet.location.LastLocationImpl;
 import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
@@ -70,6 +72,15 @@ public class EntryProfileActivity extends BaseActivity {
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final ImageButton topicButton = (ImageButton) findViewById(R.id.imageButtonTopic);
+        topicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
 
         final View dialogView = View.inflate(EntryProfileActivity.this, R.layout.date_time_picker, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(EntryProfileActivity.this).create();
