@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
 
@@ -40,6 +41,7 @@ public class ChatAnnotationActivity extends BaseActivity {
     private EditText textSI;
     private EditText textName;
     private ListView list;
+    private ViewFlipper vf;
     private List<String> name = new ArrayList<String>();
     private List<String> si = new ArrayList<String>();
     private SharedPreferences mPrefs;
@@ -88,7 +90,8 @@ public class ChatAnnotationActivity extends BaseActivity {
             name=obj.name;
             si=obj.si;
         }
-        setLayoutResource(R.layout.chat_annotation_activity);
+        setLayoutResource(R.layout.chat_annotation_viewflipper);
+        vf = (ViewFlipper) findViewById(R.id.chat_annotation_viewflipper);
         textSI = (EditText) findViewById(R.id.annotation_si);
         textName = (EditText) findViewById(R.id.annotation_name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -105,7 +108,9 @@ public class ChatAnnotationActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
+                vf.setDisplayedChild(1);
+                TextView specTitle = (TextView) findViewById(R.id.chat_annotation_specific_title);
+                specTitle.setText("Si:" + si.get(position) + ", Name:" + name.get(position));
             }
         });
         list.setLongClickable(true);

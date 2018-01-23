@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:id="@+id/chat_annotation_viewflipper">
+    <include android:id="@+id/chat_annotation_activity" layout="@layout/chat_annotation_activity"></include>
+    <include android:id="@+id/chat_annotation_relation_activity" layout="@layout/chat_annotation_relation_activity"></include>
+</ViewFlipper>
