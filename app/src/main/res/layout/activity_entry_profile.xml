@@ -38,9 +38,9 @@
             android:gravity="center">
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/imageButtonTopic"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:scaleType="center"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_perm_media_white_48dp" />
             <TextView
                 android:layout_width="match_parent"
@@ -133,13 +133,15 @@
         android:gravity="center"
         android:layout_centerInParent="true" />
 
-    <ImageButton
-        android:id="@+id/imageButtonSave"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:background="@drawable/ic_save_black_48dp" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/imageButtonSave"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_save_white_24dp" />
+
 
 
 </LinearLayout>
