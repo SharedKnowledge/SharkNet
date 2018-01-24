@@ -202,7 +202,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
             }
         });
 
-        final ImageButton peerButton = (ImageButton) findViewById(R.id.imageButtonPeer);
+        final ImageButton peerButton = (ImageButton) findViewById(R.id.imageButtonSender);
         peerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

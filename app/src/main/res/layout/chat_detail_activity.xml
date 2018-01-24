@@ -35,9 +35,10 @@
                 android:gravity="center">
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/imageButtonTopic"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:scaleType="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="fitCenter"
+                    app:fabSize="mini"
                     app:srcCompat="@drawable/ic_perm_media_white_48dp" />
                 <TextView
                     android:layout_width="match_parent"
@@ -45,6 +46,7 @@
                     android:gravity="center"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
+                    android:textSize="5pt"
                     android:text="Topic" />
             </LinearLayout>
             <LinearLayout
@@ -54,19 +56,90 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:gravity="center">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/imageButtonType"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="fitCenter"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_contact_mail_white_48dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="5pt"
+                    android:text="Type" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/imageButtonApprover"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="fitCenter"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_mood_white_48dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="5pt"
+                    android:text="Approver" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/imageButtonReceiver"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="fitCenter"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_flight_land_white_48dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="5pt"
+                    android:text="Receiver" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center">
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/imageButtonPeer"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:scaleType="center"
-                app:srcCompat="@drawable/ic_person_white_48dp" />
+                android:id="@+id/imageButtonSender"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_flight_takeoff_white_48dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="Peer" />
+                android:textSize="5pt"
+                android:text="Sender" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -77,9 +150,10 @@
                 android:gravity="center">
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/imageButtonTime"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:scaleType="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                app:fabSize="mini"
                 app:srcCompat="@drawable/ic_timer_white_48dp" />
             <TextView
                 android:layout_width="match_parent"
@@ -87,6 +161,7 @@
                 android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:textSize="5pt"
                 android:text="Time" />
             </LinearLayout>
             <LinearLayout
@@ -98,9 +173,10 @@
                 android:gravity="center">
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/imageButtonLocation"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:scaleType="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                app:fabSize="mini"
                 app:srcCompat="@drawable/ic_location_on_white_48dp" />
             <TextView
                 android:layout_width="match_parent"
@@ -108,6 +184,7 @@
                 android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:textSize="5pt"
                 android:text="Location" />
             </LinearLayout>
             <!-- Other 2 icons here-->
