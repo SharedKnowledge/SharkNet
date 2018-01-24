@@ -109,12 +109,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
     }
 
     private void configureLayout() {
-        if (android.os.Build.VERSION.SDK_INT > 20) {
-            setLayoutResource(R.layout.chat_detail_activity);
-        }
-        else {
-            setLayoutResource(R.layout.chat_detail_activity_compat);
-        }
+        setLayoutResource(R.layout.chat_detail_activity);
         setOptionsMenu(R.menu.chat_detail_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mRecyclerView = (RecyclerView) findViewById(R.id.chat_msg_recycler_view);
