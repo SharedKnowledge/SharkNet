@@ -79,6 +79,7 @@ public class EntryProfileActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
                 startActivityForResult(intent, 1);
             }
         });

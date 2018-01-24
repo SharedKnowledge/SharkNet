@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -162,6 +164,11 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
                         Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers from "+ BluetoothStreamStub.staticLocalAddress,Toast.LENGTH_LONG).show();
+                        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                        prefsEditor.remove("ChatAnnotationList");
+                        prefsEditor.commit();
+
                     }
                 }
             }
@@ -187,9 +194,10 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
-                if (!TextUtils.isEmpty(topicSI)) {
-                    intent.putExtra(EXTRA_MESSAGE, topicSI);
-                }
+                intent.putExtra("purpose",1);
+//                if (!TextUtils.isEmpty(topicSI)) {
+//                    intent.putExtra(EXTRA_MESSAGE, topicSI);
+//                }
                 startActivityForResult(intent, 1);
             }
         });

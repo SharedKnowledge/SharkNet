@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class ChatAnnotationActivity extends BaseActivity {
     private List<String> si = new ArrayList<String>();
     private Map<String, HashMap<String, String>> relations = new HashMap<String, HashMap<String, String>>();
     private SharedPreferences mPrefs;
+    private int purpose = -1;
 
     public class ChatAnnotationObject {
         public List<String> name = new ArrayList<String>();
@@ -126,9 +128,15 @@ public class ChatAnnotationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        mPrefs  = getPreferences(MODE_PRIVATE);
+        mPrefs  = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
-        String json = mPrefs.getString("ChatAnnotationList", "");
+        Bundle extra = getIntent().getExtras();
+        if (extra != null) {
+            purpose=extra.getInt("purpose");
+        }
+        String json = "";
+        if (purpose==0) json = mPrefs.getString("EntryProfileTopics", "");
+        else if (purpose==1) json = mPrefs.getString("ChatAnnotationList", "");
         if (!json.equals("")) {
             ChatAnnotationObject obj = gson.fromJson(json, ChatAnnotationObject.class);
             name=obj.name;
@@ -142,10 +150,10 @@ public class ChatAnnotationActivity extends BaseActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().hide();
-        Bundle extra = getIntent().getExtras();
-        if (extra != null) {
-            textSI.setText(extra.getString(BroadcastActivity.EXTRA_MESSAGE));
-        }
+//        Bundle extra = getIntent().getExtras();
+//        if (extra != null) {
+//            textSI.setText(extra.getString(BroadcastActivity.EXTRA_MESSAGE));
+//        }
         final CustomList adapter = new
                 CustomList(this, name, si);
         list=(ListView)findViewById(R.id.annotation_list);
@@ -195,7 +203,8 @@ public class ChatAnnotationActivity extends BaseActivity {
                         cao.name=name;
                         cao.relations=relations;
                         String json = gson.toJson(cao);
-                        prefsEditor.putString("ChatAnnotationList", json);
+                        if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
+                        else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
                         prefsEditor.commit();
                         relationadapter.notifyDataSetChanged();
                         Toast.makeText(ChatAnnotationActivity.this, "Entry deleted",
@@ -222,7 +231,8 @@ public class ChatAnnotationActivity extends BaseActivity {
                             cao.name=name;
                             cao.relations=relations;
                             String json = gson.toJson(cao);
-                            prefsEditor.putString("ChatAnnotationList", json);
+                            if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
+                            else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
                             prefsEditor.commit();
                             System.out.println("_________ " + textSI.getText() + " ___________BBBB");
                             //finish();
@@ -249,7 +259,8 @@ public class ChatAnnotationActivity extends BaseActivity {
                 cao.name=name;
                 cao.relations=relations;
                 String json = gson.toJson(cao);
-                prefsEditor.putString("ChatAnnotationList", json);
+                if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
+                else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
                 prefsEditor.commit();
                 adapter.notifyDataSetChanged();
                 Toast.makeText(ChatAnnotationActivity.this, "Entry deleted",
@@ -276,7 +287,8 @@ public class ChatAnnotationActivity extends BaseActivity {
                     cao.name=name;
                     cao.relations=relations;
                     String json = gson.toJson(cao);
-                    prefsEditor.putString("ChatAnnotationList", json);
+                    if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
+                    else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
                     prefsEditor.commit();
                     returnIntent.putExtra("result", textSI.getText().toString());
                     setResult(Activity.RESULT_OK, returnIntent);
