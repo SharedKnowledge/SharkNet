@@ -133,6 +133,7 @@ public class ChatAnnotationActivity extends BaseActivity {
             ChatAnnotationObject obj = gson.fromJson(json, ChatAnnotationObject.class);
             name=obj.name;
             si=obj.si;
+            relations=obj.relations;
         }
         setLayoutResource(R.layout.chat_annotation_viewflipper);
         vf = (ViewFlipper) findViewById(R.id.chat_annotation_viewflipper);
@@ -153,14 +154,17 @@ public class ChatAnnotationActivity extends BaseActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+                                    final int position, long id) {
                 vf.setDisplayedChild(1);
+                final int[] chosennumber=new int[1];
+                chosennumber[0] = -1;
                 TextView specTitle = (TextView) findViewById(R.id.chat_annotation_specific_title);
                 specTitle.setText("Si:" + si.get(position) + ", Name:" + name.get(position));
                 List<String> relationnames = new ArrayList<String>(name);
                 relationnames.remove(position);
-                List<String> relationsis = new ArrayList<String>(si);
+                final List<String> relationsis = new ArrayList<String>(si);
                 relationsis.remove(position);
+                final EditText relationname = (EditText) findViewById(R.id.relation_name);
                 final List<String> relationnamesfinal = relationnames;
                 final List<String> relationsisfinal = relationsis;
                 final CustomRelationList relationadapter = new
@@ -172,9 +176,63 @@ public class ChatAnnotationActivity extends BaseActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int relationposition, long id) {
+                        chosennumber[0]=relationposition;
                         ((TextView) findViewById(R.id.object_title)).setText("Si:" + relationsisfinal.get(relationposition) + ", Name:" + relationnamesfinal.get(relationposition));
                     }});
+                relationlist.setLongClickable(true);
+                relationlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                                   int pos, long id) {
+                        if (relations.get(si.get(position))==null) {
+                            relations.put(si.get(position),new HashMap<String, String>());
+                        }
+                        relations.get(si.get(position)).remove(relationsis.get(pos));
+                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                        Gson gson = new Gson();
+                        ChatAnnotationObject cao = new ChatAnnotationObject();
+                        cao.si=si;
+                        cao.name=name;
+                        cao.relations=relations;
+                        String json = gson.toJson(cao);
+                        prefsEditor.putString("ChatAnnotationList", json);
+                        prefsEditor.commit();
+                        relationadapter.notifyDataSetChanged();
+                        Toast.makeText(ChatAnnotationActivity.this, "Entry deleted",
+                                Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                });
+                final FloatingActionButton relationSaveButton = (FloatingActionButton) findViewById(R.id.imageButtonRelationSave);
+                relationSaveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!TextUtils.isEmpty(relationname.getText().toString())&&chosennumber[0]!=-1) {
+                            InputMethodManager inputManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                            if (relations.get(si.get(position))==null) {
+                                relations.put(si.get(position),new HashMap<String, String>());
+                            }
+                            relations.get(si.get(position)).put(relationsis.get(chosennumber[0]),relationname.getText().toString());
+                            relationadapter.notifyDataSetChanged();
+                            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                            Gson gson = new Gson();
+                            ChatAnnotationObject cao = new ChatAnnotationObject();
+                            cao.si=si;
+                            cao.name=name;
+                            cao.relations=relations;
+                            String json = gson.toJson(cao);
+                            prefsEditor.putString("ChatAnnotationList", json);
+                            prefsEditor.commit();
+                            System.out.println("_________ " + textSI.getText() + " ___________BBBB");
+                            //finish();
+                        }
+                        else {
+                            vf.setDisplayedChild(0);
+                        }
 
+                    }
+                });
             }
         });
         list.setLongClickable(true);
@@ -189,6 +247,7 @@ public class ChatAnnotationActivity extends BaseActivity {
                 ChatAnnotationObject cao = new ChatAnnotationObject();
                 cao.si=si;
                 cao.name=name;
+                cao.relations=relations;
                 String json = gson.toJson(cao);
                 prefsEditor.putString("ChatAnnotationList", json);
                 prefsEditor.commit();

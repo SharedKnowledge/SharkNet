@@ -101,7 +101,7 @@
         android:id="@+id/relation_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imageButtonSave"
+        android:layout_above="@+id/imageButtonRelationSave"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:gravity="center"
@@ -109,7 +109,7 @@
         android:inputType="text" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/imageButtonSave"
+        android:id="@+id/imageButtonRelationSave"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
