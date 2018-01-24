@@ -147,6 +147,6 @@
     <!-- Entry Profile -->
     <string name="entryprof_enablelocationprof">Enable Location Profiling</string>
 
-
+    <string name="google_maps_key">XXXX</string>
 
 </resources>
