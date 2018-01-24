@@ -29,7 +29,9 @@ import net.sharksystem.sharknet.SharkApp;
 import net.sharksystem.sharknet.broadcast.BroadcastActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Dustin Feurich on 28.09.2017.
@@ -41,14 +43,17 @@ public class ChatAnnotationActivity extends BaseActivity {
     private EditText textSI;
     private EditText textName;
     private ListView list;
+    private ListView relationlist;
     private ViewFlipper vf;
     private List<String> name = new ArrayList<String>();
     private List<String> si = new ArrayList<String>();
+    private Map<String, HashMap<String, String>> relations = new HashMap<String, HashMap<String, String>>();
     private SharedPreferences mPrefs;
 
     public class ChatAnnotationObject {
         public List<String> name = new ArrayList<String>();
         public List<String> si = new ArrayList<String>();
+        public Map<String, HashMap<String, String>> relations = new HashMap<String, HashMap<String, String>>();
     }
 
     public class CustomList extends ArrayAdapter<String> {
@@ -74,6 +79,45 @@ public class ChatAnnotationActivity extends BaseActivity {
             txtName.setText(name.get(position));
 
             txtSi.setText(si.get(position));
+            return rowView;
+        }
+    }
+
+    public class CustomRelationList extends ArrayAdapter<String> {
+
+        private final Activity context;
+        private final List<String> name;
+        private final List<String> si;
+        private final String semanticobject;
+
+
+        public CustomRelationList(Activity context,
+                          List<String> name, List<String> si, String semanticobject) {
+            super(context, R.layout.single_chat_annotation_relation, si);
+            this.context = context;
+            this.name = name;
+            this.si = si;
+            this.semanticobject = semanticobject;
+
+        }
+        @Override
+        public View getView(int position, View view, ViewGroup parent) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView= inflater.inflate(R.layout.single_chat_annotation_relation, null, true);
+            TextView txtName = (TextView) rowView.findViewById(R.id.SingleChatAnnotationName);
+
+            TextView txtSi = (TextView) rowView.findViewById(R.id.SingleChatAnnotationSubjectIdentifier);
+
+            TextView txtRelation = (TextView) rowView.findViewById(R.id.SingleChatAnnotationRelation);
+            txtName.setText(name.get(position));
+
+            txtSi.setText(si.get(position));
+            String relation = "";
+            try {
+                relation = relations.get(semanticobject).get(si.get(position));
+            } catch (Exception e) {
+            }
+            txtRelation.setText(relation);
             return rowView;
         }
     }
@@ -113,6 +157,24 @@ public class ChatAnnotationActivity extends BaseActivity {
                 vf.setDisplayedChild(1);
                 TextView specTitle = (TextView) findViewById(R.id.chat_annotation_specific_title);
                 specTitle.setText("Si:" + si.get(position) + ", Name:" + name.get(position));
+                List<String> relationnames = new ArrayList<String>(name);
+                relationnames.remove(position);
+                List<String> relationsis = new ArrayList<String>(si);
+                relationsis.remove(position);
+                final List<String> relationnamesfinal = relationnames;
+                final List<String> relationsisfinal = relationsis;
+                final CustomRelationList relationadapter = new
+                        CustomRelationList(ChatAnnotationActivity.this, relationnames, relationsis, si.get(position));
+                relationlist=(ListView)findViewById(R.id.annotation_connection_list);
+                relationlist.setAdapter(relationadapter);
+                relationlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int relationposition, long id) {
+                        ((TextView) findViewById(R.id.object_title)).setText("Si:" + relationsisfinal.get(relationposition) + ", Name:" + relationnamesfinal.get(relationposition));
+                    }});
+
             }
         });
         list.setLongClickable(true);
@@ -153,6 +215,7 @@ public class ChatAnnotationActivity extends BaseActivity {
                     ChatAnnotationObject cao = new ChatAnnotationObject();
                     cao.si=si;
                     cao.name=name;
+                    cao.relations=relations;
                     String json = gson.toJson(cao);
                     prefsEditor.putString("ChatAnnotationList", json);
                     prefsEditor.commit();
