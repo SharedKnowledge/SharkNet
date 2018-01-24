@@ -35,6 +35,7 @@ import net.sharksystem.api.models.Profile;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
+import net.sharksystem.sharknet.broadcast.BroadcastActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
 import net.sharksystem.sharknet.data.dataprovider.SQLPolygonDataProvider;
 import net.sharksystem.sharknet.location.LastLocationImpl;
@@ -207,7 +208,8 @@ public class EntryProfileActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-
+        Intent intent = new Intent(getApplicationContext(), BroadcastActivity.class);
+        startActivity(intent);
     }
 
     private SpatialFilter spatialFilter;
