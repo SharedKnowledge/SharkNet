@@ -19,8 +19,10 @@ import net.sharkfw.asip.engine.serializer.SharkProtocolNotSupportedException;
 import net.sharkfw.system.L;
 import net.sharksystem.api.dao_interfaces.SharkNetApi;
 import net.sharksystem.api.models.Contact;
+import net.sharksystem.api.models.Profile;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.broadcast.BroadcastActivity;
 import net.sharksystem.sharknet.chat.ChatActivity;
 import net.sharksystem.sharknet.dummy.Dummy;
 import net.sharksystem.sharknet.radar.RadarActivity;
@@ -219,6 +221,17 @@ public class MainActivity extends BaseActivity implements StartupFragment.Startu
         }
         mApi.startRadar();
         mApi.setNotificationResultActivity(new Intent(MainActivity.this, ChatActivity.class));
-        startActivity(new Intent(MainActivity.this, ChatActivity.class));
+        //startActivity(new Intent(MainActivity.this, ChatActivity.class));
+        Profile profile = mApi.getProfile(null);
+        if (profile.getActiveEntryInterest() != null) {
+            System.out.println("________________Entry Profile in Manager_____________");
+            mApi.getSharkEngine().getBroadcastManager().setActiveEntryProfile(profile.getActiveEntryInterest());
+        }
+        if (profile.getActiveOutInterest() != null) {
+            mApi.getSharkEngine().getBroadcastManager().setActiveOutProfile(profile.getActiveOutInterest());
+        }
+        getSharkApp().setBroadcast(mApi.getBroadcast());
+        Intent intent = new Intent(this, BroadcastActivity.class);
+        startActivity(intent);
     }
 }
