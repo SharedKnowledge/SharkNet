@@ -88,7 +88,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
 
-        android:text="@string/main_new_profile_next_fragment"
+        android:text="@string/main_new_profile_finish"
         android:textColor="@color/grey_200"
         mApp:layout_constraintBottom_toBottomOf="parent"
         mApp:layout_constraintRight_toRightOf="parent"/>
