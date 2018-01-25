@@ -18,7 +18,7 @@
         android:textSize="32sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/active_entry_profile" />
 
     <EditText
@@ -38,8 +38,9 @@
             android:gravity="center">
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/imageButtonTopic"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:fabSize="mini"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_perm_media_white_48dp" />
             <TextView
@@ -49,6 +50,28 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="5dp"
                 android:text="Topic" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/imageButtonType"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:fabSize="mini"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_contact_mail_white_48dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
+                android:text="Type" />
         </LinearLayout>
     <EditText
         android:id="@+id/peer"

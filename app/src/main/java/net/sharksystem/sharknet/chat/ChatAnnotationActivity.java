@@ -43,18 +43,22 @@ public class ChatAnnotationActivity extends BaseActivity {
     private SharkApp application;
     private EditText textSI;
     private EditText textName;
+    private EditText textAddress;
     private ListView list;
     private ListView relationlist;
     private ViewFlipper vf;
     private List<String> name = new ArrayList<String>();
     private List<String> si = new ArrayList<String>();
+    private List<String> address = new ArrayList<String>();
     private Map<String, HashMap<String, String>> relations = new HashMap<String, HashMap<String, String>>();
     private SharedPreferences mPrefs;
     private int purpose = -1;
+    private String type = "";
 
     public class ChatAnnotationObject {
         public List<String> name = new ArrayList<String>();
         public List<String> si = new ArrayList<String>();
+        public List<String> address = new ArrayList<String>();
         public Map<String, HashMap<String, String>> relations = new HashMap<String, HashMap<String, String>>();
     }
 
@@ -133,23 +137,40 @@ public class ChatAnnotationActivity extends BaseActivity {
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             purpose=extra.getInt("purpose");
+            type=extra.getString("type");
         }
         String json = "";
-        if (purpose==0) json = mPrefs.getString("EntryProfileTopics", "");
-        else if (purpose==1) json = mPrefs.getString("ChatAnnotationList", "");
+        if (type.equals("topic")) {
+            if (purpose == 0) json = mPrefs.getString("EntryProfileTopics", "");
+            else if (purpose == 1) json = mPrefs.getString("ChatAnnotationList", "");
+        }
+        else if (type.equals("type")) {
+            if (purpose == 0) json = mPrefs.getString("EntryProfileTypes", "");
+            else if (purpose == 1) json = mPrefs.getString("ChatAnnotationTypeList", "");
+        }
         if (!json.equals("")) {
             ChatAnnotationObject obj = gson.fromJson(json, ChatAnnotationObject.class);
             name=obj.name;
             si=obj.si;
+            address=obj.address;
             relations=obj.relations;
         }
         setLayoutResource(R.layout.chat_annotation_viewflipper);
         vf = (ViewFlipper) findViewById(R.id.chat_annotation_viewflipper);
         textSI = (EditText) findViewById(R.id.annotation_si);
         textName = (EditText) findViewById(R.id.annotation_name);
+        textAddress = (EditText) findViewById(R.id.annotation_address);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().hide();
+        if (type.equals("topic")) {
+            ((TextView) findViewById(R.id.chat_annotation_title)).setText("List of Topic Annotations");
+            ((EditText) findViewById(R.id.annotation_address)).setVisibility(View.GONE);
+        }
+        else if (type.equals("type")){
+            ((TextView) findViewById(R.id.chat_annotation_title)).setText("List of Type Annotations");
+            ((EditText) findViewById(R.id.annotation_address)).setVisibility(View.GONE);
+        }
 //        Bundle extra = getIntent().getExtras();
 //        if (extra != null) {
 //            textSI.setText(extra.getString(BroadcastActivity.EXTRA_MESSAGE));
@@ -172,9 +193,12 @@ public class ChatAnnotationActivity extends BaseActivity {
                 relationnames.remove(position);
                 final List<String> relationsis = new ArrayList<String>(si);
                 relationsis.remove(position);
+                final List<String> relationaddresses = new ArrayList<String>(address);
+                relationaddresses.remove(position);
                 final EditText relationname = (EditText) findViewById(R.id.relation_name);
                 final List<String> relationnamesfinal = relationnames;
                 final List<String> relationsisfinal = relationsis;
+                final List<String> relationaddressesfinal = relationaddresses;
                 final CustomRelationList relationadapter = new
                         CustomRelationList(ChatAnnotationActivity.this, relationnames, relationsis, si.get(position));
                 relationlist=(ListView)findViewById(R.id.annotation_connection_list);
@@ -201,10 +225,17 @@ public class ChatAnnotationActivity extends BaseActivity {
                         ChatAnnotationObject cao = new ChatAnnotationObject();
                         cao.si=si;
                         cao.name=name;
+                        cao.address=address;
                         cao.relations=relations;
                         String json = gson.toJson(cao);
-                        if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
-                        else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
+                        if (type.equals("topic")) {
+                            if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
+                            else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
+                        }
+                        else if (type.equals("type")) {
+                            if (purpose==0) prefsEditor.putString("EntryProfileTypes", json);
+                            else if (purpose==1) prefsEditor.putString("ChatAnnotationTypeList", json);
+                        }
                         prefsEditor.commit();
                         relationadapter.notifyDataSetChanged();
                         Toast.makeText(ChatAnnotationActivity.this, "Entry deleted",
@@ -229,10 +260,17 @@ public class ChatAnnotationActivity extends BaseActivity {
                             ChatAnnotationObject cao = new ChatAnnotationObject();
                             cao.si=si;
                             cao.name=name;
+                            cao.address=address;
                             cao.relations=relations;
                             String json = gson.toJson(cao);
-                            if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
-                            else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
+                            if (type.equals("topic")) {
+                                if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
+                                else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
+                            }
+                            else if (type.equals("type")) {
+                                if (purpose==0) prefsEditor.putString("EntryProfileTypes", json);
+                                else if (purpose==1) prefsEditor.putString("ChatAnnotationTypeList", json);
+                            }
                             prefsEditor.commit();
                             System.out.println("_________ " + textSI.getText() + " ___________BBBB");
                             //finish();
@@ -257,10 +295,17 @@ public class ChatAnnotationActivity extends BaseActivity {
                 ChatAnnotationObject cao = new ChatAnnotationObject();
                 cao.si=si;
                 cao.name=name;
+                cao.address=address;
                 cao.relations=relations;
                 String json = gson.toJson(cao);
-                if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
-                else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
+                if (type.equals("topic")) {
+                    if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
+                    else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
+                }
+                else if (type.equals("type")) {
+                    if (purpose==0) prefsEditor.putString("EntryProfileTypes", json);
+                    else if (purpose==1) prefsEditor.putString("ChatAnnotationTypeList", json);
+                }
                 prefsEditor.commit();
                 adapter.notifyDataSetChanged();
                 Toast.makeText(ChatAnnotationActivity.this, "Entry deleted",
@@ -279,16 +324,24 @@ public class ChatAnnotationActivity extends BaseActivity {
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     si.add(textSI.getText().toString());
                     name.add(textName.getText().toString());
+                    address.add(textAddress.getText().toString());
                     adapter.notifyDataSetChanged();
                     SharedPreferences.Editor prefsEditor = mPrefs.edit();
                     Gson gson = new Gson();
                     ChatAnnotationObject cao = new ChatAnnotationObject();
                     cao.si=si;
                     cao.name=name;
+                    cao.address=address;
                     cao.relations=relations;
                     String json = gson.toJson(cao);
-                    if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
-                    else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
+                    if (type.equals("topic")) {
+                        if (purpose==0) prefsEditor.putString("EntryProfileTopics", json);
+                        else if (purpose==1) prefsEditor.putString("ChatAnnotationList", json);
+                    }
+                    else if (type.equals("type")) {
+                        if (purpose==0) prefsEditor.putString("EntryProfileTypes", json);
+                        else if (purpose==1) prefsEditor.putString("ChatAnnotationTypeList", json);
+                    }
                     prefsEditor.commit();
                     returnIntent.putExtra("result", textSI.getText().toString());
                     setResult(Activity.RESULT_OK, returnIntent);

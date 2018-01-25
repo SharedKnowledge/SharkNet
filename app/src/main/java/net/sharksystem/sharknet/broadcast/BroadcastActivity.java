@@ -190,9 +190,22 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                 mRevealView.setVisibility(View.GONE);
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
                 intent.putExtra("purpose",1);
+                intent.putExtra("type","topic");
 //                if (!TextUtils.isEmpty(topicSI)) {
 //                    intent.putExtra(EXTRA_MESSAGE, topicSI);
 //                }
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton typeButton = (ImageButton) findViewById(R.id.imageButtonType);
+        typeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRevealView.setVisibility(View.GONE);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",1);
+                intent.putExtra("type","type");
                 startActivityForResult(intent, 1);
             }
         });

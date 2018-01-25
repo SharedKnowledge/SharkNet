@@ -80,6 +80,18 @@ public class EntryProfileActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
                 intent.putExtra("purpose",0);
+                intent.putExtra("type","topic");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton typeButton = (ImageButton) findViewById(R.id.imageButtonType);
+        typeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","type");
                 startActivityForResult(intent, 1);
             }
         });
