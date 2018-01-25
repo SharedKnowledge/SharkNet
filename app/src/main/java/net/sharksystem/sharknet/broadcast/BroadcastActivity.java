@@ -162,6 +162,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor prefsEditor = mPrefs.edit();
                         prefsEditor.remove("ChatAnnotationList");
+                        prefsEditor.remove("ChatAnnotationTypeList");
                         prefsEditor.commit();
 
                     }
