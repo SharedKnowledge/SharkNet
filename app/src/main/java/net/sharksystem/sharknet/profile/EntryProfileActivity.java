@@ -96,6 +96,39 @@ public class EntryProfileActivity extends BaseActivity {
             }
         });
 
+        final ImageButton approverButton = (ImageButton) findViewById(R.id.imageButtonApprover);
+        approverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","approver");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton receiverButton = (ImageButton) findViewById(R.id.imageButtonReceiver);
+        receiverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","receiver");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton senderButton = (ImageButton) findViewById(R.id.imageButtonSender);
+        senderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","sender");
+                startActivityForResult(intent, 1);
+            }
+        });
+
         final View dialogView = View.inflate(EntryProfileActivity.this, R.layout.date_time_picker, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(EntryProfileActivity.this).create();
 
