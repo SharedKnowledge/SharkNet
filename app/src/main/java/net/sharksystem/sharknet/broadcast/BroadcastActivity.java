@@ -268,6 +268,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationTimeActivity.class);
+                intent.putExtra("purpose",1);
                 intent.putExtra(EXTRA_MESSAGE, "Location");
                 startActivity(intent);
                 //DialogFragment newFragment = new TimePickerFragment();

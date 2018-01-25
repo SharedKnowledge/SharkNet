@@ -37,6 +37,7 @@ import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
 import net.sharksystem.sharknet.broadcast.BroadcastActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
+import net.sharksystem.sharknet.chat.ChatAnnotationTimeActivity;
 import net.sharksystem.sharknet.data.dataprovider.SQLPolygonDataProvider;
 import net.sharksystem.sharknet.location.LastLocationImpl;
 import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
@@ -126,6 +127,16 @@ public class EntryProfileActivity extends BaseActivity {
                 intent.putExtra("purpose",0);
                 intent.putExtra("type","sender");
                 startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton timeButton = (ImageButton) findViewById(R.id.imageButtonTime);
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationTimeActivity.class);
+                intent.putExtra("purpose",0);
+                startActivity(intent);
             }
         });
 
