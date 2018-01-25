@@ -208,6 +208,7 @@ public class ChatAnnotationActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     final int position, long id) {
+                if (type.equals("sender")) return;
                 vf.setDisplayedChild(1);
                 final int[] chosennumber=new int[1];
                 chosennumber[0] = -1;
@@ -381,6 +382,9 @@ public class ChatAnnotationActivity extends BaseActivity {
                 Intent returnIntent = new Intent();
                 if (!TextUtils.isEmpty(textSI.getText().toString())) {
                     if (si.contains(textSI.getText().toString())) return;
+                    if (type.equals("sender")) {
+                        if (purpose == 1 && si.size()==1) return;
+                    }
                     InputMethodManager inputManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     si.add(textSI.getText().toString());
