@@ -37,27 +37,31 @@ public class PolygonLocation implements ProfileGeometry{
     public double distanceTo(SharkPoint location) {
         double distance = -1;
 
-        for(int i=0; i<corners.size();i++) {
-            SharkPoint pointA = corners.get(i);
-            SharkPoint pointB = corners.get(i % (corners.size()-1));
+        if (corners.size() > 1) {
+            for (int i = 0; i < corners.size(); i++) {
+                SharkPoint pointA = corners.get(i);
+                SharkPoint pointB = corners.get(i % (corners.size() - 1));
 
-            double a = GeoUtils.distanceBetween(pointB.getY(), pointB.getX(), location.getY(), location.getX());
-            double b = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), location.getY(), location.getX());
-            double c = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), pointB.getY(), pointB.getX());
+                double a = GeoUtils.distanceBetween(pointB.getY(), pointB.getX(), location.getY(), location.getX());
+                double b = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), location.getY(), location.getX());
+                double c = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), pointB.getY(), pointB.getX());
 
-            double beta = GeoUtils.calcAngleFromEdgesSphere(b, a, c);
-            double alpha = GeoUtils.calcAngleFromEdgesSphere(a,b,c);
+                double beta = GeoUtils.calcAngleFromEdgesSphere(b, a, c);
+                double alpha = GeoUtils.calcAngleFromEdgesSphere(a, b, c);
 
-            double currentDistance;
-            if (alpha < 90 && beta < 90){
-                currentDistance = Math.asin(Math.sin(a / GeoUtils.EARTHRADIUS) * Math.sin(Math.toRadians(beta)));
-            } else {
-                currentDistance = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), location.getY(), location.getX());
+                double currentDistance;
+                if (alpha < 90 && beta < 90) {
+                    currentDistance = Math.asin(Math.sin(a / GeoUtils.EARTHRADIUS) * Math.sin(Math.toRadians(beta)));
+                } else {
+                    currentDistance = GeoUtils.distanceBetween(pointA.getY(), pointA.getX(), location.getY(), location.getX());
+                }
+
+                if (currentDistance < distance || distance == -1) {
+                    distance = currentDistance;
+                }
             }
-
-            if (currentDistance < distance || distance == -1) {
-                distance = currentDistance;
-            }
+        } else {
+            distance = GeoUtils.distanceBetween(corners.get(0).getY(), corners.get(0).getX(), location.getY(), location.getX());
         }
 
         return distance;
