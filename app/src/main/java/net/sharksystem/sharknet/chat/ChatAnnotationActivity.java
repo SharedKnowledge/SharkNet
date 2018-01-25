@@ -148,6 +148,18 @@ public class ChatAnnotationActivity extends BaseActivity {
             if (purpose == 0) json = mPrefs.getString("EntryProfileTypes", "");
             else if (purpose == 1) json = mPrefs.getString("ChatAnnotationTypeList", "");
         }
+        else if (type.equals("approver")) {
+            if (purpose == 0) json = mPrefs.getString("EntryProfileApprovers", "");
+            else if (purpose == 1) json = mPrefs.getString("ChatAnnotationApproverList", "");
+        }
+        else if (type.equals("receiver")) {
+            if (purpose == 0) json = mPrefs.getString("EntryProfileReceivers", "");
+            else if (purpose == 1) json = mPrefs.getString("ChatAnnotationReceiverList", "");
+        }
+        else if (type.equals("sender")) {
+            if (purpose == 0) json = mPrefs.getString("EntryProfileSenders", "");
+            else if (purpose == 1) json = mPrefs.getString("ChatAnnotationSenderList", "");
+        }
         if (!json.equals("")) {
             ChatAnnotationObject obj = gson.fromJson(json, ChatAnnotationObject.class);
             name=obj.name;
@@ -170,6 +182,18 @@ public class ChatAnnotationActivity extends BaseActivity {
         else if (type.equals("type")){
             ((TextView) findViewById(R.id.chat_annotation_title)).setText("List of Type Annotations");
             ((EditText) findViewById(R.id.annotation_address)).setVisibility(View.GONE);
+        }
+        else if (type.equals("approver")){
+            ((TextView) findViewById(R.id.chat_annotation_title)).setText("List of Approver Annotations");
+            ((EditText) findViewById(R.id.annotation_address)).setVisibility(View.VISIBLE);
+        }
+        else if (type.equals("receiver")){
+            ((TextView) findViewById(R.id.chat_annotation_title)).setText("List of Receiver Annotations");
+            ((EditText) findViewById(R.id.annotation_address)).setVisibility(View.VISIBLE);
+        }
+        else if (type.equals("sender")){
+            ((TextView) findViewById(R.id.chat_annotation_title)).setText("List of Sender Annotations");
+            ((EditText) findViewById(R.id.annotation_address)).setVisibility(View.VISIBLE);
         }
 //        Bundle extra = getIntent().getExtras();
 //        if (extra != null) {
@@ -236,6 +260,18 @@ public class ChatAnnotationActivity extends BaseActivity {
                             if (purpose==0) prefsEditor.putString("EntryProfileTypes", json);
                             else if (purpose==1) prefsEditor.putString("ChatAnnotationTypeList", json);
                         }
+                        else if (type.equals("approver")) {
+                            if (purpose==0) prefsEditor.putString("EntryProfileApprovers", json);
+                            else if (purpose==1) prefsEditor.putString("ChatAnnotationApproverList", json);
+                        }
+                        else if (type.equals("receiver")) {
+                            if (purpose==0) prefsEditor.putString("EntryProfileReceivers", json);
+                            else if (purpose==1) prefsEditor.putString("ChatAnnotationReceiverList", json);
+                        }
+                        else if (type.equals("sender")) {
+                            if (purpose==0) prefsEditor.putString("EntryProfileSenders", json);
+                            else if (purpose==1) prefsEditor.putString("ChatAnnotationSenderList", json);
+                        }
                         prefsEditor.commit();
                         relationadapter.notifyDataSetChanged();
                         Toast.makeText(ChatAnnotationActivity.this, "Entry deleted",
@@ -271,6 +307,18 @@ public class ChatAnnotationActivity extends BaseActivity {
                                 if (purpose==0) prefsEditor.putString("EntryProfileTypes", json);
                                 else if (purpose==1) prefsEditor.putString("ChatAnnotationTypeList", json);
                             }
+                            else if (type.equals("approver")) {
+                                if (purpose==0) prefsEditor.putString("EntryProfileApprovers", json);
+                                else if (purpose==1) prefsEditor.putString("ChatAnnotationApproverList", json);
+                            }
+                            else if (type.equals("receiver")) {
+                                if (purpose==0) prefsEditor.putString("EntryProfileReceivers", json);
+                                else if (purpose==1) prefsEditor.putString("ChatAnnotationReceiverList", json);
+                            }
+                            else if (type.equals("sender")) {
+                                if (purpose==0) prefsEditor.putString("EntryProfileSenders", json);
+                                else if (purpose==1) prefsEditor.putString("ChatAnnotationSenderList", json);
+                            }
                             prefsEditor.commit();
                             System.out.println("_________ " + textSI.getText() + " ___________BBBB");
                             //finish();
@@ -290,6 +338,7 @@ public class ChatAnnotationActivity extends BaseActivity {
                                            int pos, long id) {
                 name.remove(pos);
                 si.remove(pos);
+                address.remove(pos);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
                 Gson gson = new Gson();
                 ChatAnnotationObject cao = new ChatAnnotationObject();
@@ -305,6 +354,18 @@ public class ChatAnnotationActivity extends BaseActivity {
                 else if (type.equals("type")) {
                     if (purpose==0) prefsEditor.putString("EntryProfileTypes", json);
                     else if (purpose==1) prefsEditor.putString("ChatAnnotationTypeList", json);
+                }
+                else if (type.equals("approver")) {
+                    if (purpose==0) prefsEditor.putString("EntryProfileApprovers", json);
+                    else if (purpose==1) prefsEditor.putString("ChatAnnotationApproverList", json);
+                }
+                else if (type.equals("receiver")) {
+                    if (purpose==0) prefsEditor.putString("EntryProfileReceivers", json);
+                    else if (purpose==1) prefsEditor.putString("ChatAnnotationReceiverList", json);
+                }
+                else if (type.equals("sender")) {
+                    if (purpose==0) prefsEditor.putString("EntryProfileSenders", json);
+                    else if (purpose==1) prefsEditor.putString("ChatAnnotationSenderList", json);
                 }
                 prefsEditor.commit();
                 adapter.notifyDataSetChanged();
@@ -341,6 +402,18 @@ public class ChatAnnotationActivity extends BaseActivity {
                     else if (type.equals("type")) {
                         if (purpose==0) prefsEditor.putString("EntryProfileTypes", json);
                         else if (purpose==1) prefsEditor.putString("ChatAnnotationTypeList", json);
+                    }
+                    else if (type.equals("approver")) {
+                        if (purpose==0) prefsEditor.putString("EntryProfileApprovers", json);
+                        else if (purpose==1) prefsEditor.putString("ChatAnnotationApproverList", json);
+                    }
+                    else if (type.equals("receiver")) {
+                        if (purpose==0) prefsEditor.putString("EntryProfileReceivers", json);
+                        else if (purpose==1) prefsEditor.putString("ChatAnnotationReceiverList", json);
+                    }
+                    else if (type.equals("sender")) {
+                        if (purpose==0) prefsEditor.putString("EntryProfileSenders", json);
+                        else if (purpose==1) prefsEditor.putString("ChatAnnotationSenderList", json);
                     }
                     prefsEditor.commit();
                     returnIntent.putExtra("result", textSI.getText().toString());

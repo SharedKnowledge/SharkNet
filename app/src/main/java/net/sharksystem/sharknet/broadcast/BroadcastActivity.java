@@ -164,8 +164,8 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                         prefsEditor.remove("ChatAnnotationList");
                         prefsEditor.remove("ChatAnnotationTypeList");
                         prefsEditor.remove("ChatAnnotationApproverList");
-                        prefsEditor.remove("ChatAnnotationSenderList");
                         prefsEditor.remove("ChatAnnotationReceiverList");
+                        prefsEditor.remove("ChatAnnotationSenderList");
                         prefsEditor.remove("ChatAnnotationTimeList");
                         prefsEditor.commit();
 
