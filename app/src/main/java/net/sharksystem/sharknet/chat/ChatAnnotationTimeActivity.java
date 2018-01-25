@@ -36,6 +36,8 @@ public class ChatAnnotationTimeActivity extends AppCompatActivity {
         final View dialogView = View.inflate(ChatAnnotationTimeActivity.this, R.layout.date_time_picker, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(ChatAnnotationTimeActivity.this).create();
 
+        ((TimePicker) dialogView.findViewById(R.id.time_picker)).setIs24HourView(true);
+
         final Button startButton = (Button) findViewById(R.id.buttonStart);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,9 +56,9 @@ public class ChatAnnotationTimeActivity extends AppCompatActivity {
                                 timePicker.getCurrentMinute());
 
                         selectedStartTime = calendar.getTimeInMillis();
-                        DateFormat formatter = new SimpleDateFormat("dd. MMM. yyyy : HH:mm");
+                        DateFormat formatter = new SimpleDateFormat("dd. MMMM yyyy - HH:mm");
                         String dateFormatted = formatter.format(new Date(selectedStartTime));
-                        startButton.setText(String.valueOf(dateFormatted));
+                        startButton.setText("Start Time:       "+String.valueOf(dateFormatted));
                         alertDialog.dismiss();
                     }});
                 alertDialog.setView(dialogView);
@@ -82,9 +84,9 @@ public class ChatAnnotationTimeActivity extends AppCompatActivity {
                                 timePicker.getCurrentMinute());
 
                         selectedEndTime = calendar.getTimeInMillis();
-                        DateFormat formatter = new SimpleDateFormat("dd. MMM. yyyy : HH:mm");
+                        DateFormat formatter = new SimpleDateFormat("dd. MMMM yyyy - HH:mm");
                         String dateFormatted = formatter.format(new Date(selectedEndTime));
-                        endButton.setText(String.valueOf(dateFormatted));
+                        endButton.setText("End Time:       "+String.valueOf(dateFormatted));
                         alertDialog.dismiss();
                     }});
                 alertDialog.setView(dialogView);
