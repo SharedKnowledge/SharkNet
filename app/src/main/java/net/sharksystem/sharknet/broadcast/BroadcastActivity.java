@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -107,12 +109,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
     }
 
     private void configureLayout() {
-        if (android.os.Build.VERSION.SDK_INT > 20) {
-            setLayoutResource(R.layout.chat_detail_activity);
-        }
-        else {
-            setLayoutResource(R.layout.chat_detail_activity_compat);
-        }
+        setLayoutResource(R.layout.chat_detail_activity);
         setOptionsMenu(R.menu.chat_detail_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mRecyclerView = (RecyclerView) findViewById(R.id.chat_msg_recycler_view);
@@ -162,6 +159,16 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                         startSubscription();
                         mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
                         Toast.makeText(getApplicationContext(), "Sent to " + nearbyPeers.size() + " Peers from "+ BluetoothStreamStub.staticLocalAddress,Toast.LENGTH_LONG).show();
+                        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                        prefsEditor.remove("ChatAnnotationList");
+                        prefsEditor.remove("ChatAnnotationTypeList");
+                        prefsEditor.remove("ChatAnnotationApproverList");
+                        prefsEditor.remove("ChatAnnotationReceiverList");
+                        prefsEditor.remove("ChatAnnotationSenderList");
+                        prefsEditor.remove("ChatAnnotationTimeList");
+                        prefsEditor.commit();
+
                     }
                 }
             }
@@ -187,23 +194,73 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
-                if (!TextUtils.isEmpty(topicSI)) {
-                    intent.putExtra(EXTRA_MESSAGE, topicSI);
-                }
+                intent.putExtra("purpose",1);
+                intent.putExtra("type","topic");
+//                if (!TextUtils.isEmpty(topicSI)) {
+//                    intent.putExtra(EXTRA_MESSAGE, topicSI);
+//                }
                 startActivityForResult(intent, 1);
             }
         });
 
-        final ImageButton peerButton = (ImageButton) findViewById(R.id.imageButtonPeer);
-        peerButton.setOnClickListener(new View.OnClickListener() {
+        final ImageButton typeButton = (ImageButton) findViewById(R.id.imageButtonType);
+        typeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
-                Intent intent = new Intent(getApplicationContext(), ChatAnnotationPeerActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, "Peer");
-                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",1);
+                intent.putExtra("type","type");
+                startActivityForResult(intent, 1);
             }
         });
+
+        final ImageButton approverButton = (ImageButton) findViewById(R.id.imageButtonApprover);
+        approverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRevealView.setVisibility(View.GONE);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",1);
+                intent.putExtra("type","approver");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton senderButton = (ImageButton) findViewById(R.id.imageButtonSender);
+        senderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRevealView.setVisibility(View.GONE);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",1);
+                intent.putExtra("type","sender");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton receiverButton = (ImageButton) findViewById(R.id.imageButtonReceiver);
+        receiverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRevealView.setVisibility(View.GONE);
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",1);
+                intent.putExtra("type","receiver");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+//        final ImageButton peerButton = (ImageButton) findViewById(R.id.imageButtonSender);
+//        peerButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mRevealView.setVisibility(View.GONE);
+//                Intent intent = new Intent(getApplicationContext(), ChatAnnotationPeerActivity.class);
+//                intent.putExtra(EXTRA_MESSAGE, "Peer");
+//                startActivity(intent);
+//            }
+//        });
 
         final ImageButton timeButton = (ImageButton) findViewById(R.id.imageButtonTime);
         timeButton.setOnClickListener(new View.OnClickListener() {
@@ -211,6 +268,7 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
             public void onClick(View v) {
                 mRevealView.setVisibility(View.GONE);
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationTimeActivity.class);
+                intent.putExtra("purpose",1);
                 intent.putExtra(EXTRA_MESSAGE, "Location");
                 startActivity(intent);
                 //DialogFragment newFragment = new TimePickerFragment();

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import net.sharkfw.system.L;
+import net.sharksystem.api.models.Contact;
 import net.sharksystem.sharknet.R;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
 
     private static final int PICK_IMAGE_REQUEST = 1777;
     NewProfileFragmentButtonListener mListener;
+    NewProfileAddressFragment.NewProfileAddressFragmentButtonListener mListener2;
     private ImageView mProfileImage;
     private EditText mProfileName;
 
@@ -37,6 +39,7 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
 
         try {
             mListener = (NewProfileFragmentButtonListener) context;
+            mListener2 = (NewProfileAddressFragment.NewProfileAddressFragmentButtonListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement NewProfileAddressFragmentButtonListener.");
         }
@@ -105,7 +108,12 @@ public class NewProfileFragment extends Fragment implements View.OnClickListener
                     Snackbar.make(v, R.string.main_new_profile_empty_name, Snackbar.LENGTH_SHORT).show();
                 } else {
                     ((MainActivity) getActivity()).mContactName = mProfileName.getText().toString();
-                    mListener.onNextFragment();
+                    String contactName = ((MainActivity) getActivity()).mContactName;
+                    Bitmap contactImage = ((MainActivity) getActivity()).mContactImage;
+                    Contact contact = new Contact(contactName, "");
+                    if(contactImage!=null) contact.setImage(contactImage);
+                    mListener2.onCreateProfile(contact);
+                    //mListener.onNextFragment();
                 }
                 break;
             case R.id.previous_fragment:

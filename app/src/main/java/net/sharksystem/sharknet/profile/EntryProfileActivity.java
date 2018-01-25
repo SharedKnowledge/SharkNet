@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -34,6 +35,9 @@ import net.sharksystem.api.models.Profile;
 import net.sharksystem.sharknet.BaseActivity;
 import net.sharksystem.sharknet.R;
 import net.sharksystem.sharknet.account.AccountDetailActivity;
+import net.sharksystem.sharknet.broadcast.BroadcastActivity;
+import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
+import net.sharksystem.sharknet.chat.ChatAnnotationTimeActivity;
 import net.sharksystem.sharknet.data.dataprovider.SQLPolygonDataProvider;
 import net.sharksystem.sharknet.location.LastLocationImpl;
 import net.sharksystem.sharknet.locationprofile.PolygonLocationProfile;
@@ -70,6 +74,71 @@ public class EntryProfileActivity extends BaseActivity {
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final ImageButton topicButton = (ImageButton) findViewById(R.id.imageButtonTopic);
+        topicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","topic");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton typeButton = (ImageButton) findViewById(R.id.imageButtonType);
+        typeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","type");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton approverButton = (ImageButton) findViewById(R.id.imageButtonApprover);
+        approverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","approver");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton receiverButton = (ImageButton) findViewById(R.id.imageButtonReceiver);
+        receiverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","receiver");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton senderButton = (ImageButton) findViewById(R.id.imageButtonSender);
+        senderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationActivity.class);
+                intent.putExtra("purpose",0);
+                intent.putExtra("type","sender");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        final ImageButton timeButton = (ImageButton) findViewById(R.id.imageButtonTime);
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatAnnotationTimeActivity.class);
+                intent.putExtra("purpose",0);
+                startActivity(intent);
+            }
+        });
 
         final View dialogView = View.inflate(EntryProfileActivity.this, R.layout.date_time_picker, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(EntryProfileActivity.this).create();
@@ -196,7 +265,8 @@ public class EntryProfileActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-
+        Intent intent = new Intent(getApplicationContext(), BroadcastActivity.class);
+        startActivity(intent);
     }
 
     private SpatialFilter spatialFilter;

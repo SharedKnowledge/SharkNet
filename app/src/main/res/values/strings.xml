@@ -95,7 +95,7 @@
     <string name="main_new_profile_image_label">Profile picture</string>
     <string name="main_new_profile_name_info"></string>
     <string name="main_new_profile_name_label">Account name</string>
-    <string name="main_new_profile_name_hint">e.g. Max Mustermann or Son Goku</string>
+    <string name="main_new_profile_name_hint">e.g. Max Mustermann</string>
     <string name="main_new_profile_address_info">The here provided Information will allow us to activate the
     Mail functionality. Therefor it will be possible to send and retrieve Messages using Mail.
     We recommend not using Emails from the big companies to provide multiple different servers.</string>
@@ -146,5 +146,7 @@
 
     <!-- Entry Profile -->
     <string name="entryprof_enablelocationprof">Enable Location Profiling</string>
+
+    <string name="google_maps_key">XXXX</string>
 
 </resources>
