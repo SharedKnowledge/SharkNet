@@ -53,6 +53,7 @@ public class SharkNetDbHelper {
             values.put(LocationProfileSchema.COLUMN_WKT, pointGeometry.getWKT());
             re += database.insert(LocationProfileSchema.TABLE_NAME, null, values);
         }
+        database.setTransactionSuccessful();
         database.endTransaction();
 
         Log.i(TAG, "Writing PointGeometries to DB");

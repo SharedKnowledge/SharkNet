@@ -144,7 +144,7 @@ public class LocationProfilingService extends Service implements GoogleApiClient
             sharkPointList.add(lastpoint);
 
 
-            if (sharkPointList.size() > 50) {
+            if (sharkPointList.size() >= 50) {
                 final List<SharkPoint> tmpList = new ArrayList<>(sharkPointList);
                 sharkPointList.clear();
 
