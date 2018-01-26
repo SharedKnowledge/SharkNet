@@ -47,8 +47,8 @@ import java.util.List;
 public class LocationProfilingService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = LocationProfilingService.class.getSimpleName();
 
-    private static final long INTERVAL = 60000;
-    private static final long FASTINTERVAL = 5000;
+    private static final long INTERVAL = 5000;
+    private static final long FASTINTERVAL = 1000;
 
     private List<SharkPoint> sharkPointList = new ArrayList<>();
     private IDataProvider dataProvider = new SQLPolygonDataProvider(this);
@@ -97,6 +97,7 @@ public class LocationProfilingService extends Service implements GoogleApiClient
 
     @Override
     public void onDestroy() {
+        stopForeground(true);
         super.onDestroy();
     }
 
@@ -150,6 +151,7 @@ public class LocationProfilingService extends Service implements GoogleApiClient
                 mmHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i(TAG, "Saving Last " + tmpList.size() + " Points to Database");
                         dataProvider.putAllData(tmpList);
                     }
                 });

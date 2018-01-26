@@ -151,5 +151,5 @@
 
     <!-- LocationTracker Service -->
     <string name="locationprofile_notify_title">SharkNet Location Profiler</string>
-    <string name="locationprofile_notify_content">This Service tracks you location so it can be added to your Location Profile.</string>
+    <string name="locationprofile_notify_content">This Service tracks your location so it can be added to your Location Profile.</string>
 </resources>
