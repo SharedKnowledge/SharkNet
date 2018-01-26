@@ -2,27 +2,41 @@ package net.sharksystem.sharknet.service;
 
 import android.Manifest;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import net.sharkfw.knowledgeBase.geom.SharkPoint;
+import net.sharksystem.sharknet.R;
+import net.sharksystem.sharknet.chat.ChatAnnotationLocationActivity;
 import net.sharksystem.sharknet.data.SharkNetDbHelper;
 import net.sharksystem.sharknet.data.dataprovider.SQLPolygonDataProvider;
 import net.sharksystem.sharknet.location.LastLocationImpl;
 import net.sharksystem.sharknet.locationprofile.IDataProvider;
+import net.sharksystem.sharknet.profile.EntryProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,31 +44,51 @@ import java.util.List;
 /**
  * @author Max Oehme (546545)
  */
-public class LocationProfilingService extends Service {
-    private static final String TAG = "LOCATIONSERVICE";
+public class LocationProfilingService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+    private static final String TAG = LocationProfilingService.class.getSimpleName();
+
+    private static final long INTERVAL = 5000;
+    private static final long FASTINTERVAL = 1000;
 
     private List<SharkPoint> sharkPointList = new ArrayList<>();
     private IDataProvider dataProvider = new SQLPolygonDataProvider(this);
 
-    private Handler mHandler = new Handler();
-    private Runnable mRunnable;
+    GoogleApiClient mLocationClient;
+    LocationRequest mLocationRequest;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "Create");
-
-        mRunnable = new RecordLocationThread(this);
-        mHandler.post(mRunnable);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "Start");
+        mLocationClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
 
-        Notification notification = new Notification.Builder(this)
-                .setContentTitle("SharkNet")
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTINTERVAL);
+
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        mLocationClient.connect();
+
+        Intent notificationIntent = new Intent(this, ChatAnnotationLocationActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, 0);
+
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle(getString(R.string.locationprofile_notify_title))
+                .setContentText(getString(R.string.locationprofile_notify_content))
+                .setSmallIcon(R.drawable.shark_red_lowerres)
+                .setColor(ContextCompat.getColor(this, R.color.cyan_500))
+                //.setContentIntent(pendingIntent)
                 .build();
         startForeground(1, notification);
 
@@ -63,61 +97,65 @@ public class LocationProfilingService extends Service {
 
     @Override
     public void onDestroy() {
+        stopForeground(true);
         super.onDestroy();
-        Log.d(TAG, "END");
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    class RecordLocationThread implements Runnable {
-        private Context mmContext;
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+        client.requestLocationUpdates(mLocationRequest, new LocationUpdateCallback(), null);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.w(TAG, "Location Services: Connection suspended: " + i);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.w(TAG, "Location Services: Connection failed: " + connectionResult.getErrorMessage());
+    }
+
+    class LocationUpdateCallback extends LocationCallback {
         private Handler mmHandler = new Handler();
 
-        public RecordLocationThread(Context context) {
-            this.mmContext = context;
-        }
-
         @Override
-        public void run() {
-            FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(mmContext);
-            if (ActivityCompat.checkSelfPermission(mmContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mmContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            Task<Location> pos = client.getLastLocation();
-            pos.addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    Location location = task.getResult();
-                    SharkPoint lastpoint = new SharkPoint(location.getLatitude(),location.getLongitude());
-                    sharkPointList.add(lastpoint);
+        public void onLocationResult(LocationResult locationResult) {
+            super.onLocationResult(locationResult);
+
+            Location location = locationResult.getLastLocation();
+            SharkPoint lastpoint = new SharkPoint(location.getLatitude(),location.getLongitude());
+            sharkPointList.add(lastpoint);
 
 
-                    if (sharkPointList.size() > 50) {
-                        final List<SharkPoint> tmpList = new ArrayList<>(sharkPointList);
-                        sharkPointList.clear();
+            if (sharkPointList.size() >= 50) {
+                final List<SharkPoint> tmpList = new ArrayList<>(sharkPointList);
+                sharkPointList.clear();
 
-                        mmHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                dataProvider.putAllData(tmpList);
-                            }
-                        });
+                mmHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i(TAG, "Saving Last " + tmpList.size() + " Points to Database");
+                        dataProvider.putAllData(tmpList);
                     }
-                }
-            });
-
-            mHandler.postDelayed(this, 1000);
+                });
+            }
         }
     }
 }

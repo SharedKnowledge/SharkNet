@@ -44,14 +44,19 @@ public class SharkNetDbHelper {
 
     public long saveAllSharkPointToDB(Context context, List<SharkPoint> sharkPointList) {
         SQLiteDatabase database = new SharkNetSQLiteOpenHelper(context).getWritableDatabase();
+        long re = 0;
 
-        ContentValues values = new ContentValues();
+        database.beginTransaction();
         for (SharkPoint pointGeometry : sharkPointList) {
+            ContentValues values = new ContentValues();
+
             values.put(LocationProfileSchema.COLUMN_WKT, pointGeometry.getWKT());
+            re += database.insert(LocationProfileSchema.TABLE_NAME, null, values);
         }
+        database.setTransactionSuccessful();
+        database.endTransaction();
 
         Log.i(TAG, "Writing PointGeometries to DB");
-        long re = database.insert(LocationProfileSchema.TABLE_NAME, null, values);
         database.close();
         return re;
     }
