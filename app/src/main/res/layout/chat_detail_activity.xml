@@ -4,6 +4,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 xmlns:mApp="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -24,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingTop="5dp"
             android:background="@color/white">
 
             <LinearLayout
@@ -225,7 +227,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:src="@drawable/ic_edit_black_24dp">
+                app:srcCompat="@drawable/ic_edit_black_24dp">
             </ImageView>
         </android.support.v7.widget.CardView>
 
@@ -245,7 +247,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:src="@drawable/ic_send_dark_grey_24dp">
+                app:srcCompat="@drawable/ic_send_dark_grey_24dp">
             </ImageView>
         </android.support.v7.widget.CardView>
 

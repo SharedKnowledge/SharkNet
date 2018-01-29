@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -22,7 +21,6 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -58,7 +56,6 @@ public class LocationProfilingService extends Service implements GoogleApiClient
     GoogleApiClient mLocationClient;
     LocationRequest mLocationRequest;
 
-    int currentPrio = LocationRequest.PRIORITY_HIGH_ACCURACY;
 
     @Override
     public void onCreate() {
@@ -77,7 +74,7 @@ public class LocationProfilingService extends Service implements GoogleApiClient
         mLocationRequest.setInterval(INTERVAL);
         mLocationRequest.setFastestInterval(FASTINTERVAL);
 
-        mLocationRequest.setPriority(currentPrio);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         mLocationClient.connect();
 
         Intent notificationIntent = new Intent(this, ChatAnnotationLocationActivity.class);
@@ -145,7 +142,7 @@ public class LocationProfilingService extends Service implements GoogleApiClient
             Location location = locationResult.getLastLocation();
             SharkPoint lastpoint = new SharkPoint(location.getLatitude(),location.getLongitude());
             sharkPointList.add(lastpoint);
-            Log.e(TAG, "Point: " + lastpoint.getWKT() + " Prio: " + mLocationRequest.getPriority());
+
 
             if (sharkPointList.size() >= 50) {
                 final List<SharkPoint> tmpList = new ArrayList<>(sharkPointList);

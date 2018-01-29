@@ -1,6 +1,8 @@
 package net.sharksystem.sharknet.broadcast;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -18,6 +20,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -120,7 +124,22 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
         mAdapter.setMessages(broadcast.getMessages());
         mRecyclerView.setAdapter(mAdapter);
         final LinearLayout mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
-        mRevealView.setVisibility(View.GONE);
+        mRevealView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener(){
+
+                    @Override
+                    public void onGlobalLayout() {
+                        // gets called after layout has been done but before display
+                        // so we can get the height then hide the view
+
+                        mRevealView.setTranslationY(mRevealView.getHeight());
+                        mRevealView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        mRevealView.setVisibility(View.GONE);
+                    }
+
+                });
+        //mRevealView.setTranslationY(mRevealView.getHeight());
+        //mRevealView.setVisibility(View.GONE);
         //broadcast = new Broadcast();
         final CardView sendButton = (CardView) findViewById(R.id.message_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -170,19 +189,6 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                         prefsEditor.commit();
 
                     }
-                }
-            }
-        });
-
-        final CardView semanticButton = (CardView) findViewById(R.id.semantic_button);
-        semanticButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mRevealView.getVisibility() == View.GONE) {
-                    mRevealView.setVisibility(View.VISIBLE);
-                }
-                else {
-                    mRevealView.setVisibility(View.GONE);
                 }
             }
         });
@@ -284,6 +290,34 @@ public class BroadcastActivity extends RxSingleNavigationDrawerActivity<List<Mes
                 Intent intent = new Intent(getApplicationContext(), ChatAnnotationLocationActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, "Location");
                 startActivity(intent);
+            }
+        });
+
+        final CardView semanticButton = (CardView) findViewById(R.id.semantic_button);
+        semanticButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mRevealView.getVisibility() == View.GONE || mRevealView.getVisibility() == View.INVISIBLE) {
+                    mRecyclerView.setTranslationY(mRevealView.getHeight());
+                    mRecyclerView.animate().translationY(0).setListener(null);
+                    mRevealView.setVisibility(View.VISIBLE);
+                    mRevealView.animate()
+                            .translationY(0)
+                            .setListener(null);
+                }
+                else {
+                    mRecyclerView.animate().translationY(mRevealView.getHeight()).setListener(null);
+                    mRevealView.animate()
+                            .translationY(mRevealView.getHeight())
+                            .setListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    mRevealView.setVisibility(View.GONE);
+                                    mRecyclerView.setTranslationY(0);
+                                }
+                            });
+                }
             }
         });
     }
