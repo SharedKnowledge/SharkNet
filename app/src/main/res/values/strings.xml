@@ -128,7 +128,9 @@
     <string name="title_activity_peer_annotation_time">ChatAnnotationPeerActivity</string>
     <string name="title_activity_semantic_broadcast">SemanticBroadcastActivity</string>
     <string name="entry_profile">Entry Profile</string>
+    <string name="out_profile">Out Profile</string>
     <string name="active_entry_profile">Active Entry Profile</string>
+    <string name="active_out_profile">Active Out Profile</string>
     <string name="title_activity_entry_profile">EntryProfileActivity</string>
     <string name="title_activity_broadcast">BroadcastActivity</string>
     <string name="sidenav_item_semantic_broadcast">Semantic Broadcast</string>
@@ -143,13 +145,11 @@
     <string name="addNewSchnitzelJagdText">Name der Schnitzeljagd:</string>
     <string name="schnitzeljagd_main_menu_admin">Admin mode</string>
     <string name="schnitzeljagd_main_menu_orte">Liste der Orte</string>
-
+    <string name="google_maps_key">AIzaSyBi2DwT4pxTRIfbw5qtC-YWrWulsRGAkIk </string>
     <!-- Entry Profile -->
     <string name="entryprof_enablelocationprof">Enable Location Profiling</string>
-
-    <string name="google_maps_key">PLACEHOLDER! DO NOT INSERT KEY HERE! Follow the Google Maps Docu on how to add Debug API Key to project. If you have done so DONT push it to git!</string>
-
-    <!-- LocationTracker Service -->
     <string name="locationprofile_notify_title">SharkNet Location Profiler</string>
     <string name="locationprofile_notify_content">This Service tracks your location so it can be added to your Location Profile.</string>
+
+
 </resources>

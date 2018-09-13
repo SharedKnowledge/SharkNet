@@ -179,6 +179,10 @@
             android:label="@string/title_activity_entry_profile"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
+            android:name=".profile.OutProfileActivity"
+            android:label="OutProfileActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".broadcast.BroadcastActivity"
             android:label="@string/title_activity_broadcast"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

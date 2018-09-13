@@ -38,6 +38,7 @@ import net.sharksystem.sharknet.chat.ChatAnnotationActivity;
 import net.sharksystem.sharknet.chat.ChatAnnotationLocationActivity;
 import net.sharksystem.sharknet.main.MailServerPingPort;
 import net.sharksystem.sharknet.profile.EntryProfileActivity;
+import net.sharksystem.sharknet.profile.OutProfileActivity;
 
 import java.io.IOException;
 
@@ -54,6 +55,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
     private EditText mPopServer;
     private EditText mSmtpServer;
     private Button entryProfileBtn;
+    private Button outProfileBtn;
     private TextView mServerTestStatus;
     private ImageView mImage;
     private Bitmap mBitmap;
@@ -83,6 +85,7 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
         mSmtpServer = (EditText) findViewById(R.id.editText_account_smtp_server);
 
         entryProfileBtn = (Button) findViewById(R.id.entry_profile);
+        outProfileBtn = (Button) findViewById(R.id.out_profile);
         mServerTestStatus = (TextView) findViewById(R.id.textView_server_test_status);
 
         mImage.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +115,23 @@ public class AccountDetailActivity extends RxSingleBaseActivity<Contact> impleme
                 startActivity(intent);
             }
         });
+
+        outProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Profile profile = mApi.getProfile(null);
+                if (profile.getActiveOutInterest() == null) try {
+                    profile.setActiveOutInterest((ASIPInterest) SharkNetUtils.generateGeneralInterest(ASIPSpace.DIRECTION_OUT, InMemoSharkKB.createInMemoSemanticTag("", "")));
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+                getSharkApp().setProfile(profile);
+                Intent intent = new Intent(getApplicationContext(), OutProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
